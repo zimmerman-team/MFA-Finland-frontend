@@ -8,7 +8,7 @@ import { NoMatchPage } from "app/modules/common/no-match-page";
 const AboutModule = lazy(() => import("app/modules/about-module"));
 const LandingModule = lazy(() => import("app/modules/landing-module"));
 
-export function MainRoutes() {
+export function ModuleRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>

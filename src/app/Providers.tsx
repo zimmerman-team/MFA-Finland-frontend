@@ -3,7 +3,8 @@ import React, { ReactNode } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "app/theme";
 import { BrowserRouter as Router } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { RecoilRoot } from "recoil";
+import { Container, StylesProvider, CssBaseline } from "@material-ui/core";
 
 type ProviderProps = {
   children?: ReactNode;
@@ -12,11 +13,17 @@ type ProviderProps = {
 function Providers(props: ProviderProps) {
   return (
     /* material ui theme provider */
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {/* react router */}
-      <Router>{props.children}</Router>
-    </ThemeProvider>
+    <RecoilRoot>
+      <StylesProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {/* react router */}
+          <Container maxWidth="lg">
+            <Router>{props.children}</Router>
+          </Container>
+        </ThemeProvider>
+      </StylesProvider>
+    </RecoilRoot>
   );
 }
 
