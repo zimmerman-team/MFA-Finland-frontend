@@ -1,8 +1,8 @@
 /* core */
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 /* third-party */
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const Background = styled.div`
   width: 55px;
