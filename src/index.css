@@ -55,6 +55,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  text-decoration: initial;
+  color: #25a898;
+}
+a:hover {
+  cursor: pointer;
+  text-decoration: initial;
+  color: #30c2b0;
+}
+
 * {
-  /*outline: 1px solid #dbdbdb;*/
+  outline: 1px solid #1f74a2;
 }

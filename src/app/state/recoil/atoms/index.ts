@@ -2,7 +2,7 @@ import { atom, RecoilState } from "recoil";
 
 export const drawerAtom = atom({
   key: "drawerAtom", // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+  default: true, // default value (aka initial value)
 });
 
 export const filterPopupAtom = atom({
