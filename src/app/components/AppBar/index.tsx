@@ -31,17 +31,9 @@ export function AppBar() {
   };
 
   const LogoText = css`
-    //position: absolute;
-    //width: 97px;
-    //height: 24px;
-    //left: 34px;
-    //top: 12px;
-
     font-weight: bold;
-
     font-size: 18px;
     line-height: 1;
-
     display: flex;
     align-items: center;
     letter-spacing: 0.02em;

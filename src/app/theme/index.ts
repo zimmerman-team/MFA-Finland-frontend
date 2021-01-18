@@ -225,6 +225,11 @@ export default createMuiTheme({
         boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.1)",
       },
     },
+    MuiDrawer: {
+      paperAnchorTop: {
+        height: "100vh",
+      },
+    },
   },
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],

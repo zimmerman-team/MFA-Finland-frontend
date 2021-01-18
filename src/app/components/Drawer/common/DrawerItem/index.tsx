@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import MUIListItem from "@material-ui/core/ListItem";
 import MUIListItemIcon from "@material-ui/core/ListItemIcon";
 import MUIListItemText from "@material-ui/core/ListItemText";
-import { ProjectPalette } from "app/theme";
+import { PrimaryColor, ProjectPalette } from "app/theme";
 import { css } from "styled-components/macro";
 
 interface DrawerItemProps {
@@ -21,8 +21,9 @@ const ItemActiveStyle = css`
 `;
 const ItemInActiveStyle = css`
   span {
-    color: ${ProjectPalette.text.primary};
-    font-weight: 500;
+    color: ${PrimaryColor[2]};
+    font-weight: bold;
+    font-size: 18px;
   }
 `;
 
@@ -58,15 +59,23 @@ export const DrawerItem = (props: DrawerItemProps) => {
         }
       }}
     >
-      <MUIListItem button key={props.label}>
-        <MUIListItemIcon
+      <MUIListItem
+        button
+        key={props.label}
+        css={`
+          &:hover {
+            background-color: initial;
+          }
+        `}
+      >
+        {/*<MUIListItemIcon
           css={activeState ? ItemIconActiveStyle : ItemIconInActiveStyle}
         >
           {props.icon}
-        </MUIListItemIcon>
+        </MUIListItemIcon>*/}
         <MUIListItemText
           // eslint-disable-next-line sonarjs/no-all-duplicated-branches
-          css={activeState ? ItemActiveStyle : ItemInActiveStyle}
+          css={ItemInActiveStyle}
           primary={props.label}
         />
       </MUIListItem>
