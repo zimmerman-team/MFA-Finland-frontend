@@ -3,13 +3,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-// @ts-ignore
-import { App } from "app";
+import "app/languages";
+
 import reportWebVitals from "reportWebVitals";
 // this import looks unused; it isn't so please do not remove
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,import/no-unresolved
 import * as _ from "styled-components/cssprop";
+import Providers from "app/Providers";
+import { App } from "app";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <Providers>
+    <App />
+  </Providers>,
+  document.getElementById("root")
+);
 
 reportWebVitals();

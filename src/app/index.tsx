@@ -1,14 +1,24 @@
 import React from "react";
-import Providers from "app/Providers";
 import { ModuleRoutes } from "app/Routes";
 import { AppBar } from "app/components/AppBar";
 import { Drawer } from "app/components/Drawer";
-// import { AppDialogs } from "app/components/Dialogs";
 import { CookieDialog } from "app/components/CookieDialog";
+import { useTranslation } from "react-i18next";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
-export function App() {
+export const App = () => {
+  const { i18n } = useTranslation();
+
+  const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
+
+  React.useEffect(() => {
+    i18n
+      .changeLanguage(currentLanguage)
+      .then(() => console.info("yey, language has been set"));
+  }, []);
   return (
-    <Providers>
+    <>
       <AppBar />
       <Drawer />
       <ModuleRoutes />
@@ -19,6 +29,6 @@ export function App() {
         open
       />
       {/*  <Filter openSearch={false} />*/}
-    </Providers>
+    </>
   );
-}
+};
