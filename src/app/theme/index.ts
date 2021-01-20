@@ -198,8 +198,8 @@ export default createMuiTheme({
       // Name of the rule
       "@global": {
         "*, *::before, *::after": {
-          transition: "none !important",
-          animation: "none !important",
+          // transition: "none !important",
+          // animation: "none !important",
         },
       },
     },
