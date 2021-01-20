@@ -7,6 +7,8 @@ import { NoMatchPage } from "app/modules/common/no-match-page";
 
 import { SunburstChart } from "app/components/Charts/sunburst";
 import { SunburstChartMockData } from "app/components/Charts/sunburst/data";
+import { Treemap } from "app/components/Charts/treemap";
+import { TreemapMockData } from "app/components/Charts/treemap/data";
 
 const AboutModule = lazy(() => import("app/modules/about-module"));
 const LandingModule = lazy(() => import("app/modules/landing-module"));
@@ -24,10 +26,11 @@ export function ModuleRoutes() {
         </Route>
 
         <Route exact path="/viz">
-          <SunburstChart
+          <Treemap label="" data={TreemapMockData} />
+          {/* <SunburstChart
             data={SunburstChartMockData}
             activitiesCount={8256876601.879997}
-          />
+          /> */}
         </Route>
 
         <Route exact path="/notFound">

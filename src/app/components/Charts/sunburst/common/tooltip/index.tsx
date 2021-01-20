@@ -1,5 +1,6 @@
 import React from "react";
 import { SunburstPoint } from "react-vis";
+import { formatLocale } from "app/utils/formatLocale";
 import useMousePosition from "app/hooks/useMousePosition";
 import {
   tooltipcss,
@@ -42,12 +43,9 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
         </div>
         <div>
           <b>
-            {(
+            {formatLocale(
               props.hoveredNode.disbursed || props.hoveredNode.size
-            ).toLocaleString("fi-FI", {
-              style: "currency",
-              currency: "EUR",
-            })}
+            )}
           </b>
         </div>
       </div>
@@ -60,10 +58,7 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
         <div>Committed</div>
         <div>
           {props.hoveredNode.committed
-            ? props.hoveredNode.committed.toLocaleString("fi-FI", {
-                style: "currency",
-                currency: "EUR",
-              })
+            ? formatLocale(props.hoveredNode.committed)
             : "NA"}
         </div>
       </div>
