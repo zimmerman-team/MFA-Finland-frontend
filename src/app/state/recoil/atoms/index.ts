@@ -5,6 +5,11 @@ export const drawerAtom = atom({
   default: false, // default value (aka initial value)
 });
 
+export const languageAtom = atom({
+  key: "languageAtom", // unique ID (with respect to other atoms/selectors)
+  default: "en", // default value (aka initial value)
+});
+
 export const filterPopupAtom = atom({
   key: "filterPopupAtom", // unique ID (with respect to other atoms/selectors)
   default: "", // default value (aka initial value)
