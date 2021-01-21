@@ -14,6 +14,10 @@ const containercss = css`
   box-sizing: border-box;
   align-items: flex-start;
 
+  &:hover {
+    opacity: 0.5;
+  }
+
   > div {
     width: 100%;
     padding: 15px;
