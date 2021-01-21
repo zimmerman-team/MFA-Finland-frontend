@@ -44,7 +44,7 @@ export function AppBar() {
   `;
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    true
+    null
   );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
