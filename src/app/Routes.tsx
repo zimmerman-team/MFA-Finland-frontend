@@ -34,8 +34,8 @@ export function ModuleRoutes() {
             data={SunburstChartMockData}
             activitiesCount={8256876601.879997}
           /> */}
-          {/* <BarChart data={barMockData} /> */}
-          <SimpleBarChart data={simplebarMockData} />
+          <BarChart data={barMockData} />
+          {/* <SimpleBarChart data={simplebarMockData} /> */}
         </Route>
 
         <Route exact path="/notFound">
