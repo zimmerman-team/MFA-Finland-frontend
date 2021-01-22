@@ -12,6 +12,8 @@ import { TreemapMockData } from "app/components/Charts/treemap/data";
 import { BarChart } from "app/components/Charts/bar";
 import { SimpleBarChart } from "app/components/Charts/bar/simple";
 import { barMockData, simplebarMockData } from "app/components/Charts/bar/data";
+import { ThematicAreas } from "./components/Charts/thematicareas";
+import { thematicareasMockData } from "./components/Charts/thematicareas/data";
 
 const AboutModule = lazy(() => import("app/modules/about-module"));
 const LandingModule = lazy(() => import("app/modules/landing-module"));
@@ -34,8 +36,9 @@ export function ModuleRoutes() {
             data={SunburstChartMockData}
             activitiesCount={8256876601.879997}
           /> */}
-          <BarChart data={barMockData} />
+          {/* <BarChart data={barMockData} /> */}
           {/* <SimpleBarChart data={simplebarMockData} /> */}
+          <ThematicAreas data={thematicareasMockData} />
         </Route>
 
         <Route exact path="/notFound">
