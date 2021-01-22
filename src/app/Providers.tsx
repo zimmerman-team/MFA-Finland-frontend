@@ -18,7 +18,7 @@ function Providers(props: ProviderProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           {/* react router */}
-          <Container maxWidth="lg">
+          <Container maxWidth={false} css="height: 100%;padding: 0;">
             <Router>{props.children}</Router>
           </Container>
         </ThemeProvider>

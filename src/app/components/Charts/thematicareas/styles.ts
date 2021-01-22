@@ -100,7 +100,7 @@ export const singleitemcontainercss = css`
   }
 
   > span {
-    right: 20%;
+    right: 5%;
     font-size: 14px;
     font-weight: 700;
     position: absolute;
