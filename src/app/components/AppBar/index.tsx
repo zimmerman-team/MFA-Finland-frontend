@@ -68,8 +68,8 @@ export function AppBar() {
           box-shadow: initial;
           position: sticky;
           top: 0;
-          margin-bottom: 8px;
-          height: 68px;
+          //margin-bottom: 8px;
+          height: 64px;
           display: flex;
           justify-content: center;
           //align-items: center;
@@ -277,7 +277,7 @@ export function AppBar() {
           left: 0;
           position: fixed;
           background-color: ${PrimaryColor[0]};
-          height: 68px;
+          height: 64px;
           width: 100vw;
         `}
       />
