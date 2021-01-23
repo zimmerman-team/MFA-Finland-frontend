@@ -72,7 +72,7 @@ export const ProjectPalette: ProjectPalette = {
     contrastText: "#fff",
   },
   secondary: {
-    main: "#25baa4",
+    main: "#2E4982",
     light: "rgb(80,199,182)",
     dark: "rgb(25, 130, 114)",
     contrastText: "#ffffff",
