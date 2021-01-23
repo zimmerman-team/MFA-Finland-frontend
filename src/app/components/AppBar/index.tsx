@@ -12,7 +12,8 @@ import { css } from "styled-components/macro";
 import { MfaLogo } from "app/assets/mfa_logo";
 import LanguageIcon from "@material-ui/icons/Language";
 import SearchIcon from "@material-ui/icons/Search";
-import { Popover } from "@material-ui/core";
+import { Container, Popover } from "@material-ui/core";
+import { FilterBar } from "../../modules/landing-module/layout";
 
 export function AppBar() {
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
@@ -68,206 +69,209 @@ export function AppBar() {
           box-shadow: initial;
           position: sticky;
           top: 0;
-          margin-bottom: 8px;
+          //margin-bottom: 8px;
           height: 68px;
           display: flex;
           justify-content: center;
           //align-items: center;
+          background-color: ${PrimaryColor[0]};
         `}
       >
-        <Toolbar
-          // variant="dense"
-          disableGutters
-          // todo: move elsewhere
-          css={`
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 68px;
-            background-color: ${PrimaryColor[0]};
-          `}
-        >
-          {/* ---------------------------------------------- */}
-          {/* logo */}
-          <NavLink
-            to="/"
+        <Container maxWidth={"lg"}>
+          <Toolbar
+            // variant="dense"
+            disableGutters
+            // todo: move elsewhere
             css={`
               display: flex;
-              text-decoration: none;
-              transform-origin: right;
-              transform: translateX(-65px);
-            `}
-          >
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <MfaLogo />
-            </IconButton>
-            <div css={LogoText}>IATI Portal for MFA Finland</div>
-          </NavLink>
-
-          {/* ---------------------------------------------- */}
-          {/* searchfield */}
-          <div
-            css={`
-              display: flex;
-              justify-content: center;
+              justify-content: space-between;
               align-items: center;
+              height: 68px;
+              background-color: ${PrimaryColor[0]};
             `}
           >
-            <div
+            {/* ---------------------------------------------- */}
+            {/* logo */}
+            <NavLink
+              to="/"
               css={`
-                width: 144px;
-                height: 36px;
-                background: #bcc6d6;
-                border-radius: 32px;
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding-right: 2px;
-                padding-left: 15px;
+                text-decoration: none;
+                transform-origin: right;
+                transform: translateX(-65px);
               `}
             >
-              <div
-                css={`
-                  color: ${SecondaryColor[2]};
-                `}
-              >
-                Search
-              </div>
-              <div
-                css={`
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  width: 32px;
-                  height: 32px;
-                  border-radius: 50%;
-                  background-color: ${PrimaryColor[2]};
-                `}
-              >
-                <SearchIcon
-                  css={`
-                    fill: ${PrimaryColor[0]};
-                  `}
-                />
-              </div>
-            </div>
+              <IconButton edge="start" color="inherit" aria-label="menu">
+                <MfaLogo />
+              </IconButton>
+              <div css={LogoText}>IATI Portal for MFA Finland</div>
+            </NavLink>
 
             {/* ---------------------------------------------- */}
-            {/* lang switch */}
-            {/* todo: move to separate component */}
+            {/* searchfield */}
             <div
-              aria-describedby={id}
-              onClick={handleClick}
               css={`
                 display: flex;
-                flex-direction: column;
-                align-items: center;
                 justify-content: center;
-                margin-left: 20px;
-                margin-right: 20px;
-                user-select: none;
-                cursor: pointer;
+                align-items: center;
               `}
             >
-              <LanguageIcon
-                css={`
-                  fill: ${PrimaryColor[2]};
-                  margin-bottom: 3px;
-                `}
-              />
               <div
                 css={`
-                  font-weight: normal;
-                  font-size: 10px;
-                  line-height: 1;
+                  width: 144px;
+                  height: 36px;
+                  background: #bcc6d6;
+                  border-radius: 32px;
                   display: flex;
+                  justify-content: space-between;
                   align-items: center;
-                  color: #ffffff;
-                  text-transform: uppercase;
+                  padding-right: 2px;
+                  padding-left: 15px;
                 `}
               >
-                {currentLanguage}
+                <div
+                  css={`
+                    color: ${SecondaryColor[2]};
+                  `}
+                >
+                  Search
+                </div>
+                <div
+                  css={`
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    background-color: ${PrimaryColor[2]};
+                  `}
+                >
+                  <SearchIcon
+                    css={`
+                      fill: ${PrimaryColor[0]};
+                    `}
+                  />
+                </div>
               </div>
-            </div>
 
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-            >
+              {/* ---------------------------------------------- */}
+              {/* lang switch */}
+              {/* todo: move to separate component */}
               <div
+                aria-describedby={id}
+                onClick={handleClick}
                 css={`
                   display: flex;
                   flex-direction: column;
-                  background-color: white;
-                  padding: 16px;
-
-                  div {
-                    user-select: none;
-                    cursor: pointer;
-                    text-transform: uppercase;
-                    margin-bottom: 16px;
-
-                    &:hover {
-                      opacity: 0.5;
-                    }
-
-                    &:last-child {
-                      margin-bottom: 0;
-                    }
-                  }
+                  align-items: center;
+                  justify-content: center;
+                  margin-left: 20px;
+                  margin-right: 20px;
+                  user-select: none;
+                  cursor: pointer;
                 `}
               >
+                <LanguageIcon
+                  css={`
+                    fill: ${PrimaryColor[2]};
+                    margin-bottom: 3px;
+                  `}
+                />
                 <div
-                  onClick={() => {
-                    setLanguage("fi");
-                  }}
+                  css={`
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 1;
+                    display: flex;
+                    align-items: center;
+                    color: #ffffff;
+                    text-transform: uppercase;
+                  `}
                 >
-                  fi
-                </div>
-                <div
-                  onClick={() => {
-                    setLanguage("sv");
-                  }}
-                >
-                  sv
-                </div>
-                <div
-                  onClick={() => {
-                    setLanguage("en");
-                  }}
-                >
-                  en
+                  {currentLanguage}
                 </div>
               </div>
-            </Popover>
 
-            {/* ---------------------------------------------- */}
-            {/* burger menu */}
-            <IconButton
-              edge="end"
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleDrawer(true)}
-              data-cy="burger-menu-button"
-            >
-              <MenuIcon
-                css={`
-                  fill: ${PrimaryColor[2]};
-                `}
-              />
-            </IconButton>
-          </div>
-        </Toolbar>
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+              >
+                <div
+                  css={`
+                    display: flex;
+                    flex-direction: column;
+                    background-color: white;
+                    padding: 16px;
+
+                    div {
+                      user-select: none;
+                      cursor: pointer;
+                      text-transform: uppercase;
+                      margin-bottom: 16px;
+
+                      &:hover {
+                        opacity: 0.5;
+                      }
+
+                      &:last-child {
+                        margin-bottom: 0;
+                      }
+                    }
+                  `}
+                >
+                  <div
+                    onClick={() => {
+                      setLanguage("fi");
+                    }}
+                  >
+                    fi
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLanguage("sv");
+                    }}
+                  >
+                    sv
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLanguage("en");
+                    }}
+                  >
+                    en
+                  </div>
+                </div>
+              </Popover>
+
+              {/* ---------------------------------------------- */}
+              {/* burger menu */}
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+                data-cy="burger-menu-button"
+              >
+                <MenuIcon
+                  css={`
+                    fill: ${PrimaryColor[2]};
+                  `}
+                />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </Container>
       </MUIAppBar>
       <div
         // todo: move elsewhere

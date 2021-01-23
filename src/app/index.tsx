@@ -6,6 +6,8 @@ import { CookieDialog } from "app/components/CookieDialog";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
+import { Container } from "@material-ui/core";
+import { FilterBar } from "./components/FilterBar";
 
 export const App = () => {
   const { i18n } = useTranslation();
@@ -17,11 +19,15 @@ export const App = () => {
       .changeLanguage(currentLanguage)
       .then(() => console.info("yey, language has been set"));
   }, []);
+
   return (
     <>
       <AppBar />
+      <FilterBar />
       <Drawer />
-      <ModuleRoutes />
+      <Container maxWidth={"lg"}>
+        <ModuleRoutes />
+      </Container>
       {/*<AppDialogs />*/}
       <CookieDialog
         data-testid="cookie-dialog"
