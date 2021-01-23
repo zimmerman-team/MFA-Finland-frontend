@@ -13,6 +13,7 @@ export const App = () => {
   const { i18n } = useTranslation();
 
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
+  // const [backgroundColor, setBackgroundColor] = useRecoilState()
 
   React.useEffect(() => {
     i18n
@@ -25,7 +26,7 @@ export const App = () => {
       <AppBar />
       <FilterBar />
       <Drawer />
-      <Container maxWidth={"lg"}>
+      <Container maxWidth={false} css="height: 100%;padding: 0;">
         <ModuleRoutes />
       </Container>
       {/*<AppDialogs />*/}

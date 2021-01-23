@@ -9,7 +9,7 @@ export const FilterBar = () => {
         width: 100%;
         background-color: ${SecondaryColor[0]};
         position: sticky;
-        top: 0px;
+        top: 68px;
       `}
     />
   );

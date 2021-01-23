@@ -87,6 +87,7 @@ export function AppBar() {
               justify-content: space-between;
               align-items: center;
               height: 68px;
+              padding: 0;
               background-color: ${PrimaryColor[0]};
             `}
           >
