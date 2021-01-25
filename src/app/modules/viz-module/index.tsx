@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import { useMeasure } from "react-use";
 import Grid from "@material-ui/core/Grid";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
@@ -7,36 +8,83 @@ import { PrimaryColor } from "app/theme";
 import { VizTabs } from "app/components/VizTabs";
 import { BarChart } from "app/components/Charts/bar";
 import { Treemap } from "app/components/Charts/treemap";
+import { VizSidePanel } from "app/components/VizSidePanel";
 import { barMockData } from "app/components/Charts/bar/data";
 import { SunburstChart } from "app/components/Charts/sunburst";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
+import { getSidebarLegendItems } from "app/modules/viz-module/utils";
 import { TreemapMockData } from "app/components/Charts/treemap/data";
 import { SunburstChartMockData } from "app/components/Charts/sunburst/data";
 import { thematicareasMockData } from "app/components/Charts/thematicareas/data";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
+  const [ref, { height }] = useMeasure<HTMLDivElement>();
+  const [activeTab, setActiveTab] = React.useState("chart");
+  const [expandedVizItem, setExpandedVizItem] = React.useState<
+    string | number | null
+  >(null);
+  const [selectedVizItem, setSelectedVizItem] = React.useState<
+    string | number | null
+  >(null);
   const isProjects = get(params, "tab", "") === "projects";
+
+  console.log(expandedVizItem, selectedVizItem);
+
   return (
-    <Grid container css="height: calc(100% - 76px);">
+    <Grid
+      container
+      css={`
+        margin-top: -16px;
+        height: calc(100% - 135px);
+      `}
+    >
       <Grid item sm={12}>
         <VizTabs />
       </Grid>
-      <Grid container css="height: calc(100% - 76px);padding: 0 100px;">
+      <Grid
+        container
+        css={`
+          padding: 0 50px;
+          height: calc(100% - 76px);
+        `}
+      >
         <Grid
           item
           sm={12}
-          css="padding: 50px 0;"
+          css={`
+            padding: 50px 0;
+            background: #fff;
+          `}
           md={isProjects ? 12 : 9}
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
+          <div
+            css={`
+              left: 0;
+              top: 0px;
+              width: 100vw;
+              position: absolute;
+              background: #fff;
+              height: 100vh;
+              z-index: -3;
+            `}
+          />
           <Switch>
             <Route path="/viz/oda">
-              <BarChart data={barMockData} />
+              <BarChart
+                data={barMockData}
+                selectedVizItemId={expandedVizItem}
+                setSelectedVizItem={setExpandedVizItem}
+              />
             </Route>
             <Route path="/viz/thematic-areas">
-              <ThematicAreas data={thematicareasMockData} />
+              <ThematicAreas
+                data={thematicareasMockData}
+                selectedVizItemId={selectedVizItem}
+                setSelectedVizItem={setSelectedVizItem}
+              />
             </Route>
             <Route path="/viz/sectors">
               <SunburstChart
@@ -58,12 +106,42 @@ export default function VizModule() {
           <Grid item sm={12} md={3} lg={4} xl={4}>
             <div
               css={`
+                right: 0;
+                top: 0px;
+                width: 50vw;
+                position: absolute;
+                background: ${PrimaryColor[1]};
+                height: 100vh;
+                z-index: -2;
+              `}
+            />
+            <div
+              ref={ref}
+              css={`
                 width: 100%;
                 height: 100%;
                 display: flex;
                 background: ${PrimaryColor[1]};
               `}
-            />
+            >
+              <VizSidePanel
+                activeTab={activeTab}
+                scrollableHeight={height}
+                setActiveTab={setActiveTab}
+                vizType={get(params, "tab", "")}
+                setSelected={setSelectedVizItem}
+                setExpanded={setExpandedVizItem}
+                selectedVizItem={selectedVizItem}
+                expandedVizItem={expandedVizItem}
+                items={getSidebarLegendItems(get(params, "tab", ""), {
+                  oda: barMockData,
+                  "thematic-areas": thematicareasMockData,
+                  sectors: SunburstChartMockData,
+                  "countries-regions": TreemapMockData,
+                  organisations: TreemapMockData,
+                })}
+              />
+            </div>
           </Grid>
         )}
       </Grid>

@@ -15,7 +15,7 @@ export const ToolBox = (props: ToolBoxProps) => {
 interface GridWidgetProps {
   label?: string;
   tooltip?: boolean;
-  height?: number;
+  height?: string;
 }
 
 export const GridWidget = (props: GridWidgetProps) => {

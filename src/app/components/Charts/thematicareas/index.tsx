@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
+import find from "lodash/find";
 import Grid from "@material-ui/core/Grid";
 import {
   directions,
@@ -17,11 +18,28 @@ import { IconClose } from "app/assets/icons/IconClose";
 
 export function ThematicAreas(props: ThematicAreasProps) {
   const [selected, setSelected] = React.useState<DataProps | null>(null);
+
+  function onSelect(v: DataProps | null) {
+    setSelected(v);
+    props.setSelectedVizItem(v ? v.name : null);
+  }
+
+  React.useEffect(() => {
+    if (props.selectedVizItemId) {
+      const fItem = find(props.data, { name: props.selectedVizItemId });
+      if (fItem) {
+        setSelected(fItem as DataProps);
+      }
+    } else {
+      setSelected(null);
+    }
+  }, [props.selectedVizItemId]);
+
   return (
     <Grid container justify="center">
       {selected ? (
         <div css={singleitemcontainercss}>
-          <IconClose onClick={() => setSelected(null)} />
+          <IconClose onClick={() => onSelect(null)} />
           <div
             css={`
               ${containercss}
@@ -52,7 +70,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
               <div />
               <div />
-              <div onClick={() => setSelected(item)}>
+              <div onClick={() => onSelect(item)}>
                 <span>{item.name}</span>
               </div>
             </div>

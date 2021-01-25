@@ -9,10 +9,20 @@ export function VizTabs() {
     <Grid
       container
       css={`
-        padding: 0 100px;
-        background: #dde4ef;
+        padding: 0 50px;
       `}
     >
+      <div
+        css={`
+          left: 0;
+          top: 128px;
+          width: 100vw;
+          position: absolute;
+          background: #dde4ef;
+          height: 83px;
+          z-index: -1;
+        `}
+      />
       <Grid
         item
         sm={12}
