@@ -4,7 +4,7 @@ import MUIAppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import theme, { PrimaryColor, SecondaryColor } from "app/theme";
+import { PrimaryColor, SecondaryColor } from "app/theme";
 import { NavLink } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { drawerAtom, languageAtom } from "app/state/recoil/atoms";
@@ -84,6 +84,7 @@ export function AppBar() {
             justify-content: space-between;
             align-items: center;
             height: 68px;
+            padding: 0 24px;
             background-color: ${PrimaryColor[0]};
           `}
         >
@@ -95,7 +96,7 @@ export function AppBar() {
               display: flex;
               text-decoration: none;
               transform-origin: right;
-              transform: translateX(-65px);
+              // transform: translateX(-65px);
             `}
           >
             <IconButton edge="start" color="inherit" aria-label="menu">
@@ -254,7 +255,7 @@ export function AppBar() {
             {/* ---------------------------------------------- */}
             {/* burger menu */}
             <IconButton
-              edge="end"
+              // edge="end"
               color="inherit"
               aria-label="menu"
               onClick={toggleDrawer(true)}
