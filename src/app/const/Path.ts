@@ -1,3 +1,4 @@
+export const AppName = "MFA";
 const basePath = "/";
 
 type PathItemType = {
