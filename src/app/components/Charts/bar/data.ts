@@ -2,13 +2,15 @@ import { BarExtendedDatum, BarItemProps } from "@nivo/bar";
 
 export interface BarChartProps {
   data: any;
+  selectedVizItemId: string | number | null;
+  setSelectedVizItem: (name: string | number | null) => void;
 }
 
 export interface BarNodeProps extends BarItemProps {
   hoveredXIndex: number | null;
   setHoveredXIndex: React.Dispatch<React.SetStateAction<number | null>>;
   selected: BarExtendedDatum;
-  setSelected: React.Dispatch<React.SetStateAction<BarExtendedDatum>>;
+  setSelected: (b: BarExtendedDatum) => void;
 }
 
 export const barMockData = [

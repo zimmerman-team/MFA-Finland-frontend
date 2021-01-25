@@ -1,3 +1,8 @@
+import get from "lodash/get";
+import orderBy from "lodash/orderBy";
+import { formatLocale } from "app/utils/formatLocale";
+import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
+
 /* eslint-disable no-plusplus */
 const ranges = [
   { divider: 1e9, suffix: "Bn", abbr: "BLN" },
@@ -51,4 +56,32 @@ export function getMoneyValueWithMetricPrefix(
     }
   }
   return n.toString();
+}
+
+export function getODALegendItems(data: any): VizSidePanelItemProps[] {
+  return orderBy(data, "year", "desc").map((d: any) => ({
+    id: d.year,
+    name: `${d.year} Total ODA`,
+    value: formatLocale(get(d, "exclusive", 0) + get(d, "other", 0)),
+    children: [
+      {
+        id: "Exclusive ODA",
+        name: "Exclusive ODA",
+        value: formatLocale(get(d, "exclusive", 0)),
+        color: get(d, "exclusiveColor", ""),
+      },
+      {
+        id: "Other ODA",
+        name: "Other ODA",
+        value: formatLocale(get(d, "other", 0)),
+        color: get(d, "otherColor", ""),
+      },
+      {
+        id: "ODA/GNI",
+        name: "ODA/GNI",
+        value: `${get(d, "gni", 0)}%`,
+        color: get(d, "gniColor", ""),
+      },
+    ],
+  }));
 }
