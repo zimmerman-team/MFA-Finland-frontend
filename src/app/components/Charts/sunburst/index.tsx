@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import find from "lodash/find";
 import sumBy from "lodash/sumBy";
 import findIndex from "lodash/findIndex";
 import { SunburstPoint } from "react-vis";
@@ -50,6 +51,11 @@ export function SunburstChart(props: SunburstChartProps) {
     setSelected(
       prevIndex < 1 ? { name: "", code: "" } : prevSelections[prevIndex - 1]
     );
+    props.setSelectedVizItem(
+      prevIndex < 1
+        ? null
+        : get(prevSelections, `[${prevIndex - 1}].name`, null)
+    );
     const updatedPrevSelections = [...prevSelections];
     updatedPrevSelections.pop();
     setPrevSelections(updatedPrevSelections);
@@ -62,8 +68,24 @@ export function SunburstChart(props: SunburstChartProps) {
         { name: node.title, code: node.code },
       ]);
       setSelected({ name: node.title, code: node.code });
+      props.setSelectedVizItem(node.title);
     }
   }
+
+  React.useEffect(() => {
+    if (props.selectedVizItemId !== selected.name) {
+      const fItem = find(localData.children, {
+        title: props.selectedVizItemId,
+      });
+      if (fItem) {
+        setPrevSelections([
+          ...prevSelections,
+          { name: fItem.title, code: fItem.code },
+        ]);
+        setSelected({ name: fItem.title, code: fItem.code });
+      }
+    }
+  }, [props.selectedVizItemId]);
 
   React.useLayoutEffect(() => {
     if (width < 600) {

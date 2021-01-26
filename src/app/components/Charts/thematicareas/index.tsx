@@ -65,7 +65,10 @@ export function ThematicAreas(props: ThematicAreasProps) {
       ) : (
         <div css={containercss}>
           {props.data.map((item: DataProps, index: number) => (
-            <div css={itemcirclecss(item.size, item.color, directions[index])}>
+            <div
+              key={item.name}
+              css={itemcirclecss(item.size, item.color, directions[index])}
+            >
               <div />
               <div />
               <div />

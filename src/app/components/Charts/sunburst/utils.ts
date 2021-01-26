@@ -3,6 +3,8 @@ import find from "lodash/find";
 import sumBy from "lodash/sumBy";
 import filter from "lodash/filter";
 import orderBy from "lodash/orderBy";
+import { formatLocale } from "app/utils/formatLocale";
+import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
 
 function convertHexToRGBA(hexCode: string, opacity: number) {
   let hex = hexCode.replace("#", "");
@@ -81,4 +83,48 @@ export function getSelectedItemData(selected: string, data: any) {
     };
   }
   return data;
+}
+
+export function getSectorsLegends(
+  data: any,
+  sectorfilter: string | number | null
+): VizSidePanelItemProps[] {
+  let filteredData = data;
+  if (sectorfilter) {
+    filteredData = getSelectedItemData(sectorfilter as string, data);
+  }
+  const children = orderBy(filteredData.children, "size", "desc").map(
+    (d: any) => ({
+      id: d.title,
+      name: d.title,
+      value: formatLocale(d.size),
+      color: d.color,
+      children: orderBy(d.children, "size", "desc").map((child: any) => ({
+        id: child.title,
+        name: child.title,
+        value: formatLocale(child.size),
+        color: child.color,
+        children: orderBy(child.children, "size", "desc").map(
+          (gchild: any) => ({
+            id: gchild.title,
+            name: gchild.title,
+            value: formatLocale(gchild.size),
+            color: gchild.color,
+          })
+        ),
+      })),
+    })
+  );
+  if (filteredData.color === "") {
+    return children;
+  }
+  return [
+    {
+      id: filteredData.title,
+      name: filteredData.title,
+      value: formatLocale(filteredData.size),
+      color: filteredData.color,
+      children,
+    },
+  ];
 }

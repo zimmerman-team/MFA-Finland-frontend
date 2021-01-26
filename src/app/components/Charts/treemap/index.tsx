@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import find from "lodash/find";
 import { useWindowSize } from "react-use";
 import Grid from "@material-ui/core/Grid";
 import { css } from "styled-components/macro";
@@ -46,6 +47,7 @@ export function Treemap(props: TreemapProps) {
 
   function goBack() {
     setDrilldownId(null);
+    props.setSelectedVizItem(null);
     setRenderedNodes({ ...props.data });
   }
 
@@ -65,6 +67,17 @@ export function Treemap(props: TreemapProps) {
       setSmTooltip(node);
     }
   }
+
+  React.useEffect(() => {
+    if (props.selectedVizItemId !== drilldownId) {
+      const fItem = find(renderedNodes.children, {
+        ref: props.selectedVizItemId,
+      });
+      if (fItem) {
+        onNodeClick({ data: fItem }, "");
+      }
+    }
+  }, [props.selectedVizItemId]);
 
   React.useEffect(() => setRenderedNodes({ ...props.data }), [props.data]);
 

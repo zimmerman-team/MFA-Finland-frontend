@@ -1,6 +1,10 @@
 export interface SunburstChartProps {
   data: any;
   activitiesCount: number;
+  selectedVizItemId: string | number | null;
+  setSelectedVizItem: React.Dispatch<
+    React.SetStateAction<string | number | null>
+  >;
 }
 
 export const SunburstChartColors = [

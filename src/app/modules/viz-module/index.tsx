@@ -13,9 +13,13 @@ import { barMockData } from "app/components/Charts/bar/data";
 import { SunburstChart } from "app/components/Charts/sunburst";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
-import { TreemapMockData } from "app/components/Charts/treemap/data";
+import {
+  TreemapMockData,
+  CountriesTreemapMockData,
+} from "app/components/Charts/treemap/data";
 import { SunburstChartMockData } from "app/components/Charts/sunburst/data";
 import { thematicareasMockData } from "app/components/Charts/thematicareas/data";
+import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -28,8 +32,30 @@ export default function VizModule() {
     string | number | null
   >(null);
   const isProjects = get(params, "tab", "") === "projects";
+  const [legends, setLegends] = React.useState<VizSidePanelItemProps[]>([]);
 
-  console.log(expandedVizItem, selectedVizItem);
+  // console.log(expandedVizItem, selectedVizItem);
+
+  React.useEffect(() => {
+    setSelectedVizItem(null);
+    setExpandedVizItem(null);
+  }, [get(params, "tab", "")]);
+
+  React.useEffect(() => {
+    setLegends(
+      getSidebarLegendItems(
+        get(params, "tab", ""),
+        {
+          oda: barMockData,
+          "thematic-areas": thematicareasMockData,
+          sectors: SunburstChartMockData,
+          "countries-regions": CountriesTreemapMockData,
+          organisations: TreemapMockData,
+        },
+        selectedVizItem
+      )
+    );
+  }, [selectedVizItem, get(params, "tab", "")]);
 
   return (
     <Grid
@@ -90,13 +116,25 @@ export default function VizModule() {
               <SunburstChart
                 data={SunburstChartMockData}
                 activitiesCount={8256876601.879997}
+                selectedVizItemId={selectedVizItem}
+                setSelectedVizItem={setSelectedVizItem}
               />
             </Route>
             <Route path="/viz/countries-regions">
-              <Treemap label="" data={TreemapMockData} />
+              <Treemap
+                label=""
+                data={CountriesTreemapMockData}
+                selectedVizItemId={selectedVizItem}
+                setSelectedVizItem={setSelectedVizItem}
+              />
             </Route>
             <Route path="/viz/organisations">
-              <Treemap label="" data={TreemapMockData} />
+              <Treemap
+                label=""
+                data={TreemapMockData}
+                selectedVizItemId={selectedVizItem}
+                setSelectedVizItem={setSelectedVizItem}
+              />
             </Route>
             <Route path="/viz/budget-lines">budget lines viz</Route>
             <Route path="/viz/projects">projects table/list</Route>
@@ -125,6 +163,7 @@ export default function VizModule() {
               `}
             >
               <VizSidePanel
+                items={legends}
                 activeTab={activeTab}
                 scrollableHeight={height}
                 setActiveTab={setActiveTab}
@@ -133,13 +172,6 @@ export default function VizModule() {
                 setExpanded={setExpandedVizItem}
                 selectedVizItem={selectedVizItem}
                 expandedVizItem={expandedVizItem}
-                items={getSidebarLegendItems(get(params, "tab", ""), {
-                  oda: barMockData,
-                  "thematic-areas": thematicareasMockData,
-                  sectors: SunburstChartMockData,
-                  "countries-regions": TreemapMockData,
-                  organisations: TreemapMockData,
-                })}
               />
             </div>
           </Grid>
