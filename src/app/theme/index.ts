@@ -95,7 +95,13 @@ export const ProjectPalette: ProjectPalette = {
   },
 };
 
-export const ProjectTypography: TypographyOptions = {
+interface ExtendedTypography extends TypographyOptions {
+  accordionSummary: FontStyle;
+  accordionDetail: FontStyle;
+  body3: FontStyle;
+}
+
+export const ProjectTypography: ExtendedTypography = {
   h1: {
     fontFamily: TextStyle.fontFamily,
     fontWeight: TextStyle.fontWeightRegular,
@@ -172,6 +178,21 @@ export const ProjectTypography: TypographyOptions = {
     color: ProjectPalette.text.primary,
     lineHeight: `1`,
     fontSize: `14px`,
+  },
+  accordionSummary: {
+    color: ProjectPalette.text.primary,
+    fontFamily: TextStyle.fontFamily,
+    lineHeight: `${1.71429}em`,
+    fontSize: `${1}rem`,
+    fontWeight: 500,
+  },
+  accordionDetail: {
+    color: ProjectPalette.text.primary,
+    fontFamily: TextStyle.fontFamily,
+    lineHeight: `${1.71429}em`,
+    fontSize: `${14}px`,
+    fontWeight: 300,
+    letterSpacing: "0.5px",
   },
 };
 

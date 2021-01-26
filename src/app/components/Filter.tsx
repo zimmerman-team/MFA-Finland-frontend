@@ -8,7 +8,7 @@ interface FilterProps {
 export const Filter = (props: FilterProps) => {
   let location = useLocation();
 
-  const arrayOfStrings = ["/about", "/feedback", "/statement"];
+  const arrayOfStrings = ["/about", "/feedback", "/statement", "/project"];
   const str = location.pathname;
   const found = arrayOfStrings.find((v) => str === v);
 
