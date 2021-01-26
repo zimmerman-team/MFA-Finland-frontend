@@ -5,7 +5,7 @@ import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { Path } from "app/const/Path";
 import { DataGrid } from "app/components/DataGrid";
 import { ModuleContainer } from "app/components/ModuleContainer";
-import { ModuleHeader } from "app/components/ModuleHeader";
+import { DetailModuleHeader } from "app/components/DetailModuleHeader";
 
 interface ModuleProps {
   label: string;
@@ -15,7 +15,7 @@ interface ModuleProps {
 export const DetailModuleLayout = (props: ModuleProps) => {
   return (
     <ModuleContainer>
-      <ModuleHeader label={props.label} crumbs={props.crumbs} />
+      <DetailModuleHeader label={props.label} crumbs={props.crumbs} />
       <DataGrid />
     </ModuleContainer>
   );
