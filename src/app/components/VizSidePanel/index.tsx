@@ -50,13 +50,15 @@ export function VizSidePanel(props: VizSidePanelProps) {
           {props.items.map((item: VizSidePanelItemProps) => (
             <VizSidePanelItem
               {...item}
-              key={item.name}
+              key={item.id}
               vizType={props.vizType}
               setSelected={props.setSelected}
               setExpanded={props.setExpanded}
               expanded={props.expandedVizItem === item.id}
               selected={
-                props.selectedVizItem ? props.selectedVizItem === item.id : true
+                props.selectedVizItem
+                  ? props.selectedVizItem === item.id
+                  : props.vizType === "thematic-areas"
               }
             />
           ))}

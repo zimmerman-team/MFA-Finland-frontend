@@ -5,18 +5,22 @@ export const containercss = (
   expanded: boolean,
   selected: boolean,
   hasChildren: boolean,
+  vizType: string,
   isChild?: boolean
 ) => css`
   display: flex;
   flex-direction: column;
-  padding: 16px 16px ${expanded ? "0px" : "16px"} 16px;
   ${selected ? "padding-left: 16px;" : ""}
+  transition: background 0.2s ease-in-out;
+  padding: 16px 16px ${expanded ? "0px" : "16px"} 16px;
   opacity: ${selected || isChild || hasChildren ? 1 : 0.5};
 
-  ${isChild
+  ${isChild ||
+  vizType === "sectors" ||
+  vizType === "organisations" ||
+  vizType === "countries-regions"
     ? ""
     : `
-      transition: background 0.2s ease-in-out;
       border-bottom: 1px solid rgba(188, 198, 214, 1);
 
       ${
@@ -29,6 +33,18 @@ export const containercss = (
           : ""
       }
   `}
+
+  ${(vizType === "sectors" ||
+    vizType === "organisations" ||
+    vizType === "countries-regions") &&
+  hasChildren &&
+  !selected
+    ? `
+      &:hover {
+        background: ${SecondaryColor[0]};
+      }
+    `
+    : ""}
 `;
 
 export const circlecss = (color: string) => css`
