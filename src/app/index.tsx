@@ -21,7 +21,7 @@ export const App = () => {
   return (
     <>
       <AppBar />
-      <div
+      {/* <div
         css={`
           position: sticky;
           top: 64px;
@@ -44,7 +44,7 @@ export const App = () => {
           height: 64px;
           width: 100vw;
         `}
-      />
+      /> */}
 
       <Drawer />
       <ModuleRoutes />

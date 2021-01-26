@@ -9,7 +9,7 @@ interface ModuleHeaderProps {
   crumbs: BreadcrumbLinkModel[];
 }
 
-export const ModuleHeader = (props: ModuleHeaderProps) => {
+export const DetailModuleHeader = (props: ModuleHeaderProps) => {
   return (
     <React.Fragment>
       <Grid item lg={12}>
