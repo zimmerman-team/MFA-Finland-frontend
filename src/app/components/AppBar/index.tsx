@@ -68,11 +68,9 @@ export function AppBar() {
           box-shadow: initial;
           position: sticky;
           top: 0;
-          //margin-bottom: 8px;
           height: 64px;
           display: flex;
           justify-content: center;
-          //align-items: center;
         `}
       >
         <Toolbar

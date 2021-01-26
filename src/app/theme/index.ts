@@ -175,7 +175,7 @@ export const ProjectTypography: TypographyOptions = {
   },
 };
 
-const Overline1Typo = {
+export const Overline1Type = {
   fontFamily: TextStyle.fontFamily,
   fontWeight: TextStyle.fontWeightRegular,
   color: ProjectPalette.text.primary,
@@ -183,7 +183,7 @@ const Overline1Typo = {
   fontSize: `12px`,
 };
 
-const Overline2Typo = {
+export const Overline2Type = {
   fontFamily: TextStyle.fontFamily,
   fontWeight: TextStyle.fontWeightRegular,
   color: ProjectPalette.text.primary,

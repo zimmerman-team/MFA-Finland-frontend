@@ -3,9 +3,9 @@ import useTitle from "react-use/lib/useTitle";
 import { LandingLayout } from "app/modules/landing-module/layout";
 import { AppName } from "app/const/Path";
 
-const moduleName: string = "About";
+const moduleName: string = "Privacy";
 
-export function AboutModule() {
+export function PrivacyModule() {
   useTitle(`${AppName} - ${moduleName}`);
 
   return <div>{moduleName}</div>;
