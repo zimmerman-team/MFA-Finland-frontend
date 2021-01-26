@@ -58,7 +58,7 @@ export const ProjectPalette: ProjectPalette = {
     A200: "#aaaaaa",
   },
   text: {
-    primary: "#222222",
+    primary: "#2E4982",
     // secondary: '#fff',
     secondary: "#6f7173",
     disabled: "rgba(0, 0, 0, 0.38)",
@@ -66,7 +66,7 @@ export const ProjectPalette: ProjectPalette = {
   },
   divider: "rgba(0, 0, 0, 0.12)",
   primary: {
-    main: "#242e42",
+    main: "#2E4982",
     light: "#2f3b52",
     dark: "rgb(25, 32, 46)",
     contrastText: "#fff",

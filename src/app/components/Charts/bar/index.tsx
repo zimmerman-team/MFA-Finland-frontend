@@ -1,5 +1,6 @@
 import React from "react";
 import max from "lodash/max";
+import find from "lodash/find";
 import { PrimaryColor } from "app/theme";
 import { BarChartProps } from "app/components/Charts/bar/data";
 import { BarNode } from "app/components/Charts/bar/common/node";
@@ -24,12 +25,17 @@ export function BarChart(props: BarChartProps) {
     data: props.data[props.data.length - 1],
   });
 
+  const onSelect = (b: BarExtendedDatum) => {
+    setSelected(b);
+    props.setSelectedVizItem(b.indexValue);
+  };
+
   const Bars = (bprops: any) => {
     return bprops.bars.map((bar: BarItemProps) => (
       <BarNode
         {...bar}
         selected={selected}
-        setSelected={setSelected}
+        setSelected={onSelect}
         hoveredXIndex={hoveredXIndex}
         // onZoomOut={props.onZoomOut}
         // onClick={props.onNodeClick}
@@ -41,6 +47,26 @@ export function BarChart(props: BarChartProps) {
   const LineWPoints = (lprops: any) => (
     <LineNodes {...lprops} selected={selected} hoveredXIndex={hoveredXIndex} />
   );
+
+  React.useEffect(
+    () => props.setSelectedVizItem(props.data[props.data.length - 1].year),
+    []
+  );
+
+  React.useEffect(() => {
+    if (props.selectedVizItemId) {
+      const fItem = find(props.data, { year: props.selectedVizItemId });
+      if (fItem) {
+        setSelected({
+          id: "",
+          value: 0,
+          index: 0,
+          indexValue: fItem.year,
+          data: fItem,
+        });
+      }
+    }
+  }, [props.selectedVizItemId]);
 
   return (
     <div
