@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
 import { PrimaryColor } from "app/theme";
+import { Filter } from "app/components/Filter";
 
 export const App = () => {
   const { i18n } = useTranslation();
@@ -19,33 +20,9 @@ export const App = () => {
       .then(() => console.info("yey, language has been set"));
   }, []);
   return (
-    <>
+    <React.Fragment>
       <AppBar />
-      {/* <div
-        css={`
-          position: sticky;
-          top: 64px;
-          margin-bottom: 16px;
-          height: 64px;
-          display: flex;
-          justify-content: center;
-          background-color: #ecf1fa;
-          z-index: 2;
-        `}
-      />
-      <div
-        // todo: move elsewhere
-        css={`
-          z-index: -1;
-          top: 64px;
-          left: 0;
-          position: fixed;
-          background-color: #ecf1fa;
-          height: 64px;
-          width: 100vw;
-        `}
-      /> */}
-
+      <Filter />
       <Drawer />
       <ModuleRoutes />
       {/*<AppDialogs />*/}
@@ -54,7 +31,6 @@ export const App = () => {
         message="The website uses cookies for tracking statistics. Read Grand Bargains data privacy for more details."
         open
       />
-      {/*  <Filter openSearch={false} />*/}
-    </>
+    </React.Fragment>
   );
 };
