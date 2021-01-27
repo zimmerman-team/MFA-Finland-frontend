@@ -12,7 +12,7 @@ import { AccordionStyle } from "app/components/Accordion/style";
 
 export const ActivityAccordion = (props: ActivityItemProps) => {
   return (
-    <>
+    <React.Fragment>
       <Anchor id={props.id} positionRelativeToTop={64} />
 
       <div css={AccordionStyle(props.expanded)}>
@@ -33,6 +33,6 @@ export const ActivityAccordion = (props: ActivityItemProps) => {
           {getAccordionContent(props.data, props.dataType)}
         </MUIAccordionDetails>
       </div>
-    </>
+    </React.Fragment>
   );
 };
