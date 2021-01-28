@@ -121,8 +121,8 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
                 isChild
                 selected={false}
                 expanded={false}
-                key={child.name}
                 vizType={props.vizType}
+                key={`${child.name}-${child.value}`}
                 setSelected={props.setSelected}
                 setExpanded={props.setExpanded}
                 {...child}

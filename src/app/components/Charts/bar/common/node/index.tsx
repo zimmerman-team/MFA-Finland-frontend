@@ -29,17 +29,22 @@ export function BarNode(props: BarNodeProps) {
       onMouseLeave={() => props.setHoveredXIndex(null)}
       onClick={() => {
         if (props.data.indexValue !== get(props.selected, "indexValue", "")) {
-          //   props.onClick({
-          //     selection: props.data,
-          //     translation: { x: props.x * -1 + 100, y: 0 },
-          //   });
+          props.onNodeClick({
+            selection: props.data.indexValue,
+            translation: { x: props.x * -1 + 80, y: 0 },
+          });
           props.setSelected(props.data);
         } else {
-          //   props.onZoomOut();
+          props.onZoomOut();
         }
       }}
       css={`
         cursor: pointer;
+        ${props.data.indexValue === props.selected.indexValue
+          ? `
+              z-index: 2;
+            `
+          : ""}
       `}
       data-cy="bf-barchart-bar-comp"
     >

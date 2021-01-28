@@ -2,14 +2,14 @@ import React from "react";
 import get from "lodash/get";
 import max from "lodash/max";
 import { PrimaryColor } from "app/theme";
-import { BarChartProps } from "app/components/Charts/bar/data";
-import { ResponsiveBar, BarItemProps, BarExtendedDatum } from "@nivo/bar";
+import { ResponsiveBar } from "@nivo/bar";
+import { SimpleBarChartProps } from "app/components/Charts/bar/data";
 import {
   getRange,
   getMoneyValueWithMetricPrefix,
 } from "app/components/Charts/bar/utils";
 
-export function SimpleBarChart(props: BarChartProps) {
+export function SimpleBarChart(props: SimpleBarChartProps) {
   const range = getRange(props.data, ["value"]);
   const maxValue: number = max(props.data.map((item: any) => item.value)) || 0;
 
@@ -17,7 +17,8 @@ export function SimpleBarChart(props: BarChartProps) {
     <div
       css={`
         width: 100%;
-        height: 600px;
+        height: 650px;
+        padding: 50px 0 0 20px;
         color: ${PrimaryColor[0]};
       `}
     >
@@ -33,7 +34,7 @@ export function SimpleBarChart(props: BarChartProps) {
         valueScale={{ type: "linear" }}
         maxValue={maxValue + maxValue * 0.1}
         colors={(v: any) => v.data.valueColor}
-        margin={{ top: 15, right: 50, bottom: 200, left: 40 }}
+        margin={{ top: 15, right: 40, bottom: 200, left: 40 }}
         axisBottom={{
           tickSize: 0,
           tickPadding: 10,
@@ -43,7 +44,7 @@ export function SimpleBarChart(props: BarChartProps) {
             let values = [];
             if (splits.length > 2) {
               splits.forEach((s: string, index: number) => {
-                if (index % 2 === 0) {
+                if (index % 3 === 0) {
                   values.push(`${s} ${get(splits, `[${index + 1}]`, "")}`);
                 }
               });
@@ -56,10 +57,10 @@ export function SimpleBarChart(props: BarChartProps) {
                   textAnchor="start"
                   dominantBaseline="central"
                   transform="translate(0,10) rotate(45)"
-                  css="font-size: 14px; fill: rgb(46, 73, 130); font-family: Finlandica;"
+                  css="font-size: 10px; fill: rgb(46, 73, 130); font-family: Finlandica;"
                 >
                   {values.map((s: string, index: number) => (
-                    <tspan x="0" y={index * 15}>
+                    <tspan x="0" y={index * 12} key={s}>
                       {s}
                     </tspan>
                   ))}
@@ -79,7 +80,7 @@ export function SimpleBarChart(props: BarChartProps) {
           axis: {
             ticks: {
               text: {
-                fontSize: 14,
+                fontSize: 12,
                 fill: PrimaryColor[0],
                 fontFamily: "Finlandica",
               },

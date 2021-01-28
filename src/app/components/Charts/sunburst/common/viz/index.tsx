@@ -37,20 +37,7 @@ export function SunburstViz(props: any) {
             props.setSelected(node);
             props.setSelectedCount(node.size);
           } else {
-            setSelectedFilters({
-              ...selectedFilters,
-              sectors: [
-                ...selectedFilters.sectors,
-                node.parent.children[0].data.code,
-              ],
-            });
-            setTimeout(() => {
-              history.push(
-                `${history.location.pathname.replace("sectors", "projects")}${
-                  history.location.search
-                }`
-              );
-            }, 100);
+            props.onSectorSelectChange(node.code);
           }
         }}
         onValueMouseOver={(

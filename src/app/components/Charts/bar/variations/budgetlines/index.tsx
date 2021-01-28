@@ -1,21 +1,27 @@
 import React from "react";
+import get from "lodash/get";
 import max from "lodash/max";
-import find from "lodash/find";
 import { PrimaryColor } from "app/theme";
-import { BarChartProps } from "app/components/Charts/bar/data";
 import { BarNode } from "app/components/Charts/bar/common/node";
-import { LineNodes } from "app/components/Charts/bar/common/line/node";
 import { ResponsiveBar, BarItemProps, BarExtendedDatum } from "@nivo/bar";
+import { BarChartProps, budgetLineKeys } from "app/components/Charts/bar/data";
 import {
   getRange,
   getMoneyValueWithMetricPrefix,
 } from "app/components/Charts/bar/utils";
-import { Line } from "./common/line";
 
-export function BarChart(props: BarChartProps) {
-  const range = getRange(props.data, ["exclusive", "other"]);
+export function BudgetLinesBarChart(props: BarChartProps) {
+  const range = getRange(props.data, budgetLineKeys);
   const maxValue: number =
-    max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
+    max(
+      props.data.map((item: any) => {
+        let value = 0;
+        budgetLineKeys.forEach((key: string) => {
+          value += get(item, `[${key}]`, 0);
+        });
+        return value;
+      })
+    ) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);
   const [selected, setSelected] = React.useState<BarExtendedDatum>({
     id: "",
@@ -31,9 +37,9 @@ export function BarChart(props: BarChartProps) {
   };
 
   const Bars = (bprops: any) => {
-    if (props.vizCompData.length !== bprops.bars.length) {
-      props.setVizCompData(bprops.bars);
-    }
+    // if (props.vizCompData.length !== bprops.bars.length) {
+    //   props.setVizCompData(bprops.bars);
+    // }
     return bprops.bars.map((bar: BarItemProps) => (
       <BarNode
         {...bar}
@@ -47,32 +53,6 @@ export function BarChart(props: BarChartProps) {
     ));
   };
 
-  const LineWPoints = (lprops: any) => (
-    <LineNodes {...lprops} selected={selected} hoveredXIndex={hoveredXIndex} />
-  );
-
-  React.useEffect(
-    () => props.setSelectedVizItem(props.data[props.data.length - 1].year),
-    []
-  );
-
-  React.useEffect(() => {
-    if (props.selectedVizItemId) {
-      const fItem = find(props.data, {
-        year: parseInt(props.selectedVizItemId.toString(), 10),
-      });
-      if (fItem) {
-        setSelected({
-          id: "",
-          value: 0,
-          index: 0,
-          indexValue: fItem.year,
-          data: fItem,
-        });
-      }
-    }
-  }, [props.selectedVizItemId]);
-
   return (
     <div
       css={`
@@ -83,55 +63,31 @@ export function BarChart(props: BarChartProps) {
         color: ${PrimaryColor[0]};
       `}
     >
-      <div
-        css={`
-          display: flex;
-          flex-direction: row;
-          width: calc(100% - 25px);
-          justify-content: space-between;
-        `}
-      >
-        <div>{range.abbr}</div>
-        <div>%</div>
-      </div>
-      <div
-        css={`
-          left: 0;
-          top: 14px;
-          width: 100%;
-          height: 450px;
-          padding-top: 50px;
-          position: absolute;
-        `}
-      >
-        <Line
-          data={[
-            {
-              id: "gni",
-              data: props.data.map((d: any) => ({
-                x: d.year,
-                y: d.gni,
-              })),
-            },
-          ]}
-        />
-      </div>
       <ResponsiveBar
-        padding={0.3}
+        enableGridX
+        padding={0.5}
         indexBy="year"
         data={props.data}
         enableLabel={false}
         enableGridY={false}
         innerPadding={0}
-        keys={["exclusive", "other"]}
+        layout="horizontal"
+        keys={budgetLineKeys}
         valueScale={{ type: "linear" }}
-        colors={["#ACD1D1", "#7491CE"]}
-        maxValue={maxValue + maxValue * 0.1}
-        layers={["grid", "axes", Bars, LineWPoints]}
-        margin={{ top: 15, right: 50, bottom: 50, left: 40 }}
+        maxValue={maxValue + maxValue * 0.2}
+        colors={(v: any) => get(v.data, `${v.id}Color`, "")}
+        layers={["grid", "axes", Bars]}
+        margin={{ top: 15, right: 50, bottom: 70, left: 40 }}
         theme={{
           axis: {
             ticks: {
+              text: {
+                fontSize: 14,
+                fill: PrimaryColor[0],
+                fontFamily: "Finlandica",
+              },
+            },
+            legend: {
               text: {
                 fontSize: 14,
                 fill: PrimaryColor[0],
@@ -152,16 +108,26 @@ export function BarChart(props: BarChartProps) {
             },
           },
         }}
-        axisBottom={{
+        axisLeft={{
           tickSize: 0,
           tickPadding: 10,
           tickRotation: 0,
         }}
-        axisLeft={{
+        axisTop={{
+          tickSize: 0,
+          format: (v: any) => "",
+        }}
+        axisRight={{
+          tickSize: 0,
+          format: (v: any) => "",
+        }}
+        axisBottom={{
           tickSize: 0,
           tickValues: 5,
           tickPadding: 15,
           tickRotation: 0,
+          legendOffset: 50,
+          legend: range.abbr,
           format: (v: any) => getMoneyValueWithMetricPrefix(v, range.index),
         }}
       />
