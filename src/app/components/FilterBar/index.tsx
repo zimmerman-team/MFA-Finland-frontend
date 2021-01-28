@@ -5,8 +5,9 @@ import { Chip as MUIChip, ChipProps, Typography } from "@material-ui/core";
 import { PillButton } from "../Buttons/PillButton";
 import { shouldRender } from "./utils";
 import { createStyles } from "./styles";
-import Button from "@material-ui/core/Button";
-import { ProjectPalette } from "../../theme";
+import { ProjectPalette } from "app/theme";
+import { useRecoilState } from "recoil";
+import { filterPanelOpenAtom } from "app/state/recoil/atoms";
 
 export interface FilterBarProps {
   show?: boolean;
@@ -30,12 +31,20 @@ export const FilterBar = (props: FilterBarProps) => {
   const render: boolean = shouldRender(location);
   const styles = createStyles(props);
   const [chips, setChips] = React.useState([{ name: "2020" }]);
+  const [filterPanelOpen, setFilterPanelOpen] = useRecoilState(
+    filterPanelOpenAtom
+  );
 
   if (render) {
     return (
       <React.Fragment>
         <div css={styles.container}>
-          <PillButton css={styles.button}>Add Filters</PillButton>
+          <PillButton
+            css={styles.button}
+            onClick={() => setFilterPanelOpen(true)}
+          >
+            Add Filters
+          </PillButton>
           <Typography variant="subtitle2" css={styles.label}>
             Your selections
           </Typography>
