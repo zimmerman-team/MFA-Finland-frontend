@@ -15,9 +15,8 @@ export const App = () => {
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
 
   React.useEffect(() => {
-    i18n
-      .changeLanguage(currentLanguage)
-      .then(() => console.info("yey, language has been set"));
+    i18n.changeLanguage(currentLanguage);
+    // .then(() => console.info("yey, language has been set"));
   }, []);
   return (
     <React.Fragment>

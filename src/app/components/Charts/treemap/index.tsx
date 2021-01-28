@@ -60,6 +60,7 @@ export function Treemap(props: TreemapProps) {
           children,
         });
         setDrilldownId(node.data.ref);
+        props.setSelectedVizItem(node.data.ref);
       } else {
         navigateToDetailPage(node);
       }
