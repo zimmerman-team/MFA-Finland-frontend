@@ -6,8 +6,7 @@ import { CookieDialog } from "app/components/CookieDialog";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
-import { PrimaryColor } from "app/theme";
-import { Filter } from "app/components/Filter";
+import { FilterBar } from "./components/Filter";
 
 export const App = () => {
   const { i18n } = useTranslation();
@@ -22,7 +21,7 @@ export const App = () => {
   return (
     <React.Fragment>
       <AppBar />
-      <Filter />
+      <FilterBar />
       <Drawer />
       <ModuleRoutes />
       {/*<AppDialogs />*/}

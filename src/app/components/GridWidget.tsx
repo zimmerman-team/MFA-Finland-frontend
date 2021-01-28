@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { css } from "styled-components/macro";
 import { Tooltip } from "@material-ui/core";
+import { ProjectPalette } from "../theme";
 
 let style = {
   widgetHeader: css`
@@ -15,12 +16,12 @@ let style = {
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
-    color: #2e4982;
-    opacity: 0.9;
+    color: ${ProjectPalette.primary.main};
+    //opacity: 0.9;
     line-height: 1;
   `,
   widgeTooltip: css`
-    margin-left: 16px;
+    margin-left: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,7 +37,7 @@ const widgetContainer = (height: string) => css`
   background-color: white;
   display: flex;
   border-radius: 32px;
-  padding: 32px;
+  padding: 24px 32px 32px 32px;
   flex-direction: column;
 `;
 

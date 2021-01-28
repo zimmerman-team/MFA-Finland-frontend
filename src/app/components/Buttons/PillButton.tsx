@@ -1,17 +1,14 @@
 import React from "react";
-import { css } from "styled-components/macro";
+import { css, SimpleInterpolation } from "styled-components/macro";
 import { Button, ButtonProps } from "@material-ui/core/";
 
-export const buttonStyles = css`
-  border-radius: 20px;
-  text-transform: unset;
-  padding: 4px 12px;
-  line-height: 17px;
-`;
+interface PillButton extends ButtonProps {
+  css: readonly SimpleInterpolation[];
+}
 
-export const PillButton = (props: ButtonProps) => {
+export const PillButton = (props: PillButton) => {
   return (
-    <Button {...props} css={buttonStyles} variant="contained" color="primary">
+    <Button {...props} css={props.css} variant="contained" color="primary">
       {props.children}
     </Button>
   );

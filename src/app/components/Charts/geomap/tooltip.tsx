@@ -3,7 +3,7 @@ import { css } from "styled-components/macro";
 import IconButton from "@material-ui/core/IconButton";
 import { Lock, LockOpen } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
-import { ProjectPalette } from "../../../theme";
+import { ProjectPalette, SecondaryColor } from "../../../theme";
 import { PillButton } from "../../Buttons/PillButton";
 
 interface TooltipModel {
@@ -63,6 +63,16 @@ export const Icon = css`
   margin-bottom: -2px;
 `;
 
+export const Button = css`
+  border-radius: 20px;
+  text-transform: unset;
+  padding: 4px 12px;
+  line-height: 17px;
+  :hover {
+    background-color: ${SecondaryColor[1]};
+  }
+`;
+
 export const Tooltip = React.memo(function TooltipMemoized(
   props: TooltipModel
 ) {
@@ -92,7 +102,7 @@ export const Tooltip = React.memo(function TooltipMemoized(
         </Typography>
       </div>
       <div css={ButtonContainerStyle}>
-        <PillButton>Country Page</PillButton>
+        <PillButton css={Button}>Country Page</PillButton>
       </div>
     </div>
   );
