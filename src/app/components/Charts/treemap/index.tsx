@@ -82,7 +82,7 @@ export function Treemap(props: TreemapProps) {
   React.useEffect(() => setRenderedNodes({ ...props.data }), [props.data]);
 
   return (
-    <Grid container spacing={1} css="padding-right: 10px;">
+    <Grid container spacing={1} css="padding: 50px 10px 0 0;">
       <Grid item sm={12} md={2} lg={1}>
         {drilldownId && (
           <div css={backbuttoncss} onClick={goBack}>

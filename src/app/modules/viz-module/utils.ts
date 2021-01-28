@@ -1,5 +1,8 @@
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
-import { getODALegendItems } from "app/components/Charts/bar/utils";
+import {
+  getODALegendItems,
+  getSimpleBarLegendItems,
+} from "app/components/Charts/bar/utils";
 import { getThematicAreasLegends } from "app/components/Charts/thematicareas/utils";
 import { getSectorsLegends } from "app/components/Charts/sunburst/utils";
 import { getTreemapLegends } from "app/components/Charts/treemap/utils";
@@ -12,6 +15,8 @@ export function getSidebarLegendItems(
   switch (vizType) {
     case "oda":
       return getODALegendItems(data[vizType]);
+    case "oda-drilldown":
+      return getSimpleBarLegendItems(data[vizType]);
     case "thematic-areas":
       return getThematicAreasLegends(data[vizType]);
     case "sectors":

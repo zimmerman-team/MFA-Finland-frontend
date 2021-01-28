@@ -30,9 +30,21 @@ export function Line(props: LineProps) {
           ticks: {
             text: {
               fontSize: 14,
+              fill: PrimaryColor[0],
               fontFamily: "Finlandica",
-              color: PrimaryColor[0],
             },
+          },
+          domain: {
+            line: {
+              strokeWidth: 1,
+              stroke: "rgba(224, 224, 224, 0.4)",
+            },
+          },
+        },
+        grid: {
+          line: {
+            strokeWidth: 1,
+            stroke: "rgba(224, 224, 224, 0.4)",
           },
         },
       }}
