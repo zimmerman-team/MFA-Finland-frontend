@@ -1,5 +1,6 @@
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
 import {
+  getBudgetLinesLegendItems,
   getODALegendItems,
   getSimpleBarLegendItems,
 } from "app/components/Charts/bar/utils";
@@ -25,6 +26,8 @@ export function getSidebarLegendItems(
       return getTreemapLegends(data[vizType], filter);
     case "organisations":
       return getTreemapLegends(data[vizType], filter);
+    case "budget-lines":
+      return getBudgetLinesLegendItems(data[vizType]);
     default:
       return [];
   }

@@ -2,6 +2,7 @@ import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 import { formatLocale } from "app/utils/formatLocale";
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
+import { budgetLineKeys } from "./data";
 
 /* eslint-disable no-plusplus */
 const ranges = [
@@ -93,4 +94,31 @@ export function getSimpleBarLegendItems(data: any): VizSidePanelItemProps[] {
     value: formatLocale(get(d, "value", 0)),
     color: get(d, "valueColor", ""),
   }));
+}
+
+export function getBudgetLinesLegendItems(data: any): VizSidePanelItemProps[] {
+  return orderBy(data, "year", "desc").map((d: any) => {
+    let value = 0;
+    const children: VizSidePanelItemProps[] = [];
+    budgetLineKeys.forEach((key: string) => {
+      value += get(d, `[${key}]`, 0);
+      if (get(d, `[${key}]`, 0) > 0) {
+        children.push({
+          id: key,
+          name: key,
+          value: get(d, `[${key}]`, 0),
+          color: get(d, `[${key}Color]`, "0"),
+        });
+      }
+    });
+    return {
+      id: d.year,
+      name: `${d.year}`,
+      value: formatLocale(value),
+      children: orderBy(children, "value", "desc").map((c: any) => ({
+        ...c,
+        value: formatLocale(c.value),
+      })),
+    };
+  });
 }

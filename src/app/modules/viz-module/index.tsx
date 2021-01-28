@@ -10,7 +10,11 @@ import { BarItemProps } from "@nivo/bar";
 import { VizTabs } from "app/components/VizTabs";
 import { Treemap } from "app/components/Charts/treemap";
 import { VizSidePanel } from "app/components/VizSidePanel";
-import { barMockData, simplebarMockData } from "app/components/Charts/bar/data";
+import {
+  barMockData,
+  budgetLinesMockData,
+  simplebarMockData,
+} from "app/components/Charts/bar/data";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
 import {
@@ -22,6 +26,7 @@ import { thematicareasMockData } from "app/components/Charts/thematicareas/data"
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
 import { ODAvizModule } from "app/components/Charts/modules/oda";
 import { SectorsVizModule } from "app/components/Charts/modules/sectors";
+import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -108,6 +113,7 @@ export default function VizModule() {
             sectors: SunburstChartMockData,
             "countries-regions": CountriesTreemapMockData,
             organisations: TreemapMockData,
+            "budget-lines": budgetLinesMockData,
           },
           selectedVizItem
         )
@@ -127,6 +133,7 @@ export default function VizModule() {
             sectors: SunburstChartMockData,
             "countries-regions": CountriesTreemapMockData,
             organisations: TreemapMockData,
+            "budget-lines": budgetLinesMockData,
           },
           selectedVizItem
         )
@@ -235,7 +242,17 @@ export default function VizModule() {
                 setSelectedVizItem={setSelectedVizItem}
               />
             </Route>
-            <Route path="/viz/budget-lines">budget lines viz</Route>
+            <Route path="/viz/budget-lines">
+              <BudgetLinesBarChart
+                onZoomOut={onZoomOut}
+                data={budgetLinesMockData}
+                vizCompData={vizCompData}
+                setVizCompData={setVizCompData}
+                onSelectChange={onSelectChange}
+                selectedVizItemId={expandedVizItem}
+                setSelectedVizItem={setExpandedVizItem}
+              />
+            </Route>
             <Route path="/viz/projects">projects table/list</Route>
           </Switch>
         </Grid>
