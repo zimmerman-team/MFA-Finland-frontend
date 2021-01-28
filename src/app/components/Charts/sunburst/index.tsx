@@ -105,6 +105,12 @@ export function SunburstChart(props: SunburstChartProps) {
           disbursed: child.size,
           committed: child.committed,
           percentage: child.percentage,
+          style: {
+            fillOpacity:
+              props.sectorDrillDown && props.sectorDrillDown !== child.code
+                ? 0.1
+                : 1,
+          },
         };
         if (child.children) {
           if (
@@ -114,12 +120,30 @@ export function SunburstChart(props: SunburstChartProps) {
           ) {
             updChild = {
               ...updChild,
-              children: child.children,
+              children: child.children.map((gchild: any) => ({
+                ...gchild,
+                style: {
+                  fillOpacity:
+                    props.sectorDrillDown &&
+                    props.sectorDrillDown !== gchild.code
+                      ? 0.1
+                      : 1,
+                },
+              })),
             };
           } else {
             updChild = {
               ...updChild,
-              _children: child.children,
+              _children: child.children.map((gchild: any) => ({
+                ...gchild,
+                style: {
+                  fillOpacity:
+                    props.sectorDrillDown &&
+                    props.sectorDrillDown !== gchild.code
+                      ? 0.1
+                      : 1,
+                },
+              })),
               size: sumBy(child.children, "size"),
             };
           }
@@ -135,8 +159,8 @@ export function SunburstChart(props: SunburstChartProps) {
   }
 
   return (
-    <Grid container>
-      <Grid item sm={12} md={2} lg={1}>
+    <Grid container css="padding-top: 50px;">
+      <Grid id="sunburst-back" item sm={12} md={2} lg={1}>
         {prevSelections.length > 0 && (
           <div css={backbuttoncss} onClick={goBack}>
             Back
@@ -157,6 +181,7 @@ export function SunburstChart(props: SunburstChartProps) {
             setSelected={onArcClick}
             data={normalizeData(localData)}
             setSelectedCount={setSelectedCount}
+            onSectorSelectChange={props.onSectorSelectChange}
           />
         </div>
       </Grid>

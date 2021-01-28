@@ -23,8 +23,8 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
     if (container) {
       const containerBounds = container.getBoundingClientRect();
       setStyle({
-        top: y - containerBounds.top,
-        left: x - containerBounds.left + 40,
+        top: y - containerBounds.top + 40,
+        left: x - containerBounds.left - 150,
       });
     }
   }, [x, y, props.hoveredNode]);

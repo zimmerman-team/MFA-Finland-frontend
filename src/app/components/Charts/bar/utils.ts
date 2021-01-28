@@ -85,3 +85,12 @@ export function getODALegendItems(data: any): VizSidePanelItemProps[] {
     ],
   }));
 }
+
+export function getSimpleBarLegendItems(data: any): VizSidePanelItemProps[] {
+  return orderBy(data, "value", "desc").map((d: any) => ({
+    id: d.line,
+    name: d.line,
+    value: formatLocale(get(d, "value", 0)),
+    color: get(d, "valueColor", ""),
+  }));
+}
