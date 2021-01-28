@@ -1,6 +1,9 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import React from "react";
 import { GridWidget } from "./GridWidget";
+import { Geomap } from "./Charts/geomap";
+import { data } from "./Charts/geomap/data";
+import { Legend } from "./Charts/geomap/common/Legend";
 
 interface DataGridProps {
   data?: {};
@@ -55,10 +58,14 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 5 */}
       {/* ----------------------------- */}
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        {/*@ts-ignore*/}
-        <GridWidget label="Map" height="680px" />
-      </Grid>
+      <Hidden smDown>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <GridWidget label="Map" height="680px">
+            <Geomap geoData={data} />
+            <Legend label={"Budget Amount"} startValue={0} totalValue={1000} />
+          </GridWidget>
+        </Grid>
+      </Hidden>
     </React.Fragment>
   );
 };

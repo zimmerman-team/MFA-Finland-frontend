@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React from "react";
+import React, { FunctionComponent } from "react";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { css } from "styled-components/macro";
 import { Tooltip } from "@material-ui/core";
@@ -30,13 +30,14 @@ let style = {
   `,
 };
 
-const widgetContainer = (height: number) => css`
+const widgetContainer = (height: string) => css`
   width: 100%;
   height: ${height ? height : "328px"};
   background-color: white;
   display: flex;
   border-radius: 32px;
   padding: 32px;
+  flex-direction: column;
 `;
 
 style.widgetContainer = widgetContainer;
@@ -44,11 +45,11 @@ style.widgetContainer = widgetContainer;
 interface GridWidgetProps {
   label?: string;
   tooltip?: string;
-  height?: number;
+  height?: string;
   disbursementsStatComponent?: FunctionComponent;
 }
 
-export const GridWidget = (props: GridWidgetProps) => {
+export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   return (
     <div css={style.widgetContainer(props.height)}>
       <header css={style.widgetHeader}>
@@ -61,6 +62,7 @@ export const GridWidget = (props: GridWidgetProps) => {
           </div>
         )}
       </header>
+      {props.children}
     </div>
   );
 };
