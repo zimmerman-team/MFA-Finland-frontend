@@ -57,10 +57,11 @@ export function BudgetLinesBarChart(props: BarChartProps) {
     <div
       css={`
         width: 100%;
-        height: 450px;
-        padding-top: 50px;
         position: relative;
         color: ${PrimaryColor[0]};
+        height: ${props.height || 450}px;
+        padding-top: ${!props.height ? "50px" : ""};
+        padding-right: ${!props.height ? "40px" : ""};
       `}
     >
       <ResponsiveBar
@@ -77,7 +78,7 @@ export function BudgetLinesBarChart(props: BarChartProps) {
         maxValue={maxValue + maxValue * 0.2}
         colors={(v: any) => get(v.data, `${v.id}Color`, "")}
         layers={["grid", "axes", Bars]}
-        margin={{ top: 15, right: 50, bottom: 70, left: 40 }}
+        margin={{ top: 15, right: 0, bottom: 70, left: 40 }}
         theme={{
           axis: {
             ticks: {

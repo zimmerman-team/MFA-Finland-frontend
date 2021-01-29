@@ -1,11 +1,14 @@
-// @ts-nocheck
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { FunctionComponent } from "react";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { css } from "styled-components/macro";
+import { ProjectPalette } from "app/theme";
 import { Tooltip } from "@material-ui/core";
-import { ProjectPalette } from "../theme";
+import { css } from "styled-components/macro";
+import { useHistory } from "react-router-dom";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import { useHover, useHoverDirty } from "react-use";
 
-let style = {
+const style = {
   widgetHeader: css`
     width: 100%;
     display: flex;
@@ -29,30 +32,48 @@ let style = {
   widgetTooltipIcon: css`
     fill: #bcc6d6;
   `,
+  widgetContainer: (height: string | undefined, isHovered: boolean) => css`
+    width: 100%;
+    display: flex;
+    border-radius: 32px;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 24px 32px 32px 32px;
+    height: ${height || "328px"};
+    box-shadow: ${isHovered
+      ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
+      : ""};
+    transition: box-shadow 0.3s ease-in-out;
+  `,
+  childrencontainer: (interactive?: boolean) => css`
+    display: flex;
+    flex-direction: column;
+    cursor: ${interactive ? "" : "pointer"};
+
+    * {
+      pointer-events: ${interactive ? "all" : "none"};
+    }
+  `,
 };
-
-const widgetContainer = (height: string) => css`
-  width: 100%;
-  height: ${height ? height : "328px"};
-  background-color: white;
-  display: flex;
-  border-radius: 32px;
-  padding: 24px 32px 32px 32px;
-  flex-direction: column;
-`;
-
-style.widgetContainer = widgetContainer;
 
 interface GridWidgetProps {
   label?: string;
-  tooltip?: string;
+  link?: string;
   height?: string;
+  tooltip?: string;
+  interactive?: boolean;
+  childrencontainerStyle?: React.CSSProperties;
   disbursementsStatComponent?: FunctionComponent;
 }
 
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
+  const history = useHistory();
+  const ref = React.useRef<HTMLDivElement>();
+  const isHovered = useHoverDirty(ref as React.RefObject<Element>);
   return (
-    <div css={style.widgetContainer(props.height)}>
+    <div
+      css={style.widgetContainer(props.height, isHovered && !props.interactive)}
+    >
       <header css={style.widgetHeader}>
         <div css={style.widgetLabel}>{props.label}</div>
         {props.tooltip && (
@@ -63,7 +84,18 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
           </div>
         )}
       </header>
-      {props.children}
+      <div
+        style={props.childrencontainerStyle}
+        ref={ref as React.RefObject<HTMLDivElement>}
+        css={style.childrencontainer(props.interactive)}
+        onClick={() => {
+          if (props.link) {
+            history.push(props.link);
+          }
+        }}
+      >
+        {props.children}
+      </div>
     </div>
   );
 };

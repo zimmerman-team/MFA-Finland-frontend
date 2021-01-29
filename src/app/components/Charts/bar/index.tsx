@@ -48,7 +48,12 @@ export function BarChart(props: BarChartProps) {
   };
 
   const LineWPoints = (lprops: any) => (
-    <LineNodes {...lprops} selected={selected} hoveredXIndex={hoveredXIndex} />
+    <LineNodes
+      {...lprops}
+      selected={selected}
+      height={props.height || 450}
+      hoveredXIndex={hoveredXIndex}
+    />
   );
 
   React.useEffect(
@@ -77,10 +82,10 @@ export function BarChart(props: BarChartProps) {
     <div
       css={`
         width: 100%;
-        height: 450px;
         padding-top: 50px;
         position: relative;
         color: ${PrimaryColor[0]};
+        height: ${props.height || 450}px;
       `}
     >
       <div
@@ -99,9 +104,9 @@ export function BarChart(props: BarChartProps) {
           left: 0;
           top: 14px;
           width: 100%;
-          height: 450px;
           padding-top: 50px;
           position: absolute;
+          height: ${props.height || 450}px;
         `}
       >
         <Line

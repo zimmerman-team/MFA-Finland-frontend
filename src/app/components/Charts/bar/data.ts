@@ -2,6 +2,7 @@ import { BarExtendedDatum, BarItemProps } from "@nivo/bar";
 
 export interface BarChartProps {
   data: any;
+  height?: number;
   onZoomOut: () => void;
   vizCompData: BarItemProps[];
   setVizCompData: React.Dispatch<React.SetStateAction<BarItemProps[]>>;

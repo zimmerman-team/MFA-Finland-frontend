@@ -13,8 +13,8 @@ import {
 } from "app/components/Charts/treemap/data";
 import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
 
-const containercss = css`
-  height: 500px;
+const containercss = (height?: number) => css`
+  height: ${height || 500}px;
   :hover {
     cursor: pointer;
   }
@@ -83,7 +83,11 @@ export function Treemap(props: TreemapProps) {
   React.useEffect(() => setRenderedNodes({ ...props.data }), [props.data]);
 
   return (
-    <Grid container spacing={1} css="padding: 50px 10px 0 0;">
+    <Grid
+      container
+      spacing={1}
+      css={!props.height ? "padding: 50px 10px 0 0;" : ""}
+    >
       <Grid item sm={12} md={2} lg={1}>
         {drilldownId && (
           <div css={backbuttoncss} onClick={goBack}>
@@ -92,7 +96,7 @@ export function Treemap(props: TreemapProps) {
         )}
       </Grid>
       <Grid item sm={12} md={12} lg={12}>
-        <div css={containercss}>
+        <div css={containercss(props.height)}>
           <ResponsiveTreeMapHtml
             data={renderedNodes}
             {...TreemapVizModel}

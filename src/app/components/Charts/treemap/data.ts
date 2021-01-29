@@ -19,6 +19,7 @@ export interface TreemapDataModel {
 
 export interface TreemapProps {
   label: string;
+  height?: number;
   data: TreemapDataModel;
   selectedVizItemId: string | number | null;
   setSelectedVizItem: React.Dispatch<string | number | null>;
