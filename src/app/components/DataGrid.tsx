@@ -206,7 +206,12 @@ export const DataGrid = () => {
       {/* ----------------------------- */}
       <Hidden smDown>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <GridWidget label="Map" height="680px" interactive>
+          <GridWidget
+            label="Map"
+            height="680px"
+            interactive
+            childrencontainerStyle={{ paddingTop: 88 }}
+          >
             <Geomap geoData={data} />
             <Legend label="Budget Amount" startValue={0} totalValue={1000} />
           </GridWidget>
