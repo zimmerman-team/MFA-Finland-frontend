@@ -1,12 +1,10 @@
 import React from "react";
-import { css } from "styled-components/macro";
 import { useRecoilState } from "recoil";
 import { filterPanelOpenAtom } from "../../state/recoil/atoms";
 import { Container, Grid, Typography } from "@material-ui/core";
-import { ArrowForwardIos, Cancel, Close } from "@material-ui/icons";
+import { Cancel } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core/";
 import { PillButton } from "../Buttons/PillButton";
-import { ProjectPalette, SecondaryColor } from "../../theme";
 import { createStyles } from "./styles";
 import { data } from "./data";
 import { FilterCategoryOption } from "./common/FilterCategoryOption";
