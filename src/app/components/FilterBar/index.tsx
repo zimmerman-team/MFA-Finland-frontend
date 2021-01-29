@@ -51,6 +51,7 @@ export const FilterBar = (props: FilterBarProps) => {
           {chips.map((chip, index) => {
             return (
               <Chip
+                key={chip.name}
                 label={chip.name}
                 onDelete={() =>
                   setChips(chips.filter((item) => item.name !== chip.name))

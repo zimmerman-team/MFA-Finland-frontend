@@ -1,24 +1,26 @@
 import React from "react";
 import { Grid, Hidden } from "@material-ui/core";
-import { Geomap } from "app/components/Charts/geomap";
+import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components//Charts/bar";
+import { Geomap } from "app/components/Charts/geomap";
 import { GridWidget } from "app/components/GridWidget";
+import { Treemap } from "app/components/Charts/treemap";
 import { data } from "app/components/Charts/geomap/data";
-import {
-  barMockData,
-  budgetLinesMockData,
-} from "app/components/Charts/bar/data";
 import { SunburstChart } from "app/components/Charts/sunburst";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { Legend } from "app/components/Charts/geomap/common/Legend";
 import { SunburstChartMockData } from "app/components/Charts/sunburst/data";
 import { thematicareasMockData } from "app/components/Charts/thematicareas/data";
-import { Treemap } from "app/components/Charts/treemap";
+import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
+import {
+  barMockData,
+  budgetLinesMockData,
+} from "app/components/Charts/bar/data";
 import {
   CountriesTreemapMockData,
   TreemapMockData,
 } from "app/components/Charts/treemap/data";
-import { BudgetLinesBarChart } from "./Charts/bar/variations/budgetlines";
+import { mockData } from "app/components/Charts/sdg/data";
 
 // interface DataGridProps {
 //   data?: any;
@@ -172,20 +174,29 @@ export const DataGrid = () => {
       {/*  row 4 */}
       {/* ----------------------------- */}
       <Grid item xs={12} sm={12} md={12} lg={8}>
-        <GridWidget label="SDG's" tooltip="lorem ipsum" />
+        <GridWidget
+          interactive
+          label="SDGs"
+          height="510px"
+          tooltip="lorem ipsum"
+          childrencontainerStyle={{ paddingTop: 33 }}
+        >
+          <SDGviz data={mockData} />
+        </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
         <GridWidget
           interactive
           label="About"
+          height="510px"
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}
         >
           Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
+          industry. Lorem Ipsum has been the industry&apos;s standard dummy text
+          ever since the 1500s, when an unknown printer took a galley of type
+          and scrambled it to make a type specimen book. It has survived not
+          only five centuries, but also the leap into electronic typesetting,
           remaining essentially
         </GridWidget>
       </Grid>
@@ -206,6 +217,8 @@ export const DataGrid = () => {
           </GridWidget>
         </Grid>
       </Hidden>
+
+      <div css="width: 100%; height: 100px;" />
     </React.Fragment>
   );
 };
