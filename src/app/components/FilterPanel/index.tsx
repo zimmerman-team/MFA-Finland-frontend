@@ -45,14 +45,22 @@ export const FilterPanel = (props: FilterPanelProps) => {
             <Grid container item>
               <Grid item xs={5}>
                 {data.map((option, index) => {
-                  return index < 4 && <FilterCategoryOption {...option} />;
+                  return (
+                    index < 4 && (
+                      <FilterCategoryOption key={option.label} {...option} />
+                    )
+                  );
                 })}
               </Grid>
               <Grid item xs={1} />
 
               <Grid item xs={5}>
                 {data.map((option, index) => {
-                  return index >= 4 && <FilterCategoryOption {...option} />;
+                  return (
+                    index >= 4 && (
+                      <FilterCategoryOption key={option.label} {...option} />
+                    )
+                  );
                 })}
               </Grid>
               <Grid item xs={1} />

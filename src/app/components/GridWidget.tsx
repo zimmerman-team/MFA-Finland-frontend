@@ -6,7 +6,6 @@ import { Tooltip } from "@material-ui/core";
 import { css } from "styled-components/macro";
 import { useHistory } from "react-router-dom";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { useHoverDirty } from "react-use";
 
 const style = {
   widgetHeader: css`
@@ -69,8 +68,8 @@ interface GridWidgetProps {
 
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const history = useHistory();
-  const ref = React.useRef<HTMLDivElement>();
-  const isHovered = useHoverDirty(ref as React.RefObject<Element>);
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
     <div
       css={style.widgetContainer(
@@ -89,9 +88,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         )}
       </header>
       <div
+        key={props.label}
         style={props.childrencontainerStyle}
-        ref={ref as React.RefObject<HTMLDivElement>}
         css={style.childrencontainer(props.interactive)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         onClick={() => {
           if (props.link) {
             history.push(props.link);

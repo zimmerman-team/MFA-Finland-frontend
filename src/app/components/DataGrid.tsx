@@ -217,6 +217,8 @@ export const DataGrid = () => {
           </GridWidget>
         </Grid>
       </Hidden>
+
+      <div css="width: 100%; height: 100px;" />
     </React.Fragment>
   );
 };
