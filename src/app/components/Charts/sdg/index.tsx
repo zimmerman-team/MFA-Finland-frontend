@@ -16,17 +16,20 @@ export function SDGviz(props: SDGvizProps) {
           <SDGvizItem {...d} setHoveredNode={setHoveredNode} />
         </Grid>
       ))}
-      {hoveredNode && (
-        <SunburstTooltip
-          containerId="sdg-container"
-          hoveredNode={{
-            title: hoveredNode.name,
-            disbursed: hoveredNode.disbursed,
-            committed: hoveredNode.committed,
-            percentage: (hoveredNode.disbursed / hoveredNode.committed) * 100,
-          }}
-        />
-      )}
+      <SunburstTooltip
+        containerId="sdg-container"
+        hoveredNode={
+          hoveredNode
+            ? {
+                title: hoveredNode.name,
+                disbursed: hoveredNode.disbursed,
+                committed: hoveredNode.committed,
+                percentage:
+                  (hoveredNode.disbursed / hoveredNode.committed) * 100,
+              }
+            : null
+        }
+      />
     </Grid>
   );
 }
