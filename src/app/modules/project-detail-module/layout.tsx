@@ -3,13 +3,18 @@ import { Hidden } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { ActivityAccordion } from "app/components/ActivityAccordion";
-import { ActivityItemProps } from "app/components/ActivityAccordion/model";
+import {
+  ActivityAccordionState,
+  ActivityItemProps,
+  activityList,
+} from "app/components/ActivityAccordion/model";
 import { Breadcrumbs } from "app/components/Breadcrumb";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { ElementBackground } from "app/components/ElementBackground";
 import { InPageNavigation } from "app/components/InPageNavigation";
 import { ModuleContainer } from "app/components/ModuleContainer";
 import { Path } from "app/const/Path";
+import { metaData } from "app/modules/project-detail-module/common/metaData";
 import {
   FieldOneStyle,
   FieldTwoStyle,
@@ -19,6 +24,8 @@ import {
 import theme from "app/theme";
 import { GridSpacingFix } from "app/utils/GridSpacingFix";
 import React from "react";
+import { useRecoilState } from "recoil";
+import get from "lodash/get";
 
 const crumbs: BreadcrumbLinkModel[] = [
   { label: "Explore", path: Path.explore },
@@ -29,22 +36,22 @@ export const ProjectDetailModuleLayout = () => {
   const mobile = useMediaQuery(theme.breakpoints.up("md"));
   const [activeNavItem, setActiveNavItem] = React.useState(0);
 
-  //   const [activityListState, setActivityListState] = useRecoilState<
-  //     ActivityItemProps[]
-  //   >(ActivityAccordionState);
+  const [activityListState, setActivityListState] = useRecoilState<
+    ActivityItemProps[]
+  >(ActivityAccordionState);
 
-  //   function handleNavItemClick(id: any) {
-  //     setActiveNavItem(parseInt(id, 10));
-  //     setActivityListState((prevState) => {
-  //       const updateItem = {
-  //         ...activityList[id],
-  //         expanded: true,
-  //       };
-  //       const newState = [...activityList];
-  //       newState[id] = updateItem;
-  //       return [...newState];
-  //     });
-  //   }
+  function handleNavItemClick(id: any) {
+    setActiveNavItem(parseInt(id, 10));
+    setActivityListState((prevState) => {
+      const updateItem = {
+        ...activityList[id],
+        expanded: true,
+      };
+      const newState = [...activityList];
+      newState[id] = updateItem;
+      return [...newState];
+    });
+  }
 
   return (
     <ModuleContainer>
@@ -71,7 +78,14 @@ export const ProjectDetailModuleLayout = () => {
         <Box width="100%" height="24px" />
         {/* ----------------------------------- */}
         {/* id */}
-        <Grid item xs={12} lg={12}>
+        <Grid
+          item
+          xs={12}
+          lg={12}
+          css={`
+            z-index: 1;
+          `}
+        >
           <Typography css={FieldOneStyle}>
             {"props.metadata.reporting_org_narrative"} |{" "}
             {"props.metadata.reporting_org_ref"} |{" "}
@@ -82,14 +96,29 @@ export const ProjectDetailModuleLayout = () => {
 
         {/* ----------------------------------- */}
         {/* header */}
-        <Grid item xs={12} lg={12}>
+        <Grid
+          item
+          xs={12}
+          lg={12}
+          css={`
+            z-index: 1;
+          `}
+        >
           <Typography css={FieldTwoStyle}>{"props.metadata.title"}</Typography>
         </Grid>
         <Box width="100%" height="24px" />
 
         {/* ----------------------------------- */}
         {/* info */}
-        <Grid item container xs={12} lg={12}>
+        <Grid
+          item
+          container
+          xs={12}
+          lg={12}
+          css={`
+            z-index: 1;
+          `}
+        >
           <Typography css={FieldOneStyle}>
             {"props.metadata.iati_identifier"}
           </Typography>
@@ -145,14 +174,14 @@ export const ProjectDetailModuleLayout = () => {
               margin-top: 16px;
             `}
           >
-            {/* <InPageNavigation
+            <InPageNavigation
               active={activeNavItem}
               setActive={setActiveNavItem}
               setActivityListState={setActivityListState}
               lists={activityListState}
               handleClick={handleNavItemClick}
-              actualData={props.metadata}
-            /> */}
+              actualData={metaData}
+            />
           </div>
         </Grid>
       </Hidden>
@@ -166,16 +195,16 @@ export const ProjectDetailModuleLayout = () => {
         spacing={mobile ? 2 : 0}
         css={GridSpacingFix}
       >
-        {/* {activityListState.map((item: ActivityItemProps, index: number) => (
+        {activityListState.map((item: ActivityItemProps, index: number) => (
           <Grid item xs={12} lg={12} key={index}>
             <ActivityAccordion
               {...item}
               index={index}
               handleClick={handleNavItemClick}
-              data={get(props.metadata, item.dataPath, null)}
+              data={get(metaData, item.dataPath, null)}
             />
           </Grid>
-        ))} */}
+        ))}
       </Grid>
 
       <Box width="100%" height="50vh" />

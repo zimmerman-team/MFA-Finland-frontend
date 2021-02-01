@@ -11,7 +11,7 @@ export const ElementBackground = (props: ElementBackgroundProps) => (
       top: 0;
       height: 100%;
       width: 125vw;
-      z-index: -1;
+      z-index: 0;
       background-color: ${props.backgroundColor};
     `}
   />

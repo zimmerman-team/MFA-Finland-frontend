@@ -26,7 +26,7 @@ export const InPageNavItem = (props: InpageNavItemModel) => {
         css={`
           width: 25px;
           height: 8px;
-          background: #30c2b0;
+          background: #2e4982;
           margin-right: 48px;
           visibility: ${props.active ? "visible" : "hidden"};
         `}
@@ -39,7 +39,7 @@ export const InPageNavItem = (props: InpageNavItemModel) => {
           line-height: 24px;
           letter-spacing: 0.100318px;
           transition: all 200ms;
-          color: ${props.active ? "#30c2b0" : "#626262"};
+          color: ${props.active ? "#2E4982" : "#626262"};
           &:hover {
             opacity: 0.4;
           }

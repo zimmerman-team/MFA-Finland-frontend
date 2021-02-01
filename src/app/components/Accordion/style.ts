@@ -7,6 +7,7 @@ export const AccordionHeaderStyle = css`
   height: 48px;
   width: 100%;
   background-color: #f7f7f7;
+  background-color: red;
   padding-left: 16px;
   padding-right: 16px;
   font-family: Inter;
@@ -23,7 +24,7 @@ export const AccordionHeaderStyle = css`
 export const AccordionStyle = (accordionState: any) => css`
   position: relative;
   overflow: hidden;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25); */
   border-radius: ${accordionState ? "0px 0px 16px 16px" : "0 0 0 0"};
   height: ${accordionState ? "100%" : "48px"};
   margin-bottom: 16px;

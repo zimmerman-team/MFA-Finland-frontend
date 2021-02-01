@@ -246,6 +246,28 @@ export default createMuiTheme({
         boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.1)",
       },
     },
+
+    MuiAccordion: {
+      root: {
+        backgroundColor: "#f7f7f7",
+        width: "100%",
+        marginTop: "16px!important",
+        marginBottom: "16px!important",
+        // boxShadow: 'initial',
+        "&:before": {
+          display: "none",
+        },
+
+        // note: use this snippet if you want to customize the expanded state of the accordion component
+        /*'&$expanded': {
+          marginTop: '0!important',
+          marginBottom: '0!important',
+          borderBottomLeftRadius: '16px',
+          borderBottomRightRadius: '16px',
+        },*/
+      },
+    },
+
     MuiDrawer: {
       paperAnchorTop: {
         height: "100vh",
