@@ -1,7 +1,7 @@
 import {
-  ActivityMetadata,
   ActivityItemProps,
-} from "app/modules/activity-detail-module/common/Activity/model";
+  ActivityMetadata,
+} from "app/components/ActivityAccordion/model";
 import React from "react";
 
 export type InPageNavModel = {

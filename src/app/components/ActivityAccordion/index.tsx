@@ -6,7 +6,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { ProjectTypography } from "app/theme";
 
 import { Anchor } from "app/components/InPageNavigation";
-import { ActivityItemProps } from "app/components/Activity/model";
+import { ActivityItemProps } from "app/components/ActivityAccordion/model";
 import { getAccordionContent } from "app/components/utils/getAccordionContent";
 import { AccordionStyle } from "app/components/Accordion/style";
 
