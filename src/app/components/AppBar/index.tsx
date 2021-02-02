@@ -71,6 +71,7 @@ export function AppBar() {
           height: 64px;
           display: flex;
           justify-content: center;
+          z-index: 100;
         `}
       >
         <Toolbar
@@ -82,6 +83,7 @@ export function AppBar() {
             justify-content: space-between;
             align-items: center;
             height: 68px;
+            /* padding: 0 24px; */
             padding: 0;
             background-color: ${PrimaryColor[0]};
           `}
@@ -271,7 +273,7 @@ export function AppBar() {
       <div
         // todo: move elsewhere
         css={`
-          z-index: -1;
+          z-index: 0;
           top: 0;
           left: 0;
           position: fixed;

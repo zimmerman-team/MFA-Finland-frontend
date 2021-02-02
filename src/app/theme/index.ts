@@ -95,7 +95,13 @@ export const ProjectPalette: ProjectPalette = {
   },
 };
 
-export const ProjectTypography: TypographyOptions = {
+interface ExtendedTypography extends TypographyOptions {
+  accordionSummary: FontStyle;
+  accordionDetail: FontStyle;
+  body3: FontStyle;
+}
+
+export const ProjectTypography: ExtendedTypography = {
   h1: {
     fontFamily: TextStyle.fontFamily,
     fontWeight: TextStyle.fontWeightRegular,
@@ -173,6 +179,21 @@ export const ProjectTypography: TypographyOptions = {
     lineHeight: `1`,
     fontSize: `14px`,
   },
+  accordionSummary: {
+    color: ProjectPalette.text.primary,
+    fontFamily: TextStyle.fontFamily,
+    lineHeight: `${1.71429}em`,
+    fontSize: `${1}rem`,
+    fontWeight: 500,
+  },
+  accordionDetail: {
+    color: ProjectPalette.text.primary,
+    fontFamily: TextStyle.fontFamily,
+    lineHeight: `${1.71429}em`,
+    fontSize: `${14}px`,
+    fontWeight: 300,
+    letterSpacing: "0.5px",
+  },
 };
 
 export const Overline1Type = {
@@ -225,6 +246,28 @@ export default createMuiTheme({
         boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.1)",
       },
     },
+
+    MuiAccordion: {
+      root: {
+        backgroundColor: "#f7f7f7",
+        width: "100%",
+        marginTop: "16px!important",
+        marginBottom: "16px!important",
+        // boxShadow: 'initial',
+        "&:before": {
+          display: "none",
+        },
+
+        // note: use this snippet if you want to customize the expanded state of the accordion component
+        /*'&$expanded': {
+          marginTop: '0!important',
+          marginBottom: '0!important',
+          borderBottomLeftRadius: '16px',
+          borderBottomRightRadius: '16px',
+        },*/
+      },
+    },
+
     MuiDrawer: {
       paperAnchorTop: {
         height: "100vh",
