@@ -31,21 +31,29 @@ export function BarChart(props: BarChartProps) {
   };
 
   const Bars = (bprops: any) => {
+    if (props.vizCompData.length !== bprops.bars.length) {
+      props.setVizCompData(bprops.bars);
+    }
     return bprops.bars.map((bar: BarItemProps) => (
       <BarNode
         {...bar}
         selected={selected}
         setSelected={onSelect}
+        onZoomOut={props.onZoomOut}
         hoveredXIndex={hoveredXIndex}
-        // onZoomOut={props.onZoomOut}
-        // onClick={props.onNodeClick}
+        onNodeClick={props.onSelectChange}
         setHoveredXIndex={setHoveredXIndex}
       />
     ));
   };
 
   const LineWPoints = (lprops: any) => (
-    <LineNodes {...lprops} selected={selected} hoveredXIndex={hoveredXIndex} />
+    <LineNodes
+      {...lprops}
+      selected={selected}
+      height={props.height || 450}
+      hoveredXIndex={hoveredXIndex}
+    />
   );
 
   React.useEffect(
@@ -55,7 +63,9 @@ export function BarChart(props: BarChartProps) {
 
   React.useEffect(() => {
     if (props.selectedVizItemId) {
-      const fItem = find(props.data, { year: props.selectedVizItemId });
+      const fItem = find(props.data, {
+        year: parseInt(props.selectedVizItemId.toString(), 10),
+      });
       if (fItem) {
         setSelected({
           id: "",
@@ -72,9 +82,10 @@ export function BarChart(props: BarChartProps) {
     <div
       css={`
         width: 100%;
-        height: 400px;
+        padding-top: 50px;
         position: relative;
         color: ${PrimaryColor[0]};
+        height: ${props.height || 450}px;
       `}
     >
       <div
@@ -93,8 +104,9 @@ export function BarChart(props: BarChartProps) {
           left: 0;
           top: 14px;
           width: 100%;
-          height: 400px;
+          padding-top: 50px;
           position: absolute;
+          height: ${props.height || 450}px;
         `}
       >
         <Line
@@ -130,6 +142,18 @@ export function BarChart(props: BarChartProps) {
                 fill: PrimaryColor[0],
                 fontFamily: "Finlandica",
               },
+            },
+            domain: {
+              line: {
+                strokeWidth: 1,
+                stroke: "rgba(224, 224, 224, 0.4)",
+              },
+            },
+          },
+          grid: {
+            line: {
+              strokeWidth: 1,
+              stroke: "rgba(224, 224, 224, 0.4)",
             },
           },
         }}

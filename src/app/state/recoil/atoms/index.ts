@@ -10,9 +10,9 @@ export const languageAtom = atom({
   default: "en", // default value (aka initial value)
 });
 
-export const filterPopupAtom = atom({
-  key: "filterPopupAtom", // unique ID (with respect to other atoms/selectors)
-  default: "", // default value (aka initial value)
+export const filterPanelOpenAtom = atom({
+  key: "filterPanelOpenAtom", // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
 });
 
 export interface SelectedFilterAtomModel {

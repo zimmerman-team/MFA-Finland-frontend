@@ -18,7 +18,7 @@ export function LineNodes(props: any) {
   data = data.map((d: any) => {
     const value = get(d, "data.data.gni", 0);
     const yPerc = (value / maxValue) * 100;
-    const updateY = 340 - (yPerc * 350) / 100;
+    const updateY = props.height - 110 - (yPerc * (props.height - 100)) / 100;
     return {
       ...d,
       updateY,

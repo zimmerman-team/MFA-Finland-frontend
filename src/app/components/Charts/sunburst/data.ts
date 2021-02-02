@@ -1,6 +1,9 @@
 export interface SunburstChartProps {
   data: any;
+  onZoomOut: () => void;
   activitiesCount: number;
+  sectorDrillDown: string;
+  onSectorSelectChange: (v: string) => void;
   selectedVizItemId: string | number | null;
   setSelectedVizItem: React.Dispatch<
     React.SetStateAction<string | number | null>

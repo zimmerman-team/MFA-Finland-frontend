@@ -11,6 +11,7 @@ import {
 import { getFormattedPercentage } from "app/components/Charts/sunburst/common/tooltip/utils";
 
 interface SunburstTooltipProps {
+  containerId?: string;
   hoveredNode: SunburstPoint | null;
 }
 
@@ -19,12 +20,14 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
   const [style, setStyle] = React.useState({ top: 0, left: 0 });
 
   React.useEffect(() => {
-    const container = document.getElementById("sunburst-container");
+    const container = document.getElementById(
+      props.containerId || "sunburst-container"
+    );
     if (container) {
       const containerBounds = container.getBoundingClientRect();
       setStyle({
-        top: y - containerBounds.top,
-        left: x - containerBounds.left + 40,
+        top: y - containerBounds.top + 40,
+        left: x - containerBounds.left - 150,
       });
     }
   }, [x, y, props.hoveredNode]);

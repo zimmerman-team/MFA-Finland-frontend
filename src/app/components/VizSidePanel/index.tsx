@@ -40,6 +40,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
       <div css={dividercss} />
       {props.activeTab === "chart" && (
         <div
+          id="legend-items"
           css={`
             width: 100%;
             overflow-y: auto;
@@ -50,7 +51,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
           {props.items.map((item: VizSidePanelItemProps) => (
             <VizSidePanelItem
               {...item}
-              key={item.id}
+              key={`${item.name}-${item.value}`}
               vizType={props.vizType}
               setSelected={props.setSelected}
               setExpanded={props.setExpanded}
