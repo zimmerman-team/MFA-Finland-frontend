@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Box, useMediaQuery } from "@material-ui/core";
 import { Hidden } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
