@@ -17,7 +17,7 @@ export function getRange(data: any, fields: string[]) {
   data.forEach((item: any) => {
     let v = 0;
     fields.forEach((field: string) => {
-      v += item[field];
+      v += get(item, field, 0);
     });
     if (item.y >= ranges[0].divider) {
       rangesCount[0]++;

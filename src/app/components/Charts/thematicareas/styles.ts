@@ -66,13 +66,16 @@ export const itemcirclecss = (
 
       &:hover {
         cursor: pointer;
-        > span {
+        > div {
           font-weight: 700;
         }
       }
-      > span {
+      > div {
+        width: 80px;
         color: #fff;
-        font-size: 11px;
+        font-size: 10px;
+        text-align: center;
+        margin-left: -20px;
         pointer-events: none;
       }
     }
@@ -101,8 +104,10 @@ export const singleitemcontainercss = css`
 
   > span {
     right: 5%;
+    max-width: 20%;
     font-size: 14px;
     font-weight: 700;
+    line-height: 15px;
     position: absolute;
     color: ${PrimaryColor[0]};
   }

@@ -138,6 +138,7 @@ export const DataGrid = () => {
       {/* ----------------------------- */}
       <Grid item xs={12} sm={12} md={8} lg={8}>
         <GridWidget
+          height="510px"
           label="Budget Lines"
           tooltip="lorem ipsum"
           link="/viz/budget-lines"
@@ -147,7 +148,7 @@ export const DataGrid = () => {
           }}
         >
           <BudgetLinesBarChart
-            height={260}
+            height={450}
             vizCompData={[]}
             onZoomOut={() => null}
             selectedVizItemId={null}
@@ -162,6 +163,7 @@ export const DataGrid = () => {
         <GridWidget
           interactive
           label="Result"
+          height="510px"
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}
         >

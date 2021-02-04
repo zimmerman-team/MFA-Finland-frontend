@@ -23,17 +23,21 @@ export function BudgetLinesBarChart(props: BarChartProps) {
       })
     ) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);
-  const [selected, setSelected] = React.useState<BarExtendedDatum>({
-    id: "",
-    value: 0,
-    index: 0,
-    indexValue: props.data[props.data.length - 1].year,
-    data: props.data[props.data.length - 1],
-  });
+  const [selected, setSelected] = React.useState<BarExtendedDatum | null>(
+    !props.height
+      ? {
+          id: "",
+          value: 0,
+          index: 0,
+          indexValue: props.data[props.data.length - 1].year,
+          data: props.data[props.data.length - 1],
+        }
+      : null
+  );
 
-  const onSelect = (b: BarExtendedDatum) => {
+  const onSelect = (b: BarExtendedDatum | null) => {
     setSelected(b);
-    props.setSelectedVizItem(b.indexValue);
+    props.setSelectedVizItem(get(b, "indexValue", ""));
   };
 
   const Bars = (bprops: any) => {
@@ -59,7 +63,7 @@ export function BudgetLinesBarChart(props: BarChartProps) {
         width: 100%;
         position: relative;
         color: ${PrimaryColor[0]};
-        height: ${props.height || 450}px;
+        height: ${props.height || 550}px;
         padding-top: ${!props.height ? "50px" : ""};
         padding-right: ${!props.height ? "40px" : ""};
       `}
@@ -78,7 +82,7 @@ export function BudgetLinesBarChart(props: BarChartProps) {
         maxValue={maxValue + maxValue * 0.2}
         colors={(v: any) => get(v.data, `${v.id}Color`, "")}
         layers={["grid", "axes", Bars]}
-        margin={{ top: 15, right: 0, bottom: 70, left: 40 }}
+        margin={{ top: 15, right: 0, bottom: 70, left: 45 }}
         theme={{
           axis: {
             ticks: {
@@ -124,9 +128,9 @@ export function BudgetLinesBarChart(props: BarChartProps) {
         }}
         axisBottom={{
           tickSize: 0,
-          tickValues: 5,
           tickPadding: 15,
           tickRotation: 0,
+          // tickValues: 5,
           legendOffset: 50,
           legend: range.abbr,
           format: (v: any) => getMoneyValueWithMetricPrefix(v, range.index),
