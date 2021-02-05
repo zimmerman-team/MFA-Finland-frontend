@@ -34,7 +34,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return <Filter title="Thematic Areas" data={level1MockData} />;
         break;
       case FILTER_TYPES.COUNTRIES:
-        return <></>;
+        return <Filter title="Countries/Regions" data={level1MockData} />;
         break;
       case FILTER_TYPES.SECTORS:
         return <Filter title="Sector" data={level3MockData} />;
@@ -43,16 +43,16 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return <Filter title="Organisations" data={level2MockData} />;
         break;
       case FILTER_TYPES.SDGS:
-        return <></>;
+        return <Filter title="SDGs" data={level2MockData} />;
         break;
       case FILTER_TYPES.ACTIVITY_STATUS:
-        return <></>;
+        return <Filter title="Activity Status" data={level1MockData} />;
         break;
       case FILTER_TYPES.PERIOD:
-        return <Filter title="Period" data={level2MockData} />;
+        return <></>;
         break;
       case FILTER_TYPES.ADVANCED_FILTERS:
-        return <></>;
+        return <Filter title="Advanced Filters" data={level1MockData} />;
         break;
       default:
         return <></>;
