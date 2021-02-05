@@ -119,7 +119,7 @@ export const metaData = {
   ],
   regions: [],
   locations: [],
-  humanitarian_scopes: [],
+  humanitarian_scope: [],
   sectors: [
     {
       name: "Vocabulary 99 or 98",

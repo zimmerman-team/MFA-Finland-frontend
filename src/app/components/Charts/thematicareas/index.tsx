@@ -60,7 +60,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
             </div>
           </div>
-          <span>{selected.name}</span>
+          <span>{selected.area}</span>
         </div>
       ) : (
         <div css={containercss}>
@@ -74,7 +74,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
               <div />
               <div onClick={() => onSelect(item)}>
-                <span>{item.name}</span>
+                <div>{item.area}</div>
               </div>
             </div>
           ))}

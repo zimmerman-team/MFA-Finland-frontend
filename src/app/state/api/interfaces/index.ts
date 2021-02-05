@@ -99,6 +99,14 @@ export interface StoreModel {
   sectors: ApiCallModel;
   treemap: ApiCallModel;
   sunburst: ApiCallModel;
+  odaBarChart: ApiCallModel;
+  sectorsSunburst: ApiCallModel;
+  locationsTreemap: ApiCallModel;
+  thematicAreasChart: ApiCallModel;
+  budgetLinesBarChart: ApiCallModel;
+  organisationsTreemap: ApiCallModel;
+  sdgViz: ApiCallModel;
+  geoMap: ApiCallModel;
   // table
   countries: ApiCallModel;
   linechart: ApiCallModel;

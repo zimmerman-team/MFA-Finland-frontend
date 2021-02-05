@@ -1,11 +1,14 @@
 //cc:application base#;application routes
 
-import React, { Suspense, lazy } from "react";
+import React, { Suspense } from "react";
+import { useStoreRehydrated } from "easy-peasy";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { PageLoader } from "app/modules/common/page-loader";
 import { NoMatchPage } from "app/modules/common/no-match-page";
 
 import VizModule from "app/modules/viz-module";
+import { useUrlFilters } from "app/hooks/useUrlFilters";
+import { useScrollToTop } from "app/hooks/useScrollToTop";
 
 import { LandingModule } from "app/modules/landing-module";
 import { RegionDetailModule } from "app/modules/detail-modules/region-detail-module";
@@ -19,6 +22,14 @@ import { FeedbackModule } from "app/modules/feedback-module";
 import { ProjectDetailModule } from "app/modules/project-detail-module";
 
 export function ModuleRoutes() {
+  useUrlFilters();
+  useScrollToTop();
+
+  const isRehydrated = useStoreRehydrated();
+  if (!isRehydrated) {
+    return <PageLoader />;
+  }
+
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>

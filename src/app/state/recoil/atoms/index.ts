@@ -35,28 +35,86 @@ export const filterCardTabsAtom = atom({
 export interface SelectedFilterAtomModel {
   countries: string[];
   regions: string[];
-  budget: string[];
   sectors: string[];
-  donors: string[];
   organisations: string[];
-  publishers: string[];
-  period: string[];
   activitystatus: string[];
+  activityscope: string[];
+  tag: string[];
+  defaultaidtype: string[];
+  defaultflowtype: string[];
+  defaulttiedstatus: string[];
+  collaborationtype: string[];
+  policymarker: string[];
 }
+
+const defaultfilters = {
+  countries: [] as string[],
+  regions: [] as string[],
+  sectors: [] as string[],
+  organisations: [] as string[],
+  activitystatus: [] as string[],
+  activityscope: [] as string[],
+  tag: [] as string[],
+  defaultaidtype: [] as string[],
+  defaultflowtype: [] as string[],
+  defaulttiedstatus: [] as string[],
+  collaborationtype: [] as string[],
+  policymarker: [] as string[],
+};
 
 export const selectedFilterAtom: RecoilState<SelectedFilterAtomModel> = atom({
   key: "selectedFilterAtom",
-  default: {
-    countries: [] as string[],
-    regions: [] as string[],
-    budget: [] as string[],
-    sectors: [] as string[],
-    donors: [] as string[],
-    organisations: [] as string[],
-    publishers: [] as string[],
-    period: [] as string[],
-    activitystatus: [] as string[],
-  },
+  default: defaultfilters,
+});
+
+export const ODAlatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom({
+  key: "ODAlatestFilters",
+  default: defaultfilters,
+});
+
+export const ThematicAreasLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
+  {
+    key: "ODAlatestFilters",
+    default: defaultfilters,
+  }
+);
+
+export const SectorsSunburstLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
+  {
+    key: "ODAlatestFilters",
+    default: defaultfilters,
+  }
+);
+
+export const LocationsTreemapLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
+  {
+    key: "ODAlatestFilters",
+    default: defaultfilters,
+  }
+);
+
+export const OrganisationsLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
+  {
+    key: "ODAlatestFilters",
+    default: defaultfilters,
+  }
+);
+
+export const BudgetLinesLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
+  {
+    key: "ODAlatestFilters",
+    default: defaultfilters,
+  }
+);
+
+export const SDGlatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom({
+  key: "ODAlatestFilters",
+  default: defaultfilters,
+});
+
+export const GeoLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom({
+  key: "ODAlatestFilters",
+  default: defaultfilters,
 });
 
 export const lineYearPeriodFilter = atom({
