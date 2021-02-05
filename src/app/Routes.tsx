@@ -16,6 +16,7 @@ import { AboutModule } from "app/modules/about-module";
 import { PrivacyModule } from "app/modules/privacy-module";
 import { StatementModule } from "app/modules/statement-module";
 import { FeedbackModule } from "app/modules/feedback-module";
+import { ProjectDetailModule } from "app/modules/project-detail-module";
 
 export function ModuleRoutes() {
   return (
@@ -43,6 +44,10 @@ export function ModuleRoutes() {
 
         <Route exact path="/thematic/:theme">
           <ThematicDetailModule />
+        </Route>
+
+        <Route exact path="/project">
+          <ProjectDetailModule />
         </Route>
 
         <Route exact path="/about">
