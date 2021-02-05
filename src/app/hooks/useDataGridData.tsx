@@ -105,6 +105,16 @@ export function useDataGridData() {
   const geoMapData = useStoreState((state) =>
     get(state.geoMap, "data.vizData", [])
   );
+  const vizDataLoading = useStoreState((state) => ({
+    oda: state.odaBarChart.loading,
+    thematic: state.thematicAreasChart.loading,
+    sectors: state.sectorsSunburst.loading,
+    locations: state.locationsTreemap.loading,
+    organisations: state.organisationsTreemap.loading,
+    budgetLines: state.budgetLinesBarChart.loading,
+    sdg: state.sdgViz.loading,
+    geo: state.geoMap.loading,
+  }));
 
   useMount(() => {
     const filters = getAPIFormattedFilters(selectedFilters);
@@ -211,5 +221,6 @@ export function useDataGridData() {
     budgetLinesBarChartData,
     sdgVizData,
     geoMapData,
+    vizDataLoading,
   };
 }

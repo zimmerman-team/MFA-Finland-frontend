@@ -9,6 +9,7 @@ const moduleName = "Home";
 export function LandingModule() {
   useTitle(`${AppName} - ${moduleName}`);
   const {
+    vizDataLoading,
     odaBarChartData,
     thematicAreasChartData,
     sectorsSunburstDataCount,
@@ -22,6 +23,7 @@ export function LandingModule() {
 
   return (
     <LandingLayout
+      vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}
       thematicAreasChartData={thematicAreasChartData}
       sectorsSunburstDataCount={sectorsSunburstDataCount}

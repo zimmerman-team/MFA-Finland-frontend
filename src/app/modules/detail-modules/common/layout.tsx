@@ -13,6 +13,7 @@ export const DetailModuleLayout = (props: ModuleProps) => {
     <ModuleContainer>
       <DetailModuleHeader label={props.label} crumbs={props.crumbs} />
       <DataGrid
+        vizDataLoading={props.vizDataLoading}
         odaBarChartData={props.odaBarChartData}
         thematicAreasChartData={props.thematicAreasChartData}
         sectorsSunburstDataCount={props.sectorsSunburstDataCount}

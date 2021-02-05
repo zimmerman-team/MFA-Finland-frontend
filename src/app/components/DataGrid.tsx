@@ -14,6 +14,7 @@ import { DataProps } from "app/components/Charts/thematicareas/data";
 import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
 import { TreemapDataModel } from "app/components/Charts/treemap/data";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
+import { VizLoader } from "app/modules/common/viz-loader";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -25,6 +26,16 @@ export interface DataGridProps {
   budgetLinesBarChartData: any;
   sdgVizData: SDGvizItemProps[];
   geoMapData: any;
+  vizDataLoading: {
+    oda: boolean;
+    thematic: boolean;
+    sectors: boolean;
+    locations: boolean;
+    organisations: boolean;
+    budgetLines: boolean;
+    sdg: boolean;
+    geo: boolean;
+  };
 }
 
 export const DataGrid = (props: DataGridProps) => {
@@ -38,17 +49,24 @@ export const DataGrid = (props: DataGridProps) => {
           link="/viz/oda"
           tooltip="lorem ipsum"
           label="Overview Disbursements"
+          childrencontainerStyle={{
+            height: "100%",
+          }}
         >
-          <BarChart
-            height={260}
-            vizCompData={[]}
-            data={props.odaBarChartData}
-            onZoomOut={() => null}
-            selectedVizItemId={null}
-            setVizCompData={() => null}
-            onSelectChange={() => null}
-            setSelectedVizItem={() => null}
-          />
+          {props.vizDataLoading.oda ? (
+            <VizLoader />
+          ) : (
+            <BarChart
+              height={260}
+              vizCompData={[]}
+              data={props.odaBarChartData}
+              onZoomOut={() => null}
+              selectedVizItemId={null}
+              setVizCompData={() => null}
+              onSelectChange={() => null}
+              setSelectedVizItem={() => null}
+            />
+          )}
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -61,11 +79,15 @@ export const DataGrid = (props: DataGridProps) => {
             transform: "scale(0.7)",
           }}
         >
-          <ThematicAreas
-            selectedVizItemId={null}
-            setSelectedVizItem={() => null}
-            data={props.thematicAreasChartData}
-          />
+          {props.vizDataLoading.thematic ? (
+            <VizLoader />
+          ) : (
+            <ThematicAreas
+              selectedVizItemId={null}
+              setSelectedVizItem={() => null}
+              data={props.thematicAreasChartData}
+            />
+          )}
         </GridWidget>
       </Grid>
 
@@ -82,15 +104,19 @@ export const DataGrid = (props: DataGridProps) => {
             transform: "scale(0.4)",
           }}
         >
-          <SunburstChart
-            sectorDrillDown=""
-            onZoomOut={() => null}
-            selectedVizItemId={null}
-            setSelectedVizItem={() => null}
-            data={props.sectorsSunburstData}
-            onSectorSelectChange={() => null}
-            activitiesCount={8256876601.879997}
-          />
+          {props.vizDataLoading.sectors ? (
+            <VizLoader />
+          ) : (
+            <SunburstChart
+              sectorDrillDown=""
+              onZoomOut={() => null}
+              selectedVizItemId={null}
+              setSelectedVizItem={() => null}
+              data={props.sectorsSunburstData}
+              onSectorSelectChange={() => null}
+              activitiesCount={8256876601.879997}
+            />
+          )}
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -104,13 +130,17 @@ export const DataGrid = (props: DataGridProps) => {
             paddingTop: 20,
           }}
         >
-          <Treemap
-            label=""
-            height={230}
-            selectedVizItemId={null}
-            setSelectedVizItem={() => null}
-            data={props.locationsTreemapData}
-          />
+          {props.vizDataLoading.locations ? (
+            <VizLoader />
+          ) : (
+            <Treemap
+              label=""
+              height={230}
+              selectedVizItemId={null}
+              setSelectedVizItem={() => null}
+              data={props.locationsTreemapData}
+            />
+          )}
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -124,13 +154,17 @@ export const DataGrid = (props: DataGridProps) => {
             paddingTop: 20,
           }}
         >
-          <Treemap
-            label=""
-            height={230}
-            selectedVizItemId={null}
-            setSelectedVizItem={() => null}
-            data={props.organisationsTreemapData}
-          />
+          {props.vizDataLoading.organisations ? (
+            <VizLoader />
+          ) : (
+            <Treemap
+              label=""
+              height={230}
+              selectedVizItemId={null}
+              setSelectedVizItem={() => null}
+              data={props.organisationsTreemapData}
+            />
+          )}
         </GridWidget>
       </Grid>
 
@@ -148,16 +182,20 @@ export const DataGrid = (props: DataGridProps) => {
             paddingTop: 20,
           }}
         >
-          <BudgetLinesBarChart
-            height={450}
-            vizCompData={[]}
-            onZoomOut={() => null}
-            selectedVizItemId={null}
-            setVizCompData={() => null}
-            onSelectChange={() => null}
-            setSelectedVizItem={() => null}
-            data={props.budgetLinesBarChartData}
-          />
+          {props.vizDataLoading.budgetLines ? (
+            <VizLoader />
+          ) : (
+            <BudgetLinesBarChart
+              height={450}
+              vizCompData={[]}
+              onZoomOut={() => null}
+              selectedVizItemId={null}
+              setVizCompData={() => null}
+              onSelectChange={() => null}
+              setSelectedVizItem={() => null}
+              data={props.budgetLinesBarChartData}
+            />
+          )}
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -184,7 +222,11 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          <SDGviz data={props.sdgVizData} />
+          {props.vizDataLoading.sdg ? (
+            <VizLoader />
+          ) : (
+            <SDGviz data={props.sdgVizData} />
+          )}
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -215,12 +257,18 @@ export const DataGrid = (props: DataGridProps) => {
             interactive
             childrencontainerStyle={{ paddingTop: 88 }}
           >
-            <Geomap geoData={props.geoMapData} />
-            <Legend
-              label="Disbursements Amount"
-              startValue={0}
-              totalValue={get(maxBy(props.geoMapData, "value"), "value", 0)}
-            />
+            {props.vizDataLoading.geo ? (
+              <VizLoader />
+            ) : (
+              <React.Fragment>
+                <Geomap geoData={props.geoMapData} />
+                <Legend
+                  label="Disbursements Amount"
+                  startValue={0}
+                  totalValue={get(maxBy(props.geoMapData, "value"), "value", 0)}
+                />
+              </React.Fragment>
+            )}
           </GridWidget>
         </Grid>
       </Hidden>

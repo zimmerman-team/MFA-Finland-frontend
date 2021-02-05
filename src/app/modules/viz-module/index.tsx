@@ -30,6 +30,7 @@ import {
   OrganisationsLatestFiltersAtom,
   BudgetLinesLatestFiltersAtom,
 } from "app/state/recoil/atoms";
+import { VizLoader } from "../common/viz-loader";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -122,6 +123,16 @@ export default function VizModule() {
   const budgetLinesBarChartData = useStoreState((state) =>
     get(state.budgetLinesBarChart, "data.vizData", [])
   );
+  const vizDataLoading = useStoreState((state) => ({
+    oda: state.odaBarChart.loading,
+    thematic: state.thematicAreasChart.loading,
+    sectors: state.sectorsSunburst.loading,
+    locations: state.locationsTreemap.loading,
+    organisations: state.organisationsTreemap.loading,
+    budgetLines: state.budgetLinesBarChart.loading,
+    sdg: state.sdgViz.loading,
+    geo: state.geoMap.loading,
+  }));
 
   function onSelectChange(e: {
     selection: string | number | null;
@@ -395,68 +406,92 @@ export default function VizModule() {
           />
           <Switch>
             <Route path="/viz/oda">
-              <ODAvizModule
-                vizScale={vizScale}
-                vizLevel={vizLevel}
-                onZoomOut={onZoomOut}
-                data={odaBarChartData}
-                vizCompData={vizCompData}
-                setVizCompData={setVizCompData}
-                onSelectChange={onSelectChange}
-                vizTranslation={vizTranslation}
-                selectedVizItemId={expandedVizItem}
-                setSelectedVizItem={setExpandedVizItem}
-                onArrowSelectChange={onZoomInLevelSelectorChange}
-              />
+              {vizDataLoading.oda ? (
+                <VizLoader />
+              ) : (
+                <ODAvizModule
+                  vizScale={vizScale}
+                  vizLevel={vizLevel}
+                  onZoomOut={onZoomOut}
+                  data={odaBarChartData}
+                  vizCompData={vizCompData}
+                  setVizCompData={setVizCompData}
+                  onSelectChange={onSelectChange}
+                  vizTranslation={vizTranslation}
+                  selectedVizItemId={expandedVizItem}
+                  setSelectedVizItem={setExpandedVizItem}
+                  onArrowSelectChange={onZoomInLevelSelectorChange}
+                />
+              )}
             </Route>
             <Route path="/viz/thematic-areas">
-              <ThematicAreas
-                data={thematicAreasChartData}
-                selectedVizItemId={selectedVizItem}
-                setSelectedVizItem={setSelectedVizItem}
-              />
+              {vizDataLoading.thematic ? (
+                <VizLoader />
+              ) : (
+                <ThematicAreas
+                  data={thematicAreasChartData}
+                  selectedVizItemId={selectedVizItem}
+                  setSelectedVizItem={setSelectedVizItem}
+                />
+              )}
             </Route>
             <Route path="/viz/sectors">
-              <SectorsVizModule
-                vizScale={vizScale}
-                vizLevel={vizLevel}
-                onZoomOut={onZoomOut}
-                data={sectorsSunburstData}
-                vizTranslation={vizTranslation}
-                sectorDrillDown={sectorDrillDown}
-                selectedVizItemId={selectedVizItem}
-                setSelectedVizItem={setSelectedVizItem}
-                activitiesCount={sectorsSunburstDataCount}
-                onSectorSelectChange={onSectorSelectChange}
-                // onArrowSelectChange={onZoomInLevelSelectorChange}
-              />
+              {vizDataLoading.sectors ? (
+                <VizLoader />
+              ) : (
+                <SectorsVizModule
+                  vizScale={vizScale}
+                  vizLevel={vizLevel}
+                  onZoomOut={onZoomOut}
+                  data={sectorsSunburstData}
+                  vizTranslation={vizTranslation}
+                  sectorDrillDown={sectorDrillDown}
+                  selectedVizItemId={selectedVizItem}
+                  setSelectedVizItem={setSelectedVizItem}
+                  activitiesCount={sectorsSunburstDataCount}
+                  onSectorSelectChange={onSectorSelectChange}
+                  // onArrowSelectChange={onZoomInLevelSelectorChange}
+                />
+              )}
             </Route>
             <Route path="/viz/countries-regions">
-              <Treemap
-                label=""
-                data={locationsTreemapData}
-                selectedVizItemId={selectedVizItem}
-                setSelectedVizItem={setSelectedVizItem}
-              />
+              {vizDataLoading.locations ? (
+                <VizLoader />
+              ) : (
+                <Treemap
+                  label=""
+                  data={locationsTreemapData}
+                  selectedVizItemId={selectedVizItem}
+                  setSelectedVizItem={setSelectedVizItem}
+                />
+              )}
             </Route>
             <Route path="/viz/organisations">
-              <Treemap
-                label=""
-                data={organisationsTreemapData}
-                selectedVizItemId={selectedVizItem}
-                setSelectedVizItem={setSelectedVizItem}
-              />
+              {vizDataLoading.organisations ? (
+                <VizLoader />
+              ) : (
+                <Treemap
+                  label=""
+                  data={organisationsTreemapData}
+                  selectedVizItemId={selectedVizItem}
+                  setSelectedVizItem={setSelectedVizItem}
+                />
+              )}
             </Route>
             <Route path="/viz/budget-lines">
-              <BudgetLinesBarChart
-                onZoomOut={onZoomOut}
-                vizCompData={vizCompData}
-                data={budgetLinesBarChartData}
-                setVizCompData={setVizCompData}
-                onSelectChange={onSelectChange}
-                selectedVizItemId={expandedVizItem}
-                setSelectedVizItem={setExpandedVizItem}
-              />
+              {vizDataLoading.budgetLines ? (
+                <VizLoader />
+              ) : (
+                <BudgetLinesBarChart
+                  onZoomOut={onZoomOut}
+                  vizCompData={vizCompData}
+                  data={budgetLinesBarChartData}
+                  setVizCompData={setVizCompData}
+                  onSelectChange={onSelectChange}
+                  selectedVizItemId={expandedVizItem}
+                  setSelectedVizItem={setExpandedVizItem}
+                />
+              )}
             </Route>
             <Route path="/viz/projects">projects table/list</Route>
           </Switch>

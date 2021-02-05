@@ -15,6 +15,7 @@ export const crumbs: BreadcrumbLinkModel[] = [
 export function CountryDetailModule() {
   useTitle(`${AppName} - ${moduleName}`);
   const {
+    vizDataLoading,
     odaBarChartData,
     thematicAreasChartData,
     sectorsSunburstDataCount,
@@ -30,6 +31,7 @@ export function CountryDetailModule() {
     <DetailModuleLayout
       label={moduleName}
       crumbs={crumbs}
+      vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}
       thematicAreasChartData={thematicAreasChartData}
       sectorsSunburstDataCount={sectorsSunburstDataCount}
