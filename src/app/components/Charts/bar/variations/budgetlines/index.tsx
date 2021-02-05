@@ -24,7 +24,7 @@ export function BudgetLinesBarChart(props: BarChartProps) {
     ) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);
   const [selected, setSelected] = React.useState<BarExtendedDatum | null>(
-    !props.height
+    !props.height && props.data.length > 0
       ? {
           id: "",
           value: 0,

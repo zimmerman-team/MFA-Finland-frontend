@@ -19,7 +19,7 @@ export function BarChart(props: BarChartProps) {
     max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);
   const [selected, setSelected] = React.useState<BarExtendedDatum | null>(
-    !props.height
+    !props.height && props.data.length > 0
       ? {
           id: "",
           value: 0,
@@ -66,7 +66,10 @@ export function BarChart(props: BarChartProps) {
   };
 
   React.useEffect(
-    () => props.setSelectedVizItem(props.data[props.data.length - 1].year),
+    () =>
+      props.setSelectedVizItem(
+        get(props, "data[props.data.length - 1].year", null)
+      ),
     []
   );
 

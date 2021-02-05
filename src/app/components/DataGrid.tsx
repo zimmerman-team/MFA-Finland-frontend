@@ -1,32 +1,33 @@
 import React from "react";
+import get from "lodash/get";
+import maxBy from "lodash/maxBy";
 import { Grid, Hidden } from "@material-ui/core";
 import { SDGviz } from "app/components/Charts/sdg";
-import { BarChart } from "app/components//Charts/bar";
+import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
 import { GridWidget } from "app/components/GridWidget";
 import { Treemap } from "app/components/Charts/treemap";
-import { data } from "app/components/Charts/geomap/data";
 import { SunburstChart } from "app/components/Charts/sunburst";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { Legend } from "app/components/Charts/geomap/common/Legend";
-import { SunburstChartMockData } from "app/components/Charts/sunburst/data";
-import { thematicareasMockData } from "app/components/Charts/thematicareas/data";
+import { DataProps } from "app/components/Charts/thematicareas/data";
 import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
-import {
-  barMockData,
-  budgetLinesMockData,
-} from "app/components/Charts/bar/data";
-import {
-  CountriesTreemapMockData,
-  TreemapMockData,
-} from "app/components/Charts/treemap/data";
-import { mockData } from "app/components/Charts/sdg/data";
+import { TreemapDataModel } from "app/components/Charts/treemap/data";
+import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 
-// interface DataGridProps {
-//   data?: any;
-// }
+export interface DataGridProps {
+  odaBarChartData: any;
+  thematicAreasChartData: DataProps[];
+  sectorsSunburstDataCount: number;
+  sectorsSunburstData: any;
+  locationsTreemapData: TreemapDataModel;
+  organisationsTreemapData: TreemapDataModel;
+  budgetLinesBarChartData: any;
+  sdgVizData: SDGvizItemProps[];
+  geoMapData: any;
+}
 
-export const DataGrid = () => {
+export const DataGrid = (props: DataGridProps) => {
   return (
     <React.Fragment>
       {/* ----------------------------- */}
@@ -41,7 +42,7 @@ export const DataGrid = () => {
           <BarChart
             height={260}
             vizCompData={[]}
-            data={barMockData}
+            data={props.odaBarChartData}
             onZoomOut={() => null}
             selectedVizItemId={null}
             setVizCompData={() => null}
@@ -62,8 +63,8 @@ export const DataGrid = () => {
         >
           <ThematicAreas
             selectedVizItemId={null}
-            data={thematicareasMockData}
             setSelectedVizItem={() => null}
+            data={props.thematicAreasChartData}
           />
         </GridWidget>
       </Grid>
@@ -85,8 +86,8 @@ export const DataGrid = () => {
             sectorDrillDown=""
             onZoomOut={() => null}
             selectedVizItemId={null}
-            data={SunburstChartMockData}
             setSelectedVizItem={() => null}
+            data={props.sectorsSunburstData}
             onSectorSelectChange={() => null}
             activitiesCount={8256876601.879997}
           />
@@ -108,7 +109,7 @@ export const DataGrid = () => {
             height={230}
             selectedVizItemId={null}
             setSelectedVizItem={() => null}
-            data={CountriesTreemapMockData}
+            data={props.locationsTreemapData}
           />
         </GridWidget>
       </Grid>
@@ -126,9 +127,9 @@ export const DataGrid = () => {
           <Treemap
             label=""
             height={230}
-            data={TreemapMockData}
             selectedVizItemId={null}
             setSelectedVizItem={() => null}
+            data={props.organisationsTreemapData}
           />
         </GridWidget>
       </Grid>
@@ -152,10 +153,10 @@ export const DataGrid = () => {
             vizCompData={[]}
             onZoomOut={() => null}
             selectedVizItemId={null}
-            data={budgetLinesMockData}
             setVizCompData={() => null}
             onSelectChange={() => null}
             setSelectedVizItem={() => null}
+            data={props.budgetLinesBarChartData}
           />
         </GridWidget>
       </Grid>
@@ -183,7 +184,7 @@ export const DataGrid = () => {
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          <SDGviz data={mockData} />
+          <SDGviz data={props.sdgVizData} />
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
@@ -214,8 +215,12 @@ export const DataGrid = () => {
             interactive
             childrencontainerStyle={{ paddingTop: 88 }}
           >
-            <Geomap geoData={data} />
-            <Legend label="Budget Amount" startValue={0} totalValue={1000} />
+            <Geomap geoData={props.geoMapData} />
+            <Legend
+              label="Disbursements Amount"
+              startValue={0}
+              totalValue={get(maxBy(props.geoMapData, "value"), "value", 0)}
+            />
           </GridWidget>
         </Grid>
       </Hidden>

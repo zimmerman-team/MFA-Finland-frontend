@@ -20,6 +20,14 @@ import geomapActivities from "app/state/api/actions-reducers/geomapActivities";
 import activitiesTable from "app/state/api/actions-reducers/activitiesTable";
 import donorsTable from "app/state/api/actions-reducers/donorsTable";
 import publishersTable from "app/state/api/actions-reducers/publishersTable";
+import sdgViz from "app/state/api/actions-reducers/viz/sdgViz";
+import geoMap from "app/state/api/actions-reducers/viz/geoMap";
+import odaBarChart from "app/state/api/actions-reducers/viz/odaBarChart";
+import thematicAreasChart from "app/state/api/actions-reducers/viz/thematicAreasChart";
+import sectorsSunburst from "app/state/api/actions-reducers/viz/sectorsSunburst";
+import organisationsTreemap from "app/state/api/actions-reducers/viz/organisationsTreemap";
+import locationsTreemap from "app/state/api/actions-reducers/viz/locationsTreemap";
+import budgetLinesBarChart from "app/state/api/actions-reducers/viz/budgetLinesBarChart";
 
 // table actions-reducers
 import donors from "app/state/api/actions-reducers/donors";
@@ -98,7 +106,15 @@ const storeContent: StoreModel = {
   sectors: persist(sectors),
   treemap: persist(treemap),
   sunburst: persist(sunburst),
+  odaBarChart: persist(odaBarChart),
   donorsTreemap: persist(donorsTreemap),
+  sectorsSunburst: persist(sectorsSunburst),
+  locationsTreemap: persist(locationsTreemap),
+  thematicAreasChart: persist(thematicAreasChart),
+  budgetLinesBarChart: persist(budgetLinesBarChart),
+  organisationsTreemap: persist(organisationsTreemap),
+  sdgViz: persist(sdgViz),
+  geoMap: persist(geoMap),
   // table
   countries: persist(countries),
   linechart: persist(linechart),

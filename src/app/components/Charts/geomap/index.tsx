@@ -2,13 +2,14 @@
 
 import React from "react";
 import { ResponsiveChoropleth } from "@nivo/geo";
-import { geojson } from "./features";
 
-import { Tooltip } from "./tooltip";
 import get from "lodash/get";
+import maxBy from "lodash/maxBy";
 import { css } from "styled-components/macro";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { ProjectPalette } from "../../../theme";
+import { ProjectPalette } from "app/theme";
+import { Tooltip } from "./tooltip";
+import { geojson } from "./features";
 
 // This is the main reason I chose to go with Nivo for this chart,
 // Mapbox does not support different projectionTypes and has the Mercator style as default.
@@ -59,7 +60,7 @@ export function Geomap({ geoData }) {
         features={geojson.features} // Providing a country only view is possible by changing the features, see this:
         margin={margin}
         colors={colorScheme}
-        domain={[0, 1000000]} // Scale of values.
+        domain={[0, get(maxBy(geoData, "value"), "value", 0)]} // Scale of values.
         unknownColor="#E3E3E3" // This color is used when there is no available data for that country code.
         label="properties.name"
         projectionType={mobile ? projectionType[0] : projectionType[1]}

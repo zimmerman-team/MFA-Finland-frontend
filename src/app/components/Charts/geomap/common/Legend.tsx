@@ -1,7 +1,7 @@
-import theme from "app/theme";
 import React from "react";
 import { css } from "styled-components/macro";
 import { Typography } from "@material-ui/core";
+import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 interface LegendProps {
   label: string;
@@ -54,7 +54,7 @@ export const Legend = (props: LegendProps) => {
           {props.startValue}
         </Typography>
         <Typography variant="body2" css={value}>
-          {props.totalValue}mln
+          {formatMoneyWithPrefix(props.totalValue)}
         </Typography>
       </div>
     </div>

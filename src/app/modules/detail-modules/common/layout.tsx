@@ -1,22 +1,28 @@
-import react from "react";
 import React from "react";
-import { Overline1Type } from "app/theme";
-import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
-import { Path } from "app/const/Path";
-import { DataGrid } from "app/components/DataGrid";
 import { ModuleContainer } from "app/components/ModuleContainer";
+import { DataGrid, DataGridProps } from "app/components/DataGrid";
+import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleHeader } from "app/components/DetailModuleHeader";
 
-interface ModuleProps {
+interface ModuleProps extends DataGridProps {
   label: string;
   crumbs: BreadcrumbLinkModel[];
-  data?: {};
 }
 export const DetailModuleLayout = (props: ModuleProps) => {
   return (
     <ModuleContainer>
       <DetailModuleHeader label={props.label} crumbs={props.crumbs} />
-      <DataGrid />
+      <DataGrid
+        odaBarChartData={props.odaBarChartData}
+        thematicAreasChartData={props.thematicAreasChartData}
+        sectorsSunburstDataCount={props.sectorsSunburstDataCount}
+        sectorsSunburstData={props.sectorsSunburstData}
+        locationsTreemapData={props.locationsTreemapData}
+        organisationsTreemapData={props.organisationsTreemapData}
+        budgetLinesBarChartData={props.budgetLinesBarChartData}
+        sdgVizData={props.sdgVizData}
+        geoMapData={props.geoMapData}
+      />
     </ModuleContainer>
   );
 };
