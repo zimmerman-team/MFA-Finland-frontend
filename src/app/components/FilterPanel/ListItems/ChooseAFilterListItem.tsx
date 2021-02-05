@@ -4,15 +4,18 @@ import { Typography } from "@material-ui/core";
 import { PillButton } from "../../Buttons/PillButton";
 import { ArrowForwardIos } from "@material-ui/icons";
 import React from "react";
+import { useRecoilState } from "recoil";
+import { currentFilterOpenAtom } from "../../../state/recoil/atoms";
+import { FILTER_TYPES } from "../data";
 
-export interface FilterCategoryOptionProps {
-  path: string;
+export interface ChooseAFilterListItemProps {
+  type: FILTER_TYPES;
   heading: string;
   label: string;
   selection: string[];
 }
 
-const createStyles = (props: FilterCategoryOptionProps) => {
+const createStyles = (props: ChooseAFilterListItemProps) => {
   return {
     container: css`
       margin-bottom: 32px;
@@ -49,9 +52,13 @@ const createStyles = (props: FilterCategoryOptionProps) => {
   };
 };
 
-export const FilterCategoryOption = (props: FilterCategoryOptionProps) => {
+export const ChooseAFilterListItem = (props: ChooseAFilterListItemProps) => {
   const styles = createStyles(props);
+  const [currentFilterOpen, setCurrentFilterOpen] = useRecoilState(
+    currentFilterOpenAtom
+  );
 
+  // Function determines whether the default label should be displayed, or the labels of the selected filters.
   function setLabel() {
     if (props.selection.length === 0) {
       return props.label;
@@ -79,6 +86,7 @@ export const FilterCategoryOption = (props: FilterCategoryOptionProps) => {
         css={styles.button}
         fullWidth
         endIcon={<ArrowForwardIos style={{ fontSize: 24 }} />}
+        onClick={() => setCurrentFilterOpen(props.type)}
       >
         {setLabel()}
       </PillButton>

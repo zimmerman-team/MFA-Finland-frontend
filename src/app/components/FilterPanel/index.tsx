@@ -1,80 +1,70 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { filterPanelOpenAtom } from "../../state/recoil/atoms";
-import { Container, Grid, Typography } from "@material-ui/core";
-import { Cancel } from "@material-ui/icons";
-import { IconButton } from "@material-ui/core/";
-import { PillButton } from "../Buttons/PillButton";
+import { Container } from "@material-ui/core";
 import { createStyles } from "./styles";
-import { data } from "./data";
-import { FilterCategoryOption } from "./common/FilterCategoryOption";
+import {
+  FILTER_TYPES,
+  level1MockData,
+  level2MockData,
+  level3MockData,
+} from "./data";
+import { currentFilterOpenAtom } from "app/state/recoil/atoms";
+import { ChooseAFilterPanel } from "./Panels/ChooseAFilterPanel";
+import { Filter } from "./Panels/Filter";
 
 export interface FilterPanelProps {}
 
 export const FilterPanel = (props: FilterPanelProps) => {
   const styles = createStyles(props);
-  const [filterPanelOpen, setFilterPanelOpen] = useRecoilState(
-    filterPanelOpenAtom
+  const [currentFilterOpen, setCurrentFilterOpen] = useRecoilState(
+    currentFilterOpenAtom
   );
+
   React.useEffect(() => {}, []);
+
+  function renderPanel() {
+    switch (currentFilterOpen) {
+      case FILTER_TYPES.NONE:
+        return <></>;
+        break;
+      case FILTER_TYPES.MAIN:
+        return <ChooseAFilterPanel {...props} />;
+        break;
+      case FILTER_TYPES.THEMATIC_AREAS:
+        return <Filter title="Thematic Areas" data={level1MockData} />;
+        break;
+      case FILTER_TYPES.COUNTRIES:
+        return <></>;
+        break;
+      case FILTER_TYPES.SECTORS:
+        return <Filter title="Sector" data={level3MockData} />;
+        break;
+      case FILTER_TYPES.ORGANISATIONS:
+        return <Filter title="Organisations" data={level2MockData} />;
+        break;
+      case FILTER_TYPES.SDGS:
+        return <></>;
+        break;
+      case FILTER_TYPES.ACTIVITY_STATUS:
+        return <></>;
+        break;
+      case FILTER_TYPES.PERIOD:
+        return <Filter title="Period" data={level2MockData} />;
+        break;
+      case FILTER_TYPES.ADVANCED_FILTERS:
+        return <></>;
+        break;
+      default:
+        return <></>;
+    }
+  }
 
   return (
     <>
-      {filterPanelOpen && (
+      {currentFilterOpen != FILTER_TYPES.NONE && (
         <div css={styles.container}>
           <Container maxWidth="lg" css={styles.muiContainer}>
-            <Grid
-              container
-              item
-              justify="space-between"
-              alignItems="flex-start"
-            >
-              <Typography variant="h5" css={styles.heading}>
-                Add Filters
-              </Typography>
-              <IconButton
-                css={styles.closeContainer}
-                onClick={() => setFilterPanelOpen(false)}
-              >
-                <Cancel css={styles.closeIcon} />
-              </IconButton>
-            </Grid>
-
-            <Grid container item>
-              <Grid item xs={5}>
-                {data.map((option, index) => {
-                  return (
-                    index < 4 && (
-                      <FilterCategoryOption key={option.label} {...option} />
-                    )
-                  );
-                })}
-              </Grid>
-              <Grid item xs={1} />
-
-              <Grid item xs={5}>
-                {data.map((option, index) => {
-                  return (
-                    index >= 4 && (
-                      <FilterCategoryOption key={option.label} {...option} />
-                    )
-                  );
-                })}
-              </Grid>
-              <Grid item xs={1} />
-            </Grid>
-            <Grid
-              container
-              item
-              xs={11}
-              justify="flex-end"
-              css={styles.actionContainer}
-            >
-              <PillButton variant="text" css={styles.secondaryButton}>
-                Reset filters
-              </PillButton>
-              <PillButton css={styles.primaryButton}>Apply</PillButton>
-            </Grid>
+            {renderPanel()}
           </Container>
         </div>
       )}
