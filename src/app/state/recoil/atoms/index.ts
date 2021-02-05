@@ -1,4 +1,5 @@
 import { atom, RecoilState } from "recoil";
+import { FILTER_TYPES } from "../../../components/FilterPanel/data";
 
 export const drawerAtom = atom({
   key: "drawerAtom", // unique ID (with respect to other atoms/selectors)
@@ -10,9 +11,25 @@ export const languageAtom = atom({
   default: "en", // default value (aka initial value)
 });
 
-export const filterPanelOpenAtom = atom({
-  key: "filterPanelOpenAtom", // unique ID (with respect to other atoms/selectors)
-  default: false, // default value (aka initial value)
+export const currentFilterOpenAtom = atom({
+  key: "currentFilterOpen", // unique ID (with respect to other atoms/selectors)
+  default: FILTER_TYPES.NONE, // default value (aka initial value)
+});
+
+export const filterCardTabsAtom = atom({
+  key: "filterCardTabsAtom", // unique ID (with respect to other atoms/selectors)
+  default: [
+    {
+      name: "All",
+      active: true,
+      handleClick: () => {},
+    },
+    {
+      name: "Recent",
+      active: false,
+      handleClick: () => {},
+    },
+  ], // default value (aka initial value)
 });
 
 export interface SelectedFilterAtomModel {

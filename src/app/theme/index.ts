@@ -34,7 +34,7 @@ export const ProjectTextStyles = {
   },
 };
 
-export const PrimaryColor = ["#2E4982", "#F8F8F8", "#FFFFFF"];
+export const PrimaryColor = ["#2E4982", "#F8F8F8", "#FFFFFF", "#4F6797"];
 export const SecondaryColor = ["#ECF1FA", "#BCC6D6", "#888888", "#E3E3E3"];
 
 export const ProjectPalette: ProjectPalette = {
