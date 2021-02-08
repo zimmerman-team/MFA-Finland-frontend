@@ -56,6 +56,10 @@ interface ApiCallParamsFilters {
   recipient_region_code?: string[];
   recipient_country_code?: string[];
   transaction_provider_org_ref?: string[];
+  period?: {
+    startDate: string;
+    endDate: string;
+  }[];
 }
 
 export interface ApiCallParams {
@@ -67,6 +71,7 @@ export interface ApiCallParams {
   filter_type?: string;
   filters?: ApiCallParamsFilters | string;
   search?: string;
+  extra_param?: string;
 
   token?: string;
   user_id?: string;
@@ -107,6 +112,7 @@ export interface StoreModel {
   organisationsTreemap: ApiCallModel;
   sdgViz: ApiCallModel;
   geoMap: ApiCallModel;
+  odaBudgetLinesChart: ApiCallModel;
   // table
   countries: ApiCallModel;
   linechart: ApiCallModel;

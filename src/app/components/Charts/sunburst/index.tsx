@@ -105,12 +105,6 @@ export function SunburstChart(props: SunburstChartProps) {
           disbursed: child.size,
           committed: child.committed,
           percentage: child.percentage,
-          style: {
-            fillOpacity:
-              props.sectorDrillDown && props.sectorDrillDown !== child.code
-                ? 0.1
-                : 1,
-          },
         };
         if (child.children) {
           if (
@@ -120,30 +114,12 @@ export function SunburstChart(props: SunburstChartProps) {
           ) {
             updChild = {
               ...updChild,
-              children: child.children.map((gchild: any) => ({
-                ...gchild,
-                style: {
-                  fillOpacity:
-                    props.sectorDrillDown &&
-                    props.sectorDrillDown !== gchild.code
-                      ? 0.1
-                      : 1,
-                },
-              })),
+              children: child.children,
             };
           } else {
             updChild = {
               ...updChild,
-              _children: child.children.map((gchild: any) => ({
-                ...gchild,
-                style: {
-                  fillOpacity:
-                    props.sectorDrillDown &&
-                    props.sectorDrillDown !== gchild.code
-                      ? 0.1
-                      : 1,
-                },
-              })),
+              _children: child.children,
               size: sumBy(child.children, "size"),
             };
           }

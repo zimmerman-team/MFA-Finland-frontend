@@ -123,6 +123,15 @@ export default function VizModule() {
   const budgetLinesBarChartData = useStoreState((state) =>
     get(state.budgetLinesBarChart, "data.vizData", [])
   );
+  const odaBudgetLinesChartAction = useStoreActions(
+    (actions) => actions.odaBudgetLinesChart.fetch
+  );
+  const odaBudgetLinesChartClearAction = useStoreActions(
+    (actions) => actions.odaBudgetLinesChart.clear
+  );
+  const odaBudgetLinesChartData = useStoreState((state) =>
+    get(state.odaBudgetLinesChart, "data.vizData", [])
+  );
   const vizDataLoading = useStoreState((state) => ({
     oda: state.odaBarChart.loading,
     thematic: state.thematicAreasChart.loading,
@@ -335,7 +344,7 @@ export default function VizModule() {
           "oda-drilldown",
           {
             oda: odaBarChartData,
-            "oda-drilldown": simplebarMockData,
+            "oda-drilldown": odaBudgetLinesChartData,
             "thematic-areas": thematicAreasChartData,
             sectors: sectorsSunburstData,
             "countries-regions": locationsTreemapData,
@@ -362,6 +371,28 @@ export default function VizModule() {
       setVizLevel(0);
       setVizScale(1);
       setVizTranslation({ x: 0, y: 0 });
+    }
+    if (expandedVizItem && get(params, "tab", "") === "oda" && vizLevel > 0) {
+      odaBudgetLinesChartAction({
+        values: {
+          filters: {
+            period: [
+              {
+                startDate: `${expandedVizItem}-01-01T00:00:00Z`,
+                endDate: `${expandedVizItem}-12-31T23:59:59Z`,
+              },
+            ],
+          },
+          extra_param: "simple-budgetlines-bar",
+        },
+      });
+    }
+    if (
+      !expandedVizItem &&
+      get(params, "tab", "") === "oda" &&
+      odaBudgetLinesChartData.length > 0
+    ) {
+      odaBudgetLinesChartClearAction();
     }
   }, [selectedVizItem, expandedVizItem]);
 
@@ -421,6 +452,7 @@ export default function VizModule() {
                   selectedVizItemId={expandedVizItem}
                   setSelectedVizItem={setExpandedVizItem}
                   onArrowSelectChange={onZoomInLevelSelectorChange}
+                  odaBudgetLinesChartData={odaBudgetLinesChartData}
                 />
               )}
             </Route>
@@ -440,17 +472,14 @@ export default function VizModule() {
                 <VizLoader />
               ) : (
                 <SectorsVizModule
-                  vizScale={vizScale}
                   vizLevel={vizLevel}
                   onZoomOut={onZoomOut}
                   data={sectorsSunburstData}
-                  vizTranslation={vizTranslation}
                   sectorDrillDown={sectorDrillDown}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
                   activitiesCount={sectorsSunburstDataCount}
                   onSectorSelectChange={onSectorSelectChange}
-                  // onArrowSelectChange={onZoomInLevelSelectorChange}
                 />
               )}
             </Route>

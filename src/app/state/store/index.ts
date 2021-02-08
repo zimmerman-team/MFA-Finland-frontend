@@ -28,6 +28,7 @@ import sectorsSunburst from "app/state/api/actions-reducers/viz/sectorsSunburst"
 import organisationsTreemap from "app/state/api/actions-reducers/viz/organisationsTreemap";
 import locationsTreemap from "app/state/api/actions-reducers/viz/locationsTreemap";
 import budgetLinesBarChart from "app/state/api/actions-reducers/viz/budgetLinesBarChart";
+import odaBudgetLinesChart from "app/state/api/actions-reducers/viz/odaBudgetLinesChart";
 
 // table actions-reducers
 import donors from "app/state/api/actions-reducers/donors";
@@ -115,6 +116,7 @@ const storeContent: StoreModel = {
   organisationsTreemap: persist(organisationsTreemap),
   sdgViz: persist(sdgViz),
   geoMap: persist(geoMap),
+  odaBudgetLinesChart: persist(odaBudgetLinesChart),
   // table
   countries: persist(countries),
   linechart: persist(linechart),

@@ -12,6 +12,7 @@ import { TransitionContainer } from "app/components/Charts/common/transitioncont
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
   vizLevel: number;
+  odaBudgetLinesChartData: any;
   onArrowSelectChange: (v: string) => void;
   vizTranslation: { x: number; y: number };
 }
@@ -60,7 +61,7 @@ export function ODAvizModule(props: ODAvizModuleProps) {
             }
           />
         </div>
-        <SimpleBarChart data={simplebarMockData} />
+        <SimpleBarChart data={props.odaBudgetLinesChartData} />
       </SlideContainer>
     </div>
   );
