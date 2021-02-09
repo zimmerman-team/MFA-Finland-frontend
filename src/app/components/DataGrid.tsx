@@ -114,7 +114,7 @@ export const DataGrid = (props: DataGridProps) => {
               setSelectedVizItem={() => null}
               data={props.sectorsSunburstData}
               onSectorSelectChange={() => null}
-              activitiesCount={8256876601.879997}
+              activitiesCount={props.sectorsSunburstDataCount}
             />
           )}
         </GridWidget>

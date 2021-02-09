@@ -34,7 +34,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
         valueScale={{ type: "linear" }}
         maxValue={maxValue + maxValue * 0.1}
         colors={(v: any) => v.data.valueColor}
-        margin={{ top: 15, right: 40, bottom: 200, left: 40 }}
+        margin={{ top: 15, right: 20, bottom: 200, left: 50 }}
         axisBottom={{
           tickSize: 0,
           tickPadding: 10,

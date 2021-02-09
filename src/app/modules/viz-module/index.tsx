@@ -4,8 +4,9 @@ import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
-import { useMeasure, useMount, useUnmount } from "react-use";
+import { useMeasure, useUnmount } from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { useStoreState, useStoreActions } from "app/state/store/hooks";
 
 import { PrimaryColor } from "app/theme";
 import { BarItemProps } from "@nivo/bar";
@@ -13,11 +14,8 @@ import { VizTabs } from "app/components/VizTabs";
 import { Treemap } from "app/components/Charts/treemap";
 import { VizSidePanel } from "app/components/VizSidePanel";
 import { ODAvizModule } from "app/components/Charts/modules/oda";
-import { simplebarMockData } from "app/components/Charts/bar/data";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
-import { useStoreState, useStoreActions } from "app/state/store/hooks";
-import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
 import { SectorsVizModule } from "app/components/Charts/modules/sectors";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
@@ -30,7 +28,7 @@ import {
   OrganisationsLatestFiltersAtom,
   BudgetLinesLatestFiltersAtom,
 } from "app/state/recoil/atoms";
-import { VizLoader } from "../common/viz-loader";
+import { VizLoader } from "app/modules/common/viz-loader";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -43,7 +41,6 @@ export default function VizModule() {
     string | number | null
   >(null);
   const isProjects = get(params, "tab", "") === "projects";
-  const [legends, setLegends] = React.useState<VizSidePanelItemProps[]>([]);
   const [vizLevel, setVizLevel] = React.useState(0);
   const [vizScale, setVizScale] = React.useState(1);
   const [vizCompData, setVizCompData] = React.useState<BarItemProps[]>([]);
@@ -123,6 +120,18 @@ export default function VizModule() {
   const budgetLinesBarChartData = useStoreState((state) =>
     get(state.budgetLinesBarChart, "data.vizData", [])
   );
+  const odaBudgetLinesChartAction = useStoreActions(
+    (actions) => actions.odaBudgetLinesChart.fetch
+  );
+  const odaBudgetLinesChartClearAction = useStoreActions(
+    (actions) => actions.odaBudgetLinesChart.clear
+  );
+  const odaBudgetLinesChartData = useStoreState((state) =>
+    get(state.odaBudgetLinesChart, "data.vizData", [])
+  );
+  const odaBudgetLinesChartLoading = useStoreState(
+    (state) => state.odaBudgetLinesChart.loading
+  );
   const vizDataLoading = useStoreState((state) => ({
     oda: state.odaBarChart.loading,
     thematic: state.thematicAreasChart.loading,
@@ -153,6 +162,7 @@ export default function VizModule() {
   function onZoomOut() {
     setVizLevel(0);
     setVizScale(1);
+    setSectorDrillDown("");
     setExpandedVizItem(null);
     setVizTranslation({ x: 0, y: 0 });
   }
@@ -299,71 +309,44 @@ export default function VizModule() {
   });
 
   React.useEffect(() => {
-    if (vizLevel === 0) {
-      setLegends(
-        getSidebarLegendItems(
-          get(params, "tab", ""),
-          {
-            oda: odaBarChartData,
-            "oda-drilldown": simplebarMockData,
-            "thematic-areas": thematicAreasChartData,
-            sectors: sectorsSunburstData,
-            "countries-regions": locationsTreemapData,
-            organisations: organisationsTreemapData,
-            "budget-lines": budgetLinesBarChartData,
-          },
-          selectedVizItem
-        )
-      );
-    }
-  }, [
-    vizLevel,
-    selectedVizItem,
-    get(params, "tab", ""),
-    odaBarChartData,
-    thematicAreasChartData,
-    sectorsSunburstData,
-    locationsTreemapData,
-    organisationsTreemapData,
-    budgetLinesBarChartData,
-  ]);
-
-  React.useEffect(() => {
-    if (expandedVizItem && get(params, "tab", "") === "oda" && vizLevel > 0) {
-      setLegends(
-        getSidebarLegendItems(
-          "oda-drilldown",
-          {
-            oda: odaBarChartData,
-            "oda-drilldown": simplebarMockData,
-            "thematic-areas": thematicAreasChartData,
-            sectors: sectorsSunburstData,
-            "countries-regions": locationsTreemapData,
-            organisations: organisationsTreemapData,
-            "budget-lines": budgetLinesBarChartData,
-          },
-          selectedVizItem
-        )
-      );
-    }
-  }, [
-    vizLevel,
-    expandedVizItem,
-    odaBarChartData,
-    thematicAreasChartData,
-    sectorsSunburstData,
-    locationsTreemapData,
-    organisationsTreemapData,
-    budgetLinesBarChartData,
-  ]);
-
-  React.useEffect(() => {
     if (selectedVizItem === null && expandedVizItem === null) {
       setVizLevel(0);
       setVizScale(1);
       setVizTranslation({ x: 0, y: 0 });
     }
+    if (expandedVizItem && get(params, "tab", "") === "oda" && vizLevel > 0) {
+      odaBudgetLinesChartAction({
+        values: {
+          filters: {
+            period: [
+              {
+                startDate: `${expandedVizItem}-01-01T00:00:00Z`,
+                endDate: `${expandedVizItem}-12-31T23:59:59Z`,
+              },
+            ],
+          },
+          extra_param: "simple-budgetlines-bar",
+        },
+      });
+    }
+    if (
+      !expandedVizItem &&
+      get(params, "tab", "") === "oda" &&
+      odaBudgetLinesChartData.length > 0
+    ) {
+      odaBudgetLinesChartClearAction();
+    }
   }, [selectedVizItem, expandedVizItem]);
+
+  React.useEffect(() => {
+    setActiveTab(sectorDrillDown.length > 0 ? "table" : "chart");
+  }, [sectorDrillDown]);
+
+  React.useEffect(() => {
+    if (activeTab === "chart") {
+      setSectorDrillDown("");
+    }
+  }, [activeTab]);
 
   return (
     <Grid
@@ -421,6 +404,8 @@ export default function VizModule() {
                   selectedVizItemId={expandedVizItem}
                   setSelectedVizItem={setExpandedVizItem}
                   onArrowSelectChange={onZoomInLevelSelectorChange}
+                  odaBudgetLinesChartData={odaBudgetLinesChartData}
+                  odaBudgetLinesChartLoading={odaBudgetLinesChartLoading}
                 />
               )}
             </Route>
@@ -440,17 +425,16 @@ export default function VizModule() {
                 <VizLoader />
               ) : (
                 <SectorsVizModule
-                  vizScale={vizScale}
                   vizLevel={vizLevel}
+                  activeTab={activeTab}
                   onZoomOut={onZoomOut}
                   data={sectorsSunburstData}
-                  vizTranslation={vizTranslation}
                   sectorDrillDown={sectorDrillDown}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
                   activitiesCount={sectorsSunburstDataCount}
                   onSectorSelectChange={onSectorSelectChange}
-                  // onArrowSelectChange={onZoomInLevelSelectorChange}
+                  clearSectorDrillDown={() => setSectorDrillDown("")}
                 />
               )}
             </Route>
@@ -530,7 +514,23 @@ export default function VizModule() {
               `}
             >
               <VizSidePanel
-                items={legends}
+                items={getSidebarLegendItems(
+                  expandedVizItem &&
+                    get(params, "tab", "") === "oda" &&
+                    vizLevel > 0
+                    ? "oda-drilldown"
+                    : get(params, "tab", ""),
+                  {
+                    oda: odaBarChartData,
+                    "oda-drilldown": odaBudgetLinesChartData,
+                    "thematic-areas": thematicAreasChartData,
+                    sectors: sectorsSunburstData,
+                    "countries-regions": locationsTreemapData,
+                    organisations: organisationsTreemapData,
+                    "budget-lines": budgetLinesBarChartData,
+                  },
+                  selectedVizItem
+                )}
                 activeTab={activeTab}
                 scrollableHeight={height}
                 setActiveTab={setActiveTab}
