@@ -109,6 +109,55 @@ export function BarChart(props: BarChartProps) {
         `}
       >
         <div>{range.abbr}</div>
+        <div
+          css={`
+            display: flex;
+
+            > div {
+              padding: 0 10px 0 15px;
+              &:before {
+                left: 0;
+                top: 2px;
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                content: "";
+                border-radius: 50%;
+              }
+            }
+          `}
+        >
+          <div
+            css={`
+              position: relative;
+              &:before {
+                background: #acd1d1;
+              }
+            `}
+          >
+            Exclusive ODA
+          </div>
+          <div
+            css={`
+              position: relative;
+              &:before {
+                background: #7491ce;
+              }
+            `}
+          >
+            Other ODA
+          </div>
+          <div
+            css={`
+              position: relative;
+              &:before {
+                background: #ae4764;
+              }
+            `}
+          >
+            ODA/GNI
+          </div>
+        </div>
         {showGni && <div>%</div>}
       </div>
       {showGni && (
