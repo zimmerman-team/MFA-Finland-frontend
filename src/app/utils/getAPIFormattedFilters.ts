@@ -1,5 +1,5 @@
 export function getAPIFormattedFilters(filters: any, yearPeriod?: string) {
-  let result = {};
+  let result: any = {};
   if (filters.countries.length > 0) {
     result = {
       ...result,

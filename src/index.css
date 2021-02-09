@@ -65,12 +65,12 @@ body {
 
 a {
   text-decoration: initial;
-  color: #25a898;
+  color: #2e4982;
 }
 a:hover {
   cursor: pointer;
   text-decoration: initial;
-  color: #30c2b0;
+  color: #2e4982;
 }
 
 * {

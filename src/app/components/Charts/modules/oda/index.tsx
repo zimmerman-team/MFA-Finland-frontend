@@ -8,11 +8,13 @@ import { SimpleBarChart } from "app/components/Charts/bar/simple";
 import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
+import { VizLoader } from "app/modules/common/viz-loader";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
   vizLevel: number;
   odaBudgetLinesChartData: any;
+  odaBudgetLinesChartLoading: boolean;
   onArrowSelectChange: (v: string) => void;
   vizTranslation: { x: number; y: number };
 }
@@ -47,21 +49,29 @@ export function ODAvizModule(props: ODAvizModuleProps) {
         selected={props.selectedVizItemId}
         close={() => props.setSelectedVizItem(null)}
       >
-        <div
-          css={`
-            width: fit-content;
-            padding: 24px 0 0 20px;
-          `}
-        >
-          <ArrowSelector
-            onChange={props.onArrowSelectChange}
-            options={props.data.map((d: any) => d.year.toString())}
-            selected={
-              props.selectedVizItemId ? props.selectedVizItemId.toString() : ""
-            }
-          />
-        </div>
-        <SimpleBarChart data={props.odaBudgetLinesChartData} />
+        {props.odaBudgetLinesChartLoading ? (
+          <VizLoader />
+        ) : (
+          <React.Fragment>
+            <div
+              css={`
+                width: fit-content;
+                padding: 24px 0 0 20px;
+              `}
+            >
+              <ArrowSelector
+                onChange={props.onArrowSelectChange}
+                options={props.data.map((d: any) => d.year.toString())}
+                selected={
+                  props.selectedVizItemId
+                    ? props.selectedVizItemId.toString()
+                    : ""
+                }
+              />
+            </div>
+            <SimpleBarChart data={props.odaBudgetLinesChartData} />
+          </React.Fragment>
+        )}
       </SlideContainer>
     </div>
   );

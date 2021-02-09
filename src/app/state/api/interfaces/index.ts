@@ -112,6 +112,7 @@ export interface StoreModel {
   organisationsTreemap: ApiCallModel;
   sdgViz: ApiCallModel;
   geoMap: ApiCallModel;
+  sectorProjects: ApiCallModel;
   odaBudgetLinesChart: ApiCallModel;
   // table
   countries: ApiCallModel;
