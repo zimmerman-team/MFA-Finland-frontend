@@ -63,7 +63,7 @@ export const FilterBar = (props: FilterBarProps) => {
             })}
           </div>
         </div>
-        <div css={styles.background}>hoi</div>
+        <div css={styles.background} />
       </>
     );
   } else {
