@@ -136,14 +136,14 @@ export function SunburstChart(props: SunburstChartProps) {
 
   return (
     <Grid container css="padding-top: 50px;">
-      <Grid id="sunburst-back" item sm={12} md={2} lg={1}>
+      <Grid id="sunburst-back" item xs={12} sm={12} md={2} lg={1}>
         {prevSelections.length > 0 && (
           <div css={backbuttoncss} onClick={goBack}>
             Back
           </div>
         )}
       </Grid>
-      <Grid item sm={12} md={12} lg={12}>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
         <div
           css={containercss}
           id="sunburst-container"

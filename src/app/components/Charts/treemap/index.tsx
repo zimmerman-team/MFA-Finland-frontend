@@ -98,7 +98,7 @@ export function Treemap(props: TreemapProps) {
           </div>
         )}
       </Grid>
-      <Grid item sm={12} md={12} lg={12}>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
         <div ref={ref} css={containercss(props.height)}>
           <ResponsiveTreeMapHtml
             data={renderedNodes}

@@ -21,7 +21,14 @@ function Providers(props: ProviderProps) {
           <CssBaseline />
           <StoreProvider store={store}>
             {/* react router */}
-            <Container maxWidth="lg" css="min-height: 100%;padding: 0;">
+            <Container
+              maxWidth="lg"
+              css={`
+                min-height: 100%;
+                padding: 0;
+                overflow: hidden;
+              `}
+            >
               <Router>{props.children}</Router>
             </Container>
           </StoreProvider>

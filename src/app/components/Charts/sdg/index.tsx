@@ -12,7 +12,7 @@ export function SDGviz(props: SDGvizProps) {
   return (
     <Grid container spacing={2} id="sdg-container" css="position: relative;">
       {props.data.map((d: SDGvizItemProps) => (
-        <Grid item key={d.number} sm={6} md={4} lg={2} xl={2}>
+        <Grid item key={d.number} xs={4} sm={3} md={4} lg={2} xl={2}>
           <SDGvizItem {...d} setHoveredNode={setHoveredNode} />
         </Grid>
       ))}
