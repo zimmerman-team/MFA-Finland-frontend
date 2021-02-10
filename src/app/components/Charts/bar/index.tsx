@@ -1,7 +1,9 @@
 import React from "react";
+import get from "lodash/get";
 import max from "lodash/max";
 import find from "lodash/find";
 import { PrimaryColor } from "app/theme";
+import { Line } from "app/components/Charts/bar/common/line";
 import { BarChartProps } from "app/components/Charts/bar/data";
 import { BarNode } from "app/components/Charts/bar/common/node";
 import { LineNodes } from "app/components/Charts/bar/common/line/node";
@@ -10,24 +12,27 @@ import {
   getRange,
   getMoneyValueWithMetricPrefix,
 } from "app/components/Charts/bar/utils";
-import { Line } from "./common/line";
 
 export function BarChart(props: BarChartProps) {
   const range = getRange(props.data, ["exclusive", "other"]);
   const maxValue: number =
     max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);
-  const [selected, setSelected] = React.useState<BarExtendedDatum>({
-    id: "",
-    value: 0,
-    index: 0,
-    indexValue: props.data[props.data.length - 1].year,
-    data: props.data[props.data.length - 1],
-  });
+  const [selected, setSelected] = React.useState<BarExtendedDatum | null>(
+    !props.height && props.data.length > 0
+      ? {
+          id: "",
+          value: 0,
+          index: 0,
+          indexValue: props.data[props.data.length - 1].year,
+          data: props.data[props.data.length - 1],
+        }
+      : null
+  );
 
-  const onSelect = (b: BarExtendedDatum) => {
+  const onSelect = (b: BarExtendedDatum | null) => {
     setSelected(b);
-    props.setSelectedVizItem(b.indexValue);
+    props.setSelectedVizItem(get(b, "indexValue", ""));
   };
 
   const Bars = (bprops: any) => {
@@ -47,17 +52,24 @@ export function BarChart(props: BarChartProps) {
     ));
   };
 
-  const LineWPoints = (lprops: any) => (
-    <LineNodes
-      {...lprops}
-      selected={selected}
-      height={props.height || 450}
-      hoveredXIndex={hoveredXIndex}
-    />
-  );
+  const showGni = find(props.data, (d: any) => d.gni > 0);
+
+  const LineWPoints = (lprops: any) => {
+    return showGni ? (
+      <LineNodes
+        {...lprops}
+        selected={selected}
+        height={props.height || 450}
+        hoveredXIndex={hoveredXIndex}
+      />
+    ) : null;
+  };
 
   React.useEffect(
-    () => props.setSelectedVizItem(props.data[props.data.length - 1].year),
+    () =>
+      props.setSelectedVizItem(
+        get(props, "data[props.data.length - 1].year", null)
+      ),
     []
   );
 
@@ -97,30 +109,81 @@ export function BarChart(props: BarChartProps) {
         `}
       >
         <div>{range.abbr}</div>
-        <div>%</div>
+        <div
+          css={`
+            display: flex;
+
+            > div {
+              padding: 0 10px 0 15px;
+              &:before {
+                left: 0;
+                top: 2px;
+                position: absolute;
+                width: 8px;
+                height: 8px;
+                content: "";
+                border-radius: 50%;
+              }
+            }
+          `}
+        >
+          <div
+            css={`
+              position: relative;
+              &:before {
+                background: #acd1d1;
+              }
+            `}
+          >
+            Exclusive ODA
+          </div>
+          <div
+            css={`
+              position: relative;
+              &:before {
+                background: #7491ce;
+              }
+            `}
+          >
+            Other ODA
+          </div>
+          <div
+            css={`
+              position: relative;
+              &:before {
+                background: #ae4764;
+              }
+            `}
+          >
+            ODA/GNI
+          </div>
+        </div>
+        {showGni && <div>%</div>}
       </div>
-      <div
-        css={`
-          left: 0;
-          top: 14px;
-          width: 100%;
-          padding-top: 50px;
-          position: absolute;
-          height: ${props.height || 450}px;
-        `}
-      >
-        <Line
-          data={[
-            {
-              id: "gni",
-              data: props.data.map((d: any) => ({
-                x: d.year,
-                y: d.gni,
-              })),
-            },
-          ]}
-        />
-      </div>
+      {showGni && (
+        <div
+          css={`
+            left: 0;
+            top: 14px;
+            width: 100%;
+            padding-top: 50px;
+            position: absolute;
+            height: ${props.height || 450}px;
+          `}
+        >
+          <Line
+            data={[
+              {
+                id: "gni",
+                data: props.data.map((d: any) => ({
+                  x: d.year,
+                  y: d.gni,
+                })),
+              },
+            ]}
+          />
+        </div>
+      )}
       <ResponsiveBar
         padding={0.3}
         indexBy="year"
@@ -133,7 +196,7 @@ export function BarChart(props: BarChartProps) {
         colors={["#ACD1D1", "#7491CE"]}
         maxValue={maxValue + maxValue * 0.1}
         layers={["grid", "axes", Bars, LineWPoints]}
-        margin={{ top: 15, right: 50, bottom: 50, left: 40 }}
+        margin={{ top: 15, right: 50, bottom: 50, left: 50 }}
         theme={{
           axis: {
             ticks: {
@@ -160,7 +223,7 @@ export function BarChart(props: BarChartProps) {
         axisBottom={{
           tickSize: 0,
           tickPadding: 10,
-          tickRotation: 0,
+          tickRotation: 45,
         }}
         axisLeft={{
           tickSize: 0,

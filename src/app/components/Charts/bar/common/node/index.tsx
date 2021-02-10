@@ -14,6 +14,16 @@ export function BarNode(props: BarNodeProps) {
     label: props.label,
   };
 
+  let opacity =
+    props.data.indexValue === props.hoveredXIndex ||
+    props.data.indexValue === get(props.selected, "indexValue", "")
+      ? 1
+      : 0.6;
+
+  if (!props.hoveredXIndex && !props.selected) {
+    opacity = 1;
+  }
+
   return (
     <g
       {...fprops}
@@ -40,7 +50,7 @@ export function BarNode(props: BarNodeProps) {
       }}
       css={`
         cursor: pointer;
-        ${props.data.indexValue === props.selected.indexValue
+        ${props.data.indexValue === get(props.selected, "indexValue", "")
           ? `
               z-index: 2;
             `
@@ -55,10 +65,7 @@ export function BarNode(props: BarNodeProps) {
         width={props.width}
         height={props.height}
         css={`
-          opacity: ${props.data.indexValue === props.hoveredXIndex ||
-          props.data.indexValue === props.selected.indexValue
-            ? 1
-            : 0.6};
+          opacity: ${opacity};
         `}
       />
     </g>

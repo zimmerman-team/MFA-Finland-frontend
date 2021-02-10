@@ -10,10 +10,10 @@ export const createStyles = (props: FilterPanelProps) => {
       padding-top: 24px;
 
       position: fixed;
-      width: 100%;
+      width: 100vw;
       height: 100vh;
       left: 0;
-      z-index: 1;
+      z-index: 3;
     `,
     muiContainer: css`
       padding: 0px;

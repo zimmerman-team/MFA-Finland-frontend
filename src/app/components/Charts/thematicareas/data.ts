@@ -1,8 +1,10 @@
 export interface DataProps {
   name: string;
-  color: string;
   size: number;
+  area: string;
+  color: string;
   value: number;
+  secondary?: any;
   values: string[];
 }
 
@@ -14,32 +16,58 @@ export interface ThematicAreasProps {
 
 export const thematicareasMockData: DataProps[] = [
   {
-    name: "Natural resources",
-    color: "#425346",
-    size: 200,
-    value: 200000000,
-    values: ["Main priority 50%", "€2,000,000,000", "Secondary priority 40%"],
-  },
-  {
-    name: "Women and girls",
-    color: "#AE4764",
-    size: 100,
-    value: 100000000,
-    values: ["Main priority 20%", "€1,003,070,011", "Secondary priority 35%"],
-  },
-  {
-    name: "Well-functioning society",
+    name: "Thematic area C (Main priority)",
     color: "#819DAB",
-    size: 180,
-    value: 180000000,
-    values: ["Main priority 40%", "€1,800,098,999", "Secondary priority 45%"],
+    area: "Improving democracy in societies",
+    value: 141774396.37,
+    secondary: {
+      name: "Priority area 3, secondary",
+      area: "Improving democracy in societies",
+      value: 253237682.60999998,
+    },
+    size: 200,
+    values: ["Main priority", "€141,774,396.37", "Secondary priority"],
   },
   {
-    name: "Economy and jobs",
-    color: "#DA8E68",
+    name: "Thematic area D (Main priority)",
+    color: "#425346",
+    area: "Improving food security, access to water and sustainability",
+    value: 136423111.40999997,
+    secondary: {
+      name: "Priority area 4, secondary",
+      area: "Improving food security, access to water and sustainability",
+      value: 147973623.21,
+    },
+    size: 180,
+    values: ["Main priority", "€136,423,111.41", "Secondary priority"],
+  },
+  {
+    name: "Thematic area A (Main priority)",
+    color: "#AE4764",
+    area: "Strengthening of the rights and status of women and girls",
+    value: 117256606.04000002,
+    secondary: {
+      name: "Priority area 1, secondary",
+      area: "Strengthening of the rights and status of women and girls",
+      value: 363149146.28000003,
+    },
     size: 140,
-    value: 140000000,
-    values: ["Main priority 80%", "€1,498,000,222", "Secondary priority 10%"],
+    values: ["Main priority", "€117,256,606.04", "Secondary priority"],
+  },
+  {
+    name: "Thematic area B (Main priority)",
+    color: "#DA8E68",
+    area:
+      "Generating jobs, livelihood opportunities and well-being in a developing country",
+    value: 28573232.650000002,
+    secondary: {
+      name: "Priority area 2, secondary",
+      area:
+        "Generating jobs, livelihood opportunities and well-being in a developing country",
+      value: 222483473.61,
+    },
+    size: 100,
+    values: ["Main priority", "€28,573,232.65", "Secondary priority"],
   },
 ];
 

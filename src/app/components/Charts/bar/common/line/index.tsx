@@ -7,7 +7,7 @@ export function Line(props: LineProps) {
   return (
     <ResponsiveLine
       data={props.data}
-      margin={{ top: 5, right: 50, bottom: 50, left: 40 }}
+      margin={{ top: 5, right: 50, bottom: 50, left: 50 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",

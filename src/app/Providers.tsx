@@ -4,6 +4,8 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "app/theme";
 import { BrowserRouter as Router } from "react-router-dom";
 import { RecoilRoot } from "recoil";
+import { StoreProvider } from "easy-peasy";
+import { store } from "app/state/store";
 import { Container, StylesProvider, CssBaseline } from "@material-ui/core";
 
 type ProviderProps = {
@@ -17,10 +19,12 @@ function Providers(props: ProviderProps) {
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          {/* react router */}
-          <Container maxWidth={"lg"} css="min-height: 100%;padding: 0;">
-            <Router>{props.children}</Router>
-          </Container>
+          <StoreProvider store={store}>
+            {/* react router */}
+            <Container maxWidth="lg" css="min-height: 100%;padding: 0;">
+              <Router>{props.children}</Router>
+            </Container>
+          </StoreProvider>
         </ThemeProvider>
       </StylesProvider>
     </RecoilRoot>

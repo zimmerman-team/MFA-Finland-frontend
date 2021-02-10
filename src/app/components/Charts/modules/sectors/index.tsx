@@ -1,80 +1,109 @@
 import React from "react";
+import get from "lodash/get";
+import { useRecoilState } from "recoil";
+import Grid from "@material-ui/core/Grid";
+import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { SunburstChart } from "app/components/Charts/sunburst";
+import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { SunburstChartProps } from "app/components/Charts/sunburst/data";
-import { ArrowSelector } from "app/components/Charts/common/arrowselector";
-import { SlideContainer } from "app/components/Charts/common/slidecontainer";
-import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
+import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
+import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
+import { SimpleActivitiesTableModule } from "app/components/Charts/table/modules/activities/simple";
+import { VizLoader } from "app/modules/common/viz-loader";
 
 interface SectorsVizModuleProps extends SunburstChartProps {
-  vizScale: number;
   vizLevel: number;
-  vizTranslation: { x: number; y: number };
-  //   onArrowSelectChange: (v: string) => void;
+  activeTab: string;
+  clearSectorDrillDown: () => void;
 }
 
 export function SectorsVizModule(props: SectorsVizModuleProps) {
+  const [tablePage, setTablePage] = React.useState(0);
+  const [tableRows, setTableRows] = React.useState(10);
+  const [selectedFilters] = useRecoilState(selectedFilterAtom);
+
+  /* STATE & ACTIONS */
+  const sectorProjectsAction = useStoreActions(
+    (actions) => actions.sectorProjects.fetch
+  );
+  const sectorProjectsData = useStoreState((state) =>
+    get(state.sectorProjects, "data.data", [])
+  );
+  const sectorProjectsDataCount = useStoreState((state) =>
+    get(state.sectorProjects, "data.count", 0)
+  );
+  const sectorProjectsLoading = useStoreState(
+    (state) => state.sectorProjects.loading
+  );
+
+  React.useEffect(() => {
+    if (props.sectorDrillDown.length > 0) {
+      let filters = getAPIFormattedFilters(selectedFilters);
+      if (filters.sector_code) {
+        filters.sector_code = [...filters.sector_code, props.sectorDrillDown];
+      } else {
+        filters = {
+          ...filters,
+          sector_code: [props.sectorDrillDown],
+        };
+      }
+      sectorProjectsAction({
+        values: {
+          filters,
+          rows: tableRows,
+          page: tablePage,
+        },
+      });
+    }
+  }, [props.sectorDrillDown, tableRows, tablePage]);
+
+  const showTable =
+    props.sectorDrillDown.length > 0 && props.activeTab === "table";
+
   return (
-    <div
-      id="viz-sectors"
-      css={`
-        width: 100%;
-        height: 100%;
-        position: relative;
-
-        > div {
-          height: 100%;
-        }
-      `}
-    >
-      <TransitionContainer
-        vizScale={props.vizScale}
-        vizLevel={props.vizLevel}
-        vizTranslation={props.vizTranslation}
+    <React.Fragment>
+      <Grid
+        container
+        css={`
+          padding: 24px 24px 24px 0;
+          display: ${showTable ? "flex" : "none"};
+        `}
       >
-        <div
-          css={`
-            width: 100%;
-            height: 100%;
-            * {
-              pointer-events: ${props.vizLevel > 0 ? "none" : "all"};
-
-              #sunburst-back {
-                display: ${props.vizLevel > 0 ? "none" : "flex"};
-              }
-            }
-          `}
-        >
-          <SunburstChart
-            data={props.data}
-            onZoomOut={props.onZoomOut}
-            activitiesCount={props.activitiesCount}
-            sectorDrillDown={props.sectorDrillDown}
-            selectedVizItemId={props.selectedVizItemId}
-            setSelectedVizItem={props.setSelectedVizItem}
-            onSectorSelectChange={props.onSectorSelectChange}
-          />
-        </div>
-      </TransitionContainer>
-      <SlideContainer
-        vizLevel={props.vizLevel}
-        selected={props.selectedVizItemId}
-        close={() => props.onSectorSelectChange("")}
+        {sectorProjectsLoading ? (
+          <VizLoader />
+        ) : (
+          <React.Fragment>
+            <Grid item sm={12} md={2} lg={1}>
+              <div css={backbuttoncss} onClick={props.clearSectorDrillDown}>
+                Back
+              </div>
+            </Grid>
+            <Grid item sm={12}>
+              <SimpleActivitiesTableModule
+                data={sectorProjectsData}
+                setTablePage={setTablePage}
+                setTableRows={setTableRows}
+                tableCount={sectorProjectsDataCount}
+              />
+            </Grid>
+          </React.Fragment>
+        )}
+      </Grid>
+      <div
+        css={`
+          display: ${!showTable ? "flex" : "none"};
+        `}
       >
-        <div
-          css={`
-            width: fit-content;
-            padding: 24px 0 0 20px;
-          `}
-        >
-          {/* <ArrowSelector
-            onChange={props.onArrowSelectChange}
-            options={props.data.map((d: any) => d.year.toString())}
-            selected={
-              props.selectedVizItemId ? props.selectedVizItemId.toString() : ""
-            }
-          /> */}
-        </div>
-      </SlideContainer>
-    </div>
+        <SunburstChart
+          data={props.data}
+          onZoomOut={props.onZoomOut}
+          activitiesCount={props.activitiesCount}
+          sectorDrillDown={props.sectorDrillDown}
+          selectedVizItemId={props.selectedVizItemId}
+          setSelectedVizItem={props.setSelectedVizItem}
+          onSectorSelectChange={props.onSectorSelectChange}
+        />
+      </div>
+    </React.Fragment>
   );
 }

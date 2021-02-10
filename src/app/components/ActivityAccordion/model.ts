@@ -223,7 +223,7 @@ export interface ActivityMetadata {
     status: string;
     start: string;
     end: string;
-    value: number;
+    value: number | string;
   }[];
   participating_orgs: {
     name: string;

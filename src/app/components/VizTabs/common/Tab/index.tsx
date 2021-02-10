@@ -3,7 +3,7 @@ import get from "lodash/get";
 import { css } from "styled-components/macro";
 import { TabProps } from "app/components/VizTabs/data";
 import { PrimaryColor, SecondaryColor } from "app/theme";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink, useRouteMatch, useLocation } from "react-router-dom";
 
 const tabcss = (active: boolean) => css`
   color: #fff;
@@ -20,10 +20,11 @@ const tabcss = (active: boolean) => css`
 `;
 
 export function RouteTab(props: TabProps) {
+  const location = useLocation();
   const { params } = useRouteMatch();
   return (
     <NavLink
-      to={props.url}
+      to={`${props.url}${location.search}`}
       css={tabcss(get(params, "tab", "") === props.url.split("/")[2])}
     >
       {props.name}
