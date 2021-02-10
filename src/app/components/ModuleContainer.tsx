@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import React from "react";
 
 interface ModuleContainerProps {
@@ -6,7 +6,9 @@ interface ModuleContainerProps {
 }
 
 export const ModuleContainer = (props: ModuleContainerProps) => (
-  <Grid container spacing={2}>
-    {props.children}
-  </Grid>
+  <React.Fragment>
+    <Grid container spacing={2}>
+      {props.children}
+    </Grid>
+  </React.Fragment>
 );

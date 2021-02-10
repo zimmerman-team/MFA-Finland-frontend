@@ -38,6 +38,8 @@ export interface DataGridProps {
   };
 }
 
+// todo: check if we actually need the "childrencontainerStyle" property
+
 export const DataGrid = (props: DataGridProps) => {
   return (
     <React.Fragment>
@@ -218,6 +220,7 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           label="SDGs"
+          // todo: create responsive solution for height
           height="510px"
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}

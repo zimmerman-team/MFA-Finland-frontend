@@ -33,17 +33,26 @@ const style = {
   `,
   widgetContainer: (height: string | undefined, isHovered: boolean) => css`
     width: 100%;
-    height: 100%;
+    //height: 100%;
     display: flex;
     border-radius: 32px;
     flex-direction: column;
     background-color: #ffffff;
     padding: 24px 32px 32px 32px;
     height: ${height || "328px"};
+    overflow: hidden;
     box-shadow: ${isHovered
       ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
       : ""};
     transition: box-shadow 0.3s ease-in-out;
+
+    @media (max-width: 600px) {
+      border-radius: 16px;
+      padding: 16px 16px 16px 16px;
+      width: initial;
+      margin-right: 16px;
+      margin-left: 16px;
+    }
   `,
   childrencontainer: (interactive?: boolean) => css`
     display: flex;
