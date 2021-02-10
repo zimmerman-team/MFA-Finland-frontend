@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
@@ -11,14 +12,21 @@ import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { PrimaryColor } from "app/theme";
 import { BarItemProps } from "@nivo/bar";
 import { VizTabs } from "app/components/VizTabs";
-import { Treemap } from "app/components/Charts/treemap";
+import { DataTable } from "app/components/Charts/table";
+import { VizLoader } from "app/modules/common/viz-loader";
 import { VizSidePanel } from "app/components/VizSidePanel";
 import { ODAvizModule } from "app/components/Charts/modules/oda";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
 import { SectorsVizModule } from "app/components/Charts/modules/sectors";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
-import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
+import { BudgetLinesModule } from "app/components/Charts/modules/budgetlines";
+import { CountriesRegionsModule } from "app/components/Charts/modules/locations";
+import { OrganisationsModule } from "app/components/Charts/modules/organisations";
+import {
+  thematicAreasDataTableOptions,
+  thematicAreasDataTableColumns,
+} from "app/components/Charts/thematicareas/data";
 import {
   selectedFilterAtom,
   ODAlatestFiltersAtom,
@@ -28,7 +36,6 @@ import {
   OrganisationsLatestFiltersAtom,
   BudgetLinesLatestFiltersAtom,
 } from "app/state/recoil/atoms";
-import { VizLoader } from "app/modules/common/viz-loader";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -224,6 +231,7 @@ export default function VizModule() {
     setSelectedVizItem(null);
     setExpandedVizItem(null);
     onTabChange(prevTab);
+    setActiveTab("chart");
 
     const filters = getAPIFormattedFilters(selectedFilters);
     switch (get(params, "tab", "")) {
@@ -395,6 +403,7 @@ export default function VizModule() {
                 <ODAvizModule
                   vizScale={vizScale}
                   vizLevel={vizLevel}
+                  activeTab={activeTab}
                   onZoomOut={onZoomOut}
                   data={odaBarChartData}
                   vizCompData={vizCompData}
@@ -412,12 +421,25 @@ export default function VizModule() {
             <Route path="/viz/thematic-areas">
               {vizDataLoading.thematic ? (
                 <VizLoader />
-              ) : (
+              ) : activeTab === "chart" ? (
                 <ThematicAreas
                   data={thematicAreasChartData}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
                 />
+              ) : (
+                <div
+                  css={`
+                    padding: 24px 24px 24px 0;
+                  `}
+                >
+                  <DataTable
+                    data={thematicAreasChartData}
+                    options={thematicAreasDataTableOptions}
+                    columns={thematicAreasDataTableColumns}
+                    title={`${thematicAreasChartData.length} thematic areas`}
+                  />
+                </div>
               )}
             </Route>
             <Route path="/viz/sectors">
@@ -428,6 +450,7 @@ export default function VizModule() {
                   vizLevel={vizLevel}
                   activeTab={activeTab}
                   onZoomOut={onZoomOut}
+                  scrollableHeight={height}
                   data={sectorsSunburstData}
                   sectorDrillDown={sectorDrillDown}
                   selectedVizItemId={selectedVizItem}
@@ -442,8 +465,10 @@ export default function VizModule() {
               {vizDataLoading.locations ? (
                 <VizLoader />
               ) : (
-                <Treemap
+                <CountriesRegionsModule
                   label=""
+                  activeTab={activeTab}
+                  scrollableHeight={height}
                   data={locationsTreemapData}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
@@ -454,8 +479,10 @@ export default function VizModule() {
               {vizDataLoading.organisations ? (
                 <VizLoader />
               ) : (
-                <Treemap
+                <OrganisationsModule
                   label=""
+                  activeTab={activeTab}
+                  scrollableHeight={height}
                   data={organisationsTreemapData}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
@@ -466,8 +493,10 @@ export default function VizModule() {
               {vizDataLoading.budgetLines ? (
                 <VizLoader />
               ) : (
-                <BudgetLinesBarChart
+                <BudgetLinesModule
+                  activeTab={activeTab}
                   onZoomOut={onZoomOut}
+                  scrollableHeight={height}
                   vizCompData={vizCompData}
                   data={budgetLinesBarChartData}
                   setVizCompData={setVizCompData}

@@ -1,4 +1,6 @@
+import { formatLocale } from "app/utils/formatLocale";
 import { BarExtendedDatum, BarItemProps } from "@nivo/bar";
+import { MUIDataTableOptions, MUIDataTableColumnDef } from "mui-datatables";
 
 export interface BarChartProps {
   data: any;
@@ -611,3 +613,92 @@ export const budgetLinesMockData = [
     "Country-specific and regional developmentColor": "#AE4764",
   },
 ];
+
+export const ODADataTableColumns: MUIDataTableColumnDef[] = [
+  {
+    name: "year",
+    label: "Year",
+    options: {
+      setCellProps: () => ({ style: { minWidth: "120px", maxWidth: "150px" } }),
+    },
+  },
+  {
+    name: "exclusive",
+    label: "Exclusive ODA",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+  {
+    name: "other",
+    label: "Other ODA",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+  {
+    name: "gni",
+    label: "ODA/GNI",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return `${value}%`;
+      },
+    },
+  },
+];
+
+export const ODADataTableOptions: MUIDataTableOptions = {
+  print: false,
+  elevation: 0,
+  search: true,
+  filter: false,
+  download: false,
+  rowHover: false,
+  pagination: true,
+  viewColumns: false,
+  responsive: "standard",
+  selectableRows: "none",
+  selectableRowsHeader: false,
+};
+
+export const ODAbudgetLinesDataTableColumns: MUIDataTableColumnDef[] = [
+  {
+    name: "year",
+    label: "Year",
+  },
+  {
+    name: "line",
+    label: "Budget line",
+  },
+  {
+    name: "value",
+    label: "Disbursements",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+];
+
+export const ODAbudgetLinesDataTableOptions: MUIDataTableOptions = {
+  print: false,
+  elevation: 0,
+  search: true,
+  filter: false,
+  download: false,
+  rowHover: false,
+  pagination: false,
+  viewColumns: false,
+  responsive: "standard",
+  selectableRows: "none",
+  selectableRowsHeader: false,
+};

@@ -17,7 +17,7 @@ const tableCellColors = [
   "rgba(182, 182, 182, 0.6)",
 ];
 
-export const ExpandableRow = (props: any) => {
+export const ExpandableRowOrg = (props: any) => {
   const history = useHistory();
   const [selectedFilters, setSelectedFilters] = useRecoilState(
     selectedFilterAtom
@@ -31,14 +31,14 @@ export const ExpandableRow = (props: any) => {
     });
     setTimeout(() => {
       history.push(
-        `${history.location.pathname.replace("sectors", "projects")}${
+        `${history.location.pathname.replace("organisation", "projects")}${
           history.location.search
         }`
       );
     }, 100);
   }
 
-  const children = get(props, "child.children", []);
+  const children = get(props, "child.orgs", []);
 
   return (
     <React.Fragment>
@@ -70,27 +70,25 @@ export const ExpandableRow = (props: any) => {
             />
           )}
         </TableCell>
-        <TableCell key={props.child.code} colSpan={1}>
-          {props.child.code}
-        </TableCell>
-        <TableCell key={props.child.title} colSpan={1}>
+        <TableCell key={props.child.name} colSpan={1}>
           <span
             css="color: #2e4982;cursor: pointer;"
-            onClick={() => onLinkClick(props.child.code)}
+            onClick={() => onLinkClick(props.child.name)}
           >
-            {props.child.title}
+            {props.child.name}
           </span>
         </TableCell>
-        <TableCell key={`${props.child.title}-size`} colSpan={1}>
-          {formatLocale(props.child.size)}
+        <TableCell key={`${props.child.name}-value`} colSpan={1}>
+          {formatLocale(props.child.value)}
         </TableCell>
-        <TableCell key={`${props.child.title}-committed`} colSpan={1}>
+        <TableCell key={`${props.child.name}-committed`} colSpan={1}>
           {formatLocale(props.child.committed)}
         </TableCell>
       </TableRow>
       {expanded && children.length > 0 && (
         <ExpandableRows
           data={children}
+          type="org"
           level={props.level + 1}
           key={`${props.child.title}-children`}
         />
