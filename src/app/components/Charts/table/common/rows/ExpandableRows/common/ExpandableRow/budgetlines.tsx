@@ -2,11 +2,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import get from "lodash/get";
-import { useRecoilState } from "recoil";
-import { useHistory } from "react-router-dom";
 import { formatLocale } from "app/utils/formatLocale";
 import { TableRow, TableCell } from "@material-ui/core";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
 import { ExpandButton } from "app/components/Charts/table/common/rows/ExpandableRows/common/ExpandBtn";
 
@@ -17,28 +14,10 @@ const tableCellColors = [
   "rgba(182, 182, 182, 0.6)",
 ];
 
-export const ExpandableRow = (props: any) => {
-  const history = useHistory();
-  const [selectedFilters, setSelectedFilters] = useRecoilState(
-    selectedFilterAtom
-  );
+export const ExpandableRowBudgetLines = (props: any) => {
   const [expanded, setExpanded] = React.useState(false);
 
-  function onLinkClick(code: string) {
-    setSelectedFilters({
-      ...selectedFilters,
-      sectors: [...selectedFilters.sectors, code],
-    });
-    setTimeout(() => {
-      history.push(
-        `${history.location.pathname.replace("sectors", "projects")}${
-          history.location.search
-        }`
-      );
-    }, 100);
-  }
-
-  const children = get(props, "child.children", []);
+  const children = get(props, "child.lines", []);
 
   return (
     <React.Fragment>
@@ -70,29 +49,22 @@ export const ExpandableRow = (props: any) => {
             />
           )}
         </TableCell>
-        <TableCell key={props.child.code} colSpan={1}>
-          {props.child.code}
+        <TableCell key={props.child.year} colSpan={1}>
+          {props.child.year}
         </TableCell>
-        <TableCell key={props.child.title} colSpan={1}>
-          <span
-            css="color: #2e4982;cursor: pointer;"
-            onClick={() => onLinkClick(props.child.code)}
-          >
-            {props.child.title}
-          </span>
+        <TableCell key={`${props.child.line}-line`} colSpan={1}>
+          {formatLocale(props.child.line)}
         </TableCell>
-        <TableCell key={`${props.child.title}-size`} colSpan={1}>
-          {formatLocale(props.child.size)}
-        </TableCell>
-        <TableCell key={`${props.child.title}-committed`} colSpan={1}>
-          {formatLocale(props.child.committed)}
+        <TableCell key={`${props.child.value}-value`} colSpan={1}>
+          {formatLocale(props.child.value)}
         </TableCell>
       </TableRow>
       {expanded && children.length > 0 && (
         <ExpandableRows
           data={children}
+          type="budgetlines"
           level={props.level + 1}
-          key={`${props.child.title}-children`}
+          key={`${props.child.year}-children`}
         />
       )}
     </React.Fragment>

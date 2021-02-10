@@ -1,3 +1,8 @@
+import React from "react";
+import { formatLocale } from "app/utils/formatLocale";
+import { MUIDataTableOptions, MUIDataTableColumnDef } from "mui-datatables";
+import { LinkCell } from "app/components/Charts/table/common/cells/LinkCell";
+
 export interface DataProps {
   name: string;
   size: number;
@@ -76,4 +81,41 @@ export const directions = [
   ["right", "top"],
   ["bottom", "right"],
   ["left", "bottom"],
+];
+
+export const thematicAreasDataTableOptions: MUIDataTableOptions = {
+  print: false,
+  elevation: 0,
+  search: true,
+  filter: false,
+  download: false,
+  rowHover: false,
+  pagination: true,
+  viewColumns: false,
+  responsive: "standard",
+  selectableRows: "none",
+  selectableRowsHeader: false,
+};
+
+export const thematicAreasDataTableColumns: MUIDataTableColumnDef[] = [
+  {
+    name: "area",
+    label: "Area",
+    options: {
+      customBodyRender: (value) => {
+        const link = `/thematic-area/${encodeURIComponent(value)}`;
+        return <LinkCell link={link} value={value} />;
+      },
+    },
+  },
+  {
+    name: "value",
+    label: "Disbursements",
+    options: {
+      sort: false,
+      customBodyRender: (value) => {
+        return formatLocale(value);
+      },
+    },
+  },
 ];

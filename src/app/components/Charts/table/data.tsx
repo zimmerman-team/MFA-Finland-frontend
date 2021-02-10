@@ -4,11 +4,11 @@ import {
   MUIDataTableColumnDef,
   MUIDataTableIsRowCheck,
 } from "mui-datatables";
+import { formatLocale } from "app/utils/formatLocale";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { LinkCell } from "app/components/Charts/table/common/cells/LinkCell";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
 import { MultiValuesCell } from "app/components/Charts/table/common/cells/MultiValuesCell";
-import { formatLocale } from "app/utils/formatLocale";
 
 export interface DataTableProps {
   options: MUIDataTableOptions;
@@ -94,6 +94,12 @@ export const tableTheme = createMuiTheme({
     MuiPopover: {
       paper: {
         width: "fit-content",
+      },
+    },
+    // @ts-ignore
+    MUIDataTable: {
+      liveAnnounce: {
+        display: "none",
       },
     },
   },
@@ -448,10 +454,24 @@ export const SectorsDataTableColumns: MUIDataTableColumnDef[] = [
   },
   {
     name: "size",
-    label: "Activity count",
-    options: { sort: false },
+    label: "Disbursements",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
   },
-  { name: "sum", label: "Sum of activities", options: { sort: false } },
+  {
+    name: "committed",
+    label: "Committed",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
 ];
 
 export const SectorsDataTableMockData: Array<object | number[] | string[]> = [
@@ -522,15 +542,15 @@ export const SectorsDataTableMockData: Array<object | number[] | string[]> = [
 ];
 
 export const SectorsDataTableOptions: MUIDataTableOptions = {
-  print: true,
+  print: false,
   elevation: 0,
   search: true,
   filter: false,
-  download: true,
   rowHover: true,
+  download: false,
   serverSide: true,
-  pagination: true,
-  viewColumns: true,
+  pagination: false,
+  viewColumns: false,
   expandableRows: true,
   responsive: "standard",
   selectableRows: "none",
@@ -552,4 +572,32 @@ export const SectorsDataTableOptions: MUIDataTableOptions = {
     SectorsDataTableMockData[dataIndex].children,
 };
 
-//TODO: add table functionalities
+// Locations
+
+export const LocationsDataTableColumns: MUIDataTableColumnDef[] = [
+  {
+    name: "name",
+    label: "Name",
+    options: { sort: false },
+  },
+  {
+    name: "value",
+    label: "Disbursements",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+  {
+    name: "committed",
+    label: "Committed",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+];
