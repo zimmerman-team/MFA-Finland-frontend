@@ -26,7 +26,7 @@ function Providers(props: ProviderProps) {
               css={`
                 min-height: 100%;
                 padding: 0;
-                overflow: hidden;
+                //overflow: hidden;
               `}
             >
               <Router>{props.children}</Router>
