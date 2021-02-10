@@ -11,6 +11,7 @@ const chip = css`
   font-weight: bold;
   color: ${ProjectPalette.primary.main};
   margin-right: 8px;
+  margin-bottom: 12px;
 
   .MuiChip-deleteIcon {
     color: #bcc6d6;

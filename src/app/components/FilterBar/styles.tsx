@@ -2,20 +2,21 @@ import { css } from "styled-components/macro";
 import { FilterBarProps } from "./index";
 import { ProjectPalette, SecondaryColor } from "../../theme";
 
-export const createStyles = (props: FilterBarProps) => {
+export const createStyles = (props: FilterBarProps, height: number) => {
   return {
     container: css`
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       position: sticky;
       top: 64px;
       margin-bottom: 16px;
-      height: 64px;
+      min-height: 64px;
       background-color: #ecf1fa;
-      padding: 16px 0;
       overflow-x: auto;
       overflow-y: hidden;
       z-index: 2;
+      padding-top: 16px;
+      padding-bottom: 4px;
     `,
     background: css`
       z-index: -1;
@@ -23,7 +24,7 @@ export const createStyles = (props: FilterBarProps) => {
       left: 0;
       position: fixed;
       background-color: #ecf1fa;
-      height: 64px;
+      min-height: ${height}px;
       width: 100vw;
     `,
     button: css`
@@ -42,7 +43,14 @@ export const createStyles = (props: FilterBarProps) => {
     `,
     label: css`
       margin: 0 24px;
+      white-space: nowrap;
     `,
-    chipContainer: css``,
+    chipContainer: css`
+      display: block;
+    `,
+    buttonContainer: css`
+      display: flex;
+      align-items: center;
+    `,
   };
 };

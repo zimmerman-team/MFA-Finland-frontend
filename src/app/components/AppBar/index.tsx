@@ -7,16 +7,22 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { PrimaryColor, SecondaryColor } from "app/theme";
 import { NavLink } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { drawerAtom, languageAtom } from "app/state/recoil/atoms";
+import {
+  currentFilterOpenAtom,
+  drawerAtom,
+  languageAtom,
+} from "app/state/recoil/atoms";
 import { css } from "styled-components/macro";
 import { MfaLogo } from "app/assets/mfa_logo";
 import LanguageIcon from "@material-ui/icons/Language";
 import SearchIcon from "@material-ui/icons/Search";
 import { Popover } from "@material-ui/core";
+import { FILTER_TYPES } from "../FilterPanel/data";
 
 export function AppBar() {
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
+  const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
 
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -82,8 +88,6 @@ export function AppBar() {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 68px;
-            /* padding: 0 24px; */
             padding: 0;
             background-color: ${PrimaryColor[0]};
           `}
@@ -92,6 +96,7 @@ export function AppBar() {
           {/* logo */}
           <NavLink
             to="/"
+            onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
             css={`
               display: flex;
               text-decoration: none;

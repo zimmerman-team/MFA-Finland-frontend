@@ -14,6 +14,13 @@ import { Filter } from "./Panels/Filter";
 
 export interface FilterPanelProps {}
 
+// TODO: FilterPanel Main: display selected filters
+// TODO: FilterPanel Filter: display selected filters
+// TODO: FilterPanel Filter: reset filter
+// TODO: FilterPanel Filter: select all
+// TODO: FilterPanel Filter: apply
+// TODO: FilterPanel Filter: recent/filter
+
 export const FilterPanel = (props: FilterPanelProps) => {
   const styles = createStyles(props);
   const [currentFilterOpen, setCurrentFilterOpen] = useRecoilState(
