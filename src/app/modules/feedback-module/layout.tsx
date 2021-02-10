@@ -1,4 +1,5 @@
-//@ts-nocheck
+// @ts-nocheck
+
 import {
   Box,
   Paper,
@@ -60,7 +61,7 @@ const gridSetting = {
   lg: 12,
 };
 
-const FaqList: AccordionProps[] = [
+const FaqList = [
   {
     label: "The data of my organisation is not correct. How can I change it?",
     content:
