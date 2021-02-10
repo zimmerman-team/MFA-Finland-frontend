@@ -10,7 +10,7 @@ import { BottomActions } from "../Card/BottomActions";
 export interface FilterProps {
   title: string;
   data?: FilterOption[];
-  hasSearch?: boolean;
+  renderSearch?: boolean;
 }
 
 export const createStyles = (props: FilterProps) => {
@@ -28,7 +28,7 @@ export const createStyles = (props: FilterProps) => {
     bottomActionsContainer: css`
       display: flex;
       justify-content: flex-end;
-      max-width: 920px;
+      max-width: ${props.title === "Period" ? "712px" : "920px"};
     `,
   };
 };
@@ -43,13 +43,15 @@ export const Filter = (props: FilterProps) => {
 
   return (
     <Grid container item direction="column" css={styles.container}>
-      <Header title={props.title} />
+      <Header {...props} />
       <Card {...props} />
-      <Typography variant="caption" css={styles.selected}>
-        {formatSelectedValues()}
-      </Typography>
+      {props.title !== "Period" && (
+        <Typography variant="caption" css={styles.selected}>
+          {formatSelectedValues()}
+        </Typography>
+      )}
       <div css={styles.bottomActionsContainer}>
-        <BottomActions />
+        <BottomActions {...props} />
       </div>
     </Grid>
   );

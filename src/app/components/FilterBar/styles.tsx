@@ -37,6 +37,7 @@ export const createStyles = (props: FilterBarProps) => {
       height: 36px;
       :hover {
         background-color: ${SecondaryColor[1]};
+        box-shadow: none;
       }
     `,
     label: css`

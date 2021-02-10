@@ -4,6 +4,7 @@ import { Button, ButtonProps } from "@material-ui/core/";
 
 interface PillButton extends ButtonProps {
   css?: readonly SimpleInterpolation[];
+  active?: boolean;
 }
 
 export const PillButton = (props: PillButton) => {

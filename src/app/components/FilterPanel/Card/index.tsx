@@ -7,6 +7,7 @@ import { CheckboxGridListItem } from "../ListItems/CheckboxGridListItem";
 import { AccordionListItem } from "../ListItems/AccordionListItem";
 import { FilterProps } from "../Panels/Filter";
 import { PrimaryColor } from "../../../theme";
+import { CardContentPeriod } from "./PeriodCardContent";
 
 export interface FilterOption {
   name: string;
@@ -27,10 +28,16 @@ export const Card = (props: FilterProps) => {
   };
 
   return (
-    <div css={styles.container}>
-      <CardHeader />
-      <CardContent {...props} />
-    </div>
+    <>
+      {props.title === "Period" ? (
+        <CardContentPeriod {...props} />
+      ) : (
+        <div css={styles.container}>
+          <CardHeader />
+          <CardContent {...props} />
+        </div>
+      )}
+    </>
   );
 };
 
@@ -74,24 +81,29 @@ const CardContent = (props: FilterProps) => {
       overflow-x: hidden;
       overflow-y: auto;
       padding-right: 24px;
+
       &::-webkit-scrollbar {
         width: 4px;
         border-radius: 4px;
         background: transparent;
       }
+
       &::-webkit-scrollbar-track {
         border-radius: 4px;
         background: ${PrimaryColor[0]};
       }
+
       &::-webkit-scrollbar-thumb {
         border-radius: 4px;
         background: white;
       }
+
       ::-webkit-scrollbar-button {
         width: 0;
         height: 0;
         display: none;
       }
+
       ::-webkit-scrollbar-corner {
         background-color: transparent;
       }

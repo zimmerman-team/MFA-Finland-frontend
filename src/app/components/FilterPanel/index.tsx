@@ -31,28 +31,42 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return <ChooseAFilterPanel {...props} />;
         break;
       case FILTER_TYPES.THEMATIC_AREAS:
-        return <Filter title="Thematic Areas" data={level1MockData} />;
+        return (
+          <Filter title="Thematic Areas" data={level1MockData} renderSearch />
+        );
         break;
       case FILTER_TYPES.COUNTRIES:
-        return <Filter title="Countries/Regions" data={level1MockData} />;
+        return (
+          <Filter
+            title="Countries/Regions"
+            data={level1MockData}
+            renderSearch
+          />
+        );
         break;
       case FILTER_TYPES.SECTORS:
-        return <Filter title="Sector" data={level3MockData} />;
+        return <Filter title="Sector" data={level3MockData} renderSearch />;
         break;
       case FILTER_TYPES.ORGANISATIONS:
-        return <Filter title="Organisations" data={level2MockData} />;
+        return (
+          <Filter title="Organisations" data={level2MockData} renderSearch />
+        );
         break;
       case FILTER_TYPES.SDGS:
-        return <Filter title="SDGs" data={level2MockData} />;
+        return <Filter title="SDGs" data={level2MockData} renderSearch />;
         break;
       case FILTER_TYPES.ACTIVITY_STATUS:
-        return <Filter title="Activity Status" data={level1MockData} />;
+        return (
+          <Filter title="Activity Status" data={level1MockData} renderSearch />
+        );
         break;
       case FILTER_TYPES.PERIOD:
-        return <></>;
+        return <Filter title="Period" />;
         break;
       case FILTER_TYPES.ADVANCED_FILTERS:
-        return <Filter title="Advanced Filters" data={level1MockData} />;
+        return (
+          <Filter title="Advanced Filters" data={level1MockData} renderSearch />
+        );
         break;
       default:
         return <></>;
