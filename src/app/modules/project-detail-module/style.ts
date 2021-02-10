@@ -29,8 +29,8 @@ export const TextHighlightStyle = css`
 `;
 
 export const DescriptionLabelStyle = css`
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
   color: #2e4063;
 `;

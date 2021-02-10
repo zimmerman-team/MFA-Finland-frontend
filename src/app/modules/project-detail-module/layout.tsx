@@ -28,6 +28,7 @@ import { GridSpacingFix } from "app/utils/GridSpacingFix";
 import React from "react";
 import { useRecoilState } from "recoil";
 import get from "lodash/get";
+import { TotalDisbursements } from "./common/Disbursements";
 
 const crumbs: BreadcrumbLinkModel[] = [
   { label: "Explore", path: Path.explore },
@@ -153,6 +154,10 @@ export const ProjectDetailModuleLayout = () => {
       {/* total disbursements */}
       <Grid item xs={12} lg={12}>
         <Typography css={DescriptionLabelStyle}>Total Disbursements</Typography>
+        <TotalDisbursements
+          totalDisbursements={7000}
+          totalCommitments={10000}
+        />
       </Grid>
 
       {/* ------------------------------------------------------------------ */}
