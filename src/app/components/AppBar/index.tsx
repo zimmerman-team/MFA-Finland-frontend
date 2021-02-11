@@ -241,7 +241,7 @@ export function AppBar() {
       <div
         // todo: move elsewhere
         css={`
-          z-index: 0;
+          z-index: 1;
           top: 0;
           left: 0;
           position: fixed;
