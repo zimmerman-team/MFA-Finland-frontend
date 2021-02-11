@@ -20,10 +20,10 @@ export const App = () => {
   }, []);
   return (
     <React.Fragment>
-      <AppBar />
-      <FilterBar />
-      <FilterPanel />
-      <Drawer />
+      {/*<AppBar />*/}
+      {/*<FilterBar />*/}
+      {/*<FilterPanel />*/}
+      {/*<Drawer />*/}
       <ModuleRoutes />
       {/*<AppDialogs />*/}
       <CookieDialog

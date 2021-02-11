@@ -202,7 +202,18 @@ export const DataGrid = (props: DataGridProps) => {
           )}
         </GridWidget>
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={4}
+        lg={4}
+        css={`
+          @media (max-width: 960px) {
+            order: 1;
+          }
+        `}
+      >
         <GridWidget
           interactive
           label="Result"
@@ -234,7 +245,18 @@ export const DataGrid = (props: DataGridProps) => {
           )}
         </GridWidget>
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={4}
+        lg={4}
+        css={`
+          @media (max-width: 960px) {
+            order: 1;
+          }
+        `}
+      >
         <GridWidget
           interactive
           label="About"
@@ -254,7 +276,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 5 */}
       {/* ----------------------------- */}
-      <Hidden smDown>
+      <Hidden xsDown>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <GridWidget
             label="Map"
@@ -283,7 +305,9 @@ export const DataGrid = (props: DataGridProps) => {
         </Grid>
       </Hidden>
 
-      <div css="width: 100%; height: 100px;" />
+      <Hidden smDown>
+        <div css="width: 100%; height: 100px;" />
+      </Hidden>
     </React.Fragment>
   );
 };
