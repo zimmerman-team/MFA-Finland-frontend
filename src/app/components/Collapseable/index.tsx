@@ -6,20 +6,7 @@ import { PlayArrow } from "@material-ui/icons";
 import { ResponsivePie } from "@nivo/pie";
 import { SecondaryColor } from "../../theme";
 
-const data = [
-  {
-    id: "unallocable",
-    label: "unallocable",
-    value: 25,
-  },
-  {
-    id: "rest",
-    label: "rest",
-    value: 75,
-  },
-];
-
-export function Collapsable() {
+export function Collapsable(props: any) {
   const styles = {
     container: css`
       display: flex;
@@ -94,10 +81,24 @@ export function Collapsable() {
             Geographically unallocable ODA
           </Typography>
           <div css={styles.chartContainer}>
-            <PieChart data={data} />
+            <PieChart
+              data={[
+                {
+                  id: "unallocable",
+                  label: "unallocable",
+                  value: props.unallocable,
+                },
+                {
+                  id: "rest",
+                  label: "rest",
+                  value: 100 - props.unallocable,
+                },
+              ]}
+            />
           </div>
           <Typography variant="overline" css={styles.subtitle}>
-            25% of actual exclusive ODA is NOT showing on the map.
+            {props.unallocable}% of actual exclusive ODA is NOT showing on the
+            map.
           </Typography>
         </div>
       </Slide>
@@ -131,7 +132,7 @@ const PieChart = (props: PieProps) => {
   return (
     <div css={styles.container}>
       <Typography variant="subtitle2" css={styles.counter}>
-        25%
+        {props.data[0].value}%
       </Typography>
       <ResponsivePie
         data={props.data}
