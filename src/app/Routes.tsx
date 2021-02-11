@@ -23,7 +23,7 @@ import { ProjectDetailModule } from "app/modules/project-detail-module";
 
 export function ModuleRoutes() {
   useUrlFilters();
-  useScrollToTop();
+  // useScrollToTop();
 
   const isRehydrated = useStoreRehydrated();
   if (!isRehydrated) {
@@ -57,7 +57,7 @@ export function ModuleRoutes() {
           <ThematicDetailModule />
         </Route>
 
-        <Route exact path="/project">
+        <Route exact path="/project/:param">
           <ProjectDetailModule />
         </Route>
 
