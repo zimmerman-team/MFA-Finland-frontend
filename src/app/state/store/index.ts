@@ -65,6 +65,7 @@ import {
 // sync variables
 import syncSearch from "app/state/api/actions-reducers/sync/search";
 import filtersUpdated from "app/state/api/actions-reducers/sync/filtersUpdated";
+import activitySDG from "../api/actions-reducers/detail-pages/activitySDG";
 
 // auth
 // import user from "app/state/api/actions-reducers/auth/user";
@@ -140,6 +141,7 @@ const storeContent: StoreModel = {
   organisationsTable: persist(organisationsTable),
   sectorsTable: persist(sectorsTable),
   activityDetail: persist(activityDetail),
+  activitySDG: persist(activitySDG),
   detailPublishersTable: persist(detailPublishersTable),
   detailDonorsTable: persist(detailDonorsTable),
   // sync variables
