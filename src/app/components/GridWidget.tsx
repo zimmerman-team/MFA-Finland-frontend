@@ -50,8 +50,6 @@ const style = {
       border-radius: 16px;
       padding: 16px 16px 16px 16px;
       width: initial;
-      //margin-right: 16px;
-      //margin-left: 16px;
       height: initial;
     }
   `,

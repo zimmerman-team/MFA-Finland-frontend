@@ -20,9 +20,10 @@ export const drawerStyle = {
   `,
   DrawerGridContainer: css`
     background-color: ${PrimaryColor[0]};
-    height: 100vh;
+    height: 100%;
     padding-left: 39px;
     padding-right: 39px;
+    //flex-direction: column;
   `,
   HeaderGrid: css`
     display: flex;
@@ -37,6 +38,9 @@ export const drawerStyle = {
   AddressContainer: css`
     padding-top: 12px;
     padding-left: 32px;
+    @media (max-width: 960px) {
+      padding: initial;
+    }
   `,
   SocialIconContainer: css`
     display: flex;
