@@ -254,7 +254,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 5 */}
       {/* ----------------------------- */}
-      <Hidden smDown>
+      <Hidden xsDown>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <GridWidget
             label="Map"

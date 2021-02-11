@@ -46,12 +46,12 @@ const style = {
       : ""};
     transition: box-shadow 0.3s ease-in-out;
 
-    @media (max-width: 600px) {
+    @media (max-width: 960px) {
       border-radius: 16px;
       padding: 16px 16px 16px 16px;
       width: initial;
-      margin-right: 16px;
-      margin-left: 16px;
+      //margin-right: 16px;
+      //margin-left: 16px;
     }
   `,
   childrencontainer: (interactive?: boolean) => css`
