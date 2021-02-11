@@ -1,36 +1,38 @@
 // @ts-nocheck
-
-import { Box, Tab, useMediaQuery } from "@material-ui/core";
-import { Hidden } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
-import { ActivityAccordion } from "app/components/ActivityAccordion";
+import React from "react";
+import {
+  Box,
+  useMediaQuery,
+  Hidden,
+  Typography,
+  Grid,
+} from "@material-ui/core";
+import { Path } from "app/const/Path";
 import {
   ActivityAccordionState,
   ActivityItemProps,
   activityList,
+  ActivityDetailModuleLayoutProps,
 } from "app/components/ActivityAccordion/model";
 import { Breadcrumbs } from "app/components/Breadcrumb";
-import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
-import { ElementBackground } from "app/components/ElementBackground";
-import { InPageNavigation } from "app/components/InPageNavigation";
 import { ModuleContainer } from "app/components/ModuleContainer";
-import { Path } from "app/const/Path";
-import { metaData } from "app/modules/project-detail-module/common/metaData";
+import { InPageNavigation } from "app/components/InPageNavigation";
+import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
+import { ActivityAccordion } from "app/components/ActivityAccordion";
+import { ElementBackground } from "app/components/ElementBackground";
 import {
   FieldOneStyle,
   FieldTwoStyle,
   TextHighlightStyle,
   DescriptionLabelStyle,
 } from "app/modules/project-detail-module/style";
+import { SDGviz } from "app/components/Charts/sdg";
 import theme, { PrimaryColor, SecondaryColor } from "app/theme";
 import { GridSpacingFix } from "app/utils/GridSpacingFix";
-import React from "react";
 import { useRecoilState } from "recoil";
 import get from "lodash/get";
 import { TotalDisbursements } from "./common/Disbursements";
 import { css } from "styled-components/macro";
-import { FilledButton } from "../../components/Buttons/FilledButton";
 import { PillButton } from "../../components/Buttons/PillButton";
 import {
   TransactionsBar,
@@ -42,7 +44,9 @@ const crumbs: BreadcrumbLinkModel[] = [
   { label: "Activity Detail" },
 ];
 
-export const ProjectDetailModuleLayout = () => {
+export const ProjectDetailModuleLayout = (
+  props: ActivityDetailModuleLayoutProps
+) => {
   const mobile = useMediaQuery(theme.breakpoints.up("md"));
   const [activeNavItem, setActiveNavItem] = React.useState(0);
 
@@ -97,9 +101,9 @@ export const ProjectDetailModuleLayout = () => {
           `}
         >
           <Typography css={FieldOneStyle}>
-            {"props.metadata.reporting_org_narrative"} |{" "}
-            {"props.metadata.reporting_org_ref"} |{" "}
-            {"props.metadata.reporting_org_type"}
+            {props.metadata.reporting_org_narrative} |{" "}
+            {props.metadata.reporting_org_ref} |{" "}
+            {props.metadata.reporting_org_type}
           </Typography>
         </Grid>
         <Box width="100%" height="18px" />
@@ -114,7 +118,7 @@ export const ProjectDetailModuleLayout = () => {
             z-index: 1;
           `}
         >
-          <Typography css={FieldTwoStyle}>{"props.metadata.title"}</Typography>
+          <Typography css={FieldTwoStyle}>{props.metadata.title}</Typography>
         </Grid>
         <Box width="100%" height="24px" />
 
@@ -130,13 +134,13 @@ export const ProjectDetailModuleLayout = () => {
           `}
         >
           <Typography css={FieldOneStyle}>
-            {"props.metadata.iati_identifier"}
+            {props.metadata.iati_identifier}
           </Typography>
           <Box width="100px" />
           <Typography css={FieldOneStyle}>
             activities from{" "}
-            <span css={TextHighlightStyle}>{"props.metadata.dates[0]"}</span> To{" "}
-            <span css={TextHighlightStyle}>{"props.metadata.dates[1]"}</span>{" "}
+            <span css={TextHighlightStyle}>{props.metadata.dates[0]}</span> To{" "}
+            <span css={TextHighlightStyle}>{props.metadata.dates[1]}</span>{" "}
           </Typography>
         </Grid>
 
@@ -152,7 +156,7 @@ export const ProjectDetailModuleLayout = () => {
         <Grid item lg={12}>
           <Typography css={DescriptionLabelStyle}>Description</Typography>
           <Box width="100%" height="16px" />
-          <Typography>{"props.metadata.description"}</Typography>
+          <Typography>{props.metadata.description}</Typography>
         </Grid>
         <Box width="100%" height="60px" />
       </Grid>
@@ -167,20 +171,23 @@ export const ProjectDetailModuleLayout = () => {
         />
       </Grid>
 
-      <Box width="100%" height="56px" />
+      <Box width="100%" height="60px" />
 
       {/* ------------------------------------------------------------------ */}
       {/* transactions */}
       <Grid item xs={12} lg={12}>
         <Transactions />
-        {/*<Typography css={DescriptionLabelStyle}>Transactions</Typography>*/}
       </Grid>
 
-      <Box width="100%" height="56px" />
+      <Box width="100%" height="60px" />
 
-      <Grid item xs={12} lg={12}>
-        <Typography css={DescriptionLabelStyle}>SDG's</Typography>
+      <Grid item xs={12} md={12} lg={8}>
+        <Typography css={DescriptionLabelStyle}>SDGs</Typography>
+        <Box width="100%" height="15px" />
+        <SDGviz data={props.sdgVizData} />
       </Grid>
+
+      <Box width="100%" height="60px" />
 
       {/* ------------------------------------------------------------------ */}
       {/* SDG's */}
@@ -188,9 +195,9 @@ export const ProjectDetailModuleLayout = () => {
         <Grid item lg={3}>
           <div
             css={`
-              position: sticky;
-              top: 97px;
+              top: 140px;
               margin-top: 16px;
+              position: sticky;
             `}
           >
             <InPageNavigation
@@ -199,7 +206,7 @@ export const ProjectDetailModuleLayout = () => {
               setActivityListState={setActivityListState}
               lists={activityListState}
               handleClick={handleNavItemClick}
-              actualData={metaData}
+              actualData={props.metaData}
             />
           </div>
         </Grid>
@@ -215,12 +222,12 @@ export const ProjectDetailModuleLayout = () => {
         css={GridSpacingFix}
       >
         {activityListState.map((item: ActivityItemProps, index: number) => (
-          <Grid item xs={12} lg={12} key={index}>
+          <Grid item xs={12} lg={12} key={item.id}>
             <ActivityAccordion
               {...item}
               index={index}
               handleClick={handleNavItemClick}
-              data={get(metaData, item.dataPath, null)}
+              data={get(props.metadata, item.dataPath, null)}
             />
           </Grid>
         ))}
@@ -241,8 +248,6 @@ export const Transactions = (props: TransactionsProps) => {
       display: flex;
       justify-content: space-between;
       margin-bottom: 24px;
-      //margin-top: 72px;
-      //align-items: center;
     `,
     tabContainer: css`
       display: flex;

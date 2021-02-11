@@ -1,5 +1,5 @@
 import React from "react";
-import { Accordion, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import MUIAccordionSummary from "@material-ui/core/AccordionSummary";
 import MUIAccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -11,6 +11,7 @@ import { getAccordionContent } from "app/components/utils/getAccordionContent";
 import { AccordionStyle } from "app/components/Accordion/style";
 
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+
 export const ActivityAccordion = (props: ActivityItemProps) => {
   return (
     <React.Fragment>

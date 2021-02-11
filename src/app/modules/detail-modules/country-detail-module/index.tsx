@@ -25,6 +25,7 @@ export function CountryDetailModule() {
     budgetLinesBarChartData,
     sdgVizData,
     geoMapData,
+    unallocablePercentage,
   } = useDataGridData();
 
   return (
@@ -41,6 +42,7 @@ export function CountryDetailModule() {
       budgetLinesBarChartData={budgetLinesBarChartData}
       sdgVizData={sdgVizData}
       geoMapData={geoMapData}
+      unallocablePercentage={unallocablePercentage}
     />
   );
 }

@@ -56,6 +56,7 @@ interface ApiCallParamsFilters {
   recipient_region_code?: string[];
   recipient_country_code?: string[];
   transaction_provider_org_ref?: string[];
+  iati_identifier?: string[];
   period?: {
     startDate: string;
     endDate: string;
@@ -138,6 +139,7 @@ export interface StoreModel {
   detailDonorsTable: ApiCallModel;
   sectorsTable: ApiCallModel;
   activityDetail: ApiCallModel;
+  activitySDG: ApiCallModel;
   donorsTreemap: ApiCallModel;
   // auth
   // users: ApiCallModel;

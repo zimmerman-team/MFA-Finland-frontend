@@ -23,6 +23,7 @@ export const DetailModuleLayout = (props: ModuleProps) => {
         budgetLinesBarChartData={props.budgetLinesBarChartData}
         sdgVizData={props.sdgVizData}
         geoMapData={props.geoMapData}
+        unallocablePercentage={props.unallocablePercentage}
       />
     </ModuleContainer>
   );

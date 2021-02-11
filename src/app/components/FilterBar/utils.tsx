@@ -1,8 +1,10 @@
 export function shouldRender(location: any) {
-  const arrayOfStrings = ["/about", "/feedback", "/statement", "/project"];
-  const str = location.pathname;
-  const found = arrayOfStrings.find((v) => str === v);
-  if (found === undefined) {
+  const urls = ["/about", "/feedback", "/statement", "/project"];
+  const currentLocation = location.pathname;
+  let found = urls.some((url) => {
+    return currentLocation.includes(url);
+  });
+  if (found === false) {
     return true;
   } else {
     return false;

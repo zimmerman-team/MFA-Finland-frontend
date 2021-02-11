@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { InpageNavItemModel } from "app/components/InPageNavigation/model";
 import { atom } from "recoil";
+import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 
 export const navList: InpageNavItemModel[] = [
   {
@@ -327,6 +328,7 @@ export interface ActivityDetailModuleLayoutProps {
   metadata: ActivityMetadata;
   inTransactions: Array<string[]>;
   outTransactions: Array<string[]>;
+  sdgVizData: SDGvizItemProps[];
 }
 
 export const initActivityDetailData: ActivityDetailModuleLayoutProps = {
@@ -380,6 +382,7 @@ export const initActivityDetailData: ActivityDetailModuleLayoutProps = {
     legacy_data: [],
     conditions: [],
   },
+  sdgVizData: [],
   inTransactions: [],
   outTransactions: [],
 };

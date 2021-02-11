@@ -101,13 +101,12 @@ function getLink(key: string, data: any) {
         {cellData}
       </Link>
     );
-  } else {
-    return (
-      <a href={`${link}`} target="_blank" rel="noopener noreferrer">
-        {cellData}
-      </a>
-    );
   }
+  return (
+    <a href={`${link}`} target="_blank" rel="noopener noreferrer">
+      {cellData}
+    </a>
+  );
 }
 
 export function getAccordionContent(data: any, type: string) {

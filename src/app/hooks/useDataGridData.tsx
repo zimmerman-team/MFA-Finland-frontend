@@ -105,6 +105,9 @@ export function useDataGridData() {
   const geoMapData = useStoreState((state) =>
     get(state.geoMap, "data.vizData", [])
   );
+  const unallocablePercentage = useStoreState((state) =>
+    get(state.geoMap, "data.unallocablePercentage", 0)
+  );
   const vizDataLoading = useStoreState((state) => ({
     oda: state.odaBarChart.loading,
     thematic: state.thematicAreasChart.loading,
@@ -222,5 +225,6 @@ export function useDataGridData() {
     sdgVizData,
     geoMapData,
     vizDataLoading,
+    unallocablePercentage,
   };
 }
