@@ -16,7 +16,6 @@ import { TreemapDataModel } from "app/components/Charts/treemap/data";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "./Collapseable";
-import { css } from "styled-components/macro";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -28,6 +27,7 @@ export interface DataGridProps {
   budgetLinesBarChartData: any;
   sdgVizData: SDGvizItemProps[];
   geoMapData: any;
+  unallocablePercentage: number;
   vizDataLoading: {
     oda: boolean;
     thematic: boolean;
@@ -270,7 +270,7 @@ export const DataGrid = (props: DataGridProps) => {
                   position: relative;
                 `}
               >
-                <Collapsable />
+                <Collapsable unallocable={props.unallocablePercentage} />
                 <Geomap geoData={props.geoMapData} />
                 <Legend
                   label="Disbursements Amount"
