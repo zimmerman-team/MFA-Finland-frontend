@@ -20,12 +20,11 @@ export const App = () => {
   }, []);
   return (
     <React.Fragment>
-      {/*<AppBar />*/}
-      {/*<FilterBar />*/}
-      {/*<FilterPanel />*/}
-      {/*<Drawer />*/}
+      <AppBar />
+      <FilterBar />
+      <FilterPanel />
+      <Drawer />
       <ModuleRoutes />
-      {/*<AppDialogs />*/}
       <CookieDialog
         data-testid="cookie-dialog"
         message="The website uses cookies for tracking statistics. Read Grand Bargains data privacy for more details."
