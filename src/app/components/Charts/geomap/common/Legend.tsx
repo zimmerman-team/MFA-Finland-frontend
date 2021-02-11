@@ -16,6 +16,7 @@ const container = css`
   flex-direction: column;
   align-self: flex-end;
   margin-right: 8px;
+  margin-left: auto;
 `;
 
 const label = css`

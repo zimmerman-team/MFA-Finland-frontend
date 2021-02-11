@@ -15,6 +15,8 @@ import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budget
 import { TreemapDataModel } from "app/components/Charts/treemap/data";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { VizLoader } from "app/modules/common/viz-loader";
+import { Collapsable } from "./Collapseable";
+import { css } from "styled-components/macro";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -263,14 +265,19 @@ export const DataGrid = (props: DataGridProps) => {
             {props.vizDataLoading.geo ? (
               <VizLoader />
             ) : (
-              <React.Fragment>
+              <div
+                css={`
+                  position: relative;
+                `}
+              >
+                <Collapsable />
                 <Geomap geoData={props.geoMapData} />
                 <Legend
                   label="Disbursements Amount"
                   startValue={0}
                   totalValue={get(maxBy(props.geoMapData, "value"), "value", 0)}
                 />
-              </React.Fragment>
+              </div>
             )}
           </GridWidget>
         </Grid>
