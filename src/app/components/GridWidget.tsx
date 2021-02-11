@@ -52,6 +52,7 @@ const style = {
       width: initial;
       //margin-right: 16px;
       //margin-left: 16px;
+      height: initial;
     }
   `,
   childrencontainer: (interactive?: boolean) => css`
@@ -73,6 +74,7 @@ interface GridWidgetProps {
   interactive?: boolean;
   childrencontainerStyle?: React.CSSProperties;
   disbursementsStatComponent?: FunctionComponent;
+  // responsiveOrder?: number;
 }
 
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
