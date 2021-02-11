@@ -1,8 +1,8 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { SDGvizItem } from "app/components/Charts/sdg/common/item";
+import { SDGTooltip } from "app/components/Charts/sdg/common/tooltip";
 import { SDGvizProps, SDGvizItemProps } from "app/components/Charts/sdg/data";
-import { SunburstTooltip } from "app/components/Charts/sunburst/common/tooltip";
 
 export function SDGviz(props: SDGvizProps) {
   const [hoveredNode, setHoveredNode] = React.useState<SDGvizItemProps | null>(
@@ -10,13 +10,13 @@ export function SDGviz(props: SDGvizProps) {
   );
 
   return (
-    <Grid container spacing={2} id="sdg-container" css="position: relative;">
+    <Grid container spacing={2} id="sdg-container">
       {props.data.map((d: SDGvizItemProps) => (
         <Grid item key={d.number} xs={4} sm={3} md={4} lg={2} xl={2}>
           <SDGvizItem {...d} setHoveredNode={setHoveredNode} />
         </Grid>
       ))}
-      <SunburstTooltip
+      <SDGTooltip
         containerId="sdg-container"
         hoveredNode={
           hoveredNode
