@@ -25,7 +25,7 @@ export const FilterBar = (props: FilterBarProps) => {
   let container: any;
 
   React.useEffect(() => {
-    setHeight(container.clientHeight);
+    setHeight(container ? container.clientHeight : 64);
   }, [chips]);
 
   if (render) {

@@ -1,5 +1,5 @@
 export function shouldRender(location: any) {
-  const arrayOfStrings = ["/about", "/feedback", "/statement"];
+  const arrayOfStrings = ["/about", "/feedback", "/statement", "/project"];
   const str = location.pathname;
   const found = arrayOfStrings.find((v) => str === v);
   if (found === undefined) {
