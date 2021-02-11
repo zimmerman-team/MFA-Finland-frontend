@@ -10,7 +10,6 @@ import { css } from "styled-components/macro";
 interface DrawerItemProps {
   label: string;
   path: string;
-  icon: JSX.Element;
 }
 
 const ItemActiveStyle = css`
@@ -63,16 +62,14 @@ export const DrawerItem = (props: DrawerItemProps) => {
         button
         key={props.label}
         css={`
+          @media (max-width: 960px) {
+            padding: 0 !important;
+          }
           &:hover {
             background-color: initial;
           }
         `}
       >
-        {/*<MUIListItemIcon
-          css={activeState ? ItemIconActiveStyle : ItemIconInActiveStyle}
-        >
-          {props.icon}
-        </MUIListItemIcon>*/}
         <MUIListItemText
           // eslint-disable-next-line sonarjs/no-all-duplicated-branches
           css={ItemInActiveStyle}

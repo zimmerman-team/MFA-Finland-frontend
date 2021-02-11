@@ -1,13 +1,11 @@
 import React from "react";
 import MUIDrawer from "@material-ui/core/Drawer";
-import MUIList from "@material-ui/core/List";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
-import { Box, Divider, Grid } from "@material-ui/core";
-import { GlobalNavItemProps, GlobalNavItems } from "app/components/Drawer/data";
+import { Divider, Grid } from "@material-ui/core";
+import { GlobalNavItems } from "app/components/Drawer/common/data";
 import { useRecoilState } from "recoil";
 import { drawerAtom } from "app/state/recoil/atoms";
-import { DrawerItem } from "app/components/Drawer/common/DrawerItem";
 import { MfaLogo } from "app/assets/mfa_logo";
 import { NavLink } from "react-router-dom";
 import { PrimaryColor } from "app/theme";
@@ -16,7 +14,8 @@ import { IconFacebook } from "app/assets/icons/IconFacebook";
 import { IconYoutube } from "app/assets/icons/IconYoutube";
 import { IconLinkedin } from "app/assets/icons/IconLinkedin";
 import { IconTwitter } from "app/assets/icons/IconTwitter";
-import { drawerStyle } from "./drawerStyle";
+import { drawerStyle } from "app/components/Drawer/common/drawerStyle";
+import { NavList } from "app/components/Drawer/common/NavList";
 
 export const Drawer = () => {
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
@@ -38,10 +37,17 @@ export const Drawer = () => {
 
   return (
     <MUIDrawer anchor="top" open={drawerState} onClose={toggleDrawer(false)}>
-      <Grid container item lg={12} css={drawerStyle.DrawerGridContainer}>
+      <Grid
+        container
+        item
+        xs={12}
+        sm={12}
+        lg={12}
+        css={drawerStyle.DrawerGridContainer}
+      >
         {/* ----------------------------------------------------------- */}
         {/* header */}
-        <Grid item lg={12} css={drawerStyle.HeaderGrid}>
+        <Grid item xs={12} sm={12} lg={12} css={drawerStyle.HeaderGrid}>
           <NavLink to="/" css={drawerStyle.NavLink}>
             <IconButton edge="start" color="inherit" aria-label="menu">
               <MfaLogo />
@@ -60,16 +66,27 @@ export const Drawer = () => {
 
         {/* ----------------------------------------------------------- */}
         {/* content */}
-        <Grid item container lg={12}>
+        <Grid item container xs={12} sm={12} lg={12}>
           {/* ----------------------------------------------------------- */}
           {/* links */}
-          <Grid item lg={2}>
-            {/* <NavList items={props.items} /> */}
+          <Grid item xs={12} sm={12} lg={2}>
+            <NavList items={GlobalNavItems} />
           </Grid>
-          <Divider orientation="vertical" flexItem />
+          <div
+            css={`
+              width: 1px;
+              height: 200px;
+              background-color: white;
+
+              @media (max-width: 960px) {
+                width: 200px;
+                height: 1px;
+              }
+            `}
+          />
           {/* ----------------------------------------------------------- */}
           {/* address */}
-          <Grid item lg={3} css={drawerStyle.AddressContainer}>
+          <Grid item xs={12} sm={12} lg={3} css={drawerStyle.AddressContainer}>
             <Typography
               variant="body1"
               css={`
@@ -82,7 +99,7 @@ export const Drawer = () => {
               <br /> FI-00023 Government
               <br /> Finland
             </Typography>
-            <br /> <br /> <br /> <br />
+            <br /> <br />
             <Typography
               variant="body1"
               css={`
@@ -94,15 +111,31 @@ export const Drawer = () => {
               kirjaamo.um@formin.fi
             </Typography>
           </Grid>
+          <div
+            css={`
+              width: 1px;
+              height: 200px;
+              background-color: white;
 
+              @media (max-width: 960px) {
+                width: 200px;
+                height: 1px;
+              }
+            `}
+          />
           {/* ----------------------------------------------------------- */}
           {/* socials */}
           <Grid
             item
             container
+            xs={12}
+            sm={12}
             lg={3}
             css={`
               padding-left: 32px;
+              @media (max-width: 960px) {
+                padding-left: initial;
+              }
             `}
           >
             <Grid item lg={12}>
@@ -143,45 +176,12 @@ export const Drawer = () => {
                 </IconButton>
               </div>
             </Grid>
+            <Grid item lg={12}>
+              Lorem
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
     </MUIDrawer>
   );
 };
-
-// export const NavList = (props: NavListProps) => {
-//   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
-
-//   // todo: simplify this logic
-//   const toggleDrawer = (open: boolean) => (
-//     event: React.KeyboardEvent | React.MouseEvent
-//   ) => {
-//     if (
-//       event.type === "keydown" &&
-//       ((event as React.KeyboardEvent).key === "Tab" ||
-//         (event as React.KeyboardEvent).key === "Shift")
-//     ) {
-//       return;
-//     }
-
-//   return (
-//     <div
-//       role="presentation"
-//       onKeyDown={toggleDrawer(false)}
-//       onClick={toggleDrawer(false)}
-//     >
-//       <MUIList disablePadding>
-//         {props.items.map((item: GlobalNavItemProps, index: number) => (
-//           <DrawerItem {...item} key={index} />
-//         ))}
-//       </MUIList>
-
-//       <Box width="100%" height="32px" />
-//     </div>
-//   );
-// };
-
-// interface NavListProps {
-//   items: GlobalNavItemProps[]
-// }

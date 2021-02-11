@@ -1,11 +1,14 @@
 import { useRecoilState } from "recoil";
-import { currentFilterOpenAtom } from "../../../state/recoil/atoms";
+
 import { css } from "styled-components/macro";
 import { IconButton, Typography } from "@material-ui/core";
-import { FILTER_TYPES } from "../data";
+
 import { ArrowBackIos } from "@material-ui/icons";
-import { SearchPlaceholder } from "../../AppBar";
+
 import React from "react";
+import { SearchPlaceholder } from "app/components/AppBar/sort/SearchPlaceholder";
+import { currentFilterOpenAtom } from "app/state/recoil/atoms";
+import { FILTER_TYPES } from "app/components/FilterPanel/data";
 
 interface HeaderProps {
   title: string;

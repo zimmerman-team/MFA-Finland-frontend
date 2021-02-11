@@ -4,8 +4,6 @@ const basePath = "/";
 type PathItemType = {
   name: string;
   path: string;
-  // icon
-  // module
 };
 
 interface PathProps {
@@ -23,6 +21,7 @@ export const Path = {
   },
   home: basePath,
   explore: `${basePath}explore`,
+  feedback: `${basePath}feedback`,
   search: `${basePath}search-results`,
   detail: {
     activity: `${basePath}activity/:param`,
