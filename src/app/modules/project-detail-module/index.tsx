@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import filter from "lodash/filter";
 import { AppName } from "app/const/Path";
 import useTitle from "react-use/lib/useTitle";
 import { useRouteMatch } from "react-router-dom";
@@ -60,7 +61,7 @@ export function ProjectDetailModule() {
     <React.Fragment>
       <ProjectDetailModuleLayout
         {...activityDetailData}
-        sdgVizData={sdgVizData}
+        sdgVizData={filter(sdgVizData, { disabled: false })}
       />
       <div
         css={`
