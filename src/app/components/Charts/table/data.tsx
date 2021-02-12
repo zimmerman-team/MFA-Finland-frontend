@@ -9,13 +9,6 @@ import { createMuiTheme, ThemeOptions } from "@material-ui/core/styles";
 import { LinkCell } from "app/components/Charts/table/common/cells/LinkCell";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
 import { MultiValuesCell } from "app/components/Charts/table/common/cells/MultiValuesCell";
-import {
-  TableCell,
-  TableFooter,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
-import { css } from "styled-components/macro";
 import { TableBodyFooter } from "./common/rows/TableBodyFooter";
 
 export interface DataTableProps {
