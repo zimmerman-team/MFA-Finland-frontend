@@ -1,18 +1,20 @@
+// @ts-nocheck
 import React from "react";
 import { css } from "styled-components/macro";
-import { PrimaryColor, SecondaryColor } from "../../../../theme";
 import { Typography } from "@material-ui/core";
-import { DescriptionLabelStyle } from "../../style";
-import { PillButton } from "../../../../components/Buttons/PillButton";
-import {
-  TransactionsBar,
-  transactionsBarData,
-} from "../../../../components/Charts/bar/variations/transactions";
-import { DataTable } from "../../../../components/Charts/table";
+import { PrimaryColor, SecondaryColor } from "app/theme";
+import { PillButton } from "app/components/Buttons/PillButton";
+import { DescriptionLabelStyle } from "app/modules/project-detail-module/style";
+import { TransactionsBar } from "app/components/Charts/bar/variations/transactions";
+import { DataTable } from "app/components/Charts/table";
 import {
   TransactionsDataTableColumns,
   TransactionsDataTableOptions,
-} from "../../../../components/Charts/table/data";
+} from "app/components/Charts/table/data";
+
+interface TransactionsProps {
+  data: any;
+}
 
 interface TransactionsProps {}
 
@@ -78,31 +80,16 @@ export const Transactions = (props: TransactionsProps) => {
       {/*Rendered panel based on active tab*/}
       <div css={styles.contentContainer}>
         {activeTab === "chart" ? (
-          <TransactionsBar data={transactionsBarData} />
+          <TransactionsBar data={props.data} />
         ) : (
-          <Table />
+          <DataTable
+            options={TransactionsDataTableOptions}
+            title={""}
+            columns={TransactionsDataTableColumns}
+            data={props.data}
+          />
         )}
       </div>
     </>
-  );
-};
-
-export const Table = () => {
-  const data = [
-    ["01. Jan-2001", "Project Name...", "$123,234.00", "$123,234.00"],
-    ["01. Jan-2001", "Project Name...", "$123,234.00", "$123,234.00"],
-    ["01. Jan-2001", "Project Name...", "$123,234.00", "$123,234.00"],
-    ["01. Jan-2001", "Project Name...", "$123,234.00", "$123,234.00"],
-    ["01. Jan-2001", "Project Name...", "$123,234.00", "$123,234.00"],
-    ["01. Jan-2001", "Project Name...", "$123,234.00", "$123,234.00"],
-  ];
-  //TODO: fix styling..
-  return (
-    <DataTable
-      options={TransactionsDataTableOptions}
-      title={""}
-      columns={TransactionsDataTableColumns}
-      data={data}
-    />
   );
 };

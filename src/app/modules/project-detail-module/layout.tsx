@@ -41,7 +41,7 @@ import {
 import { Transactions } from "./common/Transactions";
 
 const crumbs: BreadcrumbLinkModel[] = [
-  { label: "Explore", path: Path.explore },
+  { label: "Homepage", path: Path.home },
   { label: "Activity Detail" },
 ];
 
@@ -140,8 +140,13 @@ export const ProjectDetailModuleLayout = (
           <Box width="100px" />
           <Typography css={FieldOneStyle}>
             activities from{" "}
-            <span css={TextHighlightStyle}>{props.metadata.dates[0]}</span> To{" "}
-            <span css={TextHighlightStyle}>{props.metadata.dates[1]}</span>{" "}
+            <span css={TextHighlightStyle}>
+              <b>{props.metadata.dates[0]}</b>
+            </span>{" "}
+            To{" "}
+            <span css={TextHighlightStyle}>
+              <b>{props.metadata.dates[1]}</b>
+            </span>{" "}
           </Typography>
         </Grid>
 
@@ -167,8 +172,8 @@ export const ProjectDetailModuleLayout = (
       <Grid item xs={12} lg={12}>
         <Typography css={DescriptionLabelStyle}>Total Disbursements</Typography>
         <TotalDisbursements
-          totalDisbursements={7000}
-          totalCommitments={10000}
+          totalCommitments={props.commitmentsTotal}
+          totalDisbursements={props.disbursementsTotal}
         />
       </Grid>
 
@@ -177,7 +182,7 @@ export const ProjectDetailModuleLayout = (
       {/* ------------------------------------------------------------------ */}
       {/* transactions */}
       <Grid item xs={12} lg={12}>
-        <Transactions />
+        <Transactions data={props.transactions} />
       </Grid>
 
       <Box width="100%" height="60px" />

@@ -610,27 +610,30 @@ export const LocationsDataTableColumns: MUIDataTableColumnDef[] = [
   },
 ];
 
-// Project detail: transactions table
 export const TransactionsDataTableColumns: MUIDataTableColumnDef[] = [
   {
     name: "year",
     label: "Year",
-    options: { sort: false },
   },
   {
-    name: "project",
-    label: "Project",
-    options: { sort: false },
+    name: "disbursed",
+    label: "Disbursement",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
   },
   {
     name: "commitment",
     label: "Commitment",
-    options: { sort: false },
-  },
-  {
-    name: "disbursement",
-    label: "Disbursement",
-    options: { sort: false },
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
   },
 ];
 
@@ -651,7 +654,17 @@ export const TransactionsDataTableOptions: MUIDataTableOptions = {
   selectableRowsHeader: false,
   expandableRowsOnClick: false,
   customTableBodyFooterRender: (options) => {
-    console.log("options", options);
+    function calculateTotalCommitment(): string {
+      let total: string;
+      total = "";
+      return total;
+    }
+
+    function calculateTotalDisbursements(): string {
+      let total: string;
+      total = "";
+      return total;
+    }
     return (
       <TableFooter>
         <TableRow>
