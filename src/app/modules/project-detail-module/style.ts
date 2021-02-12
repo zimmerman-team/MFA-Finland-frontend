@@ -8,7 +8,7 @@ export const FieldOneStyle = css`
   line-height: 24px;
   text-transform: uppercase;
   letter-spacing: 0.250795px;
-  color: rgba(1, 1, 10, 0.6);
+  color: ${theme.palette.text.primary};
 `;
 
 export const FieldTwoStyle = css`

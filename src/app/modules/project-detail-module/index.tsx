@@ -7,6 +7,7 @@ import { useRouteMatch } from "react-router-dom";
 import { useStoreActions, useStoreState } from "app/state/store/hooks";
 import { initActivityDetailData } from "app/components/ActivityAccordion/model";
 import { ProjectDetailModuleLayout } from "app/modules/project-detail-module/layout";
+import { PageLoader } from "../common/page-loader";
 
 const moduleName = "Project Detail";
 
@@ -59,6 +60,7 @@ export function ProjectDetailModule() {
 
   return (
     <React.Fragment>
+      {loading && <PageLoader />}
       <ProjectDetailModuleLayout
         {...activityDetailData}
         sdgVizData={filter(sdgVizData, { disabled: false })}

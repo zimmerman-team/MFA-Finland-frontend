@@ -601,3 +601,30 @@ export const LocationsDataTableColumns: MUIDataTableColumnDef[] = [
     },
   },
 ];
+
+export const TransactionsDataTableColumns: MUIDataTableColumnDef[] = [
+  {
+    name: "year",
+    label: "Year",
+  },
+  {
+    name: "disbursed",
+    label: "Disbursement",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+  {
+    name: "commitment",
+    label: "Commitment",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+];

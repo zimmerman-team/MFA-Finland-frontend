@@ -44,10 +44,9 @@ const tablebodycell = (isLink: boolean) => css`
   font-size: 14px;
   font-weight: 500;
 
-  color: ${isLink ? "#25a898" : "initial"};
+  color: ${isLink ? "#2E4982" : "initial"};
   :hover {
     cursor: ${isLink ? "pointer" : "initial"};
-    color: ${isLink ? "#30c2b0" : "initial"};
   }
 `;
 
@@ -143,7 +142,7 @@ export function getAccordionContent(data: any, type: string) {
                     )}
                     onClick={() =>
                       "url" in item && Object.values(item)[0] === item[key]
-                        ? window.open(window.location.origin + item["url"])
+                        ? window.open(window.location.origin + item.url)
                         : null
                     }
                   >

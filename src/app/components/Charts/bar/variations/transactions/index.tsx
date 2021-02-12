@@ -1,7 +1,14 @@
 import React from "react";
+import get from "lodash/get";
+import max from "lodash/max";
+import { PrimaryColor } from "app/theme";
 import { ResponsiveBar } from "@nivo/bar";
-import { PrimaryColor } from "../../../../../theme";
 import { css } from "styled-components/macro";
+import {
+  getRange,
+  getMoneyValueWithMetricPrefix,
+} from "app/components/Charts/bar/utils";
+import { TreemapTooltip } from "app/components/Charts/treemap/common/tooltip";
 
 export const transactionsBarData = [
   {
@@ -65,7 +72,18 @@ interface TransactionsBarProps {
   data: any;
 }
 
+const keys = ["disbursed", "commitment"];
+
 export const TransactionsBar = (props: TransactionsBarProps) => {
+  const range = getRange(props.data, keys);
+  const values: number[] = [];
+  props.data.forEach((item: any) => {
+    keys.forEach((key: string) => {
+      values.push(get(item, `[${key}]`, 0));
+    });
+  });
+  const maxValue: number = max(values) || 0;
+
   const styles = {
     container: css`
       display: flex;
@@ -105,7 +123,7 @@ export const TransactionsBar = (props: TransactionsBarProps) => {
   return (
     <>
       <div css={styles.container}>
-        <div>MLN</div>
+        <div>{range.abbr}</div>
         <div css={styles.legendContainer}>
           <div css={styles.legendItem}>
             <div css={circle(colors.commitment)} />
@@ -118,36 +136,39 @@ export const TransactionsBar = (props: TransactionsBarProps) => {
         </div>
       </div>
       <ResponsiveBar
-        data={props.data}
-        keys={["disbursed", "commitment"]} //TODO: variable
-        indexBy="year" //TODO: variable
-        margin={{ top: 20, right: 0, bottom: 25, left: 28 }}
+        keys={keys}
         padding={0.5}
+        indexBy="year"
+        borderWidth={1}
         innerPadding={3}
-        maxValue={10} //TODO: variable
+        data={props.data}
         groupMode="grouped"
         valueScale={{ type: "linear" }}
-        indexScale={{ type: "band", round: true }}
+        maxValue={maxValue + maxValue * 0.2}
         colors={(bar: any) => colors[bar.id]}
-        borderWidth={1}
+        indexScale={{ type: "band", round: true }}
+        margin={{ top: 20, right: 0, bottom: 25, left: 35 }}
         borderColor={{ from: "color", modifiers: [["darker", 2]] }}
-        axisTop={null}
-        axisRight={null}
         axisBottom={{
           tickSize: 0,
           tickPadding: 10,
           tickRotation: 0,
-          legend: "year", //TODO: variable
-          legendPosition: "middle",
-          legendOffset: 32,
         }}
         axisLeft={{
           tickSize: 0,
+          tickValues: 5,
           tickPadding: 5,
           tickRotation: 0,
-          tickValues: 5, //TODO: variable
+          format: (v: any) => getMoneyValueWithMetricPrefix(v, range.index),
         }}
-        gridYValues={5} //TODO: variable
+        axisTop={{
+          tickSize: 0,
+          format: (v: any) => "",
+        }}
+        axisRight={{
+          tickSize: 0,
+          format: (v: any) => "",
+        }}
         enableLabel={false}
         labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
         theme={{
@@ -172,11 +193,29 @@ export const TransactionsBar = (props: TransactionsBarProps) => {
               stroke: "rgba(224, 224, 224, 0.4)",
             },
           },
+          tooltip: {
+            container: {
+              padding: 15,
+              borderRadius: 15,
+            },
+          },
         }}
-        isInteractive={true}
-        animate={true}
+        animate
         motionStiffness={90}
         motionDamping={15}
+        tooltip={(tProps: any) => {
+          return (
+            <TreemapTooltip
+              node={{
+                data: {
+                  name: tProps.data.year,
+                  disbursed: tProps.data.disbursed,
+                  committed: tProps.data.commitment,
+                },
+              }}
+            />
+          );
+        }}
       />
     </>
   );

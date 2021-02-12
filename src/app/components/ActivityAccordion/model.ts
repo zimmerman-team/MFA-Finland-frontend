@@ -32,15 +32,15 @@ export interface ActivityItemProps {
 }
 
 export const activityList: ActivityItemProps[] = [
-  {
-    id: "budget",
-    label: "Budget",
-    description: "budget desc",
-    path: "budget",
-    dataPath: "budgets",
-    dataType: "array",
-    expanded: false,
-  },
+  // {
+  //   id: "budget",
+  //   label: "Budget",
+  //   description: "budget desc",
+  //   path: "budget",
+  //   dataPath: "budgets",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
   {
     id: "participating_orgs",
     label: "Participating organisations",
@@ -61,40 +61,40 @@ export const activityList: ActivityItemProps[] = [
   },
   {
     id: "recipient_countries",
-    label: "Recipient countries",
+    label: "Countries",
     description: "recipient_countries desc",
-    path: "recipient_countries",
+    path: "countries",
     dataPath: "countries",
     dataType: "array",
     expanded: false,
   },
   {
     id: "recipient_regions",
-    label: "Recipient regions",
+    label: "Regions",
     description: "recipient_regions desc",
-    path: "recipient_regions",
+    path: "regions",
     dataPath: "regions",
     dataType: "array",
     expanded: false,
   },
-  {
-    id: "locations",
-    label: "Locations",
-    description: "locations desc",
-    path: "locations",
-    dataPath: "locations",
-    dataType: "array",
-    expanded: false,
-  },
-  {
-    id: "humanitarian_scope",
-    label: "Humanitarian scope",
-    description: "humanitarian_scope desc",
-    path: "humanitarian_scope",
-    dataPath: "humanitarian_scope",
-    dataType: "array",
-    expanded: false,
-  },
+  // {
+  //   id: "locations",
+  //   label: "Locations",
+  //   description: "locations desc",
+  //   path: "locations",
+  //   dataPath: "locations",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "humanitarian_scope",
+  //   label: "Humanitarian scope",
+  //   description: "humanitarian_scope desc",
+  //   path: "humanitarian_scope",
+  //   dataPath: "humanitarian_scope",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
   {
     id: "sectors",
     label: "Sectors",
@@ -122,87 +122,87 @@ export const activityList: ActivityItemProps[] = [
     dataType: "array",
     expanded: false,
   },
-  {
-    id: "tags",
-    label: "Tags",
-    description: "tag desc",
-    path: "tags",
-    dataPath: "tags",
-    dataType: "array",
-    expanded: false,
-  },
-  {
-    id: "contact_information",
-    label: "Contact information",
-    description: "contact_information desc",
-    path: "contact_information",
-    dataPath: "contact_info",
-    dataType: "object",
-    expanded: false,
-  },
-  {
-    id: "other_identifiers",
-    label: "Other identifiers",
-    description: "other_identifiers desc",
-    path: "other_identifiers",
-    dataPath: "other_identifiers",
-    dataType: "array",
-    expanded: false,
-  },
-  {
-    id: "country_budget_items",
-    label: "Country budget items",
-    description: "country_budget_items desc",
-    path: "country_budget_items",
-    dataPath: "country_budget_items",
-    dataType: "array",
-    expanded: false,
-  },
-  {
-    id: "planned_disbursements",
-    label: "Planned disbursements",
-    description: "planned_disbursements desc",
-    path: "planned_disbursements",
-    dataPath: "planned_disbursements",
-    dataType: "array",
-    expanded: false,
-  },
-  {
-    id: "document_links",
-    label: "Document links",
-    description: "document_links desc",
-    path: "document_links",
-    dataPath: "document_links",
-    dataType: "array",
-    expanded: false,
-  },
-  {
-    id: "related_activities",
-    label: "Related activities",
-    description: "related_activities desc",
-    path: "related_activities",
-    dataPath: "related_activities",
-    dataType: "array",
-    expanded: false,
-  },
-  {
-    id: "legacy_data",
-    label: "Legacy data",
-    description: "legacy_data desc",
-    path: "legacy_data",
-    dataPath: "legacy_data",
-    dataType: "array",
-    expanded: false,
-  },
-  {
-    id: "conditions",
-    label: "Conditions - not attached",
-    description: "conditions desc",
-    path: "conditions",
-    dataPath: "conditions",
-    dataType: "array",
-    expanded: false,
-  },
+  // {
+  //   id: "tags",
+  //   label: "Tags",
+  //   description: "tag desc",
+  //   path: "tags",
+  //   dataPath: "tags",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "contact_information",
+  //   label: "Contact information",
+  //   description: "contact_information desc",
+  //   path: "contact_information",
+  //   dataPath: "contact_info",
+  //   dataType: "object",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "other_identifiers",
+  //   label: "Other identifiers",
+  //   description: "other_identifiers desc",
+  //   path: "other_identifiers",
+  //   dataPath: "other_identifiers",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "country_budget_items",
+  //   label: "Country budget items",
+  //   description: "country_budget_items desc",
+  //   path: "country_budget_items",
+  //   dataPath: "country_budget_items",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "planned_disbursements",
+  //   label: "Planned disbursements",
+  //   description: "planned_disbursements desc",
+  //   path: "planned_disbursements",
+  //   dataPath: "planned_disbursements",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "document_links",
+  //   label: "Document links",
+  //   description: "document_links desc",
+  //   path: "document_links",
+  //   dataPath: "document_links",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "related_activities",
+  //   label: "Related activities",
+  //   description: "related_activities desc",
+  //   path: "related_activities",
+  //   dataPath: "related_activities",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "legacy_data",
+  //   label: "Legacy data",
+  //   description: "legacy_data desc",
+  //   path: "legacy_data",
+  //   dataPath: "legacy_data",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
+  // {
+  //   id: "conditions",
+  //   label: "Conditions - not attached",
+  //   description: "conditions desc",
+  //   path: "conditions",
+  //   dataPath: "conditions",
+  //   dataType: "array",
+  //   expanded: false,
+  // },
 ];
 
 interface ActivityPercentField {
@@ -219,13 +219,13 @@ export interface ActivityMetadata {
   title: string;
   dates: string[];
   description: string;
-  budgets: {
-    type: string;
-    status: string;
-    start: string;
-    end: string;
-    value: number | string;
-  }[];
+  // budgets: {
+  //   type: string;
+  //   status: string;
+  //   start: string;
+  //   end: string;
+  //   value: number | string;
+  // }[];
   participating_orgs: {
     name: string;
     type: string;
@@ -239,7 +239,7 @@ export interface ActivityMetadata {
     default_flow_type: string;
     default_finance_type: string;
     default_tied_status: string;
-    capital_spend: string;
+    // capital_spend: string;
     planned_start: string;
     actual_start: string;
     planned_end: string;
@@ -247,17 +247,17 @@ export interface ActivityMetadata {
   };
   countries: ActivityPercentField[];
   regions: ActivityPercentField[];
-  locations: {
-    text: string;
-    // todo: check type from solr
-    coordinates: any;
-  }[];
-  humanitarian_scope: {
-    type: string;
-    vocabulary: string;
-    code: string;
-    text: string;
-  }[];
+  // locations: {
+  //   text: string;
+  //   // todo: check type from solr
+  //   coordinates: any;
+  // }[];
+  // humanitarian_scope: {
+  //   type: string;
+  //   vocabulary: string;
+  //   code: string;
+  //   text: string;
+  // }[];
   sectors: ActivityPercentField[];
   default_aid_types: {
     name: string;
@@ -271,10 +271,10 @@ export interface ActivityMetadata {
     vocabulary_uri: string;
     vocabulary: string;
   }[];
-  tags: {
-    code: string;
-    text: string;
-  }[];
+  // tags: {
+  //   code: string;
+  //   text: string;
+  // }[];
   contact_info: {
     type: string;
     telephone: string;
@@ -286,49 +286,50 @@ export interface ActivityMetadata {
     position: string;
     mailing_address: string;
   };
-  other_identifiers: {
-    code: string;
-    text: string;
-  }[];
-  country_budget_items: {
-    vocab_code: string;
-    code: string;
-    percentage: string;
-    text: string;
-  }[];
-  planned_disbursements: {
-    value: string;
-    type: string;
-    start: string;
-    end: string;
-    provider: string;
-  }[];
-  document_links: {
-    text: string;
-    url: string;
-    category: string;
-  }[];
-  related_activities: {
-    ref: string;
-    type: string;
-  }[];
-  legacy_data: {
-    name: string;
-    value: string;
-    iati_equivalent: string;
-  }[];
-  conditions: {
-    text: string;
-    type: string;
-  }[];
+  // other_identifiers: {
+  //   code: string;
+  //   text: string;
+  // }[];
+  // country_budget_items: {
+  //   vocab_code: string;
+  //   code: string;
+  //   percentage: string;
+  //   text: string;
+  // }[];
+  // planned_disbursements: {
+  //   value: string;
+  //   type: string;
+  //   start: string;
+  //   end: string;
+  //   provider: string;
+  // }[];
+  // document_links: {
+  //   text: string;
+  //   url: string;
+  //   category: string;
+  // }[];
+  // related_activities: {
+  //   ref: string;
+  //   type: string;
+  // }[];
+  // legacy_data: {
+  //   name: string;
+  //   value: string;
+  //   iati_equivalent: string;
+  // }[];
+  // conditions: {
+  //   text: string;
+  //   type: string;
+  // }[];
 }
 
 export interface ActivityDetailModuleLayoutProps {
   loading?: boolean;
   metadata: ActivityMetadata;
-  inTransactions: Array<string[]>;
-  outTransactions: Array<string[]>;
+  transactions: any;
   sdgVizData: SDGvizItemProps[];
+  disbursementsTotal: number;
+  commitmentsTotal: number;
 }
 
 export const initActivityDetailData: ActivityDetailModuleLayoutProps = {
@@ -340,7 +341,7 @@ export const initActivityDetailData: ActivityDetailModuleLayoutProps = {
     title: "",
     dates: ["", ""],
     description: "",
-    budgets: [],
+    // budgets: [],
     participating_orgs: [],
     summary: {
       status: "",
@@ -349,7 +350,7 @@ export const initActivityDetailData: ActivityDetailModuleLayoutProps = {
       default_flow_type: "",
       default_finance_type: "",
       default_tied_status: "",
-      capital_spend: "",
+      // capital_spend: "",
       planned_start: "",
       actual_start: "",
       planned_end: "",
@@ -357,12 +358,12 @@ export const initActivityDetailData: ActivityDetailModuleLayoutProps = {
     },
     countries: [],
     regions: [],
-    locations: [],
-    humanitarian_scope: [],
+    // locations: [],
+    // humanitarian_scope: [],
     sectors: [],
     default_aid_types: [],
     policy_markers: [],
-    tags: [],
+    // tags: [],
     contact_info: {
       type: "",
       telephone: "",
@@ -374,17 +375,18 @@ export const initActivityDetailData: ActivityDetailModuleLayoutProps = {
       position: "",
       mailing_address: "",
     },
-    other_identifiers: [],
-    country_budget_items: [],
-    planned_disbursements: [],
-    document_links: [],
-    related_activities: [],
-    legacy_data: [],
-    conditions: [],
+    // other_identifiers: [],
+    // country_budget_items: [],
+    // planned_disbursements: [],
+    // document_links: [],
+    // related_activities: [],
+    // legacy_data: [],
+    // conditions: [],
   },
   sdgVizData: [],
-  inTransactions: [],
-  outTransactions: [],
+  transactions: [],
+  disbursementsTotal: 0,
+  commitmentsTotal: 0,
 };
 
 export const ActivityAccordionState = atom({
