@@ -1,3 +1,4 @@
+import { formatLocale } from "app/utils/formatLocale";
 import React from "react";
 import { css } from "styled-components/macro";
 
@@ -10,10 +11,14 @@ const style = {
   barContainer: css`
     display: flex;
     width: 100%;
-    height: 8px;
+    height: 12px;
+    position: relative;
     background-color: #dde3eb;
     border-radius: 10px;
+    border-color: rgba(52, 50, 73, 0.5);
+    border-width: 0.5px;
     margin-bottom: 15px;
+    border-style: solid;
     margin-top: 50px;
   `,
   barFill: css`
@@ -28,6 +33,7 @@ const style = {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
     width: 40px;
     height: 40px;
     background-color: #2e4982;
@@ -59,6 +65,8 @@ const style = {
 };
 
 function percentage(num: number, nam: number) {
+  if (num > nam) return 100;
+  if (nam === 0) return 0;
   return (num / nam) * 100;
 }
 
@@ -75,18 +83,19 @@ export const TotalDisbursements = (props: TotalDisbursementsProps) => {
         {/* bar fill */}
         <div
           css={`
-            display: flex;
-            width: ${totalProgress}%;
+            margin: 1px;
             height: 8px;
-            background-color: #2e4982;
+            display: flex;
             border-radius: 10px;
             justify-content: flex-end;
+            background-color: ${totalProgress > 0 ? "#2e4982" : ""};
+            width: ${totalProgress > 0 ? `${totalProgress}%` : "40px"};
           `}
         >
           {/* bar indicator */}
           <div css={style.barIndicator}>
             {/* indicator text */}
-            <span css={style.indicatorText}>{totalProgress}%</span>
+            <span css={style.indicatorText}>{totalProgress.toFixed(0)}%</span>
             {/* <div
               css={`
                 width: 20px;
@@ -109,7 +118,7 @@ export const TotalDisbursements = (props: TotalDisbursementsProps) => {
               font-weight: bold;
             `}
           >
-            € {props.totalDisbursements}
+            {formatLocale(props.totalDisbursements)}
           </div>
         </div>
 
@@ -123,7 +132,7 @@ export const TotalDisbursements = (props: TotalDisbursementsProps) => {
               font-weight: bold;
             `}
           >
-            € {props.totalCommitments}
+            {formatLocale(props.totalCommitments)}
           </div>
         </div>
       </div>

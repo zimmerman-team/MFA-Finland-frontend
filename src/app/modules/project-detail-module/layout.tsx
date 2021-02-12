@@ -27,20 +27,15 @@ import {
   DescriptionLabelStyle,
 } from "app/modules/project-detail-module/style";
 import { SDGviz } from "app/components/Charts/sdg";
-import theme, { PrimaryColor, SecondaryColor } from "app/theme";
+import theme from "app/theme";
 import { GridSpacingFix } from "app/utils/GridSpacingFix";
 import { useRecoilState } from "recoil";
 import get from "lodash/get";
 import { TotalDisbursements } from "./common/Disbursements";
-import { css } from "styled-components/macro";
-import { PillButton } from "../../components/Buttons/PillButton";
-import {
-  TransactionsBar,
-  transactionsBarData,
-} from "../../components/Charts/bar/variations/transactions";
+import { Transactions } from "./common/Transactions";
 
 const crumbs: BreadcrumbLinkModel[] = [
-  { label: "Explore", path: Path.explore },
+  { label: "Homepage", path: Path.home },
   { label: "Activity Detail" },
 ];
 
@@ -139,8 +134,13 @@ export const ProjectDetailModuleLayout = (
           <Box width="100px" />
           <Typography css={FieldOneStyle}>
             activities from{" "}
-            <span css={TextHighlightStyle}>{props.metadata.dates[0]}</span> To{" "}
-            <span css={TextHighlightStyle}>{props.metadata.dates[1]}</span>{" "}
+            <span css={TextHighlightStyle}>
+              <b>{props.metadata.dates[0]}</b>
+            </span>{" "}
+            To{" "}
+            <span css={TextHighlightStyle}>
+              <b>{props.metadata.dates[1]}</b>
+            </span>{" "}
           </Typography>
         </Grid>
 
@@ -166,8 +166,8 @@ export const ProjectDetailModuleLayout = (
       <Grid item xs={12} lg={12}>
         <Typography css={DescriptionLabelStyle}>Total Disbursements</Typography>
         <TotalDisbursements
-          totalDisbursements={7000}
-          totalCommitments={10000}
+          totalCommitments={props.commitmentsTotal}
+          totalDisbursements={props.disbursementsTotal}
         />
       </Grid>
 
@@ -176,7 +176,7 @@ export const ProjectDetailModuleLayout = (
       {/* ------------------------------------------------------------------ */}
       {/* transactions */}
       <Grid item xs={12} lg={12}>
-        <Transactions />
+        <Transactions data={props.transactions} />
       </Grid>
 
       <Box width="100%" height="60px" />
@@ -235,78 +235,5 @@ export const ProjectDetailModuleLayout = (
 
       <Box width="100%" height="50vh" />
     </ModuleContainer>
-  );
-};
-
-interface TransactionsProps {}
-
-export const Transactions = (props: TransactionsProps) => {
-  const [activeTab, setActiveTab] = React.useState("chart");
-
-  const styles = {
-    container: css`
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    `,
-    tabContainer: css`
-      display: flex;
-
-      button:first-of-type {
-        margin-right: 16px;
-      }
-    `,
-    contentContainer: css`
-      height: 458px;
-      width: 100%;
-    `,
-  };
-
-  const tab = (active: boolean) => {
-    return css`
-      height: 36px;
-      padding: 9px 16px;
-      border-radius: 22px;
-      text-transform: unset;
-      background-color: ${active ? PrimaryColor[0] : SecondaryColor[1]};
-      color: ${active ? "white" : PrimaryColor[0]};
-      box-shadow: none;
-
-      :hover {
-        background-color: ${active ? SecondaryColor[1] : PrimaryColor[0]};
-      }
-    `;
-  };
-
-  return (
-    <>
-      {/*Header with tabs*/}
-      <div css={styles.container}>
-        <Typography css={DescriptionLabelStyle}>Transactions</Typography>
-        <div css={styles.tabContainer}>
-          <PillButton
-            css={tab(activeTab === "chart")}
-            onClick={() => setActiveTab("chart")}
-          >
-            Chart
-          </PillButton>
-          <PillButton
-            css={tab(activeTab === "table")}
-            onClick={() => setActiveTab("table")}
-          >
-            Table
-          </PillButton>
-        </div>
-      </div>
-
-      {/*Rendered panel based on active tab*/}
-      <div css={styles.contentContainer}>
-        {activeTab === "chart" ? (
-          <TransactionsBar data={transactionsBarData} />
-        ) : (
-          <div>table</div>
-        )}
-      </div>
-    </>
   );
 };
