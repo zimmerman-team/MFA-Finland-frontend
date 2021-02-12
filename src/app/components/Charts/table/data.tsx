@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { css } from "styled-components/macro";
+import { TableBodyFooter } from "./common/rows/TableBodyFooter";
 
 export interface DataTableProps {
   options: MUIDataTableOptions;
@@ -25,7 +26,7 @@ export interface DataTableProps {
   theme?: ThemeOptions;
 }
 
-export const tableTheme = createMuiTheme({
+export const tableTheme: ThemeOptions = createMuiTheme({
   overrides: {
     MuiPaper: {
       root: {
@@ -642,7 +643,7 @@ export const TransactionsDataTableOptions: MUIDataTableOptions = {
   elevation: 0,
   search: false,
   filter: false,
-  rowHover: true,
+  rowHover: false,
   download: false,
   serverSide: false,
   pagination: true,
@@ -654,71 +655,116 @@ export const TransactionsDataTableOptions: MUIDataTableOptions = {
   selectableRowsHeader: false,
   expandableRowsOnClick: false,
   customTableBodyFooterRender: (options) => {
-    function calculateTotalCommitment(): string {
-      let total: string;
-      total = "";
-      return total;
-    }
-
-    function calculateTotalDisbursements(): string {
-      let total: string;
-      total = "";
-      return total;
-    }
-    return (
-      <TableFooter>
-        <TableRow>
-          <TableCell
-            colSpan={6}
-            css={css`
-              background-color: #2e4982;
-              height: 56px;
-            `}
-          >
-            <div
-              css={css`
-                display: flex;
-              `}
-            >
-              <Typography
-                variant="body2"
-                css={css`
-                  color: white !important;
-                  margin-right: 24px;
-                `}
-              >
-                Commitment type:
-              </Typography>
-              <Typography
-                variant="body2"
-                css={css`
-                  color: white !important;
-                  margin-right: 110px;
-                `}
-              >
-                $000,000,000.00
-              </Typography>
-              <Typography
-                variant="body2"
-                css={css`
-                  color: white !important;
-                  margin-right: 24px;
-                `}
-              >
-                Disbursement type:
-              </Typography>
-              <Typography
-                variant="body2"
-                css={css`
-                  color: white !important;
-                `}
-              >
-                $000,000,000.00
-              </Typography>
-            </div>
-          </TableCell>
-        </TableRow>
-      </TableFooter>
-    );
+    return <TableBodyFooter options={options} />;
   },
 };
+
+export const transactionsTableTheme = createMuiTheme({
+  overrides: {
+    MuiPaper: {
+      root: {
+        width: "100%",
+      },
+    },
+    MuiToolbar: {
+      root: {
+        display: "flex !important",
+        padding: "10px 0px !important",
+        "@media (max-width:600px)": {
+          justifyContent: "space-between",
+          "& > div": {
+            flex: "0 0 auto",
+          },
+        },
+      },
+    },
+    MuiTypography: {
+      h6: {
+        fontWeight: 700,
+        color: "#2E4982",
+        fontSize: "20px",
+        fontFamily: "Finlandica",
+      },
+      body2: {
+        fontSize: "12px",
+        fontFamily: "Finlandica",
+        color: "#B6B6B6 !important",
+      },
+    },
+    // MuiSvgIcon: {
+    //   root: {
+    //     fill: "#2E4982",
+    //     fontSize: "0.75em",
+    //   },
+    // },
+    MuiIconButton: {
+      root: {
+        padding: "0px",
+      },
+    },
+    MuiTableBody: {
+      root: {
+        backgroundColor: "#fff",
+      },
+    },
+    MuiSelect: {
+      root: {
+        fontFamily: "Finlandica",
+        fontSize: "14px",
+      },
+    },
+    MuiTableCell: {
+      head: {
+        color: "#2E4982",
+        fontSize: "14px",
+        lineHeight: "1rem",
+        fontFamily: "Finlandica",
+        fontWeight: "bold",
+        backgroundColor: "#F8F8F8 !important",
+        borderTop: "1px solid rgba(224, 224, 224, 1)",
+      },
+      body: {
+        color: "#2E4063",
+        fontSize: "14px",
+        fontFamily: "Finlandica",
+      },
+      footer: {
+        fontFamily: "Finlandica",
+        borderBottomStyle: "none",
+        "@media (max-width:600px)": {
+          padding: "0px !important",
+        },
+      },
+    },
+    MuiInputBase: {
+      input: {
+        color: "#b6b6b6",
+      },
+    },
+    MuiTablePagination: {
+      selectIcon: {
+        fill: "#b6b6b6",
+      },
+      caption: {
+        fontSize: "14px",
+      },
+      input: {
+        marginRight: "24px",
+      },
+      actions: {
+        marginLeft: "18px",
+      },
+    },
+    MuiPopover: {
+      paper: {
+        width: "fit-content",
+      },
+    },
+    // @ts-ignore
+    MUIDataTable: {
+      liveAnnounce: {
+        display: "none",
+      },
+    },
+  },
+});

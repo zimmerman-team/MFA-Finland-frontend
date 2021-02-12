@@ -10,6 +10,7 @@ import { DataTable } from "app/components/Charts/table";
 import {
   TransactionsDataTableColumns,
   TransactionsDataTableOptions,
+  transactionsTableTheme,
 } from "app/components/Charts/table/data";
 
 interface TransactionsProps {
@@ -87,6 +88,7 @@ export const Transactions = (props: TransactionsProps) => {
             title={""}
             columns={TransactionsDataTableColumns}
             data={props.data}
+            theme={transactionsTableTheme}
           />
         )}
       </div>
