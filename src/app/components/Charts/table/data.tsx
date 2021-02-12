@@ -5,16 +5,24 @@ import {
   MUIDataTableIsRowCheck,
 } from "mui-datatables";
 import { formatLocale } from "app/utils/formatLocale";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, ThemeOptions } from "@material-ui/core/styles";
 import { LinkCell } from "app/components/Charts/table/common/cells/LinkCell";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
 import { MultiValuesCell } from "app/components/Charts/table/common/cells/MultiValuesCell";
+import {
+  TableCell,
+  TableFooter,
+  TableRow,
+  Typography,
+} from "@material-ui/core";
+import { css } from "styled-components/macro";
 
 export interface DataTableProps {
   options: MUIDataTableOptions;
   title: string | React.ReactNode;
   columns: MUIDataTableColumnDef[];
   data: Array<object | number[] | string[]>;
+  theme?: ThemeOptions;
 }
 
 export const tableTheme = createMuiTheme({
@@ -601,3 +609,103 @@ export const LocationsDataTableColumns: MUIDataTableColumnDef[] = [
     },
   },
 ];
+
+// Project detail: transactions table
+export const TransactionsDataTableColumns: MUIDataTableColumnDef[] = [
+  {
+    name: "year",
+    label: "Year",
+    options: { sort: false },
+  },
+  {
+    name: "project",
+    label: "Project",
+    options: { sort: false },
+  },
+  {
+    name: "commitment",
+    label: "Commitment",
+    options: { sort: false },
+  },
+  {
+    name: "disbursement",
+    label: "Disbursement",
+    options: { sort: false },
+  },
+];
+
+export const TransactionsDataTableOptions: MUIDataTableOptions = {
+  print: false,
+  elevation: 0,
+  search: false,
+  filter: false,
+  rowHover: true,
+  download: false,
+  serverSide: false,
+  pagination: true,
+  viewColumns: false,
+  expandableRows: false,
+  responsive: "standard",
+  selectableRows: "none",
+  expandableRowsHeader: false,
+  selectableRowsHeader: false,
+  expandableRowsOnClick: false,
+  customTableBodyFooterRender: (options) => {
+    console.log("options", options);
+    return (
+      <TableFooter>
+        <TableRow>
+          <TableCell
+            colSpan={6}
+            css={css`
+              background-color: #2e4982;
+              height: 56px;
+            `}
+          >
+            <div
+              css={css`
+                display: flex;
+              `}
+            >
+              <Typography
+                variant="body2"
+                css={css`
+                  color: white !important;
+                  margin-right: 24px;
+                `}
+              >
+                Commitment type:
+              </Typography>
+              <Typography
+                variant="body2"
+                css={css`
+                  color: white !important;
+                  margin-right: 110px;
+                `}
+              >
+                $000,000,000.00
+              </Typography>
+              <Typography
+                variant="body2"
+                css={css`
+                  color: white !important;
+                  margin-right: 24px;
+                `}
+              >
+                Disbursement type:
+              </Typography>
+              <Typography
+                variant="body2"
+                css={css`
+                  color: white !important;
+                `}
+              >
+                $000,000,000.00
+              </Typography>
+            </div>
+          </TableCell>
+        </TableRow>
+      </TableFooter>
+    );
+  },
+};

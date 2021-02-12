@@ -9,7 +9,7 @@ export const appbarStyle = {
     height: 64px;
     display: flex;
     justify-content: center;
-    z-index: 100;
+    z-index: 102; //mui-datatable header has a default z-index of 100...
 
     @media (max-width: 600px) {
       justify-content: space-between;

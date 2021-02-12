@@ -13,7 +13,7 @@ export const createStyles = (props: FilterPanelProps) => {
       width: 100vw;
       height: 100vh;
       left: 0;
-      z-index: 3;
+      z-index: 5;
     `,
     muiContainer: css`
       padding: 0px;

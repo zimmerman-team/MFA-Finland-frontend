@@ -14,12 +14,12 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       background-color: #ecf1fa;
       overflow-x: auto;
       overflow-y: hidden;
-      z-index: 2;
+      z-index: 6;
       padding-top: 16px;
       padding-bottom: 4px;
     `,
     background: css`
-      z-index: -1;
+      z-index: 5;
       top: 64px;
       left: 0;
       position: fixed;

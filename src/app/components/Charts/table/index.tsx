@@ -5,7 +5,7 @@ import { DataTableProps, tableTheme } from "app/components/Charts/table/data";
 
 export function DataTable(props: DataTableProps) {
   return (
-    <MuiThemeProvider theme={tableTheme}>
+    <MuiThemeProvider theme={props.theme ? props.theme : tableTheme}>
       <MUIDataTable
         data={props.data}
         title={props.title}
