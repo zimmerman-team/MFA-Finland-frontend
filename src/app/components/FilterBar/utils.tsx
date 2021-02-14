@@ -1,5 +1,5 @@
 export function shouldRender(location: any) {
-  const urls = ["/about", "/feedback", "/statement", "/project"];
+  const urls = ["/about", "/feedback", "/statement", "/project/"];
   const currentLocation = location.pathname;
   let found = urls.some((url) => {
     return currentLocation.includes(url);

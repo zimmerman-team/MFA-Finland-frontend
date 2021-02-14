@@ -36,6 +36,8 @@ import {
   OrganisationsLatestFiltersAtom,
   BudgetLinesLatestFiltersAtom,
 } from "app/state/recoil/atoms";
+import { ProjectsListModule } from "app/components/Charts/modules/projects";
+import { projects } from "app/components/Charts/modules/projects/data";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -506,7 +508,13 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/projects">projects table/list</Route>
+            <Route path="/viz/projects">
+              {vizDataLoading.budgetLines ? (
+                <VizLoader />
+              ) : (
+                <ProjectsListModule projects={projects} />
+              )}
+            </Route>
           </Switch>
         </Grid>
         {!isProjects && (
