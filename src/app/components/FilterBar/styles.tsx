@@ -1,6 +1,7 @@
 import { css } from "styled-components/macro";
-import { FilterBarProps } from "./index";
-import { ProjectPalette, SecondaryColor } from "../../theme";
+
+import { SecondaryColor } from "app/theme";
+import { FilterBarProps } from "app/components/FilterBar/index";
 
 export const createStyles = (props: FilterBarProps, height: number) => {
   return {
@@ -17,6 +18,18 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       z-index: 6;
       padding-top: 16px;
       padding-bottom: 4px;
+
+      @media (max-width: 600px) {
+        top: 56px;
+        min-height: 56px;
+        //height: 56px;
+        //padding: initial;
+        //margin: initial;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: 16px;
+      }
     `,
     background: css`
       z-index: 5;
@@ -26,6 +39,9 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       background-color: #ecf1fa;
       min-height: ${height}px;
       width: 100vw;
+      @media (max-width: 600px) {
+        top: 56px;
+      }
     `,
     button: css`
       padding: 9px 16px;
@@ -47,10 +63,21 @@ export const createStyles = (props: FilterBarProps, height: number) => {
     `,
     chipContainer: css`
       display: block;
+      @media (max-width: 600px) {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        //justify-content: space-evenly;
+      }
     `,
     buttonContainer: css`
       display: flex;
       align-items: center;
+
+      @media (max-width: 600px) {
+        width: 100%;
+        margin-bottom: 16px;
+      }
     `,
   };
 };

@@ -7,7 +7,6 @@ interface ChipModel extends ChipProps {}
 
 const chip = css`
   background-color: #fff;
-  font-family: Finlandica;
   font-weight: bold;
   color: ${ProjectPalette.primary.main};
   margin-right: 8px;
@@ -15,6 +14,10 @@ const chip = css`
 
   .MuiChip-deleteIcon {
     color: #bcc6d6;
+  }
+
+  @media (max-width: 600px) {
+    //margin: initial;
   }
 `;
 

@@ -1,13 +1,15 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Chip as MUIChip, ChipProps, Typography } from "@material-ui/core";
-import { PillButton } from "../Buttons/PillButton";
+import { Typography } from "@material-ui/core";
+
 import { getMockData, shouldRender } from "./utils";
 import { createStyles } from "./styles";
 import { useRecoilState } from "recoil";
 import { currentFilterOpenAtom } from "app/state/recoil/atoms";
-import { FILTER_TYPES } from "../FilterPanel/data";
-import { Chip } from "./common/Chip";
+
+import { FILTER_TYPES } from "app/components/FilterPanel/data";
+import { Chip } from "app/components/FilterBar/common/Chip";
+import { PillButton } from "app/components/Buttons/PillButton";
 
 export interface FilterBarProps {
   show?: boolean;
@@ -18,7 +20,29 @@ export const FilterBar = (props: FilterBarProps) => {
   const mockData = getMockData();
   const location = useLocation();
   const render: boolean = shouldRender(location);
-  const [chips, setChips] = React.useState([{ name: "2020" }]);
+  const [chips, setChips] = React.useState([
+    { name: "2020" },
+    /*    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },
+    { name: "2020" },*/
+  ]);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
   const [height, setHeight] = React.useState(64);
   const styles = createStyles(props, height);

@@ -13,6 +13,7 @@ export const appbarStyle = {
 
     @media (max-width: 600px) {
       justify-content: space-between;
+      height: 56px;
     }
   `,
   toolBar: css`
