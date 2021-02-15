@@ -18,6 +18,9 @@ export const CheckboxGridListItem = (props: FilterOption) => {
     `,
     label: css`
       color: white;
+      @media (max-width: 600px) {
+        font-size: 14px;
+      }
     `,
   };
 
@@ -25,7 +28,7 @@ export const CheckboxGridListItem = (props: FilterOption) => {
     <Grid container css={styles.detailsItem}>
       {props.children?.map((node) => {
         return (
-          <Grid item xs={6} css={styles.checkboxTypographyContainer}>
+          <Grid item xs={12} lg={6} css={styles.checkboxTypographyContainer}>
             <Checkbox css={styles.checkbox} color="default" />
             <Typography variant="h6" css={styles.label}>
               {node.name}

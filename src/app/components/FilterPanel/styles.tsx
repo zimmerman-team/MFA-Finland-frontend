@@ -14,13 +14,23 @@ export const createStyles = (props: FilterPanelProps) => {
       height: 100vh;
       left: 0;
       z-index: 5;
+
+      @media (max-width: 600px) {
+        padding: 0;
+      }
     `,
     muiContainer: css`
-      padding: 0px;
+      padding: 0;
+      @media (max-width: 600px) {
+        padding: 16px;
+      }
     `,
     heading: css`
       color: white;
       margin-bottom: 37px;
+      @media (max-width: 600px) {
+        margin-bottom: 24px;
+      }
     `,
     closeIcon: css`
       color: white;

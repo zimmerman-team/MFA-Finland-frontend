@@ -13,7 +13,7 @@ export const languageAtom = atom({
 
 export const currentFilterOpenAtom = atom({
   key: "currentFilterOpen", // unique ID (with respect to other atoms/selectors)
-  default: FILTER_TYPES.NONE, // default value (aka initial value)
+  default: FILTER_TYPES.PERIOD, // default value (aka initial value)
 });
 
 export const filterCardTabsAtom = atom({

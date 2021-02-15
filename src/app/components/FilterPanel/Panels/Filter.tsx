@@ -2,10 +2,12 @@ import React from "react";
 import { css } from "styled-components/macro";
 import { Grid, Typography } from "@material-ui/core";
 import { useRecoilState } from "recoil";
-import { currentFilterOpenAtom } from "../../../state/recoil/atoms";
+import { currentFilterOpenAtom } from "app/state/recoil/atoms";
 import { Header } from "../Card/Header";
-import { Card, FilterOption } from "../Card";
+import { FilterOption } from "../Card";
+
 import { BottomActions } from "../Card/BottomActions";
+import { Card } from "app/components/FilterPanel/Card/Card";
 
 export interface FilterProps {
   title: string;

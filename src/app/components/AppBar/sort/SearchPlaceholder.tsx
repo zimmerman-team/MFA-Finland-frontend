@@ -15,6 +15,9 @@ export const SearchPlaceholder = () => {
       align-items: center;
       padding-right: 2px;
       padding-left: 15px;
+      @media (max-width: 600px) {
+        width: 100%;
+      }
     `,
     label: css`
       color: ${SecondaryColor[2]};
