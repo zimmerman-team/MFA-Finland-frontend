@@ -28,7 +28,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        padding: 16px;
+        padding: 16px 16px 8px;
       }
     `,
     background: css`
