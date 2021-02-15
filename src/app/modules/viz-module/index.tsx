@@ -20,6 +20,7 @@ import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
 import { SectorsVizModule } from "app/components/Charts/modules/sectors";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
+import { ProjectsListModule } from "app/components/Charts/modules/projects";
 import { BudgetLinesModule } from "app/components/Charts/modules/budgetlines";
 import { CountriesRegionsModule } from "app/components/Charts/modules/locations";
 import { OrganisationsModule } from "app/components/Charts/modules/organisations";
@@ -35,9 +36,8 @@ import {
   LocationsTreemapLatestFiltersAtom,
   OrganisationsLatestFiltersAtom,
   BudgetLinesLatestFiltersAtom,
+  ProjectsLatestFiltersAtom,
 } from "app/state/recoil/atoms";
-import { ProjectsListModule } from "app/components/Charts/modules/projects";
-import { projects } from "app/components/Charts/modules/projects/data";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -80,6 +80,13 @@ export default function VizModule() {
     BudgetLinesLatestFilters,
     setBudgetLinesLatestFilters,
   ] = useRecoilState(BudgetLinesLatestFiltersAtom);
+  const [ProjectsLatestFilters, setProjectsLatestFilters] = useRecoilState(
+    ProjectsLatestFiltersAtom
+  );
+  const projectListPage = useStoreState((state) => state.projectListPage.value);
+  const setProjectListPage = useStoreActions(
+    (actions) => actions.projectListPage.setValue
+  );
 
   /* STATE & ACTIONS */
   const odaBarChartAction = useStoreActions(
@@ -141,16 +148,37 @@ export default function VizModule() {
   const odaBudgetLinesChartLoading = useStoreState(
     (state) => state.odaBudgetLinesChart.loading
   );
+  const projectsAction = useStoreActions((actions) => actions.activities.fetch);
+  const projectsData = useStoreState((state) =>
+    get(state.activities, "data.data", [])
+  );
+  const projectsCountData = useStoreState((state) =>
+    get(state.activities, "data.count", [])
+  );
+
   const vizDataLoading = useStoreState((state) => ({
     oda: state.odaBarChart.loading,
     thematic: state.thematicAreasChart.loading,
     sectors: state.sectorsSunburst.loading,
     locations: state.locationsTreemap.loading,
     organisations: state.organisationsTreemap.loading,
+    projects: state.activities.loading,
     budgetLines: state.budgetLinesBarChart.loading,
     sdg: state.sdgViz.loading,
     geo: state.geoMap.loading,
   }));
+
+  function loadMoreProjects() {
+    const filters = getAPIFormattedFilters(selectedFilters);
+    projectsAction({
+      addOnData: true,
+      values: {
+        filters,
+        page: projectListPage,
+      },
+    });
+    setProjectListPage(projectListPage + 1);
+  }
 
   function onSelectChange(e: {
     selection: string | number | null;
@@ -220,6 +248,9 @@ export default function VizModule() {
         break;
       case "budget-lines":
         setBudgetLinesLatestFilters(selectedFilters);
+        break;
+      case "projects":
+        setProjectsLatestFilters(selectedFilters);
         break;
       default:
         break;
@@ -303,6 +334,18 @@ export default function VizModule() {
           !isEqual(BudgetLinesLatestFilters, selectedFilters)
         ) {
           budgetLinesBarChartAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        break;
+      case "projects":
+        if (
+          projectsData.length === 0 ||
+          !isEqual(ProjectsLatestFilters, selectedFilters)
+        ) {
+          projectsAction({
             values: {
               filters,
             },
@@ -509,11 +552,12 @@ export default function VizModule() {
               )}
             </Route>
             <Route path="/viz/projects">
-              {vizDataLoading.budgetLines ? (
-                <VizLoader />
-              ) : (
-                <ProjectsListModule projects={projects} />
-              )}
+              <ProjectsListModule
+                projects={projectsData}
+                count={projectsCountData}
+                loadMore={loadMoreProjects}
+                loading={vizDataLoading.projects}
+              />
             </Route>
           </Switch>
         </Grid>

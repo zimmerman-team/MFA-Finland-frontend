@@ -107,6 +107,13 @@ export const BudgetLinesLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> 
   }
 );
 
+export const ProjectsLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
+  {
+    key: "ProjectslatestFilters",
+    default: defaultfilters,
+  }
+);
+
 export const SDGlatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom({
   key: "ODAlatestFilters",
   default: defaultfilters,
