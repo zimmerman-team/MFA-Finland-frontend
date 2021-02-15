@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 import { css } from "styled-components/macro";
 import {
   TableCell,
@@ -7,6 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { SelectableRows } from "mui-datatables";
+import { formatLocale } from "app/utils/formatLocale";
 
 export interface TableBodyFooterProps {
   options: { columns: any[]; data: any[]; selectableRows: SelectableRows };
@@ -35,22 +37,36 @@ export const TableBodyFooter = (props: TableBodyFooterProps) => {
       font-size: 14px;
     `;
 
+  let commitment = 0;
+  let disbursement = 0;
+
+  props.options.data.forEach((row: any) => {
+    disbursement += parseInt(
+      get(row.data, "[1]", "0").replace(/,/g, "").replace("€", ""),
+      10
+    );
+    commitment += parseInt(
+      get(row.data, "[2]", "0").replace(/,/g, "").replace("€", ""),
+      10
+    );
+  });
+
   return (
     <TableFooter>
       <TableRow>
         <TableCell colSpan={6} css={styles.cell}>
           <div css={styles.typographyContainer}>
             <Typography variant="body2" css={typographyStyle(24)}>
-              Commitment type:
-            </Typography>
-            <Typography variant="body2" css={typographyStyle(110)}>
-              $000,000,000.00
-            </Typography>
-            <Typography variant="body2" css={typographyStyle(24)}>
               Disbursement type:
             </Typography>
+            <Typography variant="body2" css={typographyStyle(110)}>
+              {formatLocale(disbursement)}
+            </Typography>
+            <Typography variant="body2" css={typographyStyle(24)}>
+              Commitment type:
+            </Typography>
             <Typography variant="body2" css={typographyStyle(0)}>
-              $000,000,000.00
+              {formatLocale(commitment)}
             </Typography>
           </div>
         </TableCell>
