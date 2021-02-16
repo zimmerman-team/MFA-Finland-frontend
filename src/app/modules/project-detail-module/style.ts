@@ -9,6 +9,10 @@ export const FieldOneStyle = css`
   text-transform: uppercase;
   letter-spacing: 0.250795px;
   color: ${theme.palette.text.primary};
+
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 export const FieldTwoStyle = css`
@@ -21,11 +25,17 @@ export const FieldTwoStyle = css`
   @media (max-width: 960px) {
     font-size: 30px !important;
   }
+
+  @media (max-width: 600px) {
+    font-size: 24px !important;
+    font-weight: bold;
+  }
 `;
 
 export const TextHighlightStyle = css`
   color: ${theme.palette.text.primary};
   font-weight: 500;
+  width: 70%;
 `;
 
 export const DescriptionLabelStyle = css`
@@ -33,4 +43,13 @@ export const DescriptionLabelStyle = css`
   font-size: 24px;
   line-height: 29px;
   color: #2e4063;
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
+`;
+
+export const DescriptionStyle = css`
+  //@media (max-width: 600px) {
+  //  font-size: 12px;
+  //}
 `;
