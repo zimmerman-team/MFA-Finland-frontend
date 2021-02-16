@@ -17,18 +17,17 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       overflow-y: hidden;
       z-index: 6;
       padding-top: 16px;
-      padding-bottom: 4px;
+      padding-bottom: 16px;
 
       @media (max-width: 600px) {
         top: 56px;
         min-height: 56px;
-        //height: 56px;
-        //padding: initial;
-        //margin: initial;
+
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        padding: 16px 16px 8px;
+        //padding: 16px 16px 8px;
+        padding-left: 12px;
       }
     `,
     background: css`
@@ -56,18 +55,26 @@ export const createStyles = (props: FilterBarProps, height: number) => {
         background-color: ${SecondaryColor[1]};
         box-shadow: none;
       }
+
+      @media (max-width: 600px) {
+        display: none;
+      }
     `,
     label: css`
       margin: 0 24px;
       white-space: nowrap;
+
+      @media (max-width: 600px) {
+        margin: initial;
+      }
     `,
     chipContainer: css`
-      display: block;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 2px;
       @media (max-width: 600px) {
         width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        //justify-content: space-evenly;
       }
     `,
     buttonContainer: css`

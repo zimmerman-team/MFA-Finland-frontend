@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import { Hidden, Typography } from "@material-ui/core";
 
 import { getMockData, shouldRender } from "./utils";
 import { createStyles } from "./styles";
@@ -10,6 +10,8 @@ import { currentFilterOpenAtom } from "app/state/recoil/atoms";
 import { FILTER_TYPES } from "app/components/FilterPanel/data";
 import { Chip } from "app/components/FilterBar/common/Chip";
 import { PillButton } from "app/components/Buttons/PillButton";
+
+import FilterListIcon from "@material-ui/icons/FilterList";
 
 export interface FilterBarProps {
   show?: boolean;
@@ -22,7 +24,7 @@ export const FilterBar = (props: FilterBarProps) => {
   const render: boolean = shouldRender(location);
   const [chips, setChips] = React.useState([
     { name: "2020" },
-    /*    { name: "2020" },
+    /*{ name: "2020" },
     { name: "2020" },
     { name: "2020" },
     { name: "2020" },
@@ -88,6 +90,30 @@ export const FilterBar = (props: FilterBarProps) => {
           </div>
         </div>
         <div css={styles.background} />
+        <Hidden smUp>
+          <div
+            css={`
+              width: 40px;
+              height: 40px;
+              background-color: #2e4982;
+              position: fixed;
+              top: 70vh;
+              right: 8px;
+              z-index: 4;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+            `}
+            onClick={() => setCurrentFilterOpen(FILTER_TYPES.MAIN)}
+          >
+            <FilterListIcon
+              css={`
+                fill: white;
+              `}
+            />
+          </div>
+        </Hidden>
       </>
     );
   } else {

@@ -9,15 +9,9 @@ const chip = css`
   background-color: #fff;
   font-weight: bold;
   color: ${ProjectPalette.primary.main};
-  margin-right: 8px;
-  margin-bottom: 12px;
 
   .MuiChip-deleteIcon {
     color: #bcc6d6;
-  }
-
-  @media (max-width: 600px) {
-    //margin: initial;
   }
 `;
 
