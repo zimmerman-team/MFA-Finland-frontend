@@ -48,7 +48,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}
-      {/*<Grid item xs={12} sm={12} md={12} lg={8}>
+      <Grid item xs={12} sm={12} md={12} lg={8}>
         <GridWidget
           link="/viz/oda"
           tooltip="lorem ipsum"
@@ -93,7 +93,7 @@ export const DataGrid = (props: DataGridProps) => {
             />
           )}
         </GridWidget>
-      </Grid>*/}
+      </Grid>
 
       {/* ----------------------------- */}
       {/*  row 2 */}
@@ -126,7 +126,7 @@ export const DataGrid = (props: DataGridProps) => {
           )}
         </GridWidget>
       </Grid>
-      {/*<Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={12} sm={6} md={4} lg={4}>
         <GridWidget
           label="Regions"
           tooltip="lorem ipsum"
@@ -173,12 +173,12 @@ export const DataGrid = (props: DataGridProps) => {
             />
           )}
         </GridWidget>
-      </Grid>*/}
+      </Grid>
 
       {/* ----------------------------- */}
       {/*  row 3 */}
       {/* ----------------------------- */}
-      {/*<Grid item xs={12} sm={12} md={8} lg={8}>
+      <Grid item xs={12} sm={12} md={8} lg={8}>
         <GridWidget
           height="510px"
           label="Budget Lines"
@@ -227,7 +227,7 @@ export const DataGrid = (props: DataGridProps) => {
           See more thoroughly about recent results of development cooperation of
           Finland
         </GridWidget>
-      </Grid>*/}
+      </Grid>
 
       {/* ----------------------------- */}
       {/*  row 4 */}
