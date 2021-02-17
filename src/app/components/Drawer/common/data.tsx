@@ -9,22 +9,22 @@ export interface GlobalNavItemProps {
 export const GlobalNavItems: GlobalNavItemProps[] = [
   {
     label: "Feedback",
-    path: Path.feedback,
+    path: Path.general.feedback,
   },
   {
     label: "About",
-    path: Path.general.faq,
+    path: Path.general.about,
   },
   {
     label: "Result",
-    path: Path.general.info,
+    path: Path.general.result,
   },
   {
     label: "Privacy",
-    path: Path.general.contact,
+    path: Path.general.privacy,
   },
   {
     label: "Statements",
-    path: Path.general.contact,
+    path: Path.general.statements,
   },
 ];

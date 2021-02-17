@@ -22,6 +22,8 @@ import { StatementModule } from "app/modules/statement-module";
 import { FeedbackModule } from "app/modules/feedback-module";
 import { ProjectDetailModule } from "app/modules/project-detail-module";
 import { OrganisationTypeDetailModule } from "app/modules/detail-modules/organisation-type-detail-module";
+import { Path } from "app/const/Path";
+import { ResultModule } from "app/modules/result-module";
 
 export function ModuleRoutes() {
   useUrlFilters();
@@ -67,19 +69,22 @@ export function ModuleRoutes() {
           <ProjectDetailModule />
         </Route>
 
-        <Route exact path="/about">
+        <Route exact path={Path.general.about}>
           <AboutModule />
         </Route>
 
-        <Route exact path="/privacy">
+        <Route exact path={Path.general.privacy}>
           <PrivacyModule />
         </Route>
 
-        <Route exact path="/statement">
+        <Route exact path={Path.general.statements}>
           <StatementModule />
         </Route>
+        <Route exact path={Path.general.result}>
+          <ResultModule />
+        </Route>
 
-        <Route exact path="/feedback">
+        <Route exact path={Path.general.feedback}>
           <FeedbackModule />
         </Route>
 
@@ -91,7 +96,7 @@ export function ModuleRoutes() {
           <Redirect to="/viz/oda" />
         </Route>
 
-        <Route exact path="/notFound">
+        <Route exact path={Path.general.notFound}>
           <NoMatchPage />
         </Route>
       </Switch>

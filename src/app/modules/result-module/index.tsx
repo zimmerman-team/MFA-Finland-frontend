@@ -2,12 +2,12 @@ import React from "react";
 import useTitle from "react-use/lib/useTitle";
 import { LandingLayout } from "app/modules/landing-module/layout";
 import { AppName } from "app/const/Path";
-import { PrivacyModuleLayout } from "app/modules/privacy-module/layout";
+import { ResultModuleLayout } from "app/modules/result-module/layout";
 
-const moduleName: string = "Privacy";
+const moduleName: string = "Result";
 
-export function PrivacyModule() {
+export function ResultModule() {
   useTitle(`${AppName} - ${moduleName}`);
 
-  return <PrivacyModuleLayout />;
+  return <ResultModuleLayout />;
 }

@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
 import { FilterBar } from "./components/FilterBar";
 import { FilterPanel } from "./components/FilterPanel";
+import { PageOrnament } from "app/assets/PageOrnament";
 
 export const App = () => {
   const { i18n } = useTranslation();
@@ -16,7 +17,6 @@ export const App = () => {
 
   React.useEffect(() => {
     i18n.changeLanguage(currentLanguage);
-    // .then(() => console.info("yey, language has been set"));
   }, []);
   return (
     <React.Fragment>
@@ -30,6 +30,7 @@ export const App = () => {
         message="The website uses cookies for tracking statistics. Read Grand Bargains data privacy for more details."
         open
       />
+      <PageOrnament />
     </React.Fragment>
   );
 };
