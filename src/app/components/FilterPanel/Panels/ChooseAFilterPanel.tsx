@@ -1,6 +1,6 @@
 import React from "react";
 import { FilterPanelProps } from "../index";
-import { Grid, IconButton, Typography } from "@material-ui/core";
+import { Grid, Hidden, IconButton, Typography } from "@material-ui/core";
 import { Cancel } from "@material-ui/icons";
 import { data, FILTER_TYPES } from "../data";
 import { useRecoilState } from "recoil";
@@ -15,7 +15,16 @@ export const ChooseAFilterPanel = (props: FilterPanelProps) => {
 
   return (
     <>
-      <Grid container item justify="space-between" alignItems="flex-start">
+      {/* ------------------------------------ */}
+      {/* filter selection header */}
+      <Grid
+        container
+        item
+        xs={12}
+        lg={12}
+        justify="space-between"
+        alignItems="flex-start"
+      >
         <Typography variant="h5" css={styles.heading}>
           Add Filters
         </Typography>
@@ -27,25 +36,34 @@ export const ChooseAFilterPanel = (props: FilterPanelProps) => {
         </IconButton>
       </Grid>
 
-      <Grid container item>
-        <Grid item xs={5}>
+      {/* ------------------------------------ */}
+      {/* filter options */}
+      <Grid container item xs={12} lg={12}>
+        <Grid item xs={12} lg={5}>
           {data.map((option, index) => {
             return index < 4 && <ChooseAFilterListItem {...option} />;
           })}
         </Grid>
-        <Grid item xs={1} />
 
-        <Grid item xs={5}>
+        <Hidden smDown>
+          <Grid item lg={1} />
+        </Hidden>
+
+        <Grid item xs={12} lg={5}>
           {data.map((option, index) => {
             return index >= 4 && <ChooseAFilterListItem {...option} />;
           })}
         </Grid>
         <Grid item xs={1} />
       </Grid>
+
+      {/* ------------------------------------ */}
+      {/* selection actions */}
       <Grid
         container
         item
-        xs={11}
+        xs={12}
+        lg={11}
         justify="flex-end"
         css={styles.actionContainer}
       >

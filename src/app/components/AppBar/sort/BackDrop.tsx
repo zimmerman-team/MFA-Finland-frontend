@@ -11,6 +11,9 @@ export const BackDrop = (color: string) => (
       background-color: #2e4982;
       height: 64px;
       width: 100vw;
+      @media (max-width: 600px) {
+        height: 56px;
+      }
     `}
   />
 );

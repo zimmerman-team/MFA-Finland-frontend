@@ -35,7 +35,6 @@ const createStyles = (props: ChooseAFilterListItemProps) => {
       justify-content: start;
       color: ${props.selection.length === 0 ? "#fff" : PrimaryColor[0]};
 
-      font-family: Finlandica;
       font-weight: bold;
       font-size: 18px;
       line-height: 22px;

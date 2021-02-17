@@ -21,7 +21,6 @@ export const App = () => {
   return (
     <React.Fragment>
       <AppBar />
-
       <FilterBar />
       <FilterPanel />
       <Drawer />

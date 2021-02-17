@@ -23,6 +23,10 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
       container: css`
         box-shadow: none;
         margin: 0 0 8px 0 !important;
+
+        @media (max-width: 600px) {
+          margin: initial;
+        }
       `,
       summary: css`
         margin: 0;
@@ -43,6 +47,10 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
         }
 
         background-color: ${PrimaryColor[0]};
+
+        @media (max-width: 600px) {
+          //background-color: red;
+        }
       `,
       checkbox: css`
         color: white;
@@ -54,9 +62,20 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
           : "32px 16px 24px 80px"};
         display: flex;
         flex-direction: column;
+
+        @media (max-width: 600px) {
+          font-size: 14px;
+          padding: ${props.style == "has2NodesStyle"
+            ? "16px 0px 16px 40px"
+            : "32px 16px 24px 40px"};
+        }
       `,
       label: css`
         color: white;
+        @media (max-width: 600px) {
+          font-size: 14px;
+          //padding: initial;
+        }
       `,
     };
   };
