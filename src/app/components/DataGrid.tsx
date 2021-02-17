@@ -99,27 +99,30 @@ export const DataGrid = (props: DataGridProps) => {
       {/*  row 2 */}
       {/* ----------------------------- */}
       <Grid item xs={12} sm={6} md={4} lg={4}>
-        <GridWidget
-          label="Sectors"
-          link="/viz/sectors"
-          tooltip="lorem ipsum"
-          childrencontainerStyle={{
-            marginTop: -200,
-            transform: "scale(0.4)",
-          }}
-        >
+        <GridWidget label="Sectors" link="/viz/sectors" tooltip="lorem ipsum">
           {props.vizDataLoading.sectors ? (
             <VizLoader />
           ) : (
-            <SunburstChart
-              sectorDrillDown=""
-              onZoomOut={() => null}
-              selectedVizItemId={null}
-              setSelectedVizItem={() => null}
-              data={props.sectorsSunburstData}
-              onSectorSelectChange={() => null}
-              activitiesCount={props.sectorsSunburstDataCount}
-            />
+            <div
+              css={`
+                margin-top: -160px;
+                transform: scale(0.4);
+                @media (max-width: 600px) {
+                  margin-top: initial;
+                  transform: scale(0.7);
+                }
+              `}
+            >
+              <SunburstChart
+                sectorDrillDown=""
+                onZoomOut={() => null}
+                selectedVizItemId={null}
+                setSelectedVizItem={() => null}
+                data={props.sectorsSunburstData}
+                onSectorSelectChange={() => null}
+                activitiesCount={props.sectorsSunburstDataCount}
+              />
+            </div>
           )}
         </GridWidget>
       </Grid>
