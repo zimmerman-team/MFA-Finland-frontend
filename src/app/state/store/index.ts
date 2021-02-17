@@ -51,6 +51,7 @@ import detailDonorsTable from "app/state/api/actions-reducers/detail-pages/detai
 import sectorsTable from "app/state/api/actions-reducers/detail-pages/sectorsTable";
 import activityDetail from "app/state/api/actions-reducers/detail-pages/activityDetail";
 import activitySDG from "app/state/api/actions-reducers/detail-pages/activitySDG";
+import detailPageName from "app/state/api/actions-reducers/detail-pages/detailPageName";
 
 // filtering
 import {
@@ -145,6 +146,7 @@ const storeContent: StoreModel = {
   activitySDG: persist(activitySDG),
   detailPublishersTable: persist(detailPublishersTable),
   detailDonorsTable: persist(detailDonorsTable),
+  detailPageName: persist(detailPageName),
   // sync variables
   syncSearch: persist(syncSearch),
   filtersUpdated: persist(filtersUpdated),

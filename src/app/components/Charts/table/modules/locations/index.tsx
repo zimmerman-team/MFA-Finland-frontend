@@ -10,7 +10,11 @@ import { ExpandableRows } from "app/components/Charts/table/common/rows/Expandab
 // import { downloadActivitiesCSV } from "app/utils/downloadActivitiesCSV";
 // import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 
-export function LocationsFragmentTable(props: DataTableProps) {
+interface LocationsFragmentTableProps extends DataTableProps {
+  type: string;
+}
+
+export function LocationsFragmentTable(props: LocationsFragmentTableProps) {
   //   const [selectedFilters, setSelectedFilters] = useRecoilState(
   //     selectedFilterAtom
   //   );
@@ -102,8 +106,8 @@ export function LocationsFragmentTable(props: DataTableProps) {
             return (
               <ExpandableRows
                 level={1}
-                type="org"
                 data={childData}
+                type={props.type}
                 key={rowMeta.dataIndex}
               />
             );

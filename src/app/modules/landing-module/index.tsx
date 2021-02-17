@@ -20,7 +20,12 @@ export function LandingModule() {
     sdgVizData,
     geoMapData,
     unallocablePercentage,
-  } = useDataGridData();
+  } = useDataGridData({
+    detailPageFilter: {
+      key: "",
+      value: "",
+    },
+  });
 
   return (
     <LandingLayout

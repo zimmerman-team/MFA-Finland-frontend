@@ -3,8 +3,8 @@ import { Treemap } from "app/components/Charts/treemap";
 import { TreemapProps } from "app/components/Charts/treemap/data";
 import { LocationsFragmentTable } from "app/components/Charts/table/modules/locations";
 import {
-  LocationsDataTableColumns,
   SectorsDataTableOptions,
+  OrganisationTypesDataTableColumns,
 } from "app/components/Charts/table/data";
 
 interface OrganisationsModuleModel extends TreemapProps {
@@ -32,9 +32,10 @@ export function OrganisationsModule(props: OrganisationsModuleModel) {
       `}
     >
       <LocationsFragmentTable
+        type="org"
         data={props.data.children}
         options={SectorsDataTableOptions}
-        columns={LocationsDataTableColumns}
+        columns={OrganisationTypesDataTableColumns}
         title={`${props.data.children.length} organisation types`}
       />
     </div>
