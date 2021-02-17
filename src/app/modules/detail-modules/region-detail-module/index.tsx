@@ -1,6 +1,8 @@
 import React from "react";
+import get from "lodash/get";
 import useTitle from "react-use/lib/useTitle";
 import { Path, AppName } from "app/const/Path";
+import { useRouteMatch } from "react-router-dom";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
@@ -14,6 +16,8 @@ export const crumbs: BreadcrumbLinkModel[] = [
 
 export function RegionDetailModule() {
   useTitle(`${AppName} - ${moduleName}`);
+  const { params } = useRouteMatch();
+
   const {
     vizDataLoading,
     odaBarChartData,
@@ -26,11 +30,17 @@ export function RegionDetailModule() {
     sdgVizData,
     geoMapData,
     unallocablePercentage,
-  } = useDataGridData();
+    detailPageNameData,
+  } = useDataGridData({
+    detailPageFilter: {
+      key: "recipient_region_code",
+      value: get(params, "region", ""),
+    },
+  });
 
   return (
     <DetailModuleLayout
-      label={moduleName}
+      label={detailPageNameData || get(params, "region", "")}
       crumbs={crumbs}
       vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}

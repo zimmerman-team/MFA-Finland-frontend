@@ -99,11 +99,20 @@ export const thematicAreasDataTableOptions: MUIDataTableOptions = {
 
 export const thematicAreasDataTableColumns: MUIDataTableColumnDef[] = [
   {
-    name: "area",
+    name: "ref",
+    label: "",
+    options: {
+      display: false,
+    },
+  },
+  {
+    name: "name",
     label: "Area",
     options: {
-      customBodyRender: (value) => {
-        const link = `/thematic-area/${encodeURIComponent(value)}`;
+      customBodyRender: (value, tableMeta) => {
+        const link = `/thematic-area/${encodeURIComponent(
+          tableMeta.rowData[0]
+        )}`;
         return <LinkCell link={link} value={value} />;
       },
     },

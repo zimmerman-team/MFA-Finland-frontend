@@ -7,6 +7,7 @@ import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import {
   selectedFilterAtom,
+  prevLocationAtom,
   ODAlatestFiltersAtom,
   ThematicAreasLatestFiltersAtom,
   SectorsSunburstLatestFiltersAtom,
@@ -17,7 +18,14 @@ import {
   GeoLatestFiltersAtom,
 } from "app/state/recoil/atoms";
 
-export function useDataGridData() {
+interface useDataGridDataProps {
+  detailPageFilter: {
+    key: string;
+    value: string;
+  };
+}
+
+export function useDataGridData(props: useDataGridDataProps) {
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
   const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
     ODAlatestFiltersAtom
@@ -48,6 +56,7 @@ export function useDataGridData() {
   const [GeoLatestFilters, setGeoLatestFilters] = useRecoilState(
     GeoLatestFiltersAtom
   );
+  const [prevLocation, setPrevLocation] = useRecoilState(prevLocationAtom);
 
   /* STATE & ACTIONS */
   const odaBarChartAction = useStoreActions(
@@ -101,6 +110,12 @@ export function useDataGridData() {
   const sdgVizData = useStoreState((state) =>
     get(state.sdgViz, "data.vizData", [])
   );
+  const detailPageNameAction = useStoreActions(
+    (actions) => actions.detailPageName.fetch
+  );
+  const detailPageNameData = useStoreState((state) =>
+    get(state.detailPageName.data, "data[0]", "")
+  );
   const geoMapAction = useStoreActions((actions) => actions.geoMap.fetch);
   const geoMapData = useStoreState((state) =>
     get(state.geoMap, "data.vizData", [])
@@ -119,11 +134,25 @@ export function useDataGridData() {
     geo: state.geoMap.loading,
   }));
 
-  useMount(() => {
-    const filters = getAPIFormattedFilters(selectedFilters);
+  React.useEffect(() => {
+    let filters = getAPIFormattedFilters(selectedFilters);
+    const isDetailPage = props.detailPageFilter.value !== "";
+    if (isDetailPage) {
+      filters = {
+        ...filters,
+        [props.detailPageFilter.key]: [props.detailPageFilter.value],
+      };
+      detailPageNameAction({
+        values: {
+          filters,
+        },
+      });
+    }
     if (
       odaBarChartData.length === 0 ||
-      !isEqual(ODAlatestFilters, selectedFilters)
+      !isEqual(ODAlatestFilters, selectedFilters) ||
+      isDetailPage ||
+      (!isDetailPage && prevLocation !== "")
     ) {
       odaBarChartAction({
         values: {
@@ -133,7 +162,9 @@ export function useDataGridData() {
     }
     if (
       thematicAreasChartData.length === 0 ||
-      !isEqual(ThematicAreasLatestFilters, selectedFilters)
+      !isEqual(ThematicAreasLatestFilters, selectedFilters) ||
+      isDetailPage ||
+      (!isDetailPage && prevLocation !== "")
     ) {
       thematicAreasChartAction({
         values: {
@@ -143,7 +174,9 @@ export function useDataGridData() {
     }
     if (
       sectorsSunburstData.children.length === 0 ||
-      !isEqual(SectorsSunburstLatestFilters, selectedFilters)
+      !isEqual(SectorsSunburstLatestFilters, selectedFilters) ||
+      isDetailPage ||
+      (!isDetailPage && prevLocation !== "")
     ) {
       sectorsSunburstAction({
         values: {
@@ -153,7 +186,9 @@ export function useDataGridData() {
     }
     if (
       locationsTreemapData.children.length === 0 ||
-      !isEqual(LocationsTreemapLatestFilters, selectedFilters)
+      !isEqual(LocationsTreemapLatestFilters, selectedFilters) ||
+      isDetailPage ||
+      (!isDetailPage && prevLocation !== "")
     ) {
       locationsTreemapAction({
         values: {
@@ -163,7 +198,9 @@ export function useDataGridData() {
     }
     if (
       organisationsTreemapData.children.length === 0 ||
-      !isEqual(OrganisationsLatestFilters, selectedFilters)
+      !isEqual(OrganisationsLatestFilters, selectedFilters) ||
+      isDetailPage ||
+      (!isDetailPage && prevLocation !== "")
     ) {
       organisationsTreemapAction({
         values: {
@@ -173,7 +210,9 @@ export function useDataGridData() {
     }
     if (
       budgetLinesBarChartData.length === 0 ||
-      !isEqual(BudgetLinesLatestFilters, selectedFilters)
+      !isEqual(BudgetLinesLatestFilters, selectedFilters) ||
+      isDetailPage ||
+      (!isDetailPage && prevLocation !== "")
     ) {
       budgetLinesBarChartAction({
         values: {
@@ -183,7 +222,9 @@ export function useDataGridData() {
     }
     if (
       sdgVizData.length === 0 ||
-      !isEqual(SDGlatestFilters, selectedFilters)
+      !isEqual(SDGlatestFilters, selectedFilters) ||
+      isDetailPage ||
+      (!isDetailPage && prevLocation !== "")
     ) {
       sdgVizAction({
         values: {
@@ -193,7 +234,9 @@ export function useDataGridData() {
     }
     if (
       geoMapData.length === 0 ||
-      !isEqual(GeoLatestFilters, selectedFilters)
+      !isEqual(GeoLatestFilters, selectedFilters) ||
+      isDetailPage ||
+      (!isDetailPage && prevLocation !== "")
     ) {
       geoMapAction({
         values: {
@@ -201,10 +244,11 @@ export function useDataGridData() {
         },
       });
     }
-  });
+  }, [prevLocation]);
 
   useUnmount(() => {
     setODAlatestFilters(selectedFilters);
+    setPrevLocation(props.detailPageFilter.key);
     setThematicAreasLatestFilters(selectedFilters);
     setSectorsSunburstLatestFilters(selectedFilters);
     setLocationsTreemapLatestFilters(selectedFilters);
@@ -226,5 +270,6 @@ export function useDataGridData() {
     geoMapData,
     vizDataLoading,
     unallocablePercentage,
+    detailPageNameData,
   };
 }

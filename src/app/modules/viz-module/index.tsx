@@ -37,6 +37,7 @@ import {
   OrganisationsLatestFiltersAtom,
   BudgetLinesLatestFiltersAtom,
   ProjectsLatestFiltersAtom,
+  prevLocationAtom,
 } from "app/state/recoil/atoms";
 
 export default function VizModule() {
@@ -87,6 +88,7 @@ export default function VizModule() {
   const setProjectListPage = useStoreActions(
     (actions) => actions.projectListPage.setValue
   );
+  const [prevLocation, setPrevLocation] = useRecoilState(prevLocationAtom);
 
   /* STATE & ACTIONS */
   const odaBarChartAction = useStoreActions(
@@ -271,7 +273,8 @@ export default function VizModule() {
       case "oda":
         if (
           odaBarChartData.length === 0 ||
-          !isEqual(ODAlatestFilters, selectedFilters)
+          !isEqual(ODAlatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           odaBarChartAction({
             values: {
@@ -283,7 +286,8 @@ export default function VizModule() {
       case "thematic-areas":
         if (
           thematicAreasChartData.length === 0 ||
-          !isEqual(ThematicAreasLatestFilters, selectedFilters)
+          !isEqual(ThematicAreasLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           thematicAreasChartAction({
             values: {
@@ -295,7 +299,8 @@ export default function VizModule() {
       case "sectors":
         if (
           sectorsSunburstData.children.length === 0 ||
-          !isEqual(SectorsSunburstLatestFilters, selectedFilters)
+          !isEqual(SectorsSunburstLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           sectorsSunburstAction({
             values: {
@@ -307,7 +312,8 @@ export default function VizModule() {
       case "countries-regions":
         if (
           locationsTreemapData.children.length === 0 ||
-          !isEqual(LocationsTreemapLatestFilters, selectedFilters)
+          !isEqual(LocationsTreemapLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           locationsTreemapAction({
             values: {
@@ -319,7 +325,8 @@ export default function VizModule() {
       case "organisations":
         if (
           organisationsTreemapData.children.length === 0 ||
-          !isEqual(OrganisationsLatestFilters, selectedFilters)
+          !isEqual(OrganisationsLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           organisationsTreemapAction({
             values: {
@@ -331,7 +338,8 @@ export default function VizModule() {
       case "budget-lines":
         if (
           budgetLinesBarChartData.length === 0 ||
-          !isEqual(BudgetLinesLatestFilters, selectedFilters)
+          !isEqual(BudgetLinesLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           budgetLinesBarChartAction({
             values: {
@@ -343,7 +351,8 @@ export default function VizModule() {
       case "projects":
         if (
           projectsData.length === 0 ||
-          !isEqual(ProjectsLatestFilters, selectedFilters)
+          !isEqual(ProjectsLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           projectsAction({
             values: {
@@ -355,9 +364,10 @@ export default function VizModule() {
       default:
         break;
     }
-  }, [get(params, "tab", "")]);
+  }, [get(params, "tab", ""), prevLocation]);
 
   useUnmount(() => {
+    setPrevLocation("");
     onTabChange(get(params, "tab", ""));
   });
 

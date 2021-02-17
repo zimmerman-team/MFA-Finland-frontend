@@ -32,6 +32,7 @@ export function CountriesRegionsModule(props: CountriesRegionsModuleModel) {
       `}
     >
       <LocationsFragmentTable
+        type="location"
         data={props.data.children}
         options={SectorsDataTableOptions}
         columns={LocationsDataTableColumns}

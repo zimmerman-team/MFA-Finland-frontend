@@ -142,6 +142,7 @@ export interface StoreModel {
   activityDetail: ApiCallModel;
   activitySDG: ApiCallModel;
   donorsTreemap: ApiCallModel;
+  detailPageName: ApiCallModel;
   // auth
   // users: ApiCallModel;
   // user: ApiCallModel;

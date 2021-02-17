@@ -15,11 +15,13 @@ import { RegionDetailModule } from "app/modules/detail-modules/region-detail-mod
 import { CountryDetailModule } from "app/modules/detail-modules/country-detail-module";
 import { ThematicDetailModule } from "app/modules/detail-modules/thematic-detail-module";
 import { OrganisationDetailModule } from "app/modules/detail-modules/organisation-detail-module";
+import { SectorDetailModule } from "app/modules/detail-modules/sector-detail-module";
 import { AboutModule } from "app/modules/about-module";
 import { PrivacyModule } from "app/modules/privacy-module";
 import { StatementModule } from "app/modules/statement-module";
 import { FeedbackModule } from "app/modules/feedback-module";
 import { ProjectDetailModule } from "app/modules/project-detail-module";
+import { OrganisationTypeDetailModule } from "app/modules/detail-modules/organisation-type-detail-module";
 
 export function ModuleRoutes() {
   useUrlFilters();
@@ -46,14 +48,18 @@ export function ModuleRoutes() {
         </Route>
 
         <Route exact path="/sectors/:sector">
-          <CountryDetailModule />
+          <SectorDetailModule />
         </Route>
 
         <Route exact path="/organisations/:organisation">
           <OrganisationDetailModule />
         </Route>
 
-        <Route exact path="/thematic/:theme">
+        <Route exact path="/organisation-types/:orgType">
+          <OrganisationTypeDetailModule />
+        </Route>
+
+        <Route exact path="/thematic-area/:theme">
           <ThematicDetailModule />
         </Route>
 

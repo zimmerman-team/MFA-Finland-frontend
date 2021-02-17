@@ -4,9 +4,14 @@ import { ExpandableRowOrg } from "app/components/Charts/table/common/rows/Expand
 import { ExpandableRowBudgetLines } from "app/components/Charts/table/common/rows/ExpandableRows/common/ExpandableRow/budgetlines";
 
 export const ExpandableRows = (props: any) => {
-  if (props.type === "org") {
+  if (props.type === "org" || props.type === "location") {
     return props.data.map((child: any) => (
-      <ExpandableRowOrg child={child} key={child.name} level={props.level} />
+      <ExpandableRowOrg
+        child={child}
+        key={child.name}
+        level={props.level}
+        type={props.type}
+      />
     ));
   }
   if (props.type === "budgetlines") {
