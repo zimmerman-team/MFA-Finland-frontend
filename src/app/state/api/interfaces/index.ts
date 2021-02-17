@@ -2,6 +2,7 @@ import { Action, Thunk } from "easy-peasy";
 // import { UserMetaData } from "app/interfaces/User";
 import { SyncSearchModel } from "app/state/api/actions-reducers/sync/search";
 import { FiltersUpdatedModel } from "app/state/api/actions-reducers/sync/filtersUpdated";
+import { ProjectListPage } from "../actions-reducers/sync/generic";
 
 export interface RequestValues<T> {
   values?: T;
@@ -141,6 +142,7 @@ export interface StoreModel {
   activityDetail: ApiCallModel;
   activitySDG: ApiCallModel;
   donorsTreemap: ApiCallModel;
+  detailPageName: ApiCallModel;
   // auth
   // users: ApiCallModel;
   // user: ApiCallModel;
@@ -158,5 +160,6 @@ export interface StoreModel {
   };
   // sync variables
   syncSearch: SyncSearchModel;
+  projectListPage: ProjectListPage;
   filtersUpdated: FiltersUpdatedModel;
 }

@@ -1010,3 +1010,11 @@ export function getCountryCode(name: string): string {
   }
   return "";
 }
+
+export function getCountryName(code: string): string {
+  const fCountry = find(countries, { code });
+  if (fCountry) {
+    return fCountry.name;
+  }
+  return "";
+}

@@ -604,6 +604,49 @@ export const LocationsDataTableColumns: MUIDataTableColumnDef[] = [
   },
 ];
 
+export const OrganisationTypesDataTableColumns: MUIDataTableColumnDef[] = [
+  {
+    name: "ref",
+    label: "",
+    options: {
+      display: false,
+    },
+  },
+  {
+    name: "name",
+    label: "Name",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta) => {
+        const link = `/organisation-types/${encodeURIComponent(
+          tableMeta.rowData[0]
+        )}`;
+        return <LinkCell link={link} value={value} />;
+      },
+    },
+  },
+  {
+    name: "value",
+    label: "Disbursements",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+  {
+    name: "committed",
+    label: "Committed",
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => {
+        return formatLocale(value);
+      },
+    },
+  },
+];
+
 export const TransactionsDataTableColumns: MUIDataTableColumnDef[] = [
   {
     name: "year",

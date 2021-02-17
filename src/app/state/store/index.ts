@@ -50,6 +50,8 @@ import detailPublishersTable from "app/state/api/actions-reducers/detail-pages/d
 import detailDonorsTable from "app/state/api/actions-reducers/detail-pages/detailDonorsTable";
 import sectorsTable from "app/state/api/actions-reducers/detail-pages/sectorsTable";
 import activityDetail from "app/state/api/actions-reducers/detail-pages/activityDetail";
+import activitySDG from "app/state/api/actions-reducers/detail-pages/activitySDG";
+import detailPageName from "app/state/api/actions-reducers/detail-pages/detailPageName";
 
 // filtering
 import {
@@ -64,8 +66,8 @@ import {
 
 // sync variables
 import syncSearch from "app/state/api/actions-reducers/sync/search";
+import { projectListPage } from "app/state/api/actions-reducers/sync/generic";
 import filtersUpdated from "app/state/api/actions-reducers/sync/filtersUpdated";
-import activitySDG from "../api/actions-reducers/detail-pages/activitySDG";
 
 // auth
 // import user from "app/state/api/actions-reducers/auth/user";
@@ -144,9 +146,11 @@ const storeContent: StoreModel = {
   activitySDG: persist(activitySDG),
   detailPublishersTable: persist(detailPublishersTable),
   detailDonorsTable: persist(detailDonorsTable),
+  detailPageName: persist(detailPageName),
   // sync variables
   syncSearch: persist(syncSearch),
   filtersUpdated: persist(filtersUpdated),
+  projectListPage: persist(projectListPage),
   // auth
   // users: persist(users),
   // user: persist(user),

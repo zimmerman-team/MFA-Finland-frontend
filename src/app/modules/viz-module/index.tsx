@@ -20,6 +20,7 @@ import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
 import { SectorsVizModule } from "app/components/Charts/modules/sectors";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
+import { ProjectsListModule } from "app/components/Charts/modules/projects";
 import { BudgetLinesModule } from "app/components/Charts/modules/budgetlines";
 import { CountriesRegionsModule } from "app/components/Charts/modules/locations";
 import { OrganisationsModule } from "app/components/Charts/modules/organisations";
@@ -35,9 +36,9 @@ import {
   LocationsTreemapLatestFiltersAtom,
   OrganisationsLatestFiltersAtom,
   BudgetLinesLatestFiltersAtom,
+  ProjectsLatestFiltersAtom,
+  prevLocationAtom,
 } from "app/state/recoil/atoms";
-import { ProjectsListModule } from "app/components/Charts/modules/projects";
-import { projects } from "app/components/Charts/modules/projects/data";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -80,6 +81,14 @@ export default function VizModule() {
     BudgetLinesLatestFilters,
     setBudgetLinesLatestFilters,
   ] = useRecoilState(BudgetLinesLatestFiltersAtom);
+  const [ProjectsLatestFilters, setProjectsLatestFilters] = useRecoilState(
+    ProjectsLatestFiltersAtom
+  );
+  const projectListPage = useStoreState((state) => state.projectListPage.value);
+  const setProjectListPage = useStoreActions(
+    (actions) => actions.projectListPage.setValue
+  );
+  const [prevLocation, setPrevLocation] = useRecoilState(prevLocationAtom);
 
   /* STATE & ACTIONS */
   const odaBarChartAction = useStoreActions(
@@ -141,16 +150,37 @@ export default function VizModule() {
   const odaBudgetLinesChartLoading = useStoreState(
     (state) => state.odaBudgetLinesChart.loading
   );
+  const projectsAction = useStoreActions((actions) => actions.activities.fetch);
+  const projectsData = useStoreState((state) =>
+    get(state.activities, "data.data", [])
+  );
+  const projectsCountData = useStoreState((state) =>
+    get(state.activities, "data.count", [])
+  );
+
   const vizDataLoading = useStoreState((state) => ({
     oda: state.odaBarChart.loading,
     thematic: state.thematicAreasChart.loading,
     sectors: state.sectorsSunburst.loading,
     locations: state.locationsTreemap.loading,
     organisations: state.organisationsTreemap.loading,
+    projects: state.activities.loading,
     budgetLines: state.budgetLinesBarChart.loading,
     sdg: state.sdgViz.loading,
     geo: state.geoMap.loading,
   }));
+
+  function loadMoreProjects() {
+    const filters = getAPIFormattedFilters(selectedFilters);
+    projectsAction({
+      addOnData: true,
+      values: {
+        filters,
+        page: projectListPage,
+      },
+    });
+    setProjectListPage(projectListPage + 1);
+  }
 
   function onSelectChange(e: {
     selection: string | number | null;
@@ -221,6 +251,9 @@ export default function VizModule() {
       case "budget-lines":
         setBudgetLinesLatestFilters(selectedFilters);
         break;
+      case "projects":
+        setProjectsLatestFilters(selectedFilters);
+        break;
       default:
         break;
     }
@@ -240,7 +273,8 @@ export default function VizModule() {
       case "oda":
         if (
           odaBarChartData.length === 0 ||
-          !isEqual(ODAlatestFilters, selectedFilters)
+          !isEqual(ODAlatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           odaBarChartAction({
             values: {
@@ -252,7 +286,8 @@ export default function VizModule() {
       case "thematic-areas":
         if (
           thematicAreasChartData.length === 0 ||
-          !isEqual(ThematicAreasLatestFilters, selectedFilters)
+          !isEqual(ThematicAreasLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           thematicAreasChartAction({
             values: {
@@ -264,7 +299,8 @@ export default function VizModule() {
       case "sectors":
         if (
           sectorsSunburstData.children.length === 0 ||
-          !isEqual(SectorsSunburstLatestFilters, selectedFilters)
+          !isEqual(SectorsSunburstLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           sectorsSunburstAction({
             values: {
@@ -276,7 +312,8 @@ export default function VizModule() {
       case "countries-regions":
         if (
           locationsTreemapData.children.length === 0 ||
-          !isEqual(LocationsTreemapLatestFilters, selectedFilters)
+          !isEqual(LocationsTreemapLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           locationsTreemapAction({
             values: {
@@ -288,7 +325,8 @@ export default function VizModule() {
       case "organisations":
         if (
           organisationsTreemapData.children.length === 0 ||
-          !isEqual(OrganisationsLatestFilters, selectedFilters)
+          !isEqual(OrganisationsLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           organisationsTreemapAction({
             values: {
@@ -300,9 +338,23 @@ export default function VizModule() {
       case "budget-lines":
         if (
           budgetLinesBarChartData.length === 0 ||
-          !isEqual(BudgetLinesLatestFilters, selectedFilters)
+          !isEqual(BudgetLinesLatestFilters, selectedFilters) ||
+          prevLocation !== ""
         ) {
           budgetLinesBarChartAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        break;
+      case "projects":
+        if (
+          projectsData.length === 0 ||
+          !isEqual(ProjectsLatestFilters, selectedFilters) ||
+          prevLocation !== ""
+        ) {
+          projectsAction({
             values: {
               filters,
             },
@@ -312,9 +364,10 @@ export default function VizModule() {
       default:
         break;
     }
-  }, [get(params, "tab", "")]);
+  }, [get(params, "tab", ""), prevLocation]);
 
   useUnmount(() => {
+    setPrevLocation("");
     onTabChange(get(params, "tab", ""));
   });
 
@@ -509,11 +562,12 @@ export default function VizModule() {
               )}
             </Route>
             <Route path="/viz/projects">
-              {vizDataLoading.budgetLines ? (
-                <VizLoader />
-              ) : (
-                <ProjectsListModule projects={projects} />
-              )}
+              <ProjectsListModule
+                projects={projectsData}
+                count={projectsCountData}
+                loadMore={loadMoreProjects}
+                loading={vizDataLoading.projects}
+              />
             </Route>
           </Switch>
         </Grid>

@@ -2,11 +2,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import get from "lodash/get";
-import { useRecoilState } from "recoil";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { formatLocale } from "app/utils/formatLocale";
 import { TableRow, TableCell } from "@material-ui/core";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
 import { ExpandButton } from "app/components/Charts/table/common/rows/ExpandableRows/common/ExpandBtn";
 
@@ -19,24 +17,7 @@ const tableCellColors = [
 
 export const ExpandableRowOrg = (props: any) => {
   const history = useHistory();
-  const [selectedFilters, setSelectedFilters] = useRecoilState(
-    selectedFilterAtom
-  );
   const [expanded, setExpanded] = React.useState(false);
-
-  function onLinkClick(code: string) {
-    setSelectedFilters({
-      ...selectedFilters,
-      sectors: [...selectedFilters.sectors, code],
-    });
-    setTimeout(() => {
-      history.push(
-        `${history.location.pathname.replace("organisation", "projects")}${
-          history.location.search
-        }`
-      );
-    }, 100);
-  }
 
   const children = get(props, "child.orgs", []);
 
@@ -71,12 +52,17 @@ export const ExpandableRowOrg = (props: any) => {
           )}
         </TableCell>
         <TableCell key={props.child.name} colSpan={1}>
-          <span
-            css="color: #2e4982;cursor: pointer;"
-            onClick={() => onLinkClick(props.child.name)}
+          <Link
+            to={`/${
+              props.type === "org"
+                ? "organisations"
+                : props.child.ref.length === 2
+                ? "countries"
+                : "regions"
+            }/${props.child.ref}${history.location.search}`}
           >
             {props.child.name}
-          </span>
+          </Link>
         </TableCell>
         <TableCell key={`${props.child.name}-value`} colSpan={1}>
           {formatLocale(props.child.value)}
@@ -88,7 +74,7 @@ export const ExpandableRowOrg = (props: any) => {
       {expanded && children.length > 0 && (
         <ExpandableRows
           data={children}
-          type="org"
+          type={props.type}
           level={props.level + 1}
           key={`${props.child.title}-children`}
         />

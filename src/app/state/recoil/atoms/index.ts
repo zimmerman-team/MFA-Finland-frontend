@@ -67,6 +67,11 @@ export const selectedFilterAtom: RecoilState<SelectedFilterAtomModel> = atom({
   default: defaultfilters,
 });
 
+export const prevLocationAtom: RecoilState<string> = atom({
+  key: "prevLocationAtom",
+  default: "",
+});
+
 export const ODAlatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom({
   key: "ODAlatestFilters",
   default: defaultfilters,
@@ -103,6 +108,13 @@ export const OrganisationsLatestFiltersAtom: RecoilState<SelectedFilterAtomModel
 export const BudgetLinesLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
   {
     key: "ODAlatestFilters",
+    default: defaultfilters,
+  }
+);
+
+export const ProjectsLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
+  {
+    key: "ProjectslatestFilters",
     default: defaultfilters,
   }
 );

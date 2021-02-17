@@ -1,26 +1,31 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
-import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
 import { MoreHoriz } from "@material-ui/icons";
-import { PrimaryColor } from "../../../../theme";
+import SearchIcon from "@material-ui/icons/Search";
+import { formatLocale } from "app/utils/formatLocale";
+import IconButton from "@material-ui/core/IconButton";
+import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 
 interface ProjectsListModuleProps {
+  count: number;
+  loading: boolean;
+  loadMore: () => void;
   projects: ProjectType[];
 }
 
 export type ProjectType = {
-  name: string;
-  description: string;
-  startDate: string;
-  sector: string;
+  code: string;
+  title: string;
+  budget: number;
   status: string;
-  reportingOrg: string;
   endDate: string;
-  country: string;
-  budget: string;
-  disbursements: number;
+  startDate: string;
+  sectors: string[];
+  description: string;
+  country_region: string[];
+  disbursementPercentage: number;
 };
 
 export const ProjectsListModule = (props: ProjectsListModuleProps) => {
@@ -93,11 +98,30 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     `,
   };
 
+  const observer = React.useRef<IntersectionObserver>();
+  const bottomItemRef = React.useCallback(
+    (node) => {
+      if (props.loading) return;
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          props.loadMore();
+        }
+      });
+      if (node) {
+        observer.current.observe(node);
+      }
+    },
+    [props.loading]
+  );
+
   return (
     <div css={styles.container}>
       <div css={styles.titleContainer}>
         <Typography variant="h6" css={styles.title}>
-          120 Projects
+          {props.count} Projects
         </Typography>
         <div css={styles.iconContainer}>
           <IconButton css={styles.iconButton}>
@@ -109,9 +133,17 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
         </div>
       </div>
       <div css={styles.listContainer}>
-        {props.projects.map((project) => {
-          return <ListItem {...project} />;
+        {props.projects.map((project: ProjectType, index: number) => {
+          if (index === props.projects.length - 1) {
+            return (
+              <span ref={bottomItemRef} key={project.code}>
+                <ListItem {...project} />
+              </span>
+            );
+          }
+          return <ListItem {...project} key={project.code} />;
         })}
+        {props.loading && <div css="text-align: center;">Loading...</div>}
       </div>
     </div>
   );
@@ -119,7 +151,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
 
 const ListItem = (project: ProjectType) => {
   const styles = {
-    container: () => css`
+    container: css`
       background: #ffffff;
       box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
       border-radius: 10px;
@@ -148,33 +180,47 @@ const ListItem = (project: ProjectType) => {
   };
 
   return (
-    <div css={styles.container()}>
-      <Typography variant="h6" css={styles.name}>
-        {project.name}
-      </Typography>
-      <Typography variant="body2" css={styles.description}>
-        {project.description}
-      </Typography>
-      <Grid container item xs={10}>
-        <LabelValueGridItem
-          label="Planned start date"
-          value={project.startDate}
-        />
-        <LabelValueGridItem label="Sector" value={project.sector} />
-        <LabelValueGridItem label="Status" value={project.status} />
-        <LabelValueGridItem
-          label="Reporting organisation"
-          value={project.reportingOrg}
-        />
-        <LabelValueGridItem label="Planned end date" value={project.endDate} />
-        <LabelValueGridItem label="Country/region" value={project.country} />
-        <LabelValueGridItem label="Estimated budget" value={project.budget} />
-        <LabelValueGridItem
-          label="Disbursement"
-          value={project.disbursements}
-        />
-      </Grid>
-    </div>
+    <Link to={`/project/${project.code}`}>
+      <div css={styles.container}>
+        <Typography variant="h6" css={styles.name}>
+          {project.title}
+        </Typography>
+        <Typography variant="body2" css={styles.description}>
+          {project.description.split(".")[0]}
+        </Typography>
+        <Grid container item xs={10}>
+          <LabelValueGridItem
+            label="Planned start date"
+            value={project.startDate}
+          />
+          <LabelValueGridItem
+            label="Sector"
+            value={project.sectors.join(", ")}
+          />
+          <LabelValueGridItem label="Status" value={project.status} />
+          <LabelValueGridItem
+            value="MFA Finland"
+            label="Reporting organisation"
+          />
+          <LabelValueGridItem
+            label="Planned end date"
+            value={project.endDate}
+          />
+          <LabelValueGridItem
+            label="Country/region"
+            value={project.country_region.join(", ")}
+          />
+          <LabelValueGridItem
+            label="Estimated budget"
+            value={formatLocale(project.budget)}
+          />
+          <LabelValueGridItem
+            label="Disbursement"
+            value={project.disbursementPercentage}
+          />
+        </Grid>
+      </div>
+    </Link>
   );
 };
 
@@ -219,7 +265,7 @@ const LabelValueGridItem = (props: {
         </Box>
       ) : (
         <Typography variant="body2" css={styles.value}>
-          {props.value}
+          {props.value.length > 0 ? props.value : "N/A"}
         </Typography>
       )}
     </Grid>
