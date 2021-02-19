@@ -37,6 +37,7 @@ export interface SelectedFilterAtomModel {
   regions: string[];
   sectors: string[];
   organisations: string[];
+  organisationtypes: string[];
   activitystatus: string[];
   activityscope: string[];
   tag: string[];
@@ -45,6 +46,7 @@ export interface SelectedFilterAtomModel {
   defaulttiedstatus: string[];
   collaborationtype: string[];
   policymarker: string[];
+  years: string[];
 }
 
 const defaultfilters = {
@@ -52,6 +54,7 @@ const defaultfilters = {
   regions: [] as string[],
   sectors: [] as string[],
   organisations: [] as string[],
+  organisationtypes: [] as string[],
   activitystatus: [] as string[],
   activityscope: [] as string[],
   tag: [] as string[],
@@ -60,6 +63,7 @@ const defaultfilters = {
   defaulttiedstatus: [] as string[],
   collaborationtype: [] as string[],
   policymarker: [] as string[],
+  years: [] as string[],
 };
 
 export const selectedFilterAtom: RecoilState<SelectedFilterAtomModel> = atom({

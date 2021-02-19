@@ -2,7 +2,7 @@ import React from "react";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
-import { useMount, useUnmount } from "react-use";
+import { useUpdateEffect, useUnmount } from "react-use";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import {
@@ -245,6 +245,78 @@ export function useDataGridData(props: useDataGridDataProps) {
       });
     }
   }, [prevLocation]);
+
+  useUpdateEffect(() => {
+    let filters = getAPIFormattedFilters(selectedFilters);
+    const isDetailPage = props.detailPageFilter.value !== "";
+    if (isDetailPage) {
+      filters = {
+        ...filters,
+        [props.detailPageFilter.key]: [props.detailPageFilter.value],
+      };
+      detailPageNameAction({
+        values: {
+          filters,
+        },
+      });
+    }
+    if (!vizDataLoading.oda) {
+      odaBarChartAction({
+        values: {
+          filters,
+        },
+      });
+    }
+    if (!vizDataLoading.thematic) {
+      thematicAreasChartAction({
+        values: {
+          filters,
+        },
+      });
+    }
+    if (!vizDataLoading.sectors) {
+      sectorsSunburstAction({
+        values: {
+          filters,
+        },
+      });
+    }
+    if (!vizDataLoading.locations) {
+      locationsTreemapAction({
+        values: {
+          filters,
+        },
+      });
+    }
+    if (!vizDataLoading.organisations) {
+      organisationsTreemapAction({
+        values: {
+          filters,
+        },
+      });
+    }
+    if (!vizDataLoading.budgetLines) {
+      budgetLinesBarChartAction({
+        values: {
+          filters,
+        },
+      });
+    }
+    if (!vizDataLoading.sdg) {
+      sdgVizAction({
+        values: {
+          filters,
+        },
+      });
+    }
+    if (!vizDataLoading.geo) {
+      geoMapAction({
+        values: {
+          filters,
+        },
+      });
+    }
+  }, [selectedFilters]);
 
   useUnmount(() => {
     setODAlatestFilters(selectedFilters);

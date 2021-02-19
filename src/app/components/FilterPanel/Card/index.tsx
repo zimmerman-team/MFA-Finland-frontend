@@ -1,19 +1,13 @@
-import { css } from "styled-components/macro";
 import React from "react";
+import { PrimaryColor } from "app/theme";
+import { css } from "styled-components/macro";
+import { Tabs } from "app/components/FilterPanel/Card/Tabs";
+import { FilterProps } from "app/components/FilterPanel/data";
 import { Checkbox, LinearProgress, Typography } from "@material-ui/core";
-import { Tabs } from "./Tabs";
-import { CheckboxListItem } from "../ListItems/CheckboxListItem";
-import { CheckboxGridListItem } from "../ListItems/CheckboxGridListItem";
-import { AccordionListItem } from "../ListItems/AccordionListItem";
-import { FilterProps } from "../Panels/Filter";
-import { PrimaryColor } from "../../../theme";
-import { CardContentPeriod } from "./PeriodCardContent";
-
-export interface FilterOption {
-  name: string;
-  code: string;
-  children?: FilterOption[];
-}
+import { CardContentPeriod } from "app/components/FilterPanel/Card/PeriodCardContent";
+import { CheckboxListItem } from "app/components/FilterPanel/ListItems/CheckboxListItem";
+import { AccordionListItem } from "app/components/FilterPanel/ListItems/AccordionListItem";
+import { CheckboxGridListItem } from "app/components/FilterPanel/ListItems/CheckboxGridListItem";
 
 export const Card = (props: FilterProps) => {
   const styles = {
@@ -33,7 +27,7 @@ export const Card = (props: FilterProps) => {
         <CardContentPeriod {...props} />
       ) : (
         <div css={styles.container}>
-          <CardHeader />
+          <CardHeader {...props} />
           <CardContent {...props} />
         </div>
       )}
@@ -41,7 +35,7 @@ export const Card = (props: FilterProps) => {
   );
 };
 
-const CardHeader = () => {
+const CardHeader = (props: FilterProps) => {
   const styles = {
     container: css`
       position: sticky;
@@ -60,11 +54,28 @@ const CardHeader = () => {
       margin-right: 24px;
     `,
   };
+
+  let allDataCount = props.data ? props.data.length : 0;
+  if (props.data && props.data.length > 0 && props.data[0].children) {
+    props.data.forEach((item: any) => {
+      allDataCount += 1;
+      if (item.children) {
+        allDataCount += item.children.length;
+      }
+    });
+  }
+
   return (
     <div css={styles.container}>
       <Tabs />
       <span>
-        <Checkbox id="select_all" css={styles.checkbox} color="default" />
+        <Checkbox
+          id="select_all"
+          color="default"
+          css={styles.checkbox}
+          onChange={props.onSelectAllCheckboxChange}
+          checked={allDataCount === props.selectedItems.length}
+        />
         <Typography variant="button" css={styles.checkboxLabel}>
           Select all
         </Typography>
@@ -109,7 +120,7 @@ const CardContent = (props: FilterProps) => {
       }
     `,
   };
-  //TODO: if anyone knows a way to improve the simplicity/readability of this render function please refactor
+  // TODO: if anyone knows a way to improve the simplicity/readability of this render function please refactor
   function renderContent(): JSX.Element | undefined {
     if (data && data.length >= 1) {
       return (
@@ -123,16 +134,30 @@ const CardContent = (props: FilterProps) => {
                 // Component with 3 drilldown levels
                 return (
                   <AccordionListItem
+                    key={node1.name}
                     node={node1}
                     style="has2NodesStyle"
+                    selected={props.selectedItems.indexOf(node1.code) > -1}
                     component={
                       <>
                         {node1.children.map((node2) => {
                           return (
                             <AccordionListItem
+                              key={node2.name}
                               node={node2}
-                              component={<CheckboxGridListItem {...node2} />}
+                              component={
+                                <CheckboxGridListItem
+                                  {...node2}
+                                  selectedItems={props.selectedItems}
+                                  onFilterCheckboxChange={
+                                    props.onFilterCheckboxChange
+                                  }
+                                />
+                              }
                               style="has2NodesStyle"
+                              selected={
+                                props.selectedItems.indexOf(node2.code) > -1
+                              }
                             />
                           );
                         })}
@@ -140,26 +165,38 @@ const CardContent = (props: FilterProps) => {
                     }
                   />
                 );
-              } else {
-                // Component with 2 drilldown levels
-                return (
-                  <AccordionListItem
-                    node={node1}
-                    component={<CheckboxGridListItem {...node1} />}
-                    style="has1NodeStyle"
-                  />
-                );
               }
-            } else {
-              // Component with 1 drilldown level
-              return <CheckboxListItem {...node1} />;
+              // Component with 2 drilldown levels
+              return (
+                <AccordionListItem
+                  key={node1.name}
+                  node={node1}
+                  component={
+                    <CheckboxGridListItem
+                      {...node1}
+                      selectedItems={props.selectedItems}
+                      onFilterCheckboxChange={props.onFilterCheckboxChange}
+                    />
+                  }
+                  style="has1NodeStyle"
+                  selected={props.selectedItems.indexOf(node1.code) > -1}
+                />
+              );
             }
+            // Component with 1 drilldown level
+            return (
+              <CheckboxListItem
+                {...node1}
+                key={node1.name}
+                onFilterCheckboxChange={props.onFilterCheckboxChange}
+                selected={props.selectedItems.indexOf(node1.code) > -1}
+              />
+            );
           })}
         </>
       );
-    } else {
-      return <LinearProgress />;
     }
+    return <LinearProgress />;
   }
 
   return <div css={styles.container}>{renderContent()}</div>;

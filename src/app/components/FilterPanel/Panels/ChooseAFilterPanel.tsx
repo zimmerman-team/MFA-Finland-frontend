@@ -1,15 +1,23 @@
 import React from "react";
-import { FilterPanelProps } from "../index";
-import { Grid, IconButton, Typography } from "@material-ui/core";
-import { Cancel } from "@material-ui/icons";
-import { data, FILTER_TYPES } from "../data";
 import { useRecoilState } from "recoil";
-import { createStyles } from "../styles";
+import { Cancel } from "@material-ui/icons";
 import { currentFilterOpenAtom } from "app/state/recoil/atoms";
-import { BottomActions } from "../Card/BottomActions";
-import { ChooseAFilterListItem } from "../ListItems/ChooseAFilterListItem";
+import { Grid, IconButton, Typography } from "@material-ui/core";
+import { createStyles } from "app/components/FilterPanel/styles";
+import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
+import {
+  FILTER_TYPES,
+  MailPanelInitDataItemModel,
+} from "app/components/FilterPanel/data";
+import { ChooseAFilterListItem } from "app/components/FilterPanel/ListItems/ChooseAFilterListItem";
 
-export const ChooseAFilterPanel = (props: FilterPanelProps) => {
+interface Model {
+  onApplyFilters: () => void;
+  onResetFilters: () => void;
+  data: MailPanelInitDataItemModel[];
+}
+
+export const ChooseAFilterPanel = (props: Model) => {
   const styles = createStyles(props);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
 
@@ -29,16 +37,28 @@ export const ChooseAFilterPanel = (props: FilterPanelProps) => {
 
       <Grid container item>
         <Grid item xs={5}>
-          {data.map((option, index) => {
-            return index < 4 && <ChooseAFilterListItem {...option} />;
-          })}
+          {props.data.map(
+            (option: MailPanelInitDataItemModel, index: number) => {
+              return (
+                index < 4 && (
+                  <ChooseAFilterListItem key={option.label} {...option} />
+                )
+              );
+            }
+          )}
         </Grid>
         <Grid item xs={1} />
 
         <Grid item xs={5}>
-          {data.map((option, index) => {
-            return index >= 4 && <ChooseAFilterListItem {...option} />;
-          })}
+          {props.data.map(
+            (option: MailPanelInitDataItemModel, index: number) => {
+              return (
+                index >= 4 && (
+                  <ChooseAFilterListItem key={option.label} {...option} />
+                )
+              );
+            }
+          )}
         </Grid>
         <Grid item xs={1} />
       </Grid>
@@ -49,7 +69,10 @@ export const ChooseAFilterPanel = (props: FilterPanelProps) => {
         justify="flex-end"
         css={styles.actionContainer}
       >
-        <BottomActions />
+        <BottomActions
+          onApply={props.onApplyFilters}
+          onReset={props.onResetFilters}
+        />
       </Grid>
     </>
   );

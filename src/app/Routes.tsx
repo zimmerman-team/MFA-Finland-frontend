@@ -8,7 +8,8 @@ import { NoMatchPage } from "app/modules/common/no-match-page";
 
 import VizModule from "app/modules/viz-module";
 import { useUrlFilters } from "app/hooks/useUrlFilters";
-import { useScrollToTop } from "app/hooks/useScrollToTop";
+import { useInitialLoad } from "app/hooks/useInitialLoad";
+// import { useScrollToTop } from "app/hooks/useScrollToTop";
 
 import { LandingModule } from "app/modules/landing-module";
 import { RegionDetailModule } from "app/modules/detail-modules/region-detail-module";
@@ -25,6 +26,7 @@ import { OrganisationTypeDetailModule } from "app/modules/detail-modules/organis
 
 export function ModuleRoutes() {
   useUrlFilters();
+  useInitialLoad();
   // useScrollToTop();
 
   const isRehydrated = useStoreRehydrated();

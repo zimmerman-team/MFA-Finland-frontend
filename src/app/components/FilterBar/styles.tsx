@@ -1,6 +1,6 @@
 import { css } from "styled-components/macro";
-import { FilterBarProps } from "./index";
-import { ProjectPalette, SecondaryColor } from "../../theme";
+import { SecondaryColor } from "app/theme";
+import { FilterBarProps } from "app/components/FilterBar/index";
 
 export const createStyles = (props: FilterBarProps, height: number) => {
   return {

@@ -1,6 +1,6 @@
+import { ProjectPalette } from "app/theme";
 import { css } from "styled-components/macro";
-import { ProjectPalette } from "../../theme";
-import { FilterPanelProps } from "./index";
+import { FilterPanelProps } from "app/components/FilterPanel/data";
 
 export const createStyles = (props: FilterPanelProps) => {
   return {

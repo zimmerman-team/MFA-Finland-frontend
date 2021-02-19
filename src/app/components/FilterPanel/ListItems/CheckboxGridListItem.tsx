@@ -1,9 +1,14 @@
+import React from "react";
 import { css } from "styled-components/macro";
 import { Checkbox, Grid, Typography } from "@material-ui/core";
-import React from "react";
-import { FilterOption } from "../Card";
+import { FilterOption } from "app/components/FilterPanel/data";
 
-export const CheckboxGridListItem = (props: FilterOption) => {
+interface CheckboxListItemProps extends FilterOption {
+  selectedItems: string[];
+  onFilterCheckboxChange: (value: string) => void;
+}
+
+export const CheckboxGridListItem = (props: CheckboxListItemProps) => {
   const styles = {
     detailsItem: css`
       display: flex;
@@ -25,8 +30,18 @@ export const CheckboxGridListItem = (props: FilterOption) => {
     <Grid container css={styles.detailsItem}>
       {props.children?.map((node) => {
         return (
-          <Grid item xs={6} css={styles.checkboxTypographyContainer}>
-            <Checkbox css={styles.checkbox} color="default" />
+          <Grid
+            key={node.name}
+            item
+            xs={6}
+            css={styles.checkboxTypographyContainer}
+          >
+            <Checkbox
+              css={styles.checkbox}
+              color="default"
+              checked={props.selectedItems.indexOf(node.code) > -1}
+              onChange={() => props.onFilterCheckboxChange(node.code)}
+            />
             <Typography variant="h6" css={styles.label}>
               {node.name}
             </Typography>

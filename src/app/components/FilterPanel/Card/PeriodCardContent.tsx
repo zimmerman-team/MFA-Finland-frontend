@@ -1,13 +1,14 @@
-import { FilterProps } from "../Panels/Filter";
 import React from "react";
 import { css } from "styled-components/macro";
-import { PrimaryColor, SecondaryColor } from "../../../theme";
 import { Typography } from "@material-ui/core";
-import { PillButton } from "../../Buttons/PillButton";
+import { PrimaryColor, SecondaryColor } from "app/theme";
+import { FilterProps } from "app/components/FilterPanel/data";
+import { PillButton } from "app/components/Buttons/PillButton";
 
-//TODO: disabled yearbutton state
-//TODO: disabled apply button if begin year < end year
-//TODO: nice to have, scroll to current selected year position
+// TODO: disabled yearbutton state
+// TODO: disabled apply button if begin year < end year
+// TODO: nice to have, scroll to current selected year position
+
 const createStyles = (fromActive: boolean, toActive: boolean) => {
   return {
     container: css`

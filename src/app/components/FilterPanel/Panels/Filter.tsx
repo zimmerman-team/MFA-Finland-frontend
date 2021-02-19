@@ -1,17 +1,12 @@
 import React from "react";
+import { useRecoilState } from "recoil";
 import { css } from "styled-components/macro";
 import { Grid, Typography } from "@material-ui/core";
-import { useRecoilState } from "recoil";
-import { currentFilterOpenAtom } from "../../../state/recoil/atoms";
-import { Header } from "../Card/Header";
-import { Card, FilterOption } from "../Card";
-import { BottomActions } from "../Card/BottomActions";
-
-export interface FilterProps {
-  title: string;
-  data?: FilterOption[];
-  renderSearch?: boolean;
-}
+import { Card } from "app/components/FilterPanel/Card";
+import { FilterProps } from "app/components/FilterPanel/data";
+import { currentFilterOpenAtom } from "app/state/recoil/atoms";
+import { Header } from "app/components/FilterPanel/Card/Header";
+import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
 
 export const createStyles = (props: FilterProps) => {
   return {
@@ -38,7 +33,7 @@ export const Filter = (props: FilterProps) => {
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
 
   function formatSelectedValues() {
-    return "0 Sector categories, 0 sector sub categories, 0 sectors are selected";
+    return props.selection.join(" ");
   }
 
   return (
@@ -51,7 +46,10 @@ export const Filter = (props: FilterProps) => {
         </Typography>
       )}
       <div css={styles.bottomActionsContainer}>
-        <BottomActions {...props} />
+        <BottomActions
+          onApply={props.onApplyFilters}
+          onReset={props.onApplyFilters}
+        />
       </div>
     </Grid>
   );

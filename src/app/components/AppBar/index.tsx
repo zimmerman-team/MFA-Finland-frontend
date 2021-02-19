@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { PrimaryColor } from "app/theme";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import {
   currentFilterOpenAtom,
@@ -56,6 +56,8 @@ export function AppBar() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  const location = useLocation();
+
   return (
     <React.Fragment>
       <MUIAppBar position="relative" color="inherit" css={appbarStyle.appBar}>
@@ -77,7 +79,7 @@ export function AppBar() {
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
-            to="/"
+            to={`/${location.search}`}
             onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
             css={appbarStyle.logoLink}
           >

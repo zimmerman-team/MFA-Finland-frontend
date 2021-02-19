@@ -1,4 +1,33 @@
-import { FilterOption } from "./Card";
+export interface FilterPanelProps {}
+
+export interface FilterOption {
+  name: string;
+  code: string;
+  children?: FilterOption[];
+}
+
+export interface CheckboxListItemProps extends FilterOption {
+  selected: boolean;
+  onFilterCheckboxChange: (value: string) => void;
+}
+
+export interface FilterProps {
+  title: string;
+  selection: string[];
+  data?: FilterOption[];
+  renderSearch?: boolean;
+  selectedItems: string[];
+  onApplyFilters: () => void;
+  onSelectAllCheckboxChange: () => void;
+  onFilterCheckboxChange: (value: string) => void;
+}
+
+export interface MailPanelInitDataItemModel {
+  label: string;
+  heading: string;
+  type: any;
+  selection: string[];
+}
 
 export enum FILTER_TYPES {
   NONE,
@@ -13,7 +42,7 @@ export enum FILTER_TYPES {
   ADVANCED_FILTERS,
 }
 
-export const data = [
+export const mailPanelInitData: MailPanelInitDataItemModel[] = [
   {
     heading: "Thematic areas",
     label: "All Thematic areas",
@@ -36,7 +65,7 @@ export const data = [
     heading: "Organisations",
     label: "All Organisations",
     type: FILTER_TYPES.ORGANISATIONS,
-    selection: ["1 Organisation categories", "2 Organisations"],
+    selection: [],
   },
   {
     heading: "SDG's",
@@ -52,7 +81,7 @@ export const data = [
   },
   {
     heading: "Period",
-    label: "Year 2020",
+    label: "All years",
     type: FILTER_TYPES.PERIOD,
     selection: [],
   },
