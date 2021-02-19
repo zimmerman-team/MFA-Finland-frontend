@@ -1,10 +1,10 @@
 import { css } from "styled-components/macro";
-import { PrimaryColor, SecondaryColor } from "../../../theme";
 import { Typography } from "@material-ui/core";
-import { PillButton } from "../../Buttons/PillButton";
 import { ArrowForwardIos } from "@material-ui/icons";
 import React from "react";
 import { useRecoilState } from "recoil";
+import { PillButton } from "../../Buttons/PillButton";
+import { PrimaryColor, SecondaryColor } from "../../../theme";
 import { currentFilterOpenAtom } from "../../../state/recoil/atoms";
 import { FILTER_TYPES } from "../data";
 
@@ -61,19 +61,18 @@ export const ChooseAFilterListItem = (props: ChooseAFilterListItemProps) => {
   function setLabel() {
     if (props.selection.length === 0) {
       return props.label;
-    } else {
-      let formattedLabel = "";
-
-      for (let i = 0; i < props.selection.length; i++) {
-        const addComma = () => {
-          return i != props.selection.length - 1 ? ", " : "";
-        };
-        formattedLabel += props.selection[i];
-        formattedLabel += addComma();
-      }
-
-      return formattedLabel;
     }
+    let formattedLabel = "";
+
+    for (let i = 0; i < props.selection.length; i++) {
+      const addComma = () => {
+        return i !== props.selection.length - 1 ? ", " : "";
+      };
+      formattedLabel += props.selection[i];
+      formattedLabel += addComma();
+    }
+
+    return formattedLabel;
   }
 
   return (

@@ -1,5 +1,4 @@
 import { css } from "styled-components/macro";
-
 import { SecondaryColor } from "app/theme";
 import { FilterBarProps } from "app/components/FilterBar/index";
 

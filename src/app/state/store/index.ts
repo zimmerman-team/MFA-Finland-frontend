@@ -58,9 +58,9 @@ import {
   countries as fcountries,
   regions,
   sectors as fsectors,
-  donors as fdonors,
+  thematicareas as fthematicareas,
   organisations as forganisations,
-  publishers as fpublishers,
+  sdgs as fsdgs,
   activitystatus,
 } from "app/state/api/actions-reducers/filterOptions";
 
@@ -87,13 +87,13 @@ const storeContent: StoreModel = {
     sectors: persist(fsectors, {
       storage: "localStorage",
     }),
-    donors: persist(fdonors, {
+    thematicareas: persist(fthematicareas, {
       storage: "localStorage",
     }),
     organisations: persist(forganisations, {
       storage: "localStorage",
     }),
-    publishers: persist(fpublishers, {
+    sdgs: persist(fsdgs, {
       storage: "localStorage",
     }),
     activitystatus: persist(activitystatus, {

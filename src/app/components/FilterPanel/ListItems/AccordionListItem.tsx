@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { css } from "styled-components/macro";
-import { PrimaryColor } from "../../../theme";
+import { PrimaryColor } from "app/theme";
 import {
   Accordion,
   AccordionDetails,
@@ -9,11 +9,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ArrowDropDown } from "@material-ui/icons";
-import { FilterOption } from "../Card";
+import { FilterOption } from "app/components/FilterPanel/data";
 
 interface AccordionListItemProps {
+  selected: boolean;
   node: FilterOption;
-  component: ReactElement;
+  component: React.ReactElement;
   style: "has1NodeStyle" | "has2NodesStyle";
 }
 
@@ -91,7 +92,11 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
         id="expand-filter"
         css={styles.summary}
       >
-        <Checkbox css={styles.checkbox} color="default" />
+        <Checkbox
+          color="default"
+          css={styles.checkbox}
+          checked={props.selected}
+        />
         <Typography variant="h6" css={styles.label}>
           {props.node.name}
         </Typography>

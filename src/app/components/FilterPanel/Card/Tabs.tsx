@@ -40,7 +40,9 @@ const Tab = (props: TabProps): JSX.Element => {
   function handleTabClick(index: number) {
     setTabs((tabs) => {
       const newTabsState: any = Object.create(tabs);
-      newTabsState.map((tab: any) => (tab.active = false));
+      newTabsState.forEach((tab: any) => {
+        tab.active = false;
+      });
       newTabsState[index].active = true;
       return newTabsState;
     });
@@ -62,7 +64,14 @@ export const Tabs = () => {
   return (
     <div>
       {tabs.map((tab, index) => {
-        return <Tab index={index} name={tab.name} active={tab.active} />;
+        return (
+          <Tab
+            key={tab.name}
+            index={index}
+            name={tab.name}
+            active={tab.active}
+          />
+        );
       })}
     </div>
   );

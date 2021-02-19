@@ -10,13 +10,13 @@ export const regions: ApiCallModel = {
 export const sectors: ApiCallModel = {
   ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
 };
-export const donors: ApiCallModel = {
+export const thematicareas: ApiCallModel = {
   ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
 };
 export const organisations: ApiCallModel = {
   ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
 };
-export const publishers: ApiCallModel = {
+export const sdgs: ApiCallModel = {
   ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
 };
 export const activitystatus: ApiCallModel = {

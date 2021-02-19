@@ -1,12 +1,10 @@
 import React from "react";
-import { ModuleContainer } from "app/components/ModuleContainer";
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Path } from "app/const/Path";
 import { css } from "styled-components/macro";
 import { Breadcrumbs } from "app/components/Breadcrumb";
-import { crumbs } from "app/modules/feedback-module/layout";
+import { Box, Grid, Typography } from "@material-ui/core";
+import { ModuleContainer } from "app/components/ModuleContainer";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
-import { Path } from "app/const/Path";
-import { PageOrnament } from "app/assets/PageOrnament";
 
 const widgetContainer = (height: string | undefined, isHovered: boolean) => css`
   width: 100%;
@@ -38,7 +36,7 @@ export const ResultModuleLayout = () => {
         </Grid>
 
         <Grid item lg={12}>
-          <div css={widgetContainer}>
+          <div css={widgetContainer(undefined, false)}>
             <Typography variant="h5">Result</Typography>
             <Box width="100%" height="24px" />
             <Typography variant="body1" paragraph>

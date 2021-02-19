@@ -1,9 +1,12 @@
-import { css } from "styled-components/macro";
-import { ProjectPalette } from "../../../theme";
-import { PillButton } from "../../Buttons/PillButton";
 import React from "react";
+import { ProjectPalette } from "app/theme";
+import { css } from "styled-components/macro";
+import { PillButton } from "app/components/Buttons/PillButton";
 
-interface BottomActions {}
+interface BottomActions {
+  onApply: () => void;
+  onReset: () => void;
+}
 
 export const BottomActions = (props: BottomActions) => {
   const styles = {
@@ -32,10 +35,16 @@ export const BottomActions = (props: BottomActions) => {
 
   return (
     <>
-      <PillButton variant="text" css={styles.secondaryButton}>
+      <PillButton
+        variant="text"
+        css={styles.secondaryButton}
+        onClick={props.onReset}
+      >
         Reset filters
       </PillButton>
-      <PillButton css={styles.primaryButton}>Apply</PillButton>
+      <PillButton css={styles.primaryButton} onClick={props.onApply}>
+        Apply
+      </PillButton>
     </>
   );
 };

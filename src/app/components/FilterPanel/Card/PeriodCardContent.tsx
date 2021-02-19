@@ -1,13 +1,15 @@
-import { FilterProps } from "../Panels/Filter";
 import React from "react";
+import { useUpdateEffect } from "react-use";
 import { css } from "styled-components/macro";
-import { PrimaryColor, SecondaryColor } from "../../../theme";
 import { Typography } from "@material-ui/core";
-import { PillButton } from "../../Buttons/PillButton";
+import { PrimaryColor, SecondaryColor } from "app/theme";
+import { FilterProps } from "app/components/FilterPanel/data";
+import { PillButton } from "app/components/Buttons/PillButton";
 
-//TODO: disabled yearbutton state
-//TODO: disabled apply button if begin year < end year
-//TODO: nice to have, scroll to current selected year position
+// TODO: disabled yearbutton state
+// TODO: disabled apply button if begin year < end year
+// TODO: nice to have, scroll to current selected year position
+
 const createStyles = (fromActive: boolean, toActive: boolean) => {
   return {
     container: css`
@@ -134,29 +136,31 @@ const buttonStyles = (active: boolean) => {
   `;
 };
 
+const yearLow = 1920;
+const yearHigh = 2021;
+
 export const CardContentPeriod = (props: FilterProps) => {
-  const [selectedFromYear, setSelectedFromYear] = React.useState(2021);
-  const [selectedToYear, setSelectedToYear] = React.useState(2019);
+  const [selectedFromYear, setSelectedFromYear] = React.useState(
+    props.selectedItems[0] || yearLow
+  );
+  const [selectedToYear, setSelectedToYear] = React.useState(
+    props.selectedItems[1] || yearHigh
+  );
   const [fromActive, setFromActive] = React.useState(true);
   const [toActive, setToActive] = React.useState(false);
   const [yearButtonActive, setYearButtonActive] = React.useState(
     selectedFromYear
   );
 
-  const yearLow = 1920;
-  const yearHigh = 2021;
-
   const years = [];
-  for (var i = yearLow; i <= yearHigh; i++) {
+  for (let i = yearLow; i <= yearHigh; i++) {
     years.push(i);
   }
 
-  let styles = createStyles(fromActive, toActive);
+  const styles = createStyles(fromActive, toActive);
 
   function handleFromClick() {
-    if (fromActive) {
-      return;
-    } else {
+    if (!fromActive) {
       setFromActive(!fromActive);
       setToActive(!toActive);
       setYearButtonActive(selectedFromYear);
@@ -164,9 +168,7 @@ export const CardContentPeriod = (props: FilterProps) => {
   }
 
   function handleToClick() {
-    if (toActive) {
-      return;
-    } else {
+    if (!toActive) {
       setToActive(!toActive);
       setFromActive(!fromActive);
       setYearButtonActive(selectedToYear);
@@ -182,6 +184,10 @@ export const CardContentPeriod = (props: FilterProps) => {
       setSelectedToYear(year);
     }
   }
+
+  useUpdateEffect(() => {
+    props.onFilterCheckboxChange(`${selectedFromYear},${selectedToYear}`);
+  }, [selectedFromYear, selectedToYear]);
 
   return (
     <div css={styles.container}>
@@ -226,7 +232,7 @@ export const CardContentPeriod = (props: FilterProps) => {
               <PillButton
                 id={`button-${year}`}
                 key={`button-${year}`}
-                css={buttonStyles(year == yearButtonActive)}
+                css={buttonStyles(year === yearButtonActive)}
                 onClick={() => handleYearClick(year)}
               >
                 {year}

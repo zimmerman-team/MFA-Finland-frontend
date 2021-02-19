@@ -42,6 +42,12 @@ export function getAPIFormattedFilters(filters: any, yearPeriod?: string) {
       tag_narrative: filters.tag,
     };
   }
+  if (filters.sdg.length > 0) {
+    result = {
+      ...result,
+      tag_code: filters.sdg,
+    };
+  }
   if (filters.defaultaidtype.length > 0) {
     result = {
       ...result,
@@ -70,6 +76,12 @@ export function getAPIFormattedFilters(filters: any, yearPeriod?: string) {
     result = {
       ...result,
       policy_marker_code: filters.policymarker,
+    };
+  }
+  if (filters.years.length > 0) {
+    result = {
+      ...result,
+      years: filters.years,
     };
   }
   return result;

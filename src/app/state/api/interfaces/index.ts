@@ -153,9 +153,9 @@ export interface StoreModel {
     countries: ApiCallModel;
     regions: ApiCallModel;
     sectors: ApiCallModel;
-    donors: ApiCallModel;
+    thematicareas: ApiCallModel;
     organisations: ApiCallModel;
-    publishers: ApiCallModel;
+    sdgs: ApiCallModel;
     activitystatus: ApiCallModel;
   };
   // sync variables
