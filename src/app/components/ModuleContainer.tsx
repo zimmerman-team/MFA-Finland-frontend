@@ -1,5 +1,6 @@
 import { Grid, Hidden } from "@material-ui/core";
 import React from "react";
+import { PageOrnament } from "app/assets/PageOrnament";
 
 interface ModuleContainerProps {
   children: React.ReactNode;

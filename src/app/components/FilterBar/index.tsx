@@ -1,7 +1,7 @@
 import React from "react";
 import filter from "lodash/filter";
 import { useRecoilState } from "recoil";
-import { Typography } from "@material-ui/core";
+import { Hidden, Typography } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 import { useStoreState } from "app/state/store/hooks";
 import { Chip } from "app/components/FilterBar/common/Chip";
@@ -17,6 +17,8 @@ import {
   currentFilterOpenAtom,
   selectedFilterAtom,
 } from "app/state/recoil/atoms";
+
+import FilterListIcon from "@material-ui/icons/FilterList";
 
 export interface FilterBarProps {
   show?: boolean;
@@ -131,6 +133,30 @@ export const FilterBar = (props: FilterBarProps) => {
           </div>
         </div>
         <div css={styles.background} />
+        <Hidden smUp>
+          <div
+            css={`
+              width: 40px;
+              height: 40px;
+              background-color: #2e4982;
+              position: fixed;
+              top: 70vh;
+              right: 8px;
+              z-index: 4;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+            `}
+            onClick={() => setCurrentFilterOpen(FILTER_TYPES.MAIN)}
+          >
+            <FilterListIcon
+              css={`
+                fill: white;
+              `}
+            />
+          </div>
+        </Hidden>
       </>
     );
   }

@@ -23,6 +23,9 @@ export const CheckboxGridListItem = (props: CheckboxListItemProps) => {
     `,
     label: css`
       color: white;
+      @media (max-width: 600px) {
+        font-size: 14px;
+      }
     `,
   };
 
@@ -33,7 +36,8 @@ export const CheckboxGridListItem = (props: CheckboxListItemProps) => {
           <Grid
             key={node.name}
             item
-            xs={6}
+            xs={12}
+            lg={6}
             css={styles.checkboxTypographyContainer}
           >
             <Checkbox

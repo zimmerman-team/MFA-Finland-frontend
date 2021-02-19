@@ -25,10 +25,10 @@ const widgetContainer = (height: string | undefined, isHovered: boolean) => css`
 
 const privacyCrumbs: BreadcrumbLinkModel[] = [
   { label: "Homepage", path: Path.home },
-  { label: "About" },
+  { label: "Result" },
 ];
 
-export const AboutModuleLayout = () => {
+export const ResultModuleLayout = () => {
   return (
     <>
       <ModuleContainer>
@@ -39,7 +39,7 @@ export const AboutModuleLayout = () => {
 
         <Grid item lg={12}>
           <div css={widgetContainer}>
-            <Typography variant="h5">About</Typography>
+            <Typography variant="h5">Result</Typography>
             <Box width="100%" height="24px" />
             <Typography variant="body1" paragraph>
               Lorem Ipsum is simply dummy text of the printing and typesetting

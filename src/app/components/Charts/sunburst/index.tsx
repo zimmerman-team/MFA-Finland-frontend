@@ -135,7 +135,7 @@ export function SunburstChart(props: SunburstChartProps) {
   }
 
   return (
-    <Grid container css="padding-top: 50px;">
+    <Grid container>
       <Grid id="sunburst-back" item xs={12} sm={12} md={2} lg={1}>
         {prevSelections.length > 0 && (
           <div css={backbuttoncss} onClick={goBack}>

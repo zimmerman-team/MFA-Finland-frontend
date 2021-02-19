@@ -13,6 +13,10 @@ export const ElementBackground = (props: ElementBackgroundProps) => (
       width: 125vw;
       z-index: 0;
       background-color: ${props.backgroundColor};
+      @media (max-width: 768px) {
+        left: -16px;
+        width: 100vw;
+      }
     `}
   />
 );

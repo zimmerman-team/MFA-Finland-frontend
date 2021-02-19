@@ -4,7 +4,18 @@ import { FILTER_TYPES } from "app/components/FilterPanel/data";
 import { SelectedFilterAtomModel } from "app/state/recoil/atoms";
 
 export function shouldRender(location: any) {
-  const urls = ["/about", "/feedback", "/statement", "/project/"];
+  const urls = [
+    "/about",
+    "/feedback",
+    "/statement",
+    "/statements",
+    "/result",
+    "/project/",
+    "/contact",
+    "/privacy",
+    "/info",
+    "/faq",
+  ];
   const currentLocation = location.pathname;
   let found = urls.some((url) => {
     return currentLocation.includes(url);

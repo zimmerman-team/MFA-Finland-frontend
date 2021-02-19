@@ -14,6 +14,10 @@ const createStyles = (fromActive: boolean, toActive: boolean) => {
     container: css`
       margin-left: 104px;
       max-width: 608px;
+      @media (max-width: 600px) {
+        margin-left: 0;
+        max-width: initial;
+      }
     `,
     formControl: css`
       display: flex;
@@ -63,6 +67,13 @@ const createStyles = (fromActive: boolean, toActive: boolean) => {
       border-radius: 20px;
       padding: 17px 12px 17px 20px;
       margin-bottom: 24px;
+      @media (max-width: 600px) {
+        margin-left: 0;
+        max-width: initial;
+        max-height: initial;
+        border: none;
+        padding: 0;
+      }
     `,
     cardContentContainer: css`
       height: 320px;
@@ -94,6 +105,10 @@ const createStyles = (fromActive: boolean, toActive: boolean) => {
 
       ::-webkit-scrollbar-corner {
         background-color: transparent;
+      }
+
+      @media (max-width: 600px) {
+        padding: initial;
       }
     `,
   };
@@ -172,6 +187,8 @@ export const CardContentPeriod = (props: FilterProps) => {
   return (
     <div css={styles.container}>
       <div css={styles.inputContainer}>
+        {/* ------------------------------------------------- */}
+        {/* from */}
         <div css={styles.formControl}>
           <Typography variant="body2" css={styles.label}>
             Year (From)
@@ -185,6 +202,8 @@ export const CardContentPeriod = (props: FilterProps) => {
             {selectedFromYear}
           </PillButton>
         </div>
+        {/* ------------------------------------------------- */}
+        {/* to */}
         <div css={styles.formControl}>
           <Typography variant="body2" css={styles.label}>
             Year (To)
@@ -199,6 +218,8 @@ export const CardContentPeriod = (props: FilterProps) => {
           </PillButton>
         </div>
       </div>
+      {/* ------------------------------------------------- */}
+      {/* range */}
       <div css={styles.cardContainer}>
         <div css={styles.cardContentContainer}>
           {years.map((year) => {

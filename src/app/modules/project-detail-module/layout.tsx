@@ -25,6 +25,7 @@ import {
   FieldTwoStyle,
   TextHighlightStyle,
   DescriptionLabelStyle,
+  DescriptionStyle,
 } from "app/modules/project-detail-module/style";
 import { SDGviz } from "app/components/Charts/sdg";
 import theme, { PrimaryColor, SecondaryColor } from "app/theme";
@@ -72,11 +73,15 @@ export const ProjectDetailModuleLayout = (
     <ModuleContainer>
       {/* ------------------------------------ */}
       {/* breadcrumb */}
-      <Box width="100%" height="8px" />
+      <Hidden smDown>
+        <Box width="100%" height="8px" />
+      </Hidden>
       <Grid item xs={12} lg={12}>
         <Breadcrumbs route={crumbs} />
       </Grid>
-      <Box width="100%" height="16px" />
+      <Hidden smDown>
+        <Box width="100%" height="16px" />
+      </Hidden>
 
       {/* ------------------------------------------------------------------ */}
       {/* header */}
@@ -90,7 +95,9 @@ export const ProjectDetailModuleLayout = (
           background-color: #f7f7f7;
         `}
       >
-        <Box width="100%" height="24px" />
+        <Hidden smDown>
+          <Box width="100%" height="24px" />
+        </Hidden>
         {/* ----------------------------------- */}
         {/* id */}
         <Grid
@@ -149,8 +156,9 @@ export const ProjectDetailModuleLayout = (
             </span>{" "}
           </Typography>
         </Grid>
-
-        <Box width="100%" height="24px" />
+        <Hidden smDown>
+          <Box width="100%" height="24px" />
+        </Hidden>
         <ElementBackground backgroundColor="#f7f7f7" />
       </Grid>
 
@@ -162,7 +170,9 @@ export const ProjectDetailModuleLayout = (
         <Grid item lg={12}>
           <Typography css={DescriptionLabelStyle}>Description</Typography>
           <Box width="100%" height="16px" />
-          <Typography>{props.metadata.description}</Typography>
+          <Typography css={DescriptionStyle}>
+            {props.metadata.description}
+          </Typography>
         </Grid>
         <Box width="100%" height="60px" />
       </Grid>

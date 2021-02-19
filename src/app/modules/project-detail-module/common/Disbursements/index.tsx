@@ -93,19 +93,12 @@ export const TotalDisbursements = (props: TotalDisbursementsProps) => {
           `}
         >
           {/* bar indicator */}
-          <div css={style.barIndicator}>
-            {/* indicator text */}
-            <span css={style.indicatorText}>{totalProgress.toFixed(0)}%</span>
-            {/* <div
-              css={`
-                width: 20px;
-                height: 20px;
-                background-color: red;
-
-                transform: rotate(45deg) translateX(20px) translateY(-45px);
-              `}
-            /> */}
-          </div>
+          {totalProgress > 0 && (
+            <div css={style.barIndicator}>
+              {/* indicator text */}
+              <span css={style.indicatorText}>{totalProgress.toFixed(0)}%</span>
+            </div>
+          )}
         </div>
       </div>
 

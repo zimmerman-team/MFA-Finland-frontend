@@ -2,8 +2,8 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { Cancel } from "@material-ui/icons";
 import { currentFilterOpenAtom } from "app/state/recoil/atoms";
-import { Grid, IconButton, Typography } from "@material-ui/core";
 import { createStyles } from "app/components/FilterPanel/styles";
+import { Grid, Hidden, IconButton, Typography } from "@material-ui/core";
 import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
 import {
   FILTER_TYPES,
@@ -23,7 +23,16 @@ export const ChooseAFilterPanel = (props: Model) => {
 
   return (
     <>
-      <Grid container item justify="space-between" alignItems="flex-start">
+      {/* ------------------------------------ */}
+      {/* filter selection header */}
+      <Grid
+        container
+        item
+        xs={12}
+        lg={12}
+        justify="space-between"
+        alignItems="flex-start"
+      >
         <Typography variant="h5" css={styles.heading}>
           Add Filters
         </Typography>
@@ -35,8 +44,8 @@ export const ChooseAFilterPanel = (props: Model) => {
         </IconButton>
       </Grid>
 
-      <Grid container item>
-        <Grid item xs={5}>
+      <Grid container item xs={12} lg={12}>
+        <Grid item xs={12} lg={5}>
           {props.data.map(
             (option: MailPanelInitDataItemModel, index: number) => {
               return (
@@ -47,9 +56,12 @@ export const ChooseAFilterPanel = (props: Model) => {
             }
           )}
         </Grid>
-        <Grid item xs={1} />
 
-        <Grid item xs={5}>
+        <Hidden smDown>
+          <Grid item lg={1} />
+        </Hidden>
+
+        <Grid item xs={12} lg={5}>
           {props.data.map(
             (option: MailPanelInitDataItemModel, index: number) => {
               return (
@@ -59,20 +71,24 @@ export const ChooseAFilterPanel = (props: Model) => {
               );
             }
           )}
+          <Grid item xs={1} />
         </Grid>
-        <Grid item xs={1} />
-      </Grid>
-      <Grid
-        container
-        item
-        xs={11}
-        justify="flex-end"
-        css={styles.actionContainer}
-      >
-        <BottomActions
-          onApply={props.onApplyFilters}
-          onReset={props.onResetFilters}
-        />
+
+        {/* ------------------------------------ */}
+        {/* selection actions */}
+        <Grid
+          container
+          item
+          xs={12}
+          lg={11}
+          justify="flex-end"
+          css={styles.actionContainer}
+        >
+          <BottomActions
+            onApply={props.onApplyFilters}
+            onReset={props.onResetFilters}
+          />
+        </Grid>
       </Grid>
     </>
   );

@@ -43,8 +43,6 @@ const widgetContainer = (height: string | undefined, isHovered: boolean) => css`
   border-radius: 32px;
   flex-direction: column;
   background-color: #ffffff;
-  /* padding: 24px 32px 32px 32px; */
-
   padding: 32px;
   height: ${height || "328px"};
   box-shadow: ${isHovered
@@ -139,29 +137,30 @@ export const questionAnswer = () => {
 export const FeedbackModuleLayout = () => {
   return (
     <ModuleContainer>
+      <Box width="100%" height="16px" />
       <Grid item lg={12}>
         <Breadcrumbs route={crumbs} />
       </Grid>
 
-      <Grid item lg={3}>
+      {/*<Grid item lg={3}>
         <div
           css={`
             width: 100%;
             height: 400px;
-            /* background-color: red; */
+
             border-radius: 32px;
           `}
         />
-      </Grid>
+      </Grid>*/}
 
-      <Grid item xs={12} sm={12} md={12} lg={9}>
-        <div css={widgetContainer}>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
+        {/*<div css={widgetContainer}>
           <Grid {...gridSetting}>
             <Typography>FAQ</Typography>
           </Grid>
           <Grid {...gridSetting}></Grid>
-        </div>
-        <Box width="100%" height="24px" />
+        </div>*/}
+        {/*<Box width="100%" height="24px" />*/}
         <div css={widgetContainer}>
           <Formik
             initialValues={{
