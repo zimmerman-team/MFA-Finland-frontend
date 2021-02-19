@@ -41,18 +41,18 @@ export function getMainFilterPanelData(
       `${selectedFilters.organisations.length} organisations`
     );
   }
-  if (selectedFilters.tag.length - thematicareas.length > 0) {
-    updatedData[4].selection.push(
-      `${selectedFilters.tag.length - thematicareas.length} SDGS`
-    );
+  if (selectedFilters.sdg.length > 0) {
+    updatedData[4].selection.push(`${selectedFilters.sdg.length} SDGS`);
   }
   if (selectedFilters.activitystatus.length > 0) {
     updatedData[5].selection.push(
       `${selectedFilters.activitystatus.length} activity statuses`
     );
   }
-  if (selectedFilters.years.length > 0) {
-    updatedData[6].selection.push(`${selectedFilters.years.length} years`);
+  if (selectedFilters.years.length === 2) {
+    updatedData[6].selection.push(
+      `${selectedFilters.years[0]} - ${selectedFilters.years[1]}`
+    );
   }
   return updatedData;
 }

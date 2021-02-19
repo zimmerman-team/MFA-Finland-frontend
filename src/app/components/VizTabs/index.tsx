@@ -19,7 +19,7 @@ export function VizTabs() {
           width: 100vw;
           position: absolute;
           background: #dde4ef;
-          height: 83px;
+          height: 87px;
           z-index: -1;
         `}
       />

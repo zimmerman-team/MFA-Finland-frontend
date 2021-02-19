@@ -82,8 +82,8 @@ export const FilterBar = (props: FilterBarProps) => {
         );
         break;
       case FILTER_TYPES.SDGS:
-        updatedSelectedFilters.tag = filter(
-          updatedSelectedFilters.tag,
+        updatedSelectedFilters.sdg = filter(
+          updatedSelectedFilters.sdg,
           (f: string) => f !== chip.value
         );
         break;

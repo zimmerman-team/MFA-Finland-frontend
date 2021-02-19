@@ -41,6 +41,7 @@ export interface SelectedFilterAtomModel {
   activitystatus: string[];
   activityscope: string[];
   tag: string[];
+  sdg: string[];
   defaultaidtype: string[];
   defaultflowtype: string[];
   defaulttiedstatus: string[];
@@ -49,7 +50,7 @@ export interface SelectedFilterAtomModel {
   years: string[];
 }
 
-const defaultfilters = {
+export const defaultfilters = {
   countries: [] as string[],
   regions: [] as string[],
   sectors: [] as string[],
@@ -58,6 +59,7 @@ const defaultfilters = {
   activitystatus: [] as string[],
   activityscope: [] as string[],
   tag: [] as string[],
+  sdg: [] as string[],
   defaultaidtype: [] as string[],
   defaultflowtype: [] as string[],
   defaulttiedstatus: [] as string[],

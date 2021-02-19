@@ -38,7 +38,7 @@ export const AboutModuleLayout = () => {
         </Grid>
 
         <Grid item lg={12}>
-          <div css={widgetContainer}>
+          <div css={widgetContainer(undefined, false)}>
             <Typography variant="h5">About</Typography>
             <Box width="100%" height="24px" />
             <Typography variant="body1" paragraph>

@@ -1,9 +1,9 @@
-import { css } from "styled-components/macro";
 import React from "react";
-import { FilterProps } from "../Panels/Filter";
-import { CardContentPeriod } from "./PeriodCardContent";
-import { CardContent } from "./CardContent";
-import { CardHeader } from "./CardHeader";
+import { css } from "styled-components/macro";
+import { FilterProps } from "app/components/FilterPanel/data";
+import { CardHeader } from "app/components/FilterPanel/Card/CardHeader";
+import { CardContent } from "app/components/FilterPanel/Card/CardContent";
+import { CardContentPeriod } from "app/components/FilterPanel/Card/PeriodCardContent";
 
 export const Card = (props: FilterProps) => {
   const styles = {

@@ -416,7 +416,7 @@ export default function VizModule() {
       container
       css={`
         margin-top: -16px;
-        height: calc(100vh - 135px);
+        height: calc(100vh - 140px);
       `}
     >
       <Grid item sm={12}>

@@ -9,6 +9,7 @@ import { Filter } from "app/components/FilterPanel/Panels/Filter";
 import {
   selectedFilterAtom,
   currentFilterOpenAtom,
+  defaultfilters,
 } from "app/state/recoil/atoms";
 import {
   FILTER_TYPES,
@@ -117,10 +118,10 @@ export const FilterPanel = (props: FilterPanelProps) => {
         }
         break;
       case FILTER_TYPES.SDGS:
-        if (updatedSelectedFilters.tag.indexOf(value) > -1) {
-          remove(updatedSelectedFilters.tag, (t: string) => t === value);
+        if (updatedSelectedFilters.sdg.indexOf(value) > -1) {
+          remove(updatedSelectedFilters.sdg, (t: string) => t === value);
         } else {
-          updatedSelectedFilters.tag = [...updatedSelectedFilters.tag, value];
+          updatedSelectedFilters.sdg = [...updatedSelectedFilters.sdg, value];
         }
         break;
       case FILTER_TYPES.ACTIVITY_STATUS:
@@ -135,6 +136,9 @@ export const FilterPanel = (props: FilterPanelProps) => {
             value,
           ];
         }
+        break;
+      case FILTER_TYPES.PERIOD:
+        updatedSelectedFilters.years = value.split(",");
         break;
       default:
         break;
@@ -245,11 +249,11 @@ export const FilterPanel = (props: FilterPanelProps) => {
         values = get(filterOptionsData.sdgs, "data.data.goals", []).map(
           (value: any) => value.code
         );
-        if (updatedSelectedFilters.tag.length === values.length) {
-          updatedSelectedFilters.tag = [];
+        if (updatedSelectedFilters.sdg.length === values.length) {
+          updatedSelectedFilters.sdg = [];
         } else {
-          updatedSelectedFilters.tag = [
-            ...updatedSelectedFilters.tag,
+          updatedSelectedFilters.sdg = [
+            ...updatedSelectedFilters.sdg,
             ...values,
           ];
         }
@@ -279,7 +283,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
   }
 
   function resetFilters() {
-    setLocalSelectedFilters(selectedFilters);
+    setLocalSelectedFilters(defaultfilters);
   }
 
   function backToMain() {
@@ -383,7 +387,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onFilterCheckboxChange={(value: string) =>
               onFilterCheckboxChange(value, FILTER_TYPES.SDGS)
             }
-            selectedItems={localSelectedFilters.tag}
+            selectedItems={localSelectedFilters.sdg}
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.SDGS)
             }

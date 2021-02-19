@@ -1,11 +1,11 @@
-import { css } from "styled-components/macro";
 import React from "react";
+import { PrimaryColor } from "app/theme";
+import { css } from "styled-components/macro";
 import { LinearProgress } from "@material-ui/core";
-import { CheckboxListItem } from "../ListItems/CheckboxListItem";
-import { CheckboxGridListItem } from "../ListItems/CheckboxGridListItem";
-import { AccordionListItem } from "../ListItems/AccordionListItem";
-import { FilterProps } from "../Panels/Filter";
-import { PrimaryColor } from "../../../theme";
+import { FilterProps } from "app/components/FilterPanel/data";
+import { CheckboxListItem } from "app/components/FilterPanel/ListItems/CheckboxListItem";
+import { AccordionListItem } from "app/components/FilterPanel/ListItems/AccordionListItem";
+import { CheckboxGridListItem } from "app/components/FilterPanel/ListItems/CheckboxGridListItem";
 
 export const CardContent = (props: FilterProps) => {
   const { data } = props;
@@ -47,7 +47,7 @@ export const CardContent = (props: FilterProps) => {
       }
     `,
   };
-  //TODO: if anyone knows a way to improve the simplicity/readability of this render function please refactor
+  // TODO: if anyone knows a way to improve the simplicity/readability of this render function please refactor
   function renderContent(): JSX.Element | undefined {
     if (data && data.length >= 1) {
       return (
@@ -61,16 +61,30 @@ export const CardContent = (props: FilterProps) => {
                 // Component with 3 drilldown levels
                 return (
                   <AccordionListItem
+                    key={node1.name}
                     node={node1}
                     style="has2NodesStyle"
+                    selected={props.selectedItems.indexOf(node1.code) > -1}
                     component={
                       <>
                         {node1.children.map((node2) => {
                           return (
                             <AccordionListItem
+                              key={node2.name}
                               node={node2}
-                              component={<CheckboxGridListItem {...node2} />}
+                              component={
+                                <CheckboxGridListItem
+                                  {...node2}
+                                  selectedItems={props.selectedItems}
+                                  onFilterCheckboxChange={
+                                    props.onFilterCheckboxChange
+                                  }
+                                />
+                              }
                               style="has2NodesStyle"
+                              selected={
+                                props.selectedItems.indexOf(node2.code) > -1
+                              }
                             />
                           );
                         })}
@@ -78,26 +92,38 @@ export const CardContent = (props: FilterProps) => {
                     }
                   />
                 );
-              } else {
-                // Component with 2 drilldown levels
-                return (
-                  <AccordionListItem
-                    node={node1}
-                    component={<CheckboxGridListItem {...node1} />}
-                    style="has1NodeStyle"
-                  />
-                );
               }
-            } else {
-              // Component with 1 drilldown level
-              return <CheckboxListItem {...node1} />;
+              // Component with 2 drilldown levels
+              return (
+                <AccordionListItem
+                  key={node1.name}
+                  node={node1}
+                  component={
+                    <CheckboxGridListItem
+                      {...node1}
+                      selectedItems={props.selectedItems}
+                      onFilterCheckboxChange={props.onFilterCheckboxChange}
+                    />
+                  }
+                  style="has1NodeStyle"
+                  selected={props.selectedItems.indexOf(node1.code) > -1}
+                />
+              );
             }
+            // Component with 1 drilldown level
+            return (
+              <CheckboxListItem
+                {...node1}
+                key={node1.name}
+                onFilterCheckboxChange={props.onFilterCheckboxChange}
+                selected={props.selectedItems.indexOf(node1.code) > -1}
+              />
+            );
           })}
         </>
       );
-    } else {
-      return <LinearProgress />;
     }
+    return <LinearProgress />;
   }
 
   return <div css={styles.container}>{renderContent()}</div>;

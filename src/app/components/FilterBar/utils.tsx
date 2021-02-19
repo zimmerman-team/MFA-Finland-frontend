@@ -69,7 +69,7 @@ export function getFilterChips(
   const regions = get(filterOptions, "regions.data.data", []);
   const sectors = get(filterOptions, "sectors.data.data", []);
   const organisations = get(filterOptions, "organisations.data.data", []);
-  const sdgs = get(filterOptions, "sdgs.data.data", []);
+  const sdgs = get(filterOptions, "sdgs.data.data.goals", []);
   const activitystatus = get(filterOptions, "activitystatus.data.data", []);
 
   filters.tag.forEach((tag: string) => {
@@ -80,15 +80,17 @@ export function getFilterChips(
         value: tag,
         type: FILTER_TYPES.THEMATIC_AREAS,
       });
-    } else {
-      const fSdg = find(sdgs, { code: tag });
-      if (fSdg) {
-        chips.push({
-          name: fSdg.name,
-          value: tag,
-          type: FILTER_TYPES.SDGS,
-        });
-      }
+    }
+  });
+
+  filters.sdg.forEach((sdg: string) => {
+    const fSdg = find(sdgs, { code: sdg });
+    if (fSdg) {
+      chips.push({
+        name: fSdg.name,
+        value: sdg,
+        type: FILTER_TYPES.SDGS,
+      });
     }
   });
 

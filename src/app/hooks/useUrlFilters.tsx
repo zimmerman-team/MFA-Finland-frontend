@@ -21,11 +21,13 @@ export function useUrlFilters() {
     const activitystatus = currentUrlParams.get("activity_status_code");
     const activityscope = currentUrlParams.get("activity_scope_code");
     const tag = currentUrlParams.get("tag_narrative");
+    const sdg = currentUrlParams.get("tag_code");
     const defaultaidtype = currentUrlParams.get("default_aid_type_code");
     const defaulttiedstatus = currentUrlParams.get("default_tied_status_code");
     const defaultflowtype = currentUrlParams.get("default_flow_type_code");
     const collaborationtype = currentUrlParams.get("collaboration_type_code");
     const policymarker = currentUrlParams.get("policy_marker_code");
+    const years = currentUrlParams.get("years");
 
     if (countries) {
       updatedSelectedFilters.countries = countries.split(",");
@@ -48,6 +50,9 @@ export function useUrlFilters() {
     if (tag) {
       updatedSelectedFilters.tag = tag.split(",");
     }
+    if (sdg) {
+      updatedSelectedFilters.sdg = sdg.split(",");
+    }
     if (defaultaidtype) {
       updatedSelectedFilters.defaultaidtype = defaultaidtype.split(",");
     }
@@ -62,6 +67,9 @@ export function useUrlFilters() {
     }
     if (policymarker) {
       updatedSelectedFilters.policymarker = policymarker.split(",");
+    }
+    if (years) {
+      updatedSelectedFilters.years = years.split(",");
     }
 
     setSelectedFilters(updatedSelectedFilters);
@@ -119,6 +127,11 @@ export function useUrlFilters() {
     } else {
       currentUrlParams.delete("tag_narrative");
     }
+    if (selectedFilters.sdg.length > 0) {
+      currentUrlParams.set("tag_code", selectedFilters.sdg.join(","));
+    } else {
+      currentUrlParams.delete("tag_code");
+    }
     if (selectedFilters.defaultaidtype.length > 0) {
       currentUrlParams.set(
         "default_aid_type_code",
@@ -159,6 +172,11 @@ export function useUrlFilters() {
     } else {
       currentUrlParams.delete("policy_marker_code");
     }
+    if (selectedFilters.years.length > 0) {
+      currentUrlParams.set("years", selectedFilters.years.join(","));
+    } else {
+      currentUrlParams.delete("years");
+    }
 
     const queryString = decodeURIComponent(currentUrlParams.toString());
     history.push({
@@ -177,11 +195,13 @@ export function useUrlFilters() {
     const activitystatus = currentUrlParams.get("activity_status_code");
     const activityscope = currentUrlParams.get("activity_scope_code");
     const tag = currentUrlParams.get("tag_narrative");
+    const sdg = currentUrlParams.get("tag_code");
     const defaultaidtype = currentUrlParams.get("default_aid_type_code");
     const defaulttiedstatus = currentUrlParams.get("default_tied_status_code");
     const defaultflowtype = currentUrlParams.get("default_flow_type_code");
     const collaborationtype = currentUrlParams.get("collaboration_type_code");
     const policymarker = currentUrlParams.get("policy_marker_code");
+    const years = currentUrlParams.get("years");
 
     if (countries) {
       updatedSelectedFilters.countries = countries.split(",");
@@ -218,6 +238,11 @@ export function useUrlFilters() {
     } else if (updatedSelectedFilters.tag.length > 0) {
       updatedSelectedFilters.tag = [];
     }
+    if (sdg) {
+      updatedSelectedFilters.sdg = sdg.split(",");
+    } else if (updatedSelectedFilters.sdg.length > 0) {
+      updatedSelectedFilters.sdg = [];
+    }
     if (defaultaidtype) {
       updatedSelectedFilters.defaultaidtype = defaultaidtype.split(",");
     } else if (updatedSelectedFilters.defaultaidtype.length > 0) {
@@ -242,6 +267,11 @@ export function useUrlFilters() {
       updatedSelectedFilters.policymarker = policymarker.split(",");
     } else if (updatedSelectedFilters.policymarker.length > 0) {
       updatedSelectedFilters.policymarker = [];
+    }
+    if (years) {
+      updatedSelectedFilters.years = years.split(",");
+    } else if (updatedSelectedFilters.years.length > 0) {
+      updatedSelectedFilters.years = [];
     }
 
     if (!isEqual(selectedFilters, updatedSelectedFilters)) {
