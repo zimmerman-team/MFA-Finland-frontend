@@ -17,6 +17,11 @@ import { IconTwitter } from "app/assets/icons/IconTwitter";
 import { drawerStyle } from "app/components/Drawer/common/drawerStyle";
 import { NavList } from "app/components/Drawer/common/NavList";
 
+import LogoFacebook from "app/assets/icons/logo_fb.png";
+import LogoYoutube from "app/assets/icons/logo_yt.png";
+import LogoLinkedin from "app/assets/icons/logo_linkedin.png";
+import LogoTwitter from "app/assets/icons/logo_twitter.png";
+
 export const Drawer = () => {
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
 
@@ -144,35 +149,67 @@ export const Drawer = () => {
                   edge="start"
                   color="inherit"
                   aria-label="menu"
-                  href="https://www.google.com"
+                  href="https://www.facebook.com"
                   target="_blank"
                 >
-                  <IconFacebook css={drawerStyle.GreyIcon} />
+                  {/*<IconFacebook css={drawerStyle.GreyIcon} />*/}
+                  <img
+                    src={LogoFacebook}
+                    css={`
+                      width: 32px;
+                      height: 32px;
+                    `}
+                    alt="facebook"
+                  />
                 </IconButton>
                 <IconButton
                   color="inherit"
                   aria-label="menu"
-                  href="https://www.microsoft.com"
+                  href="https://www.facebook.com"
                   target="_blank"
                 >
-                  <IconYoutube css={drawerStyle.GreyIcon} />
+                  {/*<IconYoutube css={drawerStyle.GreyIcon} />*/}
+                  <img
+                    src={LogoYoutube}
+                    css={`
+                      width: 32px;
+                      height: 32px;
+                    `}
+                    alt="facebook"
+                  />
                 </IconButton>
                 <IconButton
                   color="inherit"
                   aria-label="menu"
-                  href="https://www.github.com"
+                  href="https://www.linkedin.com"
                   target="_blank"
                 >
-                  <IconLinkedin css={drawerStyle.GreyIcon} />
+                  {/*<IconLinkedin css={drawerStyle.GreyIcon} />*/}
+                  <img
+                    src={LogoLinkedin}
+                    css={`
+                      width: 32px;
+                      height: 32px;
+                    `}
+                    alt="linkedin"
+                  />
                 </IconButton>
                 <IconButton
                   edge="end"
                   color="inherit"
                   aria-label="menu"
-                  href="https://www.github.com"
+                  href="https://www.twitter.com"
                   target="_blank"
                 >
-                  <IconTwitter css={drawerStyle.GreyIcon} />
+                  {/*<IconTwitter css={drawerStyle.GreyIcon} />*/}
+                  <img
+                    src={LogoTwitter}
+                    css={`
+                      width: 32px;
+                      height: 32px;
+                    `}
+                    alt="twitter"
+                  />
                 </IconButton>
               </div>
             </Grid>
