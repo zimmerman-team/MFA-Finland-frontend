@@ -13,10 +13,10 @@ export const drawerStyle = {
     margin-left: 15px;
   `,
   GreyIcon: css`
-    filter: grayscale(1);
+    /*filter: grayscale(1);
     :hover {
       filter: grayscale(0);
-    }
+    }*/
   `,
   DrawerGridContainer: css`
     background-color: ${PrimaryColor[0]};
