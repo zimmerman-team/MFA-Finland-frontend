@@ -1,12 +1,14 @@
 import React from "react";
 import { ModuleContainer } from "app/components/ModuleContainer";
-import { Box, Grid, Typography } from "@material-ui/core";
+import { Box, Grid, Hidden, Typography } from "@material-ui/core";
 import { css } from "styled-components/macro";
 import { Breadcrumbs } from "app/components/Breadcrumb";
 import { crumbs } from "app/modules/feedback-module/layout";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { Path } from "app/const/Path";
 import { PageOrnament } from "app/assets/PageOrnament";
+import { Anchor, InPageNavigation } from "app/components/InPageNavigation";
+import { InpageNavItemModel } from "app/components/InPageNavigation/model";
 
 const widgetContainer = (height: string | undefined, isHovered: boolean) => css`
   width: 100%;
@@ -28,7 +30,20 @@ const privacyCrumbs: BreadcrumbLinkModel[] = [
   { label: "About" },
 ];
 
+const navList: InpageNavItemModel[] = [
+  {
+    label: "About",
+    path: "about-mfa-portal",
+  },
+];
+
 export const AboutModuleLayout = () => {
+  const [active, setActive] = React.useState(0);
+
+  function handleClick(id: any) {
+    setActive(parseInt(id, 10));
+  }
+
   return (
     <>
       <ModuleContainer>
@@ -37,7 +52,25 @@ export const AboutModuleLayout = () => {
           <Breadcrumbs route={privacyCrumbs} />
         </Grid>
 
-        <Grid item lg={12}>
+        <Hidden mdDown>
+          <Grid item lg={3}>
+            <div
+              css={`
+                position: sticky;
+                top: 140px;
+              `}
+            >
+              <InPageNavigation
+                lists={navList}
+                handleClick={handleClick}
+                active={active}
+                setActive={setActive}
+              />
+            </div>
+          </Grid>
+        </Hidden>
+        <Grid item lg={9}>
+          <Anchor id="about-mfa-portal" />
           <div css={widgetContainer(undefined, false)}>
             <Typography variant="h5">About</Typography>
             <Box width="100%" height="24px" />
