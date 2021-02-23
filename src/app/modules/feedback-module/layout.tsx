@@ -1,23 +1,18 @@
 // @ts-nocheck
 
-import {
-  Box,
-  Paper,
-  Card,
-  Typography,
-  AccordionProps,
-} from "@material-ui/core";
+import { Box, Hidden } from "@material-ui/core";
 import { Button, LinearProgress, TextField } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import { Breadcrumbs } from "app/components/Breadcrumb";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
-import { GridWidget } from "app/components/GridWidget";
 import { ModuleContainer } from "app/components/ModuleContainer";
 import { Path } from "app/const/Path";
 import { Field, Form, Formik } from "formik";
 import { TextFieldProps } from "formik-material-ui";
 import React from "react";
 import { css } from "styled-components/macro";
+import { InpageNavItemModel } from "app/components/InPageNavigation/model";
+import { Anchor, InPageNavigation } from "app/components/InPageNavigation";
 
 interface Values {
   feedback: string;
@@ -134,7 +129,20 @@ export const questionAnswer = () => {
   );
 };
 
+const navList: InpageNavItemModel[] = [
+  {
+    label: "Feedback",
+    path: "about-mfa-portal",
+  },
+];
+
 export const FeedbackModuleLayout = () => {
+  const [active, setActive] = React.useState(0);
+
+  function handleClick(id: any) {
+    setActive(parseInt(id, 10));
+  }
+
   return (
     <ModuleContainer>
       <Box width="100%" height="16px" />
@@ -142,25 +150,26 @@ export const FeedbackModuleLayout = () => {
         <Breadcrumbs route={crumbs} />
       </Grid>
 
-      {/*<Grid item lg={3}>
-        <div
-          css={`
-            width: 100%;
-            height: 400px;
+      <Hidden mdDown>
+        <Grid item lg={3}>
+          <div
+            css={`
+              position: sticky;
+              top: 140px;
+            `}
+          >
+            <InPageNavigation
+              lists={navList}
+              handleClick={handleClick}
+              active={active}
+              setActive={setActive}
+            />
+          </div>
+        </Grid>
+      </Hidden>
 
-            border-radius: 32px;
-          `}
-        />
-      </Grid>*/}
-
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        {/*<div css={widgetContainer}>
-          <Grid {...gridSetting}>
-            <Typography>FAQ</Typography>
-          </Grid>
-          <Grid {...gridSetting}></Grid>
-        </div>*/}
-        {/*<Box width="100%" height="24px" />*/}
+      <Grid item xs={12} sm={12} md={12} lg={9}>
+        <Anchor id="about-mfa-portal" />
         <div css={widgetContainer}>
           <Formik
             initialValues={{
