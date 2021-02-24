@@ -14,8 +14,8 @@ import { InnerVizStat } from "app/components/Charts/sunburst/common/innervizstat
 import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
 
 export function SunburstChart(props: SunburstChartProps) {
-  const { width } = useWindowSize();
-  const [vizSize, setVizSize] = React.useState(600);
+  // const { width } = useWindowSize();
+  // const [vizSize, setVizSize] = React.useState(600);
   const [selectedCount, setSelectedCount] = React.useState(0);
   const [localData, setLocalData] = React.useState(props.data);
   const [selected, setSelected] = React.useState({ name: "", code: " " });
@@ -87,11 +87,11 @@ export function SunburstChart(props: SunburstChartProps) {
     }
   }, [props.selectedVizItemId]);
 
-  React.useLayoutEffect(() => {
-    if (width < 600) {
-      setVizSize(width - 24);
-    }
-  }, [width]);
+  // React.useLayoutEffect(() => {
+  //   if (width < 600) {
+  //     setVizSize(width - 24);
+  //   }
+  // }, [width]);
 
   function normalizeData(data: any) {
     return {
@@ -135,32 +135,17 @@ export function SunburstChart(props: SunburstChartProps) {
   }
 
   return (
-    <Grid container>
-      <Grid id="sunburst-back" item xs={12} sm={12} md={2} lg={1}>
-        {prevSelections.length > 0 && (
-          <div css={backbuttoncss} onClick={goBack}>
-            Back
-          </div>
-        )}
-      </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12}>
-        <div
-          css={containercss}
-          id="sunburst-container"
-          style={{ height: vizSize }}
-        >
-          <InnerVizStat
-            count={selected.name !== "" ? selectedCount : props.activitiesCount}
-          />
-          <SunburstViz
-            size={vizSize}
-            setSelected={onArcClick}
-            data={normalizeData(localData)}
-            setSelectedCount={setSelectedCount}
-            onSectorSelectChange={props.onSectorSelectChange}
-          />
-        </div>
-      </Grid>
-    </Grid>
+    <div css={containercss} id="sunburst-container">
+      <InnerVizStat
+        count={selected.name !== "" ? selectedCount : props.activitiesCount}
+      />
+      <SunburstViz
+        size={240}
+        setSelected={onArcClick}
+        data={normalizeData(localData)}
+        setSelectedCount={setSelectedCount}
+        onSectorSelectChange={props.onSectorSelectChange}
+      />
+    </div>
   );
 }

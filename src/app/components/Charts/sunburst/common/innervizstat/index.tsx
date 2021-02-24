@@ -12,15 +12,7 @@ interface InnerVizStatProps {
 export function InnerVizStat(props: InnerVizStatProps) {
   return (
     <div css={totalcss}>
-      <Typography
-        variant="h3"
-        color="textPrimary"
-        css={`
-          font-size: 34px;
-          font-weight: 700;
-          margin-bottom: 10px;
-        `}
-      >
+      <Typography variant="subtitle2" color="textPrimary">
         {formatMoneyWithPrefix(props.count)}
       </Typography>
     </div>

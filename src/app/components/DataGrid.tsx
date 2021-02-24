@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
-import { Grid, Hidden } from "@material-ui/core";
+import { Box, Grid, Hidden } from "@material-ui/core";
 import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
@@ -53,9 +53,6 @@ export const DataGrid = (props: DataGridProps) => {
           link="/viz/oda"
           tooltip="lorem ipsum"
           label="Overview Disbursements"
-          childrencontainerStyle={{
-            height: "100%",
-          }}
         >
           {props.vizDataLoading.oda ? (
             <VizLoader />
@@ -79,7 +76,6 @@ export const DataGrid = (props: DataGridProps) => {
           label="Thematic Areas"
           link="/viz/thematic-areas"
           childrencontainerStyle={{
-            marginTop: -70,
             transform: "scale(0.7)",
           }}
         >
@@ -103,16 +99,7 @@ export const DataGrid = (props: DataGridProps) => {
           {props.vizDataLoading.sectors ? (
             <VizLoader />
           ) : (
-            <div
-              css={`
-                margin-top: -160px;
-                transform: scale(0.4);
-                @media (max-width: 600px) {
-                  margin-top: initial;
-                  transform: scale(0.7);
-                }
-              `}
-            >
+            <div>
               <SunburstChart
                 sectorDrillDown=""
                 onZoomOut={() => null}
