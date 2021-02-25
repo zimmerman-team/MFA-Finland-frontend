@@ -7,10 +7,10 @@ export const AccordionHeaderStyle = css`
   height: 48px;
   width: 100%;
   background-color: #f7f7f7;
-  background-color: red;
+
   padding-left: 16px;
   padding-right: 16px;
-  font-family: Inter;
+
   font-style: normal;
   font-weight: 500;
   font-size: 16px;

@@ -1,13 +1,13 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
-import { Grid, Hidden } from "@material-ui/core";
+import { Box, Grid, Hidden } from "@material-ui/core";
 import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
 import { GridWidget } from "app/components/GridWidget";
 import { Treemap } from "app/components/Charts/treemap";
-import { SunburstChart } from "app/components/Charts/sunburst";
+
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { Legend } from "app/components/Charts/geomap/common/Legend";
 import { DataProps } from "app/components/Charts/thematicareas/data";
@@ -16,6 +16,7 @@ import { TreemapDataModel } from "app/components/Charts/treemap/data";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "./Collapseable";
+import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -53,9 +54,6 @@ export const DataGrid = (props: DataGridProps) => {
           link="/viz/oda"
           tooltip="lorem ipsum"
           label="Overview Disbursements"
-          childrencontainerStyle={{
-            height: "100%",
-          }}
         >
           {props.vizDataLoading.oda ? (
             <VizLoader />
@@ -79,7 +77,6 @@ export const DataGrid = (props: DataGridProps) => {
           label="Thematic Areas"
           link="/viz/thematic-areas"
           childrencontainerStyle={{
-            marginTop: -70,
             transform: "scale(0.7)",
           }}
         >
@@ -103,17 +100,8 @@ export const DataGrid = (props: DataGridProps) => {
           {props.vizDataLoading.sectors ? (
             <VizLoader />
           ) : (
-            <div
-              css={`
-                margin-top: -160px;
-                transform: scale(0.4);
-                @media (max-width: 600px) {
-                  margin-top: initial;
-                  transform: scale(0.7);
-                }
-              `}
-            >
-              <SunburstChart
+            <div>
+              <SunburstChartSimplified
                 sectorDrillDown=""
                 onZoomOut={() => null}
                 selectedVizItemId={null}
