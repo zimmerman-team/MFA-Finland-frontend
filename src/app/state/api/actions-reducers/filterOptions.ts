@@ -22,3 +22,12 @@ export const sdgs: ApiCallModel = {
 export const activitystatus: ApiCallModel = {
   ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
 };
+export const policymarkers: ApiCallModel = {
+  ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
+};
+export const aidtypes: ApiCallModel = {
+  ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
+};
+export const budgetlines: ApiCallModel = {
+  ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
+};

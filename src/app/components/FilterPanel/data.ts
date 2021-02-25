@@ -17,6 +17,7 @@ export interface FilterProps {
   data?: FilterOption[];
   renderSearch?: boolean;
   selectedItems: string[];
+  onBackBtnClick: () => void;
   onApplyFilters: () => void;
   onSelectAllCheckboxChange: () => void;
   onFilterCheckboxChange: (value: string) => void;
@@ -40,6 +41,11 @@ export enum FILTER_TYPES {
   ACTIVITY_STATUS,
   PERIOD,
   ADVANCED_FILTERS,
+  POLICY_MARKERS,
+  AID_TYPE,
+  BUDGET_LINES,
+  BI_MULTI,
+  HUMAN_RIGHTS,
 }
 
 export const mailPanelInitData: MailPanelInitDataItemModel[] = [
@@ -89,6 +95,39 @@ export const mailPanelInitData: MailPanelInitDataItemModel[] = [
     heading: "Advanced Filters",
     label: "5 Advanced filter",
     type: FILTER_TYPES.ADVANCED_FILTERS,
+    selection: [],
+  },
+];
+
+export const advancedPanelInitData: MailPanelInitDataItemModel[] = [
+  {
+    heading: "Policy Markers",
+    label: "All Policy Markers",
+    type: FILTER_TYPES.POLICY_MARKERS,
+    selection: [],
+  },
+  {
+    heading: "Type of aid",
+    label: "All Types of aid",
+    type: FILTER_TYPES.AID_TYPE,
+    selection: [],
+  },
+  {
+    heading: "Budget lines",
+    label: "All Budget lines",
+    type: FILTER_TYPES.BUDGET_LINES,
+    selection: [],
+  },
+  {
+    heading: "Bi/Multi",
+    label: "All",
+    type: FILTER_TYPES.BI_MULTI,
+    selection: [],
+  },
+  {
+    heading: "Human rights approach",
+    label: "All",
+    type: FILTER_TYPES.HUMAN_RIGHTS,
     selection: [],
   },
 ];
@@ -277,5 +316,28 @@ export const level3MockData: FilterOption[] = [
         ],
       },
     ],
+  },
+];
+
+export const humanrightfilteroptions = [
+  {
+    name: "Not defined",
+    code: "Not defined",
+  },
+  {
+    name: "Human rights blind",
+    code: "Human rights blind",
+  },
+  {
+    name: "Human rights sensitive",
+    code: "Human rights sensitive",
+  },
+  {
+    name: "Human rights progressive",
+    code: "Human rights progressive",
+  },
+  {
+    name: "Human rights transformative",
+    code: "Human rights transformative",
   },
 ];

@@ -1,6 +1,9 @@
 import filter from "lodash/filter";
 import { SelectedFilterAtomModel } from "app/state/recoil/atoms";
-import { mailPanelInitData } from "app/components/FilterPanel/data";
+import {
+  mailPanelInitData,
+  advancedPanelInitData,
+} from "app/components/FilterPanel/data";
 
 export function getMainFilterPanelData(
   selectedFilters: SelectedFilterAtomModel
@@ -54,5 +57,44 @@ export function getMainFilterPanelData(
       `${selectedFilters.years[0]} - ${selectedFilters.years[1]}`
     );
   }
+  return updatedData;
+}
+
+export function getAdvancedFilterPanelData(
+  selectedFilters: SelectedFilterAtomModel
+) {
+  const updatedData = [...advancedPanelInitData];
+  updatedData[0].selection = [];
+  updatedData[1].selection = [];
+  updatedData[2].selection = [];
+  updatedData[3].selection = [];
+  updatedData[4].selection = [];
+
+  if (selectedFilters.policymarker.length > 0) {
+    updatedData[0].selection.push(
+      `${selectedFilters.policymarker.length} Policy Markers`
+    );
+  }
+  if (selectedFilters.defaultaidtype.length > 0) {
+    updatedData[1].selection.push(
+      `${selectedFilters.defaultaidtype.length} Types of aid`
+    );
+  }
+  if (selectedFilters.budgetlines.length > 0) {
+    updatedData[2].selection.push(
+      `${selectedFilters.budgetlines.length} Budget lines`
+    );
+  }
+  if (selectedFilters.collaborationtype.length > 0) {
+    updatedData[3].selection.push(
+      `${selectedFilters.collaborationtype.length} collaboration types`
+    );
+  }
+  if (selectedFilters.humanrights.length > 0) {
+    updatedData[4].selection.push(
+      `${selectedFilters.humanrights.length} human rights app`
+    );
+  }
+
   return updatedData;
 }

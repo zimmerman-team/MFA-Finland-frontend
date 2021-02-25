@@ -27,6 +27,8 @@ export function useUrlFilters() {
     const defaultflowtype = currentUrlParams.get("default_flow_type_code");
     const collaborationtype = currentUrlParams.get("collaboration_type_code");
     const policymarker = currentUrlParams.get("policy_marker_code");
+    const budgetlines = currentUrlParams.get("budget_line");
+    const humanrights = currentUrlParams.get("human_rights_approach");
     const years = currentUrlParams.get("years");
 
     if (countries) {
@@ -67,6 +69,12 @@ export function useUrlFilters() {
     }
     if (policymarker) {
       updatedSelectedFilters.policymarker = policymarker.split(",");
+    }
+    if (budgetlines) {
+      updatedSelectedFilters.budgetlines = budgetlines.split(",");
+    }
+    if (humanrights) {
+      updatedSelectedFilters.humanrights = humanrights.split(",");
     }
     if (years) {
       updatedSelectedFilters.years = years.split(",");
@@ -172,6 +180,22 @@ export function useUrlFilters() {
     } else {
       currentUrlParams.delete("policy_marker_code");
     }
+    if (selectedFilters.budgetlines.length > 0) {
+      currentUrlParams.set(
+        "budget_line",
+        selectedFilters.budgetlines.join(",")
+      );
+    } else {
+      currentUrlParams.delete("budget_line");
+    }
+    if (selectedFilters.humanrights.length > 0) {
+      currentUrlParams.set(
+        "human_rights_approach",
+        selectedFilters.humanrights.join(",")
+      );
+    } else {
+      currentUrlParams.delete("human_rights_approach");
+    }
     if (selectedFilters.years.length > 0) {
       currentUrlParams.set("years", selectedFilters.years.join(","));
     } else {
@@ -201,6 +225,8 @@ export function useUrlFilters() {
     const defaultflowtype = currentUrlParams.get("default_flow_type_code");
     const collaborationtype = currentUrlParams.get("collaboration_type_code");
     const policymarker = currentUrlParams.get("policy_marker_code");
+    const budgetlines = currentUrlParams.get("budget_line");
+    const humanrights = currentUrlParams.get("human_rights_approach");
     const years = currentUrlParams.get("years");
 
     if (countries) {
@@ -267,6 +293,16 @@ export function useUrlFilters() {
       updatedSelectedFilters.policymarker = policymarker.split(",");
     } else if (updatedSelectedFilters.policymarker.length > 0) {
       updatedSelectedFilters.policymarker = [];
+    }
+    if (budgetlines) {
+      updatedSelectedFilters.budgetlines = budgetlines.split(",");
+    } else if (updatedSelectedFilters.budgetlines.length > 0) {
+      updatedSelectedFilters.budgetlines = [];
+    }
+    if (humanrights) {
+      updatedSelectedFilters.humanrights = humanrights.split(",");
+    } else if (updatedSelectedFilters.humanrights.length > 0) {
+      updatedSelectedFilters.humanrights = [];
     }
     if (years) {
       updatedSelectedFilters.years = years.split(",");

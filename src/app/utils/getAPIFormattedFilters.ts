@@ -78,6 +78,18 @@ export function getAPIFormattedFilters(filters: any, yearPeriod?: string) {
       policy_marker_code: filters.policymarker,
     };
   }
+  if (filters.budgetlines.length > 0) {
+    result = {
+      ...result,
+      budget_line: filters.budgetlines,
+    };
+  }
+  if (filters.humanrights.length > 0) {
+    result = {
+      ...result,
+      human_rights_approach: filters.humanrights,
+    };
+  }
   if (filters.years.length > 0) {
     result = {
       ...result,
