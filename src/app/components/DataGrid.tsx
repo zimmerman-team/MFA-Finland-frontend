@@ -7,7 +7,7 @@ import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
 import { GridWidget } from "app/components/GridWidget";
 import { Treemap } from "app/components/Charts/treemap";
-import { SunburstChart } from "app/components/Charts/sunburst";
+
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { Legend } from "app/components/Charts/geomap/common/Legend";
 import { DataProps } from "app/components/Charts/thematicareas/data";
@@ -16,6 +16,7 @@ import { TreemapDataModel } from "app/components/Charts/treemap/data";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "./Collapseable";
+import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -100,7 +101,7 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader />
           ) : (
             <div>
-              <SunburstChart
+              <SunburstChartSimplified
                 sectorDrillDown=""
                 onZoomOut={() => null}
                 selectedVizItemId={null}

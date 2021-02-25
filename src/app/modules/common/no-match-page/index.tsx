@@ -19,7 +19,6 @@ export const NoMatchPage = () => {
     >
       <div
         css={`
-          font-family: Inter, sans-serif;
           font-size: 14px;
           font-weight: 500;
           font-style: normal;
@@ -33,7 +32,6 @@ export const NoMatchPage = () => {
       </div>
       <div
         css={`
-          font-family: Inter, sans-serif;
           font-size: 120px;
           font-weight: bold;
           font-style: normal;
@@ -47,7 +45,6 @@ export const NoMatchPage = () => {
       </div>
       <div
         css={`
-          font-family: Inter, sans-serif;
           font-size: 14px;
           font-weight: 600;
           font-style: normal;
@@ -76,7 +73,6 @@ export const NoMatchPage = () => {
         >
           <span
             css={`
-              font-family: Inter, sans-serif;
               font-size: 16px;
               font-weight: 500;
               font-style: normal;
