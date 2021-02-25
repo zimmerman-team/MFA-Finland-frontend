@@ -83,6 +83,7 @@ export const gradientlinecss = (colors: string[]) => css`
 `;
 
 export const listitemcopy = () => css`
+  font-family: Inter;
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
