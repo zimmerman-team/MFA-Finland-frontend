@@ -1,6 +1,9 @@
 import get from "lodash/get";
 import find from "lodash/find";
-import { FILTER_TYPES } from "app/components/FilterPanel/data";
+import {
+  FILTER_TYPES,
+  humanrightfilteroptions,
+} from "app/components/FilterPanel/data";
 import { SelectedFilterAtomModel } from "app/state/recoil/atoms";
 
 export function shouldRender(location: any) {
@@ -71,6 +74,19 @@ export function getFilterChips(
   const organisations = get(filterOptions, "organisations.data.data", []);
   const sdgs = get(filterOptions, "sdgs.data.data.goals", []);
   const activitystatus = get(filterOptions, "activitystatus.data.data", []);
+  const policymarkers = get(filterOptions, "policymarkers.data.data", []);
+  const aidtypes = get(filterOptions, "aidtypes.data.data", []);
+  const budgetlines = get(filterOptions, "budgetlines.data.data.data", []);
+  const bimulti = [
+    {
+      name: "Bi",
+      code: "1",
+    },
+    {
+      name: "Multi",
+      code: "2",
+    },
+  ];
 
   filters.tag.forEach((tag: string) => {
     const fArea = find(thematicareas, { code: tag });
@@ -180,13 +196,68 @@ export function getFilterChips(
     }
   });
 
-  filters.regions.forEach((actstatus: string) => {
+  filters.activitystatus.forEach((actstatus: string) => {
     const fActivitystatus = find(activitystatus, { code: actstatus });
     if (fActivitystatus) {
       chips.push({
         name: fActivitystatus.name,
         value: actstatus,
         type: FILTER_TYPES.ACTIVITY_STATUS,
+      });
+    }
+  });
+
+  filters.policymarker.forEach((pm: string) => {
+    const fPolicymarker = find(policymarkers, { code: pm });
+    if (fPolicymarker) {
+      chips.push({
+        name: fPolicymarker.name,
+        value: pm,
+        type: FILTER_TYPES.POLICY_MARKERS,
+      });
+    }
+  });
+
+  filters.defaultaidtype.forEach((type: string) => {
+    const fAidtype = find(aidtypes, { code: type });
+    if (fAidtype) {
+      chips.push({
+        name: fAidtype.name,
+        value: type,
+        type: FILTER_TYPES.AID_TYPE,
+      });
+    }
+  });
+
+  filters.budgetlines.forEach((line: string) => {
+    const fBudgetline = find(budgetlines, { code: line });
+    if (fBudgetline) {
+      chips.push({
+        name: fBudgetline.name,
+        value: line,
+        type: FILTER_TYPES.BUDGET_LINES,
+      });
+    }
+  });
+
+  filters.collaborationtype.forEach((code: string) => {
+    const fItem = find(bimulti, { code });
+    if (fItem) {
+      chips.push({
+        name: fItem.name,
+        value: code,
+        type: FILTER_TYPES.BI_MULTI,
+      });
+    }
+  });
+
+  filters.humanrights.forEach((code: string) => {
+    const fItem = find(humanrightfilteroptions, { code });
+    if (fItem) {
+      chips.push({
+        name: fItem.name,
+        value: code,
+        type: FILTER_TYPES.HUMAN_RIGHTS,
       });
     }
   });

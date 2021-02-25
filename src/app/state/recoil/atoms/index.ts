@@ -47,6 +47,8 @@ export interface SelectedFilterAtomModel {
   defaulttiedstatus: string[];
   collaborationtype: string[];
   policymarker: string[];
+  budgetlines: string[];
+  humanrights: string[];
   years: string[];
 }
 
@@ -65,6 +67,8 @@ export const defaultfilters = {
   defaulttiedstatus: [] as string[],
   collaborationtype: [] as string[],
   policymarker: [] as string[],
+  budgetlines: [] as string[],
+  humanrights: [] as string[],
   years: [] as string[],
 };
 

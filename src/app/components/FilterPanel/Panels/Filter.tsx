@@ -1,10 +1,8 @@
 import React from "react";
-import { useRecoilState } from "recoil";
 import { css } from "styled-components/macro";
 import { Grid, Typography } from "@material-ui/core";
 import { Card } from "app/components/FilterPanel/Card";
 import { FilterProps } from "app/components/FilterPanel/data";
-import { currentFilterOpenAtom } from "app/state/recoil/atoms";
 import { Header } from "app/components/FilterPanel/Card/Header";
 import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
 
@@ -30,7 +28,6 @@ export const createStyles = (props: FilterProps) => {
 
 export const Filter = (props: FilterProps) => {
   const styles = createStyles(props);
-  const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
 
   function formatSelectedValues() {
     return props.selection.join(" ");

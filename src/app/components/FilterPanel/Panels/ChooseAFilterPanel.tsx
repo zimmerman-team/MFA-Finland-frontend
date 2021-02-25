@@ -14,6 +14,7 @@ import { ChooseAFilterListItem } from "app/components/FilterPanel/ListItems/Choo
 interface Model {
   onApplyFilters: () => void;
   onResetFilters: () => void;
+  onCloseBtnClick: () => void;
   data: MailPanelInitDataItemModel[];
 }
 
@@ -36,10 +37,7 @@ export const ChooseAFilterPanel = (props: Model) => {
         <Typography variant="h5" css={styles.heading}>
           Add Filters
         </Typography>
-        <IconButton
-          css={styles.closeContainer}
-          onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
-        >
+        <IconButton css={styles.closeContainer} onClick={props.onCloseBtnClick}>
           <Cancel css={styles.closeIcon} />
         </IconButton>
       </Grid>

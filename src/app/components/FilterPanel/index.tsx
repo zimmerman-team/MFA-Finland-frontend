@@ -14,9 +14,13 @@ import {
 import {
   FILTER_TYPES,
   FilterPanelProps,
+  humanrightfilteroptions,
   MailPanelInitDataItemModel,
 } from "app/components/FilterPanel/data";
-import { getMainFilterPanelData } from "app/components/FilterPanel/utils";
+import {
+  getMainFilterPanelData,
+  getAdvancedFilterPanelData,
+} from "app/components/FilterPanel/utils";
 import { ChooseAFilterPanel } from "app/components/FilterPanel/Panels/ChooseAFilterPanel";
 
 // TODO: FilterPanel Main: display selected filters
@@ -41,9 +45,13 @@ export const FilterPanel = (props: FilterPanelProps) => {
   const [mainPanelData, setMainPanelData] = React.useState<
     MailPanelInitDataItemModel[]
   >([]);
+  const [advancedPanelData, setAdvancedPanelData] = React.useState<
+    MailPanelInitDataItemModel[]
+  >([]);
 
   React.useEffect(() => {
     setMainPanelData(getMainFilterPanelData(localSelectedFilters));
+    setAdvancedPanelData(getAdvancedFilterPanelData(localSelectedFilters));
   }, [localSelectedFilters]);
 
   React.useEffect(() => {
@@ -139,6 +147,71 @@ export const FilterPanel = (props: FilterPanelProps) => {
         break;
       case FILTER_TYPES.PERIOD:
         updatedSelectedFilters.years = value.split(",");
+        break;
+      case FILTER_TYPES.POLICY_MARKERS:
+        if (updatedSelectedFilters.policymarker.indexOf(value) > -1) {
+          remove(
+            updatedSelectedFilters.policymarker,
+            (t: string) => t === value
+          );
+        } else {
+          updatedSelectedFilters.policymarker = [
+            ...updatedSelectedFilters.policymarker,
+            value,
+          ];
+        }
+        break;
+      case FILTER_TYPES.AID_TYPE:
+        if (updatedSelectedFilters.defaultaidtype.indexOf(value) > -1) {
+          remove(
+            updatedSelectedFilters.defaultaidtype,
+            (t: string) => t === value
+          );
+        } else {
+          updatedSelectedFilters.defaultaidtype = [
+            ...updatedSelectedFilters.defaultaidtype,
+            value,
+          ];
+        }
+        break;
+      case FILTER_TYPES.BUDGET_LINES:
+        if (updatedSelectedFilters.budgetlines.indexOf(value) > -1) {
+          remove(
+            updatedSelectedFilters.budgetlines,
+            (t: string) => t === value
+          );
+        } else {
+          updatedSelectedFilters.budgetlines = [
+            ...updatedSelectedFilters.budgetlines,
+            value,
+          ];
+        }
+        break;
+      case FILTER_TYPES.BI_MULTI:
+        if (updatedSelectedFilters.collaborationtype.indexOf(value) > -1) {
+          remove(
+            updatedSelectedFilters.collaborationtype,
+            (t: string) => t === value
+          );
+        } else {
+          updatedSelectedFilters.collaborationtype = [
+            ...updatedSelectedFilters.collaborationtype,
+            value,
+          ];
+        }
+        break;
+      case FILTER_TYPES.HUMAN_RIGHTS:
+        if (updatedSelectedFilters.humanrights.indexOf(value) > -1) {
+          remove(
+            updatedSelectedFilters.humanrights,
+            (t: string) => t === value
+          );
+        } else {
+          updatedSelectedFilters.humanrights = [
+            ...updatedSelectedFilters.humanrights,
+            value,
+          ];
+        }
         break;
       default:
         break;
@@ -271,6 +344,69 @@ export const FilterPanel = (props: FilterPanelProps) => {
           ];
         }
         break;
+      case FILTER_TYPES.POLICY_MARKERS:
+        values = get(filterOptionsData.policymarkers, "data.data", []).map(
+          (value: any) => value.code
+        );
+        if (updatedSelectedFilters.policymarker.length === values.length) {
+          updatedSelectedFilters.policymarker = [];
+        } else {
+          updatedSelectedFilters.policymarker = [
+            ...updatedSelectedFilters.policymarker,
+            ...values,
+          ];
+        }
+        break;
+      case FILTER_TYPES.AID_TYPE:
+        values = get(filterOptionsData.aidtypes, "data.data", []).map(
+          (value: any) => value.code
+        );
+        if (updatedSelectedFilters.defaultaidtype.length === values.length) {
+          updatedSelectedFilters.defaultaidtype = [];
+        } else {
+          updatedSelectedFilters.defaultaidtype = [
+            ...updatedSelectedFilters.defaultaidtype,
+            ...values,
+          ];
+        }
+        break;
+      case FILTER_TYPES.BUDGET_LINES:
+        values = get(filterOptionsData.budgetlines, "data.data", []).map(
+          (value: any) => value.code
+        );
+        if (updatedSelectedFilters.budgetlines.length === values.length) {
+          updatedSelectedFilters.budgetlines = [];
+        } else {
+          updatedSelectedFilters.budgetlines = [
+            ...updatedSelectedFilters.budgetlines,
+            ...values,
+          ];
+        }
+        break;
+      case FILTER_TYPES.BI_MULTI:
+        values = ["1", "2"];
+        if (updatedSelectedFilters.collaborationtype.length === values.length) {
+          updatedSelectedFilters.collaborationtype = [];
+        } else {
+          updatedSelectedFilters.collaborationtype = [
+            ...updatedSelectedFilters.collaborationtype,
+            ...values,
+          ];
+        }
+        break;
+      case FILTER_TYPES.HUMAN_RIGHTS:
+        if (
+          updatedSelectedFilters.humanrights.length ===
+          humanrightfilteroptions.length
+        ) {
+          updatedSelectedFilters.humanrights = [];
+        } else {
+          updatedSelectedFilters.humanrights = [
+            ...updatedSelectedFilters.humanrights,
+            ...values,
+          ];
+        }
+        break;
       default:
         break;
     }
@@ -286,8 +422,16 @@ export const FilterPanel = (props: FilterPanelProps) => {
     setLocalSelectedFilters(defaultfilters);
   }
 
+  function close() {
+    setCurrentFilterOpen(FILTER_TYPES.NONE);
+  }
+
   function backToMain() {
     setCurrentFilterOpen(FILTER_TYPES.MAIN);
+  }
+
+  function backToAdvanced() {
+    setCurrentFilterOpen(FILTER_TYPES.ADVANCED_FILTERS);
   }
 
   function renderPanel() {
@@ -296,6 +440,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <ChooseAFilterPanel
             data={mainPanelData}
+            onCloseBtnClick={close}
             onApplyFilters={applyFilters}
             onResetFilters={resetFilters}
           />
@@ -314,6 +459,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.THEMATIC_AREAS)
             }
+            onBackBtnClick={backToMain}
             onApplyFilters={backToMain}
           />
         );
@@ -337,6 +483,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.COUNTRIES)
             }
+            onBackBtnClick={backToMain}
             onApplyFilters={backToMain}
           />
         );
@@ -354,6 +501,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.SECTORS)
             }
+            onBackBtnClick={backToMain}
             onApplyFilters={backToMain}
           />
         );
@@ -374,6 +522,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.ORGANISATIONS)
             }
+            onBackBtnClick={backToMain}
             onApplyFilters={backToMain}
           />
         );
@@ -391,6 +540,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.SDGS)
             }
+            onBackBtnClick={backToMain}
             onApplyFilters={backToMain}
           />
         );
@@ -408,6 +558,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.ACTIVITY_STATUS)
             }
+            onBackBtnClick={backToMain}
             onApplyFilters={backToMain}
           />
         );
@@ -423,23 +574,116 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.PERIOD)
             }
+            onBackBtnClick={backToMain}
             onApplyFilters={backToMain}
           />
         );
       case FILTER_TYPES.ADVANCED_FILTERS:
         return (
+          <ChooseAFilterPanel
+            data={advancedPanelData}
+            onCloseBtnClick={backToMain}
+            onApplyFilters={applyFilters}
+            onResetFilters={resetFilters}
+          />
+        );
+      case FILTER_TYPES.POLICY_MARKERS:
+        return (
           <Filter
-            title="Advanced Filters"
-            data={[]}
-            selection={[]}
-            selectedItems={[]}
+            title="Policy Markers"
+            data={get(filterOptionsData.policymarkers, "data.data", [])}
+            renderSearch
+            selection={advancedPanelData[0].selection}
             onFilterCheckboxChange={(value: string) =>
-              onFilterCheckboxChange(value, FILTER_TYPES.ADVANCED_FILTERS)
+              onFilterCheckboxChange(value, FILTER_TYPES.POLICY_MARKERS)
             }
+            selectedItems={localSelectedFilters.policymarker}
             onSelectAllCheckboxChange={() =>
-              onSelectAllCheckboxChange(FILTER_TYPES.ADVANCED_FILTERS)
+              onSelectAllCheckboxChange(FILTER_TYPES.POLICY_MARKERS)
             }
-            onApplyFilters={backToMain}
+            onBackBtnClick={backToAdvanced}
+            onApplyFilters={backToAdvanced}
+          />
+        );
+      case FILTER_TYPES.AID_TYPE:
+        return (
+          <Filter
+            title="Type of aid"
+            data={get(filterOptionsData.aidtypes, "data.data", [])}
+            renderSearch
+            selection={advancedPanelData[1].selection}
+            onFilterCheckboxChange={(value: string) =>
+              onFilterCheckboxChange(value, FILTER_TYPES.AID_TYPE)
+            }
+            selectedItems={localSelectedFilters.defaultaidtype}
+            onSelectAllCheckboxChange={() =>
+              onSelectAllCheckboxChange(FILTER_TYPES.AID_TYPE)
+            }
+            onBackBtnClick={backToAdvanced}
+            onApplyFilters={backToAdvanced}
+          />
+        );
+      case FILTER_TYPES.BUDGET_LINES:
+        return (
+          <Filter
+            title="Budget lines"
+            data={get(filterOptionsData.budgetlines, "data.data.data", [])}
+            renderSearch
+            selection={advancedPanelData[2].selection}
+            onFilterCheckboxChange={(value: string) =>
+              onFilterCheckboxChange(value, FILTER_TYPES.BUDGET_LINES)
+            }
+            selectedItems={localSelectedFilters.budgetlines}
+            onSelectAllCheckboxChange={() =>
+              onSelectAllCheckboxChange(FILTER_TYPES.BUDGET_LINES)
+            }
+            onBackBtnClick={backToAdvanced}
+            onApplyFilters={backToAdvanced}
+          />
+        );
+      case FILTER_TYPES.BI_MULTI:
+        return (
+          <Filter
+            title="Budget lines"
+            data={[
+              {
+                name: "Bi",
+                code: "1",
+              },
+              {
+                name: "Multi",
+                code: "2",
+              },
+            ]}
+            renderSearch
+            selection={advancedPanelData[3].selection}
+            onFilterCheckboxChange={(value: string) =>
+              onFilterCheckboxChange(value, FILTER_TYPES.BI_MULTI)
+            }
+            selectedItems={localSelectedFilters.collaborationtype}
+            onSelectAllCheckboxChange={() =>
+              onSelectAllCheckboxChange(FILTER_TYPES.BI_MULTI)
+            }
+            onBackBtnClick={backToAdvanced}
+            onApplyFilters={backToAdvanced}
+          />
+        );
+      case FILTER_TYPES.HUMAN_RIGHTS:
+        return (
+          <Filter
+            title="Human rights approach"
+            data={humanrightfilteroptions}
+            renderSearch
+            selection={advancedPanelData[4].selection}
+            onFilterCheckboxChange={(value: string) =>
+              onFilterCheckboxChange(value, FILTER_TYPES.HUMAN_RIGHTS)
+            }
+            selectedItems={localSelectedFilters.humanrights}
+            onSelectAllCheckboxChange={() =>
+              onSelectAllCheckboxChange(FILTER_TYPES.HUMAN_RIGHTS)
+            }
+            onBackBtnClick={backToAdvanced}
+            onApplyFilters={backToAdvanced}
           />
         );
       default:

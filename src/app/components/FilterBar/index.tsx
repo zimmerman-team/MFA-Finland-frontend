@@ -24,7 +24,6 @@ export interface FilterBarProps {
   show?: boolean;
 }
 
-// TODO: FilterBar: display selected filters
 export const FilterBar = (props: FilterBarProps) => {
   const location = useLocation();
   const [chips, setChips] = React.useState<ChipModel[]>([]);
@@ -90,6 +89,36 @@ export const FilterBar = (props: FilterBarProps) => {
       case FILTER_TYPES.ACTIVITY_STATUS:
         updatedSelectedFilters.activitystatus = filter(
           updatedSelectedFilters.activitystatus,
+          (f: string) => f !== chip.value
+        );
+        break;
+      case FILTER_TYPES.POLICY_MARKERS:
+        updatedSelectedFilters.policymarker = filter(
+          updatedSelectedFilters.policymarker,
+          (f: string) => f !== chip.value
+        );
+        break;
+      case FILTER_TYPES.AID_TYPE:
+        updatedSelectedFilters.defaultaidtype = filter(
+          updatedSelectedFilters.defaultaidtype,
+          (f: string) => f !== chip.value
+        );
+        break;
+      case FILTER_TYPES.BUDGET_LINES:
+        updatedSelectedFilters.budgetlines = filter(
+          updatedSelectedFilters.budgetlines,
+          (f: string) => f !== chip.value
+        );
+        break;
+      case FILTER_TYPES.BI_MULTI:
+        updatedSelectedFilters.collaborationtype = filter(
+          updatedSelectedFilters.collaborationtype,
+          (f: string) => f !== chip.value
+        );
+        break;
+      case FILTER_TYPES.HUMAN_RIGHTS:
+        updatedSelectedFilters.humanrights = filter(
+          updatedSelectedFilters.humanrights,
           (f: string) => f !== chip.value
         );
         break;

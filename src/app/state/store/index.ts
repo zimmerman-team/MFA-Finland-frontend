@@ -62,6 +62,9 @@ import {
   organisations as forganisations,
   sdgs as fsdgs,
   activitystatus,
+  policymarkers,
+  aidtypes,
+  budgetlines,
 } from "app/state/api/actions-reducers/filterOptions";
 
 // sync variables
@@ -97,6 +100,15 @@ const storeContent: StoreModel = {
       storage: "localStorage",
     }),
     activitystatus: persist(activitystatus, {
+      storage: "localStorage",
+    }),
+    policymarkers: persist(policymarkers, {
+      storage: "localStorage",
+    }),
+    aidtypes: persist(aidtypes, {
+      storage: "localStorage",
+    }),
+    budgetlines: persist(budgetlines, {
       storage: "localStorage",
     }),
   },

@@ -157,6 +157,9 @@ export interface StoreModel {
     organisations: ApiCallModel;
     sdgs: ApiCallModel;
     activitystatus: ApiCallModel;
+    policymarkers: ApiCallModel;
+    aidtypes: ApiCallModel;
+    budgetlines: ApiCallModel;
   };
   // sync variables
   syncSearch: SyncSearchModel;

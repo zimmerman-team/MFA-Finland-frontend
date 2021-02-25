@@ -28,6 +28,15 @@ export function useInitialLoad() {
   const sdgsfilterOptionsAction = useStoreActions(
     (actions) => actions.filterOptions.sdgs.fetch
   );
+  const policymarkersfilterOptionsAction = useStoreActions(
+    (actions) => actions.filterOptions.policymarkers.fetch
+  );
+  const aidtypesfilterOptionsAction = useStoreActions(
+    (actions) => actions.filterOptions.aidtypes.fetch
+  );
+  const budgetlinesfilterOptionsAction = useStoreActions(
+    (actions) => actions.filterOptions.budgetlines.fetch
+  );
   const filtersUpdatedClear = useStoreActions(
     (actions) => actions.filtersUpdated.clear
   );
@@ -41,51 +50,67 @@ export function useInitialLoad() {
     countriesfilterOptionsAction({
       values: {
         filter_type: "countries",
-        filters: getAPIFormattedFilters(selectedFilters),
+        // filters: getAPIFormattedFilters(selectedFilters),
       },
     });
     regionsfilterOptionsAction({
       values: {
         filter_type: "regions",
-        filters: getAPIFormattedFilters(selectedFilters),
+        // filters: getAPIFormattedFilters(selectedFilters),
       },
     });
     sectorsfilterOptionsAction({
       values: {
         filter_type: "sectors",
-        filters: getAPIFormattedFilters(selectedFilters),
+        // filters: getAPIFormattedFilters(selectedFilters),
       },
     });
     thematicareasfilterOptionsAction({
       values: {
         filter_type: "thematicareas",
-        filters: getAPIFormattedFilters(selectedFilters),
+        // filters: getAPIFormattedFilters(selectedFilters),
       },
     });
     organisationsfilterOptionsAction({
       values: {
         filter_type: "organisations",
-        filters: getAPIFormattedFilters(selectedFilters),
+        // filters: getAPIFormattedFilters(selectedFilters),
       },
     });
     sdgsfilterOptionsAction({
       values: {
         filter_type: "sdgs",
-        filters: getAPIFormattedFilters(selectedFilters),
+        // filters: getAPIFormattedFilters(selectedFilters),
       },
     });
     activitystatusfilterOptionsAction({
       values: {
         filter_type: "activitystatus",
-        filters: getAPIFormattedFilters(selectedFilters),
+        // filters: getAPIFormattedFilters(selectedFilters),
+      },
+    });
+    policymarkersfilterOptionsAction({
+      values: {
+        filter_type: "policymarker",
+        // filters: getAPIFormattedFilters(selectedFilters),
+      },
+    });
+    aidtypesfilterOptionsAction({
+      values: {
+        filter_type: "defaultaidtype",
+        // filters: getAPIFormattedFilters(selectedFilters),
+      },
+    });
+    budgetlinesfilterOptionsAction({
+      values: {
+        filter_type: "budgetlines",
+        // filters: getAPIFormattedFilters(selectedFilters),
       },
     });
   }
 
   useMount(() => {
-    if (get(countriesfilterOptionsData, "count", 0) === 0) {
-      filterOptionsCall();
-    }
+    filterOptionsCall();
   });
 
   useUpdateEffect(() => {

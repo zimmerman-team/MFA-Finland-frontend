@@ -1,18 +1,14 @@
-import { useRecoilState } from "recoil";
-
-import { css } from "styled-components/macro";
-import { Hidden, IconButton, Typography } from "@material-ui/core";
-
-import { ArrowBackIos } from "@material-ui/icons";
-
 import React from "react";
-import { SearchPlaceholder } from "app/components/AppBar/sort/SearchPlaceholder";
-import { currentFilterOpenAtom } from "app/state/recoil/atoms";
+import { css } from "styled-components/macro";
+import { ArrowBackIos } from "@material-ui/icons";
 import { FILTER_TYPES } from "app/components/FilterPanel/data";
+import { Hidden, IconButton, Typography } from "@material-ui/core";
+import { SearchPlaceholder } from "app/components/AppBar/sort/SearchPlaceholder";
 
 interface HeaderProps {
   title: string;
   renderSearch?: boolean;
+  onBackBtnClick: () => void;
 }
 
 const createStyles = (title: string) => {
@@ -80,16 +76,12 @@ const createStyles = (title: string) => {
 };
 
 export const Header = (props: HeaderProps) => {
-  const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
   const styles = createStyles(props.title);
 
   return (
     <div css={styles.container}>
       <div css={styles.rightSideContainer}>
-        <IconButton
-          css={styles.backButton}
-          onClick={() => setCurrentFilterOpen(FILTER_TYPES.MAIN)}
-        >
+        <IconButton css={styles.backButton} onClick={props.onBackBtnClick}>
           <ArrowBackIos style={{ color: "white" }} />
         </IconButton>
 
