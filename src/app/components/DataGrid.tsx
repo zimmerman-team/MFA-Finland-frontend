@@ -29,6 +29,10 @@ export interface DataGridProps {
   sdgVizData: SDGvizItemProps[];
   geoMapData: any;
   unallocablePercentage: number;
+  detailPageFilter?: {
+    key: string;
+    value: string;
+  };
   vizDataLoading: {
     oda: boolean;
     thematic: boolean;
@@ -54,6 +58,7 @@ export const DataGrid = (props: DataGridProps) => {
           link="/viz/oda"
           tooltip="lorem ipsum"
           label="Overview Disbursements"
+          detailPageFilter={props.detailPageFilter}
         >
           {props.vizDataLoading.oda ? (
             <VizLoader />
@@ -79,6 +84,7 @@ export const DataGrid = (props: DataGridProps) => {
           childrencontainerStyle={{
             transform: "scale(0.7)",
           }}
+          detailPageFilter={props.detailPageFilter}
         >
           {props.vizDataLoading.thematic ? (
             <VizLoader />
@@ -96,7 +102,12 @@ export const DataGrid = (props: DataGridProps) => {
       {/*  row 2 */}
       {/* ----------------------------- */}
       <Grid item xs={12} sm={6} md={4} lg={4}>
-        <GridWidget label="Sectors" link="/viz/sectors" tooltip="lorem ipsum">
+        <GridWidget
+          label="Sectors"
+          link="/viz/sectors"
+          tooltip="lorem ipsum"
+          detailPageFilter={props.detailPageFilter}
+        >
           {props.vizDataLoading.sectors ? (
             <VizLoader />
           ) : (
@@ -124,6 +135,7 @@ export const DataGrid = (props: DataGridProps) => {
             height: "100%",
             paddingTop: 20,
           }}
+          detailPageFilter={props.detailPageFilter}
         >
           {props.vizDataLoading.locations ? (
             <VizLoader />
@@ -148,6 +160,7 @@ export const DataGrid = (props: DataGridProps) => {
             height: "100%",
             paddingTop: 20,
           }}
+          detailPageFilter={props.detailPageFilter}
         >
           {props.vizDataLoading.organisations ? (
             <VizLoader />
@@ -176,6 +189,7 @@ export const DataGrid = (props: DataGridProps) => {
             width: "100%",
             paddingTop: 20,
           }}
+          detailPageFilter={props.detailPageFilter}
         >
           {props.vizDataLoading.budgetLines ? (
             <VizLoader />

@@ -53,6 +53,10 @@ export function OrganisationTypeDetailModule() {
       sdgVizData={sdgVizData}
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
+      detailPageFilter={{
+        key: "participating_org_type",
+        value: get(params, "orgType", ""),
+      }}
     />
   );
 }

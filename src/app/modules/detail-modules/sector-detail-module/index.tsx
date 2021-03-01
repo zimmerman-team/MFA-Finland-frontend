@@ -40,7 +40,7 @@ export function SectorDetailModule() {
 
   return (
     <DetailModuleLayout
-      label={detailPageNameData || get(params, "region", "")}
+      label={detailPageNameData || get(params, "sector", "")}
       crumbs={crumbs}
       vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}
@@ -53,6 +53,10 @@ export function SectorDetailModule() {
       sdgVizData={sdgVizData}
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
+      detailPageFilter={{
+        key: "sector_code",
+        value: get(params, "sector", ""),
+      }}
     />
   );
 }

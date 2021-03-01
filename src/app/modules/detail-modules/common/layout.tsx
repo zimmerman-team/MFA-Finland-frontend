@@ -6,12 +6,17 @@ import { DetailModuleHeader } from "app/components/DetailModuleHeader";
 
 interface ModuleProps extends DataGridProps {
   label: string;
+  flagCode?: string;
   crumbs: BreadcrumbLinkModel[];
 }
 export const DetailModuleLayout = (props: ModuleProps) => {
   return (
     <ModuleContainer>
-      <DetailModuleHeader label={props.label} crumbs={props.crumbs} />
+      <DetailModuleHeader
+        label={props.label}
+        crumbs={props.crumbs}
+        flagCode={props.flagCode}
+      />
       <DataGrid
         vizDataLoading={props.vizDataLoading}
         odaBarChartData={props.odaBarChartData}
@@ -24,6 +29,7 @@ export const DetailModuleLayout = (props: ModuleProps) => {
         sdgVizData={props.sdgVizData}
         geoMapData={props.geoMapData}
         unallocablePercentage={props.unallocablePercentage}
+        detailPageFilter={props.detailPageFilter}
       />
     </ModuleContainer>
   );

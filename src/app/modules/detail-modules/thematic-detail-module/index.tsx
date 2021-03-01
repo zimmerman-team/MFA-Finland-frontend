@@ -53,6 +53,10 @@ export function ThematicDetailModule() {
       sdgVizData={sdgVizData}
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
+      detailPageFilter={{
+        key: "tag_code",
+        value: decodeURIComponent(get(params, "theme", "")),
+      }}
     />
   );
 }
