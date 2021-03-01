@@ -75,6 +75,7 @@ export interface ApiCallParams {
   filters?: ApiCallParamsFilters | string;
   search?: string;
   extra_param?: string;
+  detail_type?: string;
 
   token?: string;
   user_id?: string;

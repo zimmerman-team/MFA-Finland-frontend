@@ -28,7 +28,9 @@ export interface DataGridProps {
   budgetLinesBarChartData: any;
   sdgVizData: SDGvizItemProps[];
   geoMapData: any;
+  countryIndicators?: string[];
   unallocablePercentage: number;
+  sectorDescription?: string;
   detailPageFilter?: {
     key: string;
     value: string;
@@ -126,29 +128,62 @@ export const DataGrid = (props: DataGridProps) => {
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
-        <GridWidget
-          label="Regions"
-          tooltip="lorem ipsum"
-          link="/viz/countries-regions"
-          childrencontainerStyle={{
-            width: "100%",
-            height: "100%",
-            paddingTop: 20,
-          }}
-          detailPageFilter={props.detailPageFilter}
-        >
-          {props.vizDataLoading.locations ? (
-            <VizLoader />
-          ) : (
-            <Treemap
-              label=""
-              height={230}
-              selectedVizItemId={null}
-              setSelectedVizItem={() => null}
-              data={props.locationsTreemapData}
-            />
-          )}
-        </GridWidget>
+        {!props.countryIndicators ? (
+          <GridWidget
+            label="Regions"
+            tooltip="lorem ipsum"
+            link="/viz/countries-regions"
+            childrencontainerStyle={{
+              width: "100%",
+              height: "100%",
+              paddingTop: 20,
+            }}
+            detailPageFilter={props.detailPageFilter}
+          >
+            {props.vizDataLoading.locations ? (
+              <VizLoader />
+            ) : (
+              <Treemap
+                label=""
+                height={230}
+                selectedVizItemId={null}
+                setSelectedVizItem={() => null}
+                data={props.locationsTreemapData}
+              />
+            )}
+          </GridWidget>
+        ) : (
+          <GridWidget
+            interactive
+            label="Human Development Index"
+            tooltip="Human Development Index"
+            childrencontainerStyle={{
+              width: "100%",
+              height: "100%",
+              paddingTop: 20,
+            }}
+          >
+            {props.countryIndicators.map((indicator: string) => {
+              const values = indicator.split(":");
+              if (values.length === 2) {
+                return (
+                  <div
+                    css={`
+                      margin: 8px 0;
+                      font-size: 14px;
+                    `}
+                  >
+                    {values[0]}:{" "}
+                    <span css="font-size: 16px;font-weight: bold;">
+                      {values[1]}
+                    </span>
+                  </div>
+                );
+              }
+              return "";
+            })}
+          </GridWidget>
+        )}
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
         <GridWidget
@@ -269,12 +304,18 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry&apos;s standard dummy text
-          ever since the 1500s, when an unknown printer took a galley of type
-          and scrambled it to make a type specimen book. It has survived not
-          only five centuries, but also the leap into electronic typesetting,
-          remaining essentially
+          {props.sectorDescription ? (
+            props.sectorDescription
+          ) : (
+            <>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry&apos;s standard dummy
+              text ever since the 1500s, when an unknown printer took a galley
+              of type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially
+            </>
+          )}
         </GridWidget>
       </Grid>
 

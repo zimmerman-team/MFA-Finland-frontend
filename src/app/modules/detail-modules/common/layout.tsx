@@ -9,6 +9,7 @@ interface ModuleProps extends DataGridProps {
   flagCode?: string;
   crumbs: BreadcrumbLinkModel[];
 }
+
 export const DetailModuleLayout = (props: ModuleProps) => {
   return (
     <ModuleContainer>
@@ -18,18 +19,20 @@ export const DetailModuleLayout = (props: ModuleProps) => {
         flagCode={props.flagCode}
       />
       <DataGrid
-        vizDataLoading={props.vizDataLoading}
-        odaBarChartData={props.odaBarChartData}
-        thematicAreasChartData={props.thematicAreasChartData}
-        sectorsSunburstDataCount={props.sectorsSunburstDataCount}
-        sectorsSunburstData={props.sectorsSunburstData}
-        locationsTreemapData={props.locationsTreemapData}
-        organisationsTreemapData={props.organisationsTreemapData}
-        budgetLinesBarChartData={props.budgetLinesBarChartData}
         sdgVizData={props.sdgVizData}
         geoMapData={props.geoMapData}
-        unallocablePercentage={props.unallocablePercentage}
+        vizDataLoading={props.vizDataLoading}
+        odaBarChartData={props.odaBarChartData}
         detailPageFilter={props.detailPageFilter}
+        countryIndicators={props.countryIndicators}
+        sectorDescription={props.sectorDescription}
+        sectorsSunburstData={props.sectorsSunburstData}
+        locationsTreemapData={props.locationsTreemapData}
+        unallocablePercentage={props.unallocablePercentage}
+        thematicAreasChartData={props.thematicAreasChartData}
+        budgetLinesBarChartData={props.budgetLinesBarChartData}
+        organisationsTreemapData={props.organisationsTreemapData}
+        sectorsSunburstDataCount={props.sectorsSunburstDataCount}
       />
     </ModuleContainer>
   );
