@@ -59,7 +59,7 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader />
           ) : (
             <BarChart
-              height={260}
+              height={250}
               vizCompData={[]}
               data={props.odaBarChartData}
               onZoomOut={() => null}
