@@ -57,8 +57,8 @@ export const circlecss = (color: string) => css`
 `;
 
 export const expandiconcss = (expanded: boolean) => css`
-  bottom: 0;
-  right: 10px;
+  right: 0;
+  bottom: -3px;
   font-size: 25px;
   position: absolute;
   transition: all 0.2s ease-in-out;

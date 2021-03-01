@@ -27,7 +27,7 @@ export const appbarStyle = {
     display: flex;
     text-decoration: none;
     @media (max-width: 960px) {
-      margin-left: 24px;
+      margin-left: 12px;
     }
   `,
   langSwitchContainer: css`

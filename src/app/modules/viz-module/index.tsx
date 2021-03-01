@@ -213,7 +213,7 @@ export default function VizModule() {
     );
     setVizScale(1);
     setVizTranslation({
-      x: get(fVizCompData, "x", 80) * -1 + 80,
+      x: get(fVizCompData, "x", 50) * -1 + 50,
       y: 0,
     });
     setExpandedVizItem(item);
@@ -381,12 +381,7 @@ export default function VizModule() {
       odaBudgetLinesChartAction({
         values: {
           filters: {
-            period: [
-              {
-                startDate: `${expandedVizItem}-01-01T00:00:00Z`,
-                endDate: `${expandedVizItem}-12-31T23:59:59Z`,
-              },
-            ],
+            years: [`${expandedVizItem}`, `${expandedVizItem}`],
           },
           extra_param: "simple-budgetlines-bar",
         },
@@ -427,15 +422,18 @@ export default function VizModule() {
         css={`
           padding: 0 50px;
           height: calc(100% - 76px);
+          @media (max-width: 992px) {
+            padding: 0 12px;
+          }
         `}
       >
         <Grid
           item
-          sm={12}
           css={`
             background: #fff;
           `}
-          md={isProjects ? 12 : 9}
+          sm={isProjects ? 12 : 9}
+          md={isProjects ? 12 : 8}
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
@@ -572,7 +570,7 @@ export default function VizModule() {
           </Switch>
         </Grid>
         {!isProjects && (
-          <Grid item sm={12} md={3} lg={4} xl={4}>
+          <Grid item sm={3} md={4} lg={4} xl={4}>
             <div
               css={`
                 right: 0;

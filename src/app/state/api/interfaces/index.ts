@@ -62,6 +62,7 @@ interface ApiCallParamsFilters {
     startDate: string;
     endDate: string;
   }[];
+  years?: string[];
 }
 
 export interface ApiCallParams {

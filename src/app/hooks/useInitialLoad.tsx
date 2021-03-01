@@ -110,7 +110,7 @@ export function useInitialLoad() {
   }
 
   useMount(() => {
-    filterOptionsCall();
+    // filterOptionsCall();
   });
 
   useUpdateEffect(() => {
