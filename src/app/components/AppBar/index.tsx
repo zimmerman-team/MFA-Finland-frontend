@@ -79,9 +79,9 @@ export function AppBar() {
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
+            css={appbarStyle.logoLink}
             to={`/${location.search}`}
             onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
-            css={appbarStyle.logoLink}
           >
             <Hidden xsDown>
               <IconButton edge="start" color="inherit" aria-label="menu">

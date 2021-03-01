@@ -1,9 +1,15 @@
-import { formatLocale } from "app/utils/formatLocale";
 import { SunburstPoint } from "react-vis";
+import { formatLocale } from "app/utils/formatLocale";
 
-export function getTotal(node: SunburstPoint): string {
+export function getTotal(
+  node: SunburstPoint,
+  format?: boolean
+): string | number {
   if (node.size) {
-    return formatLocale(node.size);
+    if (format) {
+      return formatLocale(node.size);
+    }
+    return node.size;
   }
   let total = 0;
   function traverse(cNode: SunburstPoint) {
@@ -18,7 +24,10 @@ export function getTotal(node: SunburstPoint): string {
     }
   }
   traverse(node);
-  return formatLocale(total);
+  if (format) {
+    return formatLocale(total);
+  }
+  return total;
 }
 
 export function getFormattedPercentage(value: number): string {

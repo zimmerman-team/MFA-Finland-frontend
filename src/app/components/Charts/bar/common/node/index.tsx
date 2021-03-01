@@ -24,9 +24,23 @@ export function BarNode(props: BarNodeProps) {
     opacity = 1;
   }
 
+  function onItemClick() {
+    if (props.data.indexValue !== get(props.selected, "indexValue", "")) {
+      props.onNodeClick({
+        selection: props.data.indexValue,
+        translation: { x: props.x * -1 + 50, y: 0 },
+      });
+      props.setSelected(props.data);
+    } else {
+      props.onZoomOut();
+    }
+  }
+
   return (
     <g
       {...fprops}
+      onClick={onItemClick}
+      onTouchStart={onItemClick}
       transform={`translate(${props.x}, ${props.y})`}
       onMouseEnter={() => {
         if (
@@ -37,17 +51,6 @@ export function BarNode(props: BarNodeProps) {
         }
       }}
       onMouseLeave={() => props.setHoveredXIndex(null)}
-      onClick={() => {
-        if (props.data.indexValue !== get(props.selected, "indexValue", "")) {
-          props.onNodeClick({
-            selection: props.data.indexValue,
-            translation: { x: props.x * -1 + 80, y: 0 },
-          });
-          props.setSelected(props.data);
-        } else {
-          props.onZoomOut();
-        }
-      }}
       css={`
         cursor: pointer;
         ${props.data.indexValue === get(props.selected, "indexValue", "")
