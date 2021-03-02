@@ -7,15 +7,7 @@ import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
 
-const moduleName = "Sector Detail Module";
-
-export const crumbs: BreadcrumbLinkModel[] = [
-  { label: "Homepage", path: Path.home },
-  { label: moduleName },
-];
-
 export function SectorDetailModule() {
-  useTitle(`${AppName} - ${moduleName}`);
   const { params } = useRouteMatch();
 
   const {
@@ -31,6 +23,7 @@ export function SectorDetailModule() {
     geoMapData,
     unallocablePercentage,
     detailPageNameData,
+    sectorDescription,
   } = useDataGridData({
     detailPageFilter: {
       key: "sector_code",
@@ -38,9 +31,15 @@ export function SectorDetailModule() {
     },
   });
 
+  const crumbs: BreadcrumbLinkModel[] = [
+    { label: "Homepage", path: Path.home },
+    { label: detailPageNameData || get(params, "sector", "") },
+  ];
+  useTitle(`${AppName} - ${detailPageNameData || get(params, "sector", "")}`);
+
   return (
     <DetailModuleLayout
-      label={detailPageNameData || get(params, "region", "")}
+      label={detailPageNameData || get(params, "sector", "")}
       crumbs={crumbs}
       vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}
@@ -53,6 +52,11 @@ export function SectorDetailModule() {
       sdgVizData={sdgVizData}
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
+      detailPageFilter={{
+        key: "sector_code",
+        value: get(params, "sector", ""),
+      }}
+      sectorDescription={sectorDescription}
     />
   );
 }

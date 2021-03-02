@@ -1,11 +1,11 @@
 import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
+import { useMeasure } from "react-use";
 import Grid from "@material-ui/core/Grid";
 import { css } from "styled-components/macro";
 import { useHistory } from "react-router-dom";
 import { ResponsiveTreeMapHtml } from "@nivo/treemap";
-import { useWindowSize, useMeasure } from "react-use";
 import { TreemapTooltip } from "app/components/Charts/treemap/common/tooltip";
 import {
   TreemapProps,
@@ -13,6 +13,7 @@ import {
 } from "app/components/Charts/treemap/data";
 import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
 import { TreeemapNode } from "./common/node";
+import { SmTooltipContainer } from "../common/smTooltipContainer";
 
 const containercss = (height?: number) => css`
   height: ${height || 500}px;
@@ -22,14 +23,12 @@ const containercss = (height?: number) => css`
 `;
 
 export function Treemap(props: TreemapProps) {
-  const { width } = useWindowSize();
   const [drilldownId, setDrilldownId] = React.useState(null);
   const [renderedNodes, setRenderedNodes] = React.useState({ ...props.data });
   const [smTooltip, setSmTooltip] = React.useState(null);
   const history = useHistory();
 
-  const showStandardTooltip =
-    !("ontouchstart" in document.documentElement) || width > 767;
+  const showStandardTooltip = !("ontouchstart" in document.documentElement);
 
   const [ref, containerSize] = useMeasure<HTMLDivElement>();
 
@@ -78,7 +77,7 @@ export function Treemap(props: TreemapProps) {
         ref: props.selectedVizItemId,
       });
       if (fItem) {
-        onNodeClick({ data: fItem }, "");
+        onNodeClick({ data: fItem }, "", true);
       }
     }
   }, [props.selectedVizItemId]);
@@ -123,6 +122,15 @@ export function Treemap(props: TreemapProps) {
           />
         </div>
       </Grid>
+      {smTooltip && (
+        <SmTooltipContainer
+          showDrilldownBtn
+          close={() => setSmTooltip(null)}
+          drilldown={() => onNodeClick(smTooltip, "", true)}
+        >
+          <TreemapTooltip node={smTooltip} />
+        </SmTooltipContainer>
+      )}
     </Grid>
   );
 }

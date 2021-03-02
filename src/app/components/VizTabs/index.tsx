@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
 import { RouteTab } from "app/components/VizTabs/common/Tab";
 import { vizTabs, TabProps } from "app/components/VizTabs/data";
@@ -10,6 +11,9 @@ export function VizTabs() {
       container
       css={`
         padding: 0 50px;
+        @media (max-width: 992px) {
+          padding: 0 12px;
+        }
       `}
     >
       <div
@@ -33,8 +37,13 @@ export function VizTabs() {
           padding: 12px 0;
         `}
       >
-        <div css="width: 100%;height: 35px;" />
+        <Hidden smDown>
+          <div css="width: 100%;height: 35px;" />
+        </Hidden>
         <Typography variant="h5">Disbursements</Typography>
+        <Hidden mdUp>
+          <div css="width: 100%;height: 35px;" />
+        </Hidden>
       </Grid>
       <Grid
         item

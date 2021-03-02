@@ -1,22 +1,16 @@
 import React from "react";
-import { useRecoilState } from "recoil";
-import { useHistory } from "react-router-dom";
 import { Sunburst, SunburstPoint } from "react-vis";
-
-import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { getTotal } from "app/components/Charts/sunburst/common/tooltip/utils";
-import { SunburstTooltip } from "app/components/Charts/sunburst/common/tooltip";
+import {
+  SunburstTooltip,
+  SunburstTooltipContent,
+} from "app/components/Charts/sunburst/common/tooltip";
 import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
 
 export function SunburstViz(props: any) {
-  const history = useHistory();
-  const [selectedFilters, setSelectedFilters] = useRecoilState(
-    selectedFilterAtom
-  );
   const [hoveredNode, setHoveredNode] = React.useState<SunburstPoint | null>(
     null
   );
-
   const showSmTooltip = "ontouchstart" in document.documentElement;
 
   return (
@@ -64,7 +58,7 @@ export function SunburstViz(props: any) {
             setHoveredNode(null);
           }}
         >
-          <SunburstTooltip hoveredNode={hoveredNode} />
+          <SunburstTooltipContent hoveredNode={hoveredNode} />
         </SmTooltipContainer>
       )}
     </React.Fragment>

@@ -34,6 +34,14 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
 
   return props.hoveredNode ? (
     <div css={tooltipcss} id="sunburst-tooltip" style={style}>
+      <SunburstTooltipContent {...props} />
+    </div>
+  ) : null;
+};
+
+export function SunburstTooltipContent(props: SunburstTooltipProps) {
+  return props.hoveredNode ? (
+    <>
       <div css={tooltiprowcss}>
         <b>{props.hoveredNode.title}</b>
       </div>
@@ -66,6 +74,6 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
         </div>
       </div>
       <div css="width: 100%;height: 15px;" />
-    </div>
+    </>
   ) : null;
-};
+}

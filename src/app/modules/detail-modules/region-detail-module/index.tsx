@@ -53,6 +53,10 @@ export function RegionDetailModule() {
       sdgVizData={sdgVizData}
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
+      detailPageFilter={{
+        key: "recipient_region_code",
+        value: get(params, "region", ""),
+      }}
     />
   );
 }

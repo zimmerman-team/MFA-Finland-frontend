@@ -3,6 +3,7 @@ import get from "lodash/get";
 import max from "lodash/max";
 import find from "lodash/find";
 import { PrimaryColor } from "app/theme";
+import { useWindowSize } from "react-use";
 import { Line } from "app/components/Charts/bar/common/line";
 import { BarChartProps } from "app/components/Charts/bar/data";
 import { BarNode } from "app/components/Charts/bar/common/node";
@@ -14,6 +15,7 @@ import {
 } from "app/components/Charts/bar/utils";
 
 export function BarChart(props: BarChartProps) {
+  const { width } = useWindowSize();
   const range = getRange(props.data, ["exclusive", "other"]);
   const maxValue: number =
     max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
@@ -94,7 +96,7 @@ export function BarChart(props: BarChartProps) {
     <div
       css={`
         width: 100%;
-        padding-top: 50px;
+        padding-top: 20px;
         position: relative;
         color: ${PrimaryColor[0]};
         height: ${props.height || 450}px;
@@ -196,7 +198,7 @@ export function BarChart(props: BarChartProps) {
         colors={["#ACD1D1", "#7491CE"]}
         maxValue={maxValue + maxValue * 0.1}
         layers={["grid", "axes", Bars, LineWPoints]}
-        margin={{ top: 15, right: 50, bottom: 50, left: 50 }}
+        margin={{ top: 15, right: 50, bottom: 60, left: 50 }}
         theme={{
           axis: {
             ticks: {
@@ -223,7 +225,7 @@ export function BarChart(props: BarChartProps) {
         axisBottom={{
           tickSize: 0,
           tickPadding: 10,
-          tickRotation: 45,
+          tickRotation: width > 800 ? 45 : 75,
         }}
         axisLeft={{
           tickSize: 0,

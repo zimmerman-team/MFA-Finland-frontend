@@ -99,6 +99,9 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
         <div
           css={`
             display: ${!showTable ? "flex" : "none"};
+            @media (max-width: 992px) {
+              padding-top: 20%;
+            }
           `}
         >
           <SunburstChart

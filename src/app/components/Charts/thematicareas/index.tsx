@@ -36,8 +36,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
   }, [props.selectedVizItemId]);
 
   return (
-    // <Grid container justify="center" css="margin-top: 50px;">
-    <Grid container justify="center">
+    <Grid container justify="center" css="margin-top: 50px;">
       {selected ? (
         <div css={singleitemcontainercss}>
           <IconClose onClick={() => onSelect(null)} />

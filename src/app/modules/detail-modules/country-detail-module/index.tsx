@@ -28,6 +28,7 @@ export function CountryDetailModule() {
     budgetLinesBarChartData,
     sdgVizData,
     geoMapData,
+    countryIndicators,
     unallocablePercentage,
   } = useDataGridData({
     detailPageFilter: {
@@ -42,6 +43,7 @@ export function CountryDetailModule() {
       label={countryName}
       vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}
+      flagCode={get(params, "country", "")}
       thematicAreasChartData={thematicAreasChartData}
       sectorsSunburstDataCount={sectorsSunburstDataCount}
       sectorsSunburstData={sectorsSunburstData}
@@ -51,6 +53,11 @@ export function CountryDetailModule() {
       sdgVizData={sdgVizData}
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
+      detailPageFilter={{
+        key: "recipient_country_code",
+        value: get(params, "country", ""),
+      }}
+      countryIndicators={countryIndicators}
     />
   );
 }

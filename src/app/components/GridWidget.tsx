@@ -1,18 +1,61 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { FunctionComponent } from "react";
+import get from "lodash/get";
 import { ProjectPalette } from "app/theme";
 import { Tooltip } from "@material-ui/core";
 import { css } from "styled-components/macro";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import { useStoreState } from "app/state/store/hooks";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import { formatLocale } from "app/utils/formatLocale";
 
 const style = {
-  widgetHeader: css`
+  widgetHeader: (odaWidget: boolean) => css`
     width: 100%;
     display: flex;
-    align-items: center;
-    height: 24px;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    ${odaWidget
+      ? `
+      @media (max-width: 992px) {
+        display: block;
+      }
+    `
+      : ""}
+  `,
+  odaHeaderStats: css`
+    display: flex;
+    flex-direction: row;
+    width: calc(100% - 350px);
+    justify-content: space-between;
+    @media (max-width: 992px) {
+      width: 100%;
+      margin: 10px 0;
+    }
+  `,
+  headerStat: css`
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      margin-bottom: 6px;
+
+      &:nth-child(1) {
+        font-size: 14px;
+      }
+      &:nth-child(2) {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      &:nth-child(3) {
+        > a {
+          font-size: 10px;
+          text-decoration: underline;
+        }
+      }
+    }
   `,
   widgetLabel: css`
     font-style: normal;
@@ -99,11 +142,45 @@ interface GridWidgetProps {
   };
   disbursementsStatComponent?: FunctionComponent;
   // responsiveOrder?: number;
+  detailPageFilter?: {
+    key: string;
+    value: string;
+  };
 }
 
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const history = useHistory();
   const [isHovered, setIsHovered] = React.useState(false);
+  const odaWidget = props.label === "Overview Disbursements";
+  const totalDisbursement = useStoreState((state) =>
+    get(state.geoMap, "data.totalDisbursement", 0)
+  );
+  const orgCount = useStoreState((state) => {
+    let count = 0;
+    const orgData = get(state.organisationsTreemap, "data.vizData", {
+      name: "",
+      color: "",
+      children: [],
+    });
+    orgData.children.forEach((child: any) => {
+      if (child.orgs) {
+        count += child.orgs.length;
+      }
+    });
+    return count;
+  });
+  const projCount = useStoreState((state) =>
+    get(state.geoMap, "data.projectCount", 0)
+  );
+
+  let searchFilterString = `${
+    props.detailPageFilter
+      ? `${props.detailPageFilter.key}=${props.detailPageFilter.value}`
+      : ""
+  }${history.location.search.replace("?", "")}`;
+  if (searchFilterString !== "") {
+    searchFilterString = `?${searchFilterString}`;
+  }
 
   return (
     <div
@@ -112,16 +189,54 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         isHovered && !props.interactive && props.link !== undefined
       )}
     >
-      <header css={style.widgetHeader}>
-        <div css={style.widgetLabel}>{props.label}</div>
-        {props.tooltip && (
-          <div css={style.widgeTooltip}>
-            <Tooltip title={props.tooltip}>
-              <InfoOutlinedIcon css={style.widgetTooltipIcon} />
-            </Tooltip>
+      <header css={style.widgetHeader(odaWidget)}>
+        <div css="display: flex;align-items: center;">
+          <div css={style.widgetLabel}>{props.label}</div>
+          {props.tooltip && (
+            <div css={style.widgeTooltip}>
+              <Tooltip title={props.tooltip}>
+                <InfoOutlinedIcon css={style.widgetTooltipIcon} />
+              </Tooltip>
+            </div>
+          )}
+        </div>
+        {odaWidget && (
+          <div css={style.odaHeaderStats}>
+            <div css={style.headerStat}>
+              <div>Disbursements amount</div>
+              <div>{formatLocale(totalDisbursement)}</div>
+            </div>
+            <div css={style.headerStat}>
+              <div>Organisations</div>
+              <div>{orgCount}</div>
+              <div>
+                <Link to={`/viz/organisations${searchFilterString}`}>
+                  View more
+                </Link>
+              </div>
+            </div>
+            <div css={style.headerStat}>
+              <div>Projects</div>
+              <div>{projCount}</div>
+              <div>
+                <Link to={`/viz/projects${searchFilterString}`}>View more</Link>
+              </div>
+            </div>
           </div>
         )}
       </header>
+      {odaWidget && (
+        <div css="display: flex;align-items: center;">
+          <div css={style.widgetLabel}>ODA</div>
+          {props.tooltip && (
+            <div css={style.widgeTooltip}>
+              <Tooltip title={props.tooltip}>
+                <InfoOutlinedIcon css={style.widgetTooltipIcon} />
+              </Tooltip>
+            </div>
+          )}
+        </div>
+      )}
       <div
         key={props.label}
         // style={props.childrencontainerStyle}
@@ -133,7 +248,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => {
           if (props.link) {
-            history.push(props.link);
+            history.push(`${props.link}${searchFilterString}`);
           }
         }}
       >

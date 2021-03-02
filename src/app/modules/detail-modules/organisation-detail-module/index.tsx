@@ -53,6 +53,10 @@ export function OrganisationDetailModule() {
       sdgVizData={sdgVizData}
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
+      detailPageFilter={{
+        key: "participating_org_ref",
+        value: get(params, "organisation", ""),
+      }}
     />
   );
 }

@@ -18,6 +18,9 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       padding-top: 16px;
       padding-bottom: 16px;
 
+      @media (max-width: 992px) {
+        padding-left: 12px;
+      }
       @media (max-width: 600px) {
         top: 56px;
         min-height: 56px;
@@ -26,7 +29,6 @@ export const createStyles = (props: FilterBarProps, height: number) => {
         justify-content: space-between;
         flex-wrap: wrap;
         //padding: 16px 16px 8px;
-        padding-left: 12px;
       }
     `,
     background: css`
