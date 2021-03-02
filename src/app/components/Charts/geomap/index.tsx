@@ -103,6 +103,19 @@ export function Geomap({ geoData }) {
     }
   }, [width]);
 
+  function handleCountryClick() {
+    if (!isLocked && tooltip.data != null) {
+      setIsLocked(true);
+    }
+  }
+
+  function handleCountryHover(hoveredCountry: any) {
+    if (hoveredCountry.feature.label !== tooltip.label && !isLocked) {
+      setTooltip(() => hoveredCountry.feature);
+    }
+    return null;
+  }
+
   return (
     <div css={GeomapContainerStyle(isLocked)}>
       <ResponsiveChoropleth
@@ -120,14 +133,9 @@ export function Geomap({ geoData }) {
         // borderColor="#fff"
         borderColor="#343249"
         layers={["features"]}
-        onClick={() => !isLocked && setIsLocked(true)}
+        onClick={() => handleCountryClick()}
         isInteractive
-        tooltip={(hoveredCountry) => {
-          if (hoveredCountry.feature.label !== tooltip.label && !isLocked) {
-            setTooltip(() => hoveredCountry.feature);
-          }
-          return null;
-        }}
+        tooltip={(hoveredCountry) => handleCountryHover(hoveredCountry)}
       />
       {tooltip.label && (
         <Tooltip

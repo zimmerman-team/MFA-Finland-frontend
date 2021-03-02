@@ -136,9 +136,9 @@ export const DataGrid = (props: DataGridProps) => {
             tooltip="lorem ipsum"
             link="/viz/countries-regions"
             childrencontainerStyle={{
-                width: 100,
-                height: 100,
-                paddingTop: 20,
+              width: 100,
+              height: 100,
+              paddingTop: 20,
             }}
             detailPageFilter={props.detailPageFilter}
           >
@@ -160,8 +160,8 @@ export const DataGrid = (props: DataGridProps) => {
             label="Human Development Index"
             tooltip="Human Development Index"
             childrencontainerStyle={{
-              width: "100%",
-              height: "100%",
+              width: 100,
+              height: 100,
               paddingTop: 20,
             }}
           >
