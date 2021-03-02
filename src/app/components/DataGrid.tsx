@@ -15,8 +15,9 @@ import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budget
 import { TreemapDataModel } from "app/components/Charts/treemap/data";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { VizLoader } from "app/modules/common/viz-loader";
-import { Collapsable } from "./Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
+import { useWindowSize } from "app/hooks/useWindowSize";
+import { Collapsable } from "./Collapseable";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -44,6 +45,7 @@ export interface DataGridProps {
 // todo: check if we actually need the "childrencontainerStyle" property
 
 export const DataGrid = (props: DataGridProps) => {
+  const [width, height] = useWindowSize();
   return (
     <React.Fragment>
       {/* ----------------------------- */}
@@ -77,7 +79,7 @@ export const DataGrid = (props: DataGridProps) => {
           label="Thematic Areas"
           link="/viz/thematic-areas"
           childrencontainerStyle={{
-            transform: "scale(0.7)",
+            scale: 0.7,
           }}
         >
           {props.vizDataLoading.thematic ? (
@@ -120,8 +122,8 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip="lorem ipsum"
           link="/viz/countries-regions"
           childrencontainerStyle={{
-            width: "100%",
-            height: "100%",
+            width: 100,
+            height: 100,
             paddingTop: 20,
           }}
         >
@@ -144,8 +146,8 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip="lorem ipsum"
           link="/viz/organisations"
           childrencontainerStyle={{
-            width: "100%",
-            height: "100%",
+            width: 100,
+            height: 100,
             paddingTop: 20,
           }}
         >
@@ -173,7 +175,7 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip="lorem ipsum"
           link="/viz/budget-lines"
           childrencontainerStyle={{
-            width: "100%",
+            width: 100,
             paddingTop: 20,
           }}
         >
@@ -273,7 +275,7 @@ export const DataGrid = (props: DataGridProps) => {
             label="Map"
             height="680px"
             interactive
-            childrencontainerStyle={{ paddingTop: 88 }}
+            childrencontainerStyle={{ paddingTop: width >= 960 ? 88 : 16 }}
           >
             {props.vizDataLoading.geo ? (
               <VizLoader />

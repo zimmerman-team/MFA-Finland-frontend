@@ -54,11 +54,30 @@ const style = {
       height: initial;
     }
   `,
-  childrencontainer: (interactive?: boolean) => css`
+  childrencontainer: (
+    interactive?: boolean,
+    childrencontainerStyle?: {
+      paddingTop?: number;
+      width?: number;
+      height?: number;
+      scale?: number;
+    }
+  ) => css`
     display: flex;
     flex-direction: column;
     cursor: ${interactive ? "" : "pointer"};
-
+    padding-top: ${childrencontainerStyle?.paddingTop
+      ? `${childrencontainerStyle.paddingTop}px`
+      : "initial"};
+    width: ${childrencontainerStyle?.width
+      ? `${childrencontainerStyle.width}%`
+      : "initial"};
+    height: ${childrencontainerStyle?.height
+      ? `${childrencontainerStyle.height}%`
+      : "initial"};
+    transform: ${childrencontainerStyle?.scale
+      ? `scale(${childrencontainerStyle.scale})`
+      : "initial"};
     * {
       pointer-events: ${interactive ? "all" : "none"};
     }
@@ -71,7 +90,13 @@ interface GridWidgetProps {
   height?: string;
   tooltip?: string;
   interactive?: boolean;
-  childrencontainerStyle?: React.CSSProperties;
+  // childrencontainerStyle?: React.CSSProperties;
+  childrencontainerStyle?: {
+    paddingTop?: number;
+    width?: number;
+    height?: number;
+    scale?: number;
+  };
   disbursementsStatComponent?: FunctionComponent;
   // responsiveOrder?: number;
 }
@@ -99,8 +124,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       </header>
       <div
         key={props.label}
-        style={props.childrencontainerStyle}
-        css={style.childrencontainer(props.interactive)}
+        // style={props.childrencontainerStyle}
+        css={style.childrencontainer(
+          props.interactive,
+          props.childrencontainerStyle
+        )}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => {

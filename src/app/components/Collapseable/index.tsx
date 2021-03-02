@@ -1,9 +1,9 @@
 import React from "react";
 import { Slide, Typography } from "@material-ui/core";
 import { css } from "styled-components/macro";
-import { PillButton } from "../Buttons/PillButton";
 import { PlayArrow } from "@material-ui/icons";
 import { ResponsivePie } from "@nivo/pie";
+import { PillButton } from "../Buttons/PillButton";
 import { SecondaryColor } from "../../theme";
 
 export function Collapsable(props: any) {
@@ -14,6 +14,9 @@ export function Collapsable(props: any) {
       align-items: center;
       position: absolute;
       right: -32px;
+      @media (max-width: 960px) {
+        right: -15px;
+      }
       z-index: 4;
       height: 192px;
     `,
