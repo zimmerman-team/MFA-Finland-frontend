@@ -364,7 +364,7 @@ export default function VizModule() {
       default:
         break;
     }
-  }, [get(params, "tab", ""), prevLocation]);
+  }, [selectedFilters, get(params, "tab", ""), prevLocation]);
 
   useUnmount(() => {
     setPrevLocation("");
