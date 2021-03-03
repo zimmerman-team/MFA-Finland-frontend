@@ -3,7 +3,7 @@ import { PrimaryColor, SecondaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import SearchIcon from "@material-ui/icons/Search";
 
-export const SearchPlaceholder = () => {
+export const SearchPlaceholder = (props: any) => {
   const styles = {
     container: css`
       width: 144px;
@@ -38,7 +38,7 @@ export const SearchPlaceholder = () => {
 
   return (
     <div css={styles.container}>
-      <div css={styles.label}>Search</div>
+      <div css={styles.label}>{props.placeholder}</div>
       <div css={styles.iconContainer}>
         <SearchIcon css={styles.icon} />
       </div>

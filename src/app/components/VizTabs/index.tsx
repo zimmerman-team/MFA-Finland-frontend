@@ -76,7 +76,7 @@ export function VizTabs() {
           `}
         >
           {vizTabs.map((tab: TabProps) => (
-            <RouteTab key={tab.name} name={tab.name} url={tab.url} />
+            <RouteTab key={tab.name} {...tab} />
           ))}
         </div>
       </Grid>

@@ -1,8 +1,10 @@
 import React from "react";
+import get from "lodash/get";
 import { Link } from "react-router-dom";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { MoreHoriz } from "@material-ui/icons";
+import { useCMSData } from "app/hooks/useCMSData";
 import SearchIcon from "@material-ui/icons/Search";
 import { formatLocale } from "app/utils/formatLocale";
 import IconButton from "@material-ui/core/IconButton";
@@ -29,6 +31,7 @@ export type ProjectType = {
 };
 
 export const ProjectsListModule = (props: ProjectsListModuleProps) => {
+  const cmsData = useCMSData({ returnData: true });
   const styles = {
     container: css`
       display: flex;
@@ -121,7 +124,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     <div css={styles.container}>
       <div css={styles.titleContainer}>
         <Typography variant="h6" css={styles.title}>
-          {props.count} Projects
+          {props.count} {get(cmsData, "viz.projects", "projects").toLowerCase()}
         </Typography>
         <div css={styles.iconContainer}>
           <IconButton css={styles.iconButton}>

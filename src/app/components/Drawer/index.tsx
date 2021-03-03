@@ -1,8 +1,10 @@
 import React from "react";
+import get from "lodash/get";
 import MUIDrawer from "@material-ui/core/Drawer";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
-import { Divider, Grid } from "@material-ui/core";
+import { useCMSData } from "app/hooks/useCMSData";
+import { Grid } from "@material-ui/core";
 import { GlobalNavItems } from "app/components/Drawer/common/data";
 import { useRecoilState } from "recoil";
 import { drawerAtom } from "app/state/recoil/atoms";
@@ -10,10 +12,6 @@ import { MfaLogo } from "app/assets/mfa_logo";
 import { NavLink } from "react-router-dom";
 import { PrimaryColor } from "app/theme";
 import Typography from "@material-ui/core/Typography";
-import { IconFacebook } from "app/assets/icons/IconFacebook";
-import { IconYoutube } from "app/assets/icons/IconYoutube";
-import { IconLinkedin } from "app/assets/icons/IconLinkedin";
-import { IconTwitter } from "app/assets/icons/IconTwitter";
 import { drawerStyle } from "app/components/Drawer/common/drawerStyle";
 import { NavList } from "app/components/Drawer/common/NavList";
 
@@ -23,6 +21,7 @@ import LogoLinkedin from "app/assets/icons/logo_linkedin.png";
 import LogoTwitter from "app/assets/icons/logo_twitter.png";
 
 export const Drawer = () => {
+  const cmsData = useCMSData({ returnData: true });
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
 
   // todo: simplify this logic
@@ -57,7 +56,9 @@ export const Drawer = () => {
             <IconButton edge="start" color="inherit" aria-label="menu">
               <MfaLogo />
             </IconButton>
-            <div css={drawerStyle.LogoText}>IATI Portal for MFA Finland</div>
+            <div css={drawerStyle.LogoText}>
+              {get(cmsData, "general.pagetitle", "")}
+            </div>
           </NavLink>
           <IconButton
             onClick={toggleDrawer(false)}

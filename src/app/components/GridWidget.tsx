@@ -5,6 +5,7 @@ import get from "lodash/get";
 import { ProjectPalette } from "app/theme";
 import { Tooltip } from "@material-ui/core";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
 import { useHistory, Link } from "react-router-dom";
 import { useStoreState } from "app/state/store/hooks";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -125,6 +126,7 @@ interface GridWidgetProps {
 
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const history = useHistory();
+  const cmsData = useCMSData({ returnData: true });
   const [isHovered, setIsHovered] = React.useState(false);
   const odaWidget = props.label === "Overview Disbursements";
   const totalDisbursement = useStoreState((state) =>
@@ -191,7 +193,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
               </div>
             </div>
             <div css={style.headerStat}>
-              <div>Projects</div>
+              <div>{get(cmsData, "viz.projects", "Projects")}</div>
               <div>{projCount}</div>
               <div>
                 <Link to={`/viz/projects${searchFilterString}`}>View more</Link>

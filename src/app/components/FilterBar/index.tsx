@@ -1,6 +1,8 @@
 import React from "react";
+import get from "lodash/get";
 import filter from "lodash/filter";
 import { useRecoilState } from "recoil";
+import { useCMSData } from "app/hooks/useCMSData";
 import { Hidden, Typography } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 import { useStoreState } from "app/state/store/hooks";
@@ -26,6 +28,7 @@ export interface FilterBarProps {
 
 export const FilterBar = (props: FilterBarProps) => {
   const location = useLocation();
+  const cmsData = useCMSData({ returnData: true });
   const [chips, setChips] = React.useState<ChipModel[]>([]);
   const render: boolean = shouldRender(location);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
@@ -143,10 +146,10 @@ export const FilterBar = (props: FilterBarProps) => {
               css={styles.button}
               onClick={() => setCurrentFilterOpen(FILTER_TYPES.MAIN)}
             >
-              Add Filters
+              {get(cmsData, "filters.addfilters", "Add Filters")}
             </PillButton>
             <Typography variant="subtitle2" css={styles.label}>
-              Your selections
+              {get(cmsData, "filters.selections", "Your selections")}
             </Typography>
           </div>
           <div css={styles.chipContainer}>

@@ -1,8 +1,9 @@
 import React from "react";
+import get from "lodash/get";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
 import { ArrowBackIos } from "@material-ui/icons";
-import { FILTER_TYPES } from "app/components/FilterPanel/data";
-import { Hidden, IconButton, Typography } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import { SearchPlaceholder } from "app/components/AppBar/sort/SearchPlaceholder";
 
 interface HeaderProps {
@@ -77,6 +78,7 @@ const createStyles = (title: string) => {
 
 export const Header = (props: HeaderProps) => {
   const styles = createStyles(props.title);
+  const cmsData = useCMSData({ returnData: true });
 
   return (
     <div css={styles.container}>
@@ -87,14 +89,16 @@ export const Header = (props: HeaderProps) => {
 
         <div>
           <Typography variant="h6" css={styles.subtitle}>
-            Add Filter
+            {get(cmsData, "filters.addfilters", "Add Filters")}
           </Typography>
           <Typography variant="h5" css={styles.title}>
             {props.title}
           </Typography>
         </div>
       </div>
-      {props.renderSearch && <SearchPlaceholder />}
+      {props.renderSearch && (
+        <SearchPlaceholder placeholder={get(cmsData, "general.search", "")} />
+      )}
     </div>
   );
 };

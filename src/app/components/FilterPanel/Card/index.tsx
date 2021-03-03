@@ -1,6 +1,8 @@
 import React from "react";
+import get from "lodash/get";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
 import { Tabs } from "app/components/FilterPanel/Card/Tabs";
 import { FilterProps } from "app/components/FilterPanel/data";
 import { Checkbox, LinearProgress, Typography } from "@material-ui/core";
@@ -23,7 +25,7 @@ export const Card = (props: FilterProps) => {
 
   return (
     <>
-      {props.title === "Period" ? (
+      {props.isPeriod ? (
         <CardContentPeriod {...props} />
       ) : (
         <div css={styles.container}>
@@ -36,6 +38,7 @@ export const Card = (props: FilterProps) => {
 };
 
 const CardHeader = (props: FilterProps) => {
+  const cmsData = useCMSData({ returnData: true });
   const styles = {
     container: css`
       position: sticky;
@@ -77,7 +80,7 @@ const CardHeader = (props: FilterProps) => {
           checked={allDataCount === props.selectedItems.length}
         />
         <Typography variant="button" css={styles.checkboxLabel}>
-          Select all
+          {get(cmsData, "filters.selectall", "Select all")}
         </Typography>
       </span>
     </div>

@@ -1,7 +1,9 @@
 import React from "react";
+import get from "lodash/get";
 import { useUpdateEffect } from "react-use";
 import { css } from "styled-components/macro";
 import { Typography } from "@material-ui/core";
+import { useCMSData } from "app/hooks/useCMSData";
 import { PrimaryColor, SecondaryColor } from "app/theme";
 import { FilterProps } from "app/components/FilterPanel/data";
 import { PillButton } from "app/components/Buttons/PillButton";
@@ -140,6 +142,7 @@ const yearLow = 1920;
 const yearHigh = 2021;
 
 export const CardContentPeriod = (props: FilterProps) => {
+  const cmsData = useCMSData({ returnData: true });
   const [selectedFromYear, setSelectedFromYear] = React.useState(
     props.selectedItems[0] || yearLow
   );
@@ -196,7 +199,7 @@ export const CardContentPeriod = (props: FilterProps) => {
         {/* from */}
         <div css={styles.formControl}>
           <Typography variant="body2" css={styles.label}>
-            Year (From)
+            {get(cmsData, "filters.yearfrom", "Year (from)")}
           </Typography>
           <PillButton
             id="from"
@@ -211,7 +214,7 @@ export const CardContentPeriod = (props: FilterProps) => {
         {/* to */}
         <div css={styles.formControl}>
           <Typography variant="body2" css={styles.label}>
-            Year (To)
+            {get(cmsData, "filters.yearto", "Year (to)")}
           </Typography>
           <PillButton
             id="to"

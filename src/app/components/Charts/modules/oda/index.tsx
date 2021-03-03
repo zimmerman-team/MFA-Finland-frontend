@@ -1,4 +1,6 @@
 import React from "react";
+import get from "lodash/get";
+import { useCMSData } from "app/hooks/useCMSData";
 import { BarChart } from "app/components/Charts/bar";
 import {
   BarChartProps,
@@ -25,6 +27,7 @@ interface ODAvizModuleProps extends BarChartProps {
 }
 
 export function ODAvizModule(props: ODAvizModuleProps) {
+  const cmsData = useCMSData({ returnData: true });
   const tableConfig = props.selectedVizItemId
     ? {
         data: props.odaBudgetLinesChartData.map((item: any) => ({
@@ -33,13 +36,17 @@ export function ODAvizModule(props: ODAvizModuleProps) {
         })),
         options: ODAbudgetLinesDataTableOptions,
         columns: ODAbudgetLinesDataTableColumns,
-        title: `${props.odaBudgetLinesChartData.length} budget lines`,
+        title: `${props.odaBudgetLinesChartData.length} ${get(
+          cmsData,
+          "general.budgetlines",
+          "budget lines"
+        ).toLowerCase()}`,
       }
     : {
         data: props.data,
         options: ODADataTableOptions,
         columns: ODADataTableColumns,
-        title: `${props.data.length} years`,
+        title: `${props.data.length} ${get(cmsData, "filters.years", "years")}`,
       };
 
   if (props.activeTab === "chart" || props.selectedVizItemId) {

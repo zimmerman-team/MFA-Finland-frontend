@@ -43,6 +43,7 @@
     "react-vis": "^1.11.7",
     "react-world-flags": "^1.4.0",
     "recoil": "^0.1.2",
+    "recoil-persist": "^2.3.0",
     "styled-components": "^5.2.1",
     "swr": "^0.4.0",
     "use-fit-text": "^2.4.0",

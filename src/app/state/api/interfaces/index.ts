@@ -7,6 +7,7 @@ import { ProjectListPage } from "../actions-reducers/sync/generic";
 export interface RequestValues<T> {
   values?: T;
   addOnData?: boolean;
+  isCMSfetch?: boolean;
 }
 
 export interface ResponseData<T> {
@@ -162,6 +163,13 @@ export interface StoreModel {
     policymarkers: ApiCallModel;
     aidtypes: ApiCallModel;
     budgetlines: ApiCallModel;
+  };
+  // cms
+  cms: {
+    general: ApiCallModel;
+    viz: ApiCallModel;
+    filters: ApiCallModel;
+    menu: ApiCallModel;
   };
   // sync variables
   syncSearch: SyncSearchModel;

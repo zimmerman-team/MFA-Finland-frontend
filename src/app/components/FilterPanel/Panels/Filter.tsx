@@ -37,7 +37,7 @@ export const Filter = (props: FilterProps) => {
     <Grid container item direction="column" css={styles.container}>
       <Header {...props} />
       <Card {...props} />
-      {props.title !== "Period" && (
+      {!props.isPeriod && (
         <Typography variant="caption" css={styles.selected}>
           {formatSelectedValues()}
         </Typography>

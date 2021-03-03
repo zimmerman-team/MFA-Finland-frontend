@@ -13,6 +13,7 @@ export interface CheckboxListItemProps extends FilterOption {
 
 export interface FilterProps {
   title: string;
+  isPeriod?: boolean;
   selection: string[];
   data?: FilterOption[];
   renderSearch?: boolean;

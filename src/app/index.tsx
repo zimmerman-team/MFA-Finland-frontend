@@ -18,6 +18,7 @@ export const App = () => {
   React.useEffect(() => {
     i18n.changeLanguage(currentLanguage);
   }, []);
+
   return (
     <React.Fragment>
       <AppBar />

@@ -5,6 +5,7 @@ import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
+import { useCMSData } from "app/hooks/useCMSData";
 import { useMeasure, useUnmount } from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
@@ -42,6 +43,7 @@ import {
 
 export default function VizModule() {
   const { params } = useRouteMatch();
+  const cmsData = useCMSData({ returnData: true });
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   const [activeTab, setActiveTab] = React.useState("chart");
   const [expandedVizItem, setExpandedVizItem] = React.useState<
@@ -490,7 +492,11 @@ export default function VizModule() {
                     data={thematicAreasChartData}
                     options={thematicAreasDataTableOptions}
                     columns={thematicAreasDataTableColumns}
-                    title={`${thematicAreasChartData.length} thematic areas`}
+                    title={`${thematicAreasChartData.length} ${get(
+                      cmsData,
+                      "general.thematicareas",
+                      "budget lines"
+                    ).toLowerCase()}`}
                   />
                 </div>
               )}

@@ -1,10 +1,10 @@
 import React from "react";
+import get from "lodash/get";
 import find from "lodash/find";
 import filter from "lodash/filter";
-// import { useRecoilState } from "recoil";
+import { useCMSData } from "app/hooks/useCMSData";
 import { DataTable } from "app/components/Charts/table";
 import { MUIDataTableIsRowCheck } from "mui-datatables";
-// import { selectedFilterAtom } from "app/state/recoil/atoms";
 import {
   DataTableProps,
   SectorsDataTableColumns,
@@ -15,6 +15,7 @@ import { ExpandableRows } from "app/components/Charts/table/common/rows/Expandab
 // import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 
 export function SectorsFragmentTable(props: DataTableProps) {
+  const cmsData = useCMSData({ returnData: true });
   //   const [selectedFilters, setSelectedFilters] = useRecoilState(
   //     selectedFilterAtom
   //   );
@@ -117,7 +118,11 @@ export function SectorsFragmentTable(props: DataTableProps) {
           }
         },
       }}
-      title={`${props.data.length} sectors`}
+      title={`${props.data.length} ${get(
+        cmsData,
+        "general.sectors",
+        "sectors"
+      ).toLowerCase()}`}
     />
   );
 }

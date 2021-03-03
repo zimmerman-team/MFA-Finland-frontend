@@ -1,14 +1,11 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import get from "lodash/get";
 import { Cancel } from "@material-ui/icons";
-import { currentFilterOpenAtom } from "app/state/recoil/atoms";
+import { useCMSData } from "app/hooks/useCMSData";
 import { createStyles } from "app/components/FilterPanel/styles";
 import { Grid, Hidden, IconButton, Typography } from "@material-ui/core";
 import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
-import {
-  FILTER_TYPES,
-  MailPanelInitDataItemModel,
-} from "app/components/FilterPanel/data";
+import { MailPanelInitDataItemModel } from "app/components/FilterPanel/data";
 import { ChooseAFilterListItem } from "app/components/FilterPanel/ListItems/ChooseAFilterListItem";
 
 interface Model {
@@ -20,7 +17,7 @@ interface Model {
 
 export const ChooseAFilterPanel = (props: Model) => {
   const styles = createStyles(props);
-  const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
+  const cmsData = useCMSData({ returnData: true });
 
   return (
     <>
@@ -35,7 +32,7 @@ export const ChooseAFilterPanel = (props: Model) => {
         alignItems="flex-start"
       >
         <Typography variant="h5" css={styles.heading}>
-          Add Filters
+          {get(cmsData, "filters.addfilters", "Add Filters")}
         </Typography>
         <IconButton css={styles.closeContainer} onClick={props.onCloseBtnClick}>
           <Cancel css={styles.closeIcon} />
