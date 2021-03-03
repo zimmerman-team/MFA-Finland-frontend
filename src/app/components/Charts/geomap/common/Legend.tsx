@@ -10,6 +10,9 @@ interface LegendProps {
 }
 
 const container = css`
+  @media (max-width: 960px) {
+    width: 212px;
+  }
   width: 382px;
   position: relative;
   display: flex;

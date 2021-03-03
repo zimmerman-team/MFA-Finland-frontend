@@ -3,6 +3,7 @@ import { css } from "styled-components/macro";
 import IconButton from "@material-ui/core/IconButton";
 import { Lock, LockOpen } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ProjectPalette, SecondaryColor } from "../../../theme";
 import { PillButton } from "../../Buttons/PillButton";
 
@@ -48,7 +49,11 @@ export const Container = css`
   justify-content: space-between;
   position: relative;
   top: -76px;
-  left: -120px;
+  @media (max-width: 960px) {
+    top: -86px;
+    left: 40px;
+  }
+  left: 40px;
   width: 296px;
   height: 181px;
   background: #ffffff;
