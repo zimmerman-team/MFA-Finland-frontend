@@ -99,9 +99,9 @@ export interface ApiCallModel
 export interface StoreModel {
   // global search
   searchDonors: ApiCallModel;
+  searchSectors: ApiCallModel;
   searchCountries: ApiCallModel;
   searchActivities: ApiCallModel;
-  searchPublishers: ApiCallModel;
   searchOrganisations: ApiCallModel;
   // viz
   donors: ApiCallModel;

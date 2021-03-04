@@ -4,9 +4,9 @@ import { StoreModel } from "app/state/api/interfaces";
 
 // global search actions-reducers
 import searchDonors from "app/state/api/actions-reducers/global-search/donors";
+import searchSectors from "app/state/api/actions-reducers/global-search/sectors";
 import searchCountries from "app/state/api/actions-reducers/global-search/countries";
 import searchActivities from "app/state/api/actions-reducers/global-search/activities";
-import searchPublishers from "app/state/api/actions-reducers/global-search/publishers";
 import searchOrganisations from "app/state/api/actions-reducers/global-search/organisations";
 
 // viz actions-reducers
@@ -114,9 +114,9 @@ const storeContent: StoreModel = {
   },
   // global search
   searchDonors,
+  searchSectors,
   searchCountries,
   searchActivities,
-  searchPublishers,
   searchOrganisations,
   // viz
   donors: persist(donors),

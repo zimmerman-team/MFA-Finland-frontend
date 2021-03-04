@@ -169,6 +169,11 @@ export const DeleteAccountDialogState = atom({
   default: false, // default value (aka initial value)
 });
 
+export const searchFocusAtom = atom({
+  key: "searchFocus", // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
+});
+
 export const ChangeEmailDialogState = atom({
   key: "changeEmailDialogState", // unique ID (with respect to other atoms/selectors)
   default: false, // default value (aka initial value)

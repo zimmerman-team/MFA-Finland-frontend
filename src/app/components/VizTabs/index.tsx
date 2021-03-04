@@ -19,7 +19,7 @@ export function VizTabs() {
       <div
         css={`
           left: 0;
-          top: 128px;
+          top: 124px;
           width: 100vw;
           position: absolute;
           background: #dde4ef;

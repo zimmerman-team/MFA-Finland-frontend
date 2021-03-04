@@ -14,13 +14,13 @@ import {
 } from "app/state/recoil/atoms";
 import { MfaLogo } from "app/assets/mfa_logo";
 import LanguageIcon from "@material-ui/icons/Language";
-import { FILTER_TYPES } from "../FilterPanel/data";
-import { SearchPlaceholder } from "app/components/AppBar/sort/SearchPlaceholder";
+import { FILTER_TYPES } from "app/components/FilterPanel/data";
 import { LanguagePopover } from "app/components/AppBar/sort/LanguagePopover";
 import { BackDrop } from "app/components/AppBar/sort/BackDrop";
 import { appbarStyle } from "app/components/AppBar/sort/appbarStyle";
 import { Hidden } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import { SearchComponent } from "app/components/AppBar/common/Search";
 
 export function AppBar() {
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
@@ -103,7 +103,7 @@ export function AppBar() {
             {/* ---------------------------------------------- */}
             {/* searchfield */}
             <Hidden xsDown>
-              <SearchPlaceholder />
+              <SearchComponent close={() => console.log("")} />
             </Hidden>
 
             <Hidden smUp>

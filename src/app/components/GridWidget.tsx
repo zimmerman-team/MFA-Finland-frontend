@@ -8,7 +8,7 @@ import { css } from "styled-components/macro";
 import { useHistory, Link } from "react-router-dom";
 import { useStoreState } from "app/state/store/hooks";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { formatLocale } from "app/utils/formatLocale";
+import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 const style = {
   widgetHeader: (odaWidget: boolean) => css`
@@ -204,7 +204,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
           <div css={style.odaHeaderStats}>
             <div css={style.headerStat}>
               <div>Disbursements amount</div>
-              <div>{formatLocale(totalDisbursement)}</div>
+              <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
             </div>
             <div css={style.headerStat}>
               <div>Organisations</div>
