@@ -7,7 +7,7 @@ export interface TabProps {
 
 export const vizTabs: TabProps[] = [
   {
-    name: "ODA",
+    name: "Overview",
     url: "/viz/oda",
   },
   {
