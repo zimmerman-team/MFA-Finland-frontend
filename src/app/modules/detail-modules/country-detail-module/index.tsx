@@ -28,7 +28,7 @@ export function CountryDetailModule() {
     budgetLinesBarChartData,
     sdgVizData,
     geoMapData,
-    countryIndicators,
+    countryData,
     unallocablePercentage,
   } = useDataGridData({
     detailPageFilter: {
@@ -57,7 +57,7 @@ export function CountryDetailModule() {
         key: "recipient_country_code",
         value: get(params, "country", ""),
       }}
-      countryIndicators={countryIndicators}
+      countryData={countryData}
     />
   );
 }
