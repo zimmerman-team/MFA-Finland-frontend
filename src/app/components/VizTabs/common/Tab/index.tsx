@@ -6,16 +6,17 @@ import { PrimaryColor, SecondaryColor } from "app/theme";
 import { NavLink, useRouteMatch, useLocation } from "react-router-dom";
 
 const tabcss = (active: boolean) => css`
-  color: #fff;
+  // WCAG changes
+  // color: #fff;
+  color: ${active ? "#fff" : PrimaryColor[0]};
   padding: 10px;
   font-size: 14px;
   font-weight: bold;
   transition: background 0.2s ease-in-out;
   background: ${active ? PrimaryColor[0] : SecondaryColor[1]};
-
   &:hover {
     color: #fff;
-    background: ${PrimaryColor[0]};
+    background: ${PrimaryColor[3]};
   }
 `;
 

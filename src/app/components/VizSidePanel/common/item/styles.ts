@@ -54,6 +54,7 @@ export const circlecss = (color: string) => css`
   margin-left: -16px;
   border-radius: 50%;
   background: ${color};
+  border: 0.5px solid #323232;
 `;
 
 export const expandiconcss = (expanded: boolean) => css`

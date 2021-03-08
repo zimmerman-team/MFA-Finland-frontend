@@ -42,6 +42,8 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
         maxValue={maxValue + maxValue * 0.1}
         colors={(v: any) => v.data.valueColor}
         margin={{ top: 15, right: 20, bottom: 200, left: 50 }}
+        borderWidth={1}
+        borderColor="black"
         onClick={(node: any) => {
           setSelectedFilters({
             ...selectedFilters,

@@ -40,6 +40,7 @@ export function TreeemapNode(props: any) {
         color: PrimaryColor[0],
         background: node.data.color,
         cursor: node.data.orgs ? "pointer" : "default",
+        border: "0.5px solid #343249",
         borderRadius: `${node.y === 1 && node.x === 1 ? 10 : 0}px ${
           node.y === 1 && node.x + node.width + 2 > props.containerSize.width
             ? 10

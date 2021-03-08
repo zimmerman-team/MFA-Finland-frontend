@@ -35,6 +35,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
           backgroundColor={
             props.activeTab === "table" ? PrimaryColor[0] : SecondaryColor[1]
           }
+          color={props.activeTab === "table" ? "#fff" : PrimaryColor[0]}
         />
       </Grid>
       <div css={dividercss} />

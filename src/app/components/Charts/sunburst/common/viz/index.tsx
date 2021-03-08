@@ -22,7 +22,10 @@ export function SunburstViz(props: any) {
         width={props.size}
         height={props.size}
         animation={{ damping: 20, stiffness: 300 }}
-        style={{ stroke: "#ffffff", strokeWidth: 5 }}
+        style={{
+          stroke: "#fff",
+          strokeWidth: 2,
+        }}
         onValueClick={(
           node: SunburstPoint,
           event: React.MouseEvent<HTMLElement>

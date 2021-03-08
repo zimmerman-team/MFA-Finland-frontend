@@ -20,14 +20,13 @@ export function shouldRender(location: any) {
     "/faq",
   ];
   const currentLocation = location.pathname;
-  let found = urls.some((url) => {
+  const found = urls.some((url) => {
     return currentLocation.includes(url);
   });
   if (found === false) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 export function getMockData() {
@@ -87,7 +86,6 @@ export function getFilterChips(
       code: "2",
     },
   ];
-
   filters.tag.forEach((tag: string) => {
     const fArea = find(thematicareas, { code: tag });
     if (fArea) {
@@ -261,6 +259,17 @@ export function getFilterChips(
       });
     }
   });
+
+  // if (filters.years.length > 1) {
+  //   chips.push({
+  //     name:
+  //       filters.years[0] === filters.years[1]
+  //         ? filters.years[0]
+  //         : `${filters.years[0]} - ${filters.years[1]}`,
+  //     value: `${filters.years[0]},${filters.years[1]}`,
+  //     type: FILTER_TYPES.PERIOD,
+  //   });
+  // }
 
   return chips;
 }

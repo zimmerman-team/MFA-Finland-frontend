@@ -1,5 +1,5 @@
 import { css } from "styled-components/macro";
-import { SecondaryColor } from "app/theme";
+import { PrimaryColor, SecondaryColor } from "app/theme";
 import { FilterBarProps } from "app/components/FilterBar/index";
 
 export const createStyles = (props: FilterBarProps, height: number) => {
@@ -53,7 +53,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       min-width: 106px;
       height: 36px;
       :hover {
-        background-color: ${SecondaryColor[1]};
+        background-color: ${PrimaryColor[3]};
         box-shadow: none;
       }
 

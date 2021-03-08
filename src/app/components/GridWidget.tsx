@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { FunctionComponent } from "react";
 import get from "lodash/get";
-import { ProjectPalette } from "app/theme";
+import { PrimaryColor, ProjectPalette } from "app/theme";
 import { Tooltip } from "@material-ui/core";
 import { css } from "styled-components/macro";
 import { useHistory, Link } from "react-router-dom";
@@ -53,6 +53,10 @@ const style = {
         > a {
           font-size: 10px;
           text-decoration: underline;
+
+          :hover {
+            color: ${PrimaryColor[3]};
+          }
         }
       }
     }
@@ -72,7 +76,10 @@ const style = {
     align-items: center;
   `,
   widgetTooltipIcon: css`
-    fill: #bcc6d6;
+    fill: ${PrimaryColor[0]};
+    :hover {
+      fill: ${PrimaryColor[3]};
+    }
   `,
   widgetContainer: (height: string | undefined, isHovered: boolean) => css`
     width: 100%;
@@ -96,6 +103,11 @@ const style = {
       width: initial;
       height: initial;
     }
+  `,
+  link: css`
+    font-size: 10px;
+    line-height: 12px;
+    color: ${PrimaryColor[0]};
   `,
   childrencontainer: (
     interactive?: boolean,
@@ -210,7 +222,10 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
               <div>Organisations</div>
               <div>{orgCount}</div>
               <div>
-                <Link to={`/viz/organisations${searchFilterString}`}>
+                <Link
+                  css={style.link}
+                  to={`/viz/organisations${searchFilterString}`}
+                >
                   View more
                 </Link>
               </div>
@@ -219,7 +234,12 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
               <div>Projects</div>
               <div>{projCount}</div>
               <div>
-                <Link to={`/viz/projects${searchFilterString}`}>View more</Link>
+                <Link
+                  css={style.link}
+                  to={`/viz/projects${searchFilterString}`}
+                >
+                  View more
+                </Link>
               </div>
             </div>
           </div>

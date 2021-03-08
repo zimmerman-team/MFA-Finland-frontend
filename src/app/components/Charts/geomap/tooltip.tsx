@@ -4,7 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { Lock, LockOpen } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { ProjectPalette, SecondaryColor } from "../../../theme";
+import { PrimaryColor, ProjectPalette, SecondaryColor } from "../../../theme";
 import { PillButton } from "../../Buttons/PillButton";
 
 interface TooltipModel {
@@ -74,7 +74,7 @@ export const Button = css`
   padding: 4px 12px;
   line-height: 17px;
   :hover {
-    background-color: ${SecondaryColor[1]};
+    background-color: ${PrimaryColor[3]};
   }
 `;
 

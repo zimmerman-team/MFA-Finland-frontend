@@ -14,14 +14,40 @@ export function BarNode(props: BarNodeProps) {
     label: props.label,
   };
 
+  const getColor = (hovered: boolean) => {
+    switch (props.color) {
+      case "#ACD1D1":
+        return hovered ? "#ACD1D1" : "#DCECEC";
+        break;
+      case "#233C71":
+        return hovered ? "#233C71" : "#A8BBE4";
+        break;
+      default:
+        return props.color;
+    }
+  };
+
   let opacity =
     props.data.indexValue === props.hoveredXIndex ||
     props.data.indexValue === get(props.selected, "indexValue", "")
       ? 1
       : 0.6;
 
+  let border =
+    props.data.indexValue === props.hoveredXIndex ||
+    props.data.indexValue === get(props.selected, "indexValue", "")
+      ? "0.5px solid #343249"
+      : "0.5px solid #B8B6CD";
+
+  const color =
+    props.data.indexValue === props.hoveredXIndex ||
+    props.data.indexValue === get(props.selected, "indexValue", "")
+      ? getColor(true)
+      : getColor(false);
+
   if (!props.hoveredXIndex && !props.selected) {
     opacity = 1;
+    border = "0.5px solid #B8B6CD";
   }
 
   function onItemClick() {
@@ -64,10 +90,11 @@ export function BarNode(props: BarNodeProps) {
       <rect
         rx={0}
         ry={0}
-        fill={props.color}
+        fill={color}
         width={props.width}
         height={props.height}
         css={`
+          outline: ${border};
           opacity: ${opacity};
         `}
       />

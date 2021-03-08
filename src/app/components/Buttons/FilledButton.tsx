@@ -5,6 +5,7 @@ interface GeneralButtonProps {
   label: string;
   onClick?: Function;
   backgroundColor?: string;
+  color?: string;
   disabled?: boolean;
 }
 
@@ -33,12 +34,15 @@ export const FilledButton = (props: GeneralButtonProps) => {
         font-weight: 700;
         font-size: 14px;
         line-height: 24px;
-        color: ${theme.palette.common.white};
+        color: ${props.color ? props.color : theme.palette.common.white};
 
         transition: background 150ms ease-in-out;
 
         &:hover {
-          background: ${PrimaryColor[0]};
+          // WCAG changes
+          // background: ${PrimaryColor[0]};
+          background: ${PrimaryColor[3]};
+          color: ${theme.palette.common.white};
         }
       `}
     >

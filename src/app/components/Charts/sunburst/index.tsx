@@ -105,6 +105,7 @@ export function SunburstChart(props: SunburstChartProps) {
           disbursed: child.size,
           committed: child.committed,
           percentage: child.percentage,
+          style: { stroke: "#343249", strokeWidth: 0.5 },
         };
         if (child.children) {
           if (
@@ -147,7 +148,9 @@ export function SunburstChart(props: SunburstChartProps) {
         <div
           css={containercss}
           id="sunburst-container"
-          style={{ height: vizSize }}
+          style={{
+            height: vizSize,
+          }}
         >
           <InnerVizStat
             count={selected.name !== "" ? selectedCount : props.activitiesCount}
