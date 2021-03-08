@@ -8,12 +8,11 @@ import { SearchComponentLayout } from "app/components/AppBar/common/Search/layou
 import {
   datapath,
   countpath,
-  searchNavItems,
-  SearchComponentProps,
   thematicAreas,
+  searchNavItems,
 } from "app/components/AppBar/common/Search/data";
 
-export function SearchComponent(props: SearchComponentProps) {
+export function SearchComponent() {
   const [value, setValue] = React.useState("");
   const targetRef = React.useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useRecoilState(searchFocusAtom);
@@ -23,6 +22,7 @@ export function SearchComponent(props: SearchComponentProps) {
   const loading = useStoreState(
     (state) =>
       state.searchActivities.loading ||
+      state.searchThematicareas.loading ||
       state.searchCountries.loading ||
       state.searchOrganisations.loading ||
       state.searchSectors.loading
@@ -33,8 +33,8 @@ export function SearchComponent(props: SearchComponentProps) {
       data: get(state.searchActivities, datapath, []),
     },
     "Thematic areas": {
-      count: thematicAreas.length,
-      data: thematicAreas,
+      count: get(state.searchThematicareas, countpath, 0),
+      data: get(state.searchThematicareas, datapath, []),
     },
     Countries: {
       count: get(state.searchCountries, countpath, 0),
@@ -66,12 +66,14 @@ export function SearchComponent(props: SearchComponentProps) {
   }));
   const searchActions = useStoreActions((actions) => ({
     activitiesAction: actions.searchActivities.fetch,
+    thematicareasAction: actions.searchThematicareas.fetch,
     countriesAction: actions.searchCountries.fetch,
     organisationsAction: actions.searchOrganisations.fetch,
     sectorsAction: actions.searchSectors.fetch,
   }));
   const clearSearchActions = useStoreActions((actions) => ({
     activitiesAction: actions.searchActivities.clear,
+    thematicareasAction: actions.searchThematicareas.clear,
     countriesAction: actions.searchCountries.clear,
     organisationsAction: actions.searchOrganisations.clear,
     sectorsAction: actions.searchSectors.clear,
@@ -80,6 +82,7 @@ export function SearchComponent(props: SearchComponentProps) {
   function clearSearch() {
     setValue("");
     clearSearchActions.activitiesAction();
+    clearSearchActions.thematicareasAction();
     clearSearchActions.countriesAction();
     clearSearchActions.organisationsAction();
     clearSearchActions.sectorsAction();
@@ -87,6 +90,11 @@ export function SearchComponent(props: SearchComponentProps) {
 
   function callActivitiesAction(q: string) {
     searchActions.activitiesAction({
+      values: {
+        q,
+      },
+    });
+    searchActions.thematicareasAction({
       values: {
         q,
       },
@@ -216,7 +224,6 @@ export function SearchComponent(props: SearchComponentProps) {
   function onClickAway(event: React.MouseEvent<Document>) {
     clearSearch();
     setIsFocused(false);
-    // props.close();
   }
 
   const renderedResults = get(searchData, `[${resultType}].data`, []);

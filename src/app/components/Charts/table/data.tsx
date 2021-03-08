@@ -104,6 +104,12 @@ export const tableTheme: ThemeOptions = createMuiTheme({
         display: "none",
       },
     },
+    // @ts-ignore
+    MUIDataTableHeadCell: {
+      fixedHeader: {
+        zIndex: 4,
+      },
+    },
   },
 });
 

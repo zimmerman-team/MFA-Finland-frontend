@@ -32,7 +32,7 @@ export function VizTabs() {
         sm={12}
         md={12}
         lg={4}
-        xl={5}
+        xl={4}
         css={`
           padding: 12px 0;
         `}
@@ -50,7 +50,7 @@ export function VizTabs() {
         sm={12}
         md={12}
         lg={8}
-        xl={7}
+        xl={8}
         css={`
           position: relative;
         `}

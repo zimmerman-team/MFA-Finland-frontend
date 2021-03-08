@@ -32,8 +32,13 @@ export const SearchField = (props: Props) => {
   return (
     <StyledInput
       css={`
-        transition: width 0.5s ease-in-out;
         width: ${isFocused ? "600px" : "144px"};
+        @media (min-width: 992px) {
+          transition: width 0.5s ease-in-out;
+        }
+        @media (max-width: 992px) {
+          width: ${isFocused ? "calc(100vw - 135px)" : "144px"};
+        }
       `}
       value={props.value}
       placeholder="Search"

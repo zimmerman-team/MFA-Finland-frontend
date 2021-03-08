@@ -36,6 +36,9 @@ const containercss = css`
   align-items: flex-start;
   justify-content: flex-start;
   box-shadow: 0 1px 14px rgba(0, 0, 0, 0.12);
+  @media (max-width: 992px) {
+    width: calc(100vw - 135px);
+  }
 `;
 
 const resultscss = css`

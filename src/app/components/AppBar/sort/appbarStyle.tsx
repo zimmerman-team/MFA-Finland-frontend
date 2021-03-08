@@ -16,15 +16,21 @@ export const appbarStyle = {
       height: 56px;
     }
   `,
-  toolBar: css`
+  toolBar: (searchOpen: boolean) => css`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 0;
+    align-items: center;
+    justify-content: space-between;
     background-color: ${PrimaryColor[0]};
+    @media (max-width: 992px) {
+      justify-content: ${searchOpen ? "flex-end" : "space-between"};
+    }
   `,
-  logoLink: css`
+  logoLink: (show: boolean) => css`
     display: flex;
+    @media (max-width: 992px) {
+      display: ${show ? "flex" : "none"};
+    }
     text-decoration: none;
     @media (max-width: 960px) {
       margin-left: 12px;

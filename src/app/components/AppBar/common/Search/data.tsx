@@ -1,9 +1,5 @@
 import React from "react";
 
-export interface SearchComponentProps {
-  close: Function;
-}
-
 export interface SearchComponentLayoutProps {
   width: number;
   value: string;

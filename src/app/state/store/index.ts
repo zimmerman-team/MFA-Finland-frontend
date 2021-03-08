@@ -8,6 +8,7 @@ import searchSectors from "app/state/api/actions-reducers/global-search/sectors"
 import searchCountries from "app/state/api/actions-reducers/global-search/countries";
 import searchActivities from "app/state/api/actions-reducers/global-search/activities";
 import searchOrganisations from "app/state/api/actions-reducers/global-search/organisations";
+import searchThematicareas from "app/state/api/actions-reducers/global-search/thematicareas";
 
 // viz actions-reducers
 import treemap from "app/state/api/actions-reducers/treemap";
@@ -118,6 +119,7 @@ const storeContent: StoreModel = {
   searchCountries,
   searchActivities,
   searchOrganisations,
+  searchThematicareas,
   // viz
   donors: persist(donors),
   sectors: persist(sectors),

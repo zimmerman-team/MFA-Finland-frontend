@@ -8,9 +8,10 @@ import { PrimaryColor } from "app/theme";
 import { NavLink, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import {
-  currentFilterOpenAtom,
   drawerAtom,
   languageAtom,
+  searchFocusAtom,
+  currentFilterOpenAtom,
 } from "app/state/recoil/atoms";
 import { MfaLogo } from "app/assets/mfa_logo";
 import LanguageIcon from "@material-ui/icons/Language";
@@ -23,6 +24,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { SearchComponent } from "app/components/AppBar/common/Search";
 
 export function AppBar() {
+  const [isFocused] = useRecoilState(searchFocusAtom);
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
@@ -61,26 +63,28 @@ export function AppBar() {
   return (
     <React.Fragment>
       <MUIAppBar position="relative" color="inherit" css={appbarStyle.appBar}>
-        <Toolbar disableGutters css={appbarStyle.toolBar}>
+        <Toolbar disableGutters css={appbarStyle.toolBar(isFocused)}>
           <Hidden smUp>
-            <IconButton
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleDrawer(true)}
-              data-cy="burger-menu-button"
-            >
-              <MenuIcon
-                css={`
-                  fill: ${PrimaryColor[2]};
-                `}
-              />
-            </IconButton>
+            {!isFocused && (
+              <IconButton
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+                data-cy="burger-menu-button"
+              >
+                <MenuIcon
+                  css={`
+                    fill: ${PrimaryColor[2]};
+                  `}
+                />
+              </IconButton>
+            )}
           </Hidden>
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
-            css={appbarStyle.logoLink}
             to={`/${location.search}`}
+            css={appbarStyle.logoLink(!isFocused)}
             onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
           >
             <Hidden xsDown>
@@ -103,7 +107,7 @@ export function AppBar() {
             {/* ---------------------------------------------- */}
             {/* searchfield */}
             <Hidden xsDown>
-              <SearchComponent close={() => console.log("")} />
+              <SearchComponent />
             </Hidden>
 
             <Hidden smUp>

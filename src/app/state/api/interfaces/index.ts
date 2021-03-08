@@ -103,6 +103,7 @@ export interface StoreModel {
   searchCountries: ApiCallModel;
   searchActivities: ApiCallModel;
   searchOrganisations: ApiCallModel;
+  searchThematicareas: ApiCallModel;
   // viz
   donors: ApiCallModel;
   sectors: ApiCallModel;
