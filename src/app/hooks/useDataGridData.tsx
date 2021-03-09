@@ -116,9 +116,11 @@ export function useDataGridData(props: useDataGridDataProps) {
   const detailPageNameData = useStoreState((state) =>
     get(state.detailPageName.data, "data[0]", "")
   );
-  const countryIndicators = useStoreState((state) =>
-    get(state.detailPageName.data, "data", "")
-  );
+  const countryData = useStoreState((state) => ({
+    region: get(state.detailPageName.data, "data.region", ""),
+    isPartner: get(state.detailPageName.data, "data.isPartner", ""),
+    countryIndicators: get(state.detailPageName.data, "data.indicators", []),
+  }));
   const sectorDescription = useStoreState((state) =>
     get(state.detailPageName.data, "data[1]", "")
   );
@@ -349,8 +351,8 @@ export function useDataGridData(props: useDataGridDataProps) {
     geoMapData,
     vizDataLoading,
     unallocablePercentage,
+    countryData,
     detailPageNameData,
-    countryIndicators,
     sectorDescription,
   };
 }

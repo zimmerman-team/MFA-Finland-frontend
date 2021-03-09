@@ -1,7 +1,8 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
-import { Box, Grid, Hidden } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
+import { Grid, Hidden } from "@material-ui/core";
 import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
@@ -29,7 +30,7 @@ export interface DataGridProps {
   budgetLinesBarChartData: any;
   sdgVizData: SDGvizItemProps[];
   geoMapData: any;
-  countryIndicators?: string[];
+  countryData?: any;
   unallocablePercentage: number;
   sectorDescription?: string;
   detailPageFilter?: {
@@ -51,7 +52,70 @@ export interface DataGridProps {
 // todo: check if we actually need the "childrencontainerStyle" property
 
 export const DataGrid = (props: DataGridProps) => {
-  const [width, height] = useWindowSize();
+  const location = useLocation();
+  const [width] = useWindowSize();
+
+  const isOrgTypeDetail = location.pathname.indexOf("organisation-types") > -1;
+  const isOrgDetail = location.pathname.indexOf("organisations") > -1;
+  const isSectorDetail = location.pathname.indexOf("sectors") > -1;
+  const isCountryDetail = location.pathname.indexOf("countries") > -1;
+  const isRegionDetail = location.pathname.indexOf("regions") > -1;
+
+  function getResultBlockContent() {
+    if (isOrgTypeDetail || isOrgDetail) {
+      return {
+        label: "",
+        text: "",
+      };
+    }
+    if (isSectorDetail) {
+      return {
+        label: "Sector info",
+        text: props.sectorDescription,
+      };
+    }
+    if (isCountryDetail) {
+      return {
+        label: "Contact Department in MFA",
+        text: "",
+      };
+    }
+    if (isRegionDetail) {
+      return {
+        label: "Finland and the region in development cooperation?",
+        text: "",
+      };
+    }
+    return {
+      label: "Result",
+      text:
+        "See more thoroughly about recent results of development cooperation of Finland",
+    };
+  }
+
+  function getAboutBlockContent() {
+    if (isOrgTypeDetail || isOrgDetail || isSectorDetail || isRegionDetail) {
+      return {
+        label: "",
+        text: "",
+      };
+    }
+    if (isCountryDetail) {
+      return {
+        label: "RSS Feed",
+        text: "",
+      };
+    }
+    return {
+      label: "About",
+      text:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially",
+    };
+  }
+
+  const resultContent = getResultBlockContent();
+  const aboutContent = getAboutBlockContent();
+
   return (
     <React.Fragment>
       {/* ----------------------------- */}
@@ -130,7 +194,7 @@ export const DataGrid = (props: DataGridProps) => {
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
-        {!props.countryIndicators ? (
+        {!props.countryData ? (
           <GridWidget
             label="Regions"
             tooltip="lorem ipsum"
@@ -165,11 +229,12 @@ export const DataGrid = (props: DataGridProps) => {
               paddingTop: 20,
             }}
           >
-            {props.countryIndicators.map((indicator: string) => {
+            {props.countryData.countryIndicators.map((indicator: string) => {
               const values = indicator.split(":");
               if (values.length === 2) {
                 return (
                   <div
+                    key={indicator}
                     css={`
                       margin: 8px 0;
                       font-size: 14px;
@@ -258,13 +323,12 @@ export const DataGrid = (props: DataGridProps) => {
       >
         <GridWidget
           interactive
-          label="Result"
           height="510px"
-          tooltip="lorem ipsum"
+          label={resultContent.label}
+          tooltip={resultContent.label}
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          See more thoroughly about recent results of development cooperation of
-          Finland
+          {resultContent.text}
         </GridWidget>
       </Grid>
 
@@ -301,23 +365,12 @@ export const DataGrid = (props: DataGridProps) => {
       >
         <GridWidget
           interactive
-          label="About"
           height="510px"
-          tooltip="lorem ipsum"
+          label={aboutContent.label}
+          tooltip={aboutContent.label}
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          {props.sectorDescription ? (
-            props.sectorDescription
-          ) : (
-            <>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry&apos;s standard dummy
-              text ever since the 1500s, when an unknown printer took a galley
-              of type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially
-            </>
-          )}
+          {aboutContent.text}
         </GridWidget>
       </Grid>
 
