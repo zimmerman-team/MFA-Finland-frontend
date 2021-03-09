@@ -1,6 +1,5 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import MUIBreadcrumbs from "@material-ui/core/Breadcrumbs";
+import { Typography, Breadcrumbs as MUIBreadcrumbs } from "@material-ui/core";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   BreadcrumbProps,

@@ -4,8 +4,35 @@ import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
 import { RouteTab } from "app/components/VizTabs/common/Tab";
 import { vizTabs, TabProps } from "app/components/VizTabs/data";
+import { Breadcrumbs } from "app/components/Breadcrumb";
+import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
+import { Path } from "app/const/Path";
+import { css } from "styled-components/macro";
+import { Tooltip } from "@material-ui/core";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import { PrimaryColor } from "app/theme";
 
 export function VizTabs() {
+  const crumbs: BreadcrumbLinkModel[] = [
+    { label: "Homepage", path: Path.home },
+    { label: "Disbursements" },
+  ];
+  const styles = {
+    tooltip: css`
+      fill: ${PrimaryColor[0]};
+      :hover {
+        fill: ${PrimaryColor[3]};
+      }
+    `,
+    titleContainer: css`
+      display: flex;
+      margin-bottom: 16px;
+      margin-top: 3px;
+    `,
+    title: css`
+      margin-right: 12px;
+    `,
+  };
   return (
     <Grid
       container
@@ -27,23 +54,23 @@ export function VizTabs() {
           z-index: -1;
         `}
       />
-      <Grid
-        item
-        sm={12}
-        md={12}
-        lg={4}
-        xl={4}
-        css={`
-          padding: 12px 0;
-        `}
-      >
-        <Hidden smDown>
-          <div css="width: 100%;height: 35px;" />
-        </Hidden>
-        <Typography variant="h5">Disbursements</Typography>
-        <Hidden mdUp>
-          <div css="width: 100%;height: 35px;" />
-        </Hidden>
+      <Grid item sm={12} md={12} lg={4} xl={4}>
+        {/* <Hidden smDown> */}
+        {/*  <div css="width: 100%;height: 35px;" /> */}
+        {/* </Hidden> */}
+        <div css="width: 100%; height: 8px;" />
+        <Breadcrumbs route={crumbs} />
+        <div css={styles.titleContainer}>
+          <Typography variant="h5" css={styles.title}>
+            Disbursements
+          </Typography>
+          <Tooltip title="lorem ipsum">
+            <InfoOutlinedIcon css={styles.tooltip} />
+          </Tooltip>
+        </div>
+        {/* <Hidden mdUp> */}
+        {/*  <div css="width: 100%;height: 35px;" /> */}
+        {/* </Hidden> */}
       </Grid>
       <Grid
         item
