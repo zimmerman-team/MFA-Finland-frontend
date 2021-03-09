@@ -130,7 +130,7 @@ export const TransactionsBar = (props: TransactionsBarProps) => {
             Commitment
           </div>
           <div css={styles.legendItem}>
-            <div css={circle(colors.disbursed)}></div>
+            <div css={circle(colors.disbursed)} />
             Disbursements
           </div>
         </div>
@@ -139,7 +139,7 @@ export const TransactionsBar = (props: TransactionsBarProps) => {
         keys={keys}
         padding={0.5}
         indexBy="year"
-        borderWidth={1}
+        borderWidth={0.5}
         innerPadding={3}
         data={props.data}
         groupMode="grouped"

@@ -23,8 +23,8 @@ export function SunburstViz(props: any) {
         height={props.size}
         animation={{ damping: 20, stiffness: 300 }}
         style={{
-          stroke: "#fff",
-          strokeWidth: 2,
+          stroke: "#343249",
+          strokeWidth: 0.5,
         }}
         onValueClick={(
           node: SunburstPoint,
