@@ -222,8 +222,10 @@ export function SearchComponent() {
   }
 
   function onClickAway(event: React.MouseEvent<Document>) {
-    clearSearch();
-    setIsFocused(false);
+    if (isFocused) {
+      clearSearch();
+      setIsFocused(false);
+    }
   }
 
   const renderedResults = get(searchData, `[${resultType}].data`, []);
