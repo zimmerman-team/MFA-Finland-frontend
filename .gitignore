@@ -65,6 +65,8 @@ typings/
 
 # Webstorm ide
 .idea/*
+.idea/inspectionProfiles/Project_Default.xml
+.idea/jsLinters/eslint.xml
 
 .vercel
 .DS_Store
@@ -73,3 +75,5 @@ Icon
 # cypress recordings
 cypress/screenshots/
 cypress/videos/
+
+
