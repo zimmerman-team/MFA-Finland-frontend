@@ -13,6 +13,7 @@ export const ModuleContainer = (props: ModuleContainerProps) => (
       spacing={2}
       css={`
         width: initial;
+        position: relative;
         @media (max-width: 960px) {
           //border-radius: 16px;
           //padding: 16px 16px 16px 16px;
