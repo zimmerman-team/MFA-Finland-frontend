@@ -4,11 +4,8 @@ import { Cancel } from "@material-ui/icons";
 import { currentFilterOpenAtom } from "app/state/recoil/atoms";
 import { createStyles } from "app/components/FilterPanel/styles";
 import { Grid, Hidden, IconButton, Typography } from "@material-ui/core";
+import { MailPanelInitDataItemModel } from "app/components/FilterPanel/data";
 import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
-import {
-  FILTER_TYPES,
-  MailPanelInitDataItemModel,
-} from "app/components/FilterPanel/data";
 import { ChooseAFilterListItem } from "app/components/FilterPanel/ListItems/ChooseAFilterListItem";
 
 interface Model {

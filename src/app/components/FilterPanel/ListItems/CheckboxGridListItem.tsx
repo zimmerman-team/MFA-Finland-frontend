@@ -5,7 +5,7 @@ import { FilterOption } from "app/components/FilterPanel/data";
 
 interface CheckboxListItemProps extends FilterOption {
   selectedItems: string[];
-  onFilterCheckboxChange: (value: string) => void;
+  onFilterCheckboxChange: (value: string | string[]) => void;
 }
 
 export const CheckboxGridListItem = (props: CheckboxListItemProps) => {
@@ -34,10 +34,10 @@ export const CheckboxGridListItem = (props: CheckboxListItemProps) => {
       {props.children?.map((node) => {
         return (
           <Grid
-            key={node.name}
             item
-            xs={12}
             lg={6}
+            xs={12}
+            key={`${node.name}-${node.code}`}
             css={styles.checkboxTypographyContainer}
           >
             <Checkbox

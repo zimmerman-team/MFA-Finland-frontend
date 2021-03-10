@@ -1,5 +1,7 @@
 import React from "react";
 import get from "lodash/get";
+import find from "lodash/find";
+import filter from "lodash/filter";
 import remove from "lodash/remove";
 import { useRecoilState } from "recoil";
 import { Container } from "@material-ui/core";
@@ -58,7 +60,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
     setLocalSelectedFilters(selectedFilters);
   }, [selectedFilters]);
 
-  function onFilterCheckboxChange(value: string, type: any): void {
+  function onFilterCheckboxChange(param: string | string[], type: any): void {
+    const value = param as string;
     const updatedSelectedFilters = { ...localSelectedFilters };
     switch (type) {
       case FILTER_TYPES.THEMATIC_AREAS:
@@ -69,60 +72,151 @@ export const FilterPanel = (props: FilterPanelProps) => {
         }
         break;
       case FILTER_TYPES.COUNTRIES:
-        if (value.length === 2) {
-          if (updatedSelectedFilters.countries.indexOf(value) > -1) {
-            remove(
+        if (typeof param === "string") {
+          const isRegion = !Number.isNaN(parseInt(value, 10));
+          if (!isRegion) {
+            if (updatedSelectedFilters.countries.indexOf(value) > -1) {
+              updatedSelectedFilters.countries = filter(
+                updatedSelectedFilters.countries,
+                (t: string) => t !== value
+              );
+            } else {
+              updatedSelectedFilters.countries = [
+                ...updatedSelectedFilters.countries,
+                value,
+              ];
+            }
+          } else if (updatedSelectedFilters.regions.indexOf(value) > -1) {
+            updatedSelectedFilters.regions = filter(
+              updatedSelectedFilters.regions,
+              (t: string) => t !== value
+            );
+          } else {
+            updatedSelectedFilters.regions = [
+              ...updatedSelectedFilters.regions,
+              value,
+            ];
+          }
+        } else {
+          let areParamValuesApplied = true;
+          const regions = filter(
+            param,
+            (pvalue: string) => !Number.isNaN(parseInt(pvalue, 10))
+          );
+          const countries = filter(
+            param,
+            (pvalue: string) =>
+              Number.isNaN(parseInt(pvalue, 10)) && pvalue !== ""
+          );
+          countries.forEach((c: string) => {
+            areParamValuesApplied =
+              areParamValuesApplied &&
+              updatedSelectedFilters.countries.indexOf(c) > -1;
+          });
+          regions.forEach((r: string) => {
+            areParamValuesApplied =
+              areParamValuesApplied &&
+              updatedSelectedFilters.regions.indexOf(r) > -1;
+          });
+          if (areParamValuesApplied) {
+            updatedSelectedFilters.countries = filter(
               updatedSelectedFilters.countries,
-              (t: string) => t === value
+              (t: string) => countries.indexOf(t) === -1
+            );
+            updatedSelectedFilters.regions = filter(
+              updatedSelectedFilters.regions,
+              (t: string) => regions.indexOf(t) === -1
             );
           } else {
             updatedSelectedFilters.countries = [
               ...updatedSelectedFilters.countries,
-              value,
+              ...countries,
+            ];
+            updatedSelectedFilters.regions = [
+              ...updatedSelectedFilters.regions,
+              ...regions,
             ];
           }
-        } else if (updatedSelectedFilters.regions.indexOf(value) > -1) {
-          remove(updatedSelectedFilters.regions, (t: string) => t === value);
-        } else {
-          updatedSelectedFilters.regions = [
-            ...updatedSelectedFilters.regions,
-            value,
-          ];
         }
         break;
       case FILTER_TYPES.SECTORS:
-        if (updatedSelectedFilters.sectors.indexOf(value) > -1) {
-          remove(updatedSelectedFilters.sectors, (t: string) => t === value);
-        } else {
-          updatedSelectedFilters.sectors = [
-            ...updatedSelectedFilters.sectors,
-            value,
-          ];
-        }
-        break;
-      case FILTER_TYPES.ORGANISATIONS:
-        if (value.length === 2) {
-          if (updatedSelectedFilters.organisationtypes.indexOf(value) > -1) {
-            remove(
-              updatedSelectedFilters.organisationtypes,
-              (t: string) => t === value
-            );
+        if (typeof param === "string") {
+          if (updatedSelectedFilters.sectors.indexOf(value) > -1) {
+            remove(updatedSelectedFilters.sectors, (t: string) => t === value);
           } else {
-            updatedSelectedFilters.organisationtypes = [
-              ...updatedSelectedFilters.organisationtypes,
+            updatedSelectedFilters.sectors = [
+              ...updatedSelectedFilters.sectors,
               value,
             ];
           }
-        } else if (updatedSelectedFilters.organisations.indexOf(value) > -1) {
-          remove(
-            updatedSelectedFilters.organisations,
-            (t: string) => t === value
-          );
         } else {
-          updatedSelectedFilters.organisations = [
-            ...updatedSelectedFilters.organisations,
-            value,
-          ];
+          let areParamValuesApplied = true;
+          param.forEach((pvalue: string) => {
+            areParamValuesApplied =
+              areParamValuesApplied &&
+              updatedSelectedFilters.sectors.indexOf(pvalue) > -1;
+          });
+          if (areParamValuesApplied) {
+            remove(
+              updatedSelectedFilters.sectors,
+              (t: string) => param.indexOf(t) > -1
+            );
+          } else {
+            updatedSelectedFilters.sectors = [
+              ...updatedSelectedFilters.sectors,
+              ...param,
+            ];
+          }
+        }
+        break;
+      case FILTER_TYPES.ORGANISATIONS:
+        if (typeof param === "string") {
+          if (updatedSelectedFilters.organisations.indexOf(value) > -1) {
+            remove(
+              updatedSelectedFilters.organisations,
+              (t: string) => t === value
+            );
+          } else {
+            updatedSelectedFilters.organisations = [
+              ...updatedSelectedFilters.organisations,
+              value,
+            ];
+          }
+        } else {
+          let areParamValuesApplied = true;
+          const orgType = find(param, (pvalue: string) => pvalue.length === 2);
+          const onlyOrgs = filter(param, (pvalue: string) => pvalue.length > 2);
+          onlyOrgs.forEach((org: string) => {
+            areParamValuesApplied =
+              areParamValuesApplied &&
+              updatedSelectedFilters.organisations.indexOf(org) > -1;
+          });
+          if (areParamValuesApplied) {
+            remove(
+              updatedSelectedFilters.organisations,
+              (t: string) => onlyOrgs.indexOf(t) > -1
+            );
+          } else {
+            updatedSelectedFilters.organisations = [
+              ...updatedSelectedFilters.organisations,
+              ...onlyOrgs,
+            ];
+          }
+          if (orgType) {
+            if (
+              updatedSelectedFilters.organisationtypes.indexOf(orgType) > -1
+            ) {
+              remove(
+                updatedSelectedFilters.organisationtypes,
+                (t: string) => t === orgType
+              );
+            } else {
+              updatedSelectedFilters.organisationtypes = [
+                ...updatedSelectedFilters.organisationtypes,
+                orgType,
+              ];
+            }
+          }
         }
         break;
       case FILTER_TYPES.SDGS:
@@ -237,9 +331,11 @@ export const FilterPanel = (props: FilterPanelProps) => {
         }
         break;
       case FILTER_TYPES.COUNTRIES:
-        values = get(filterOptionsData.countries, "data.data", []).map(
-          (value: any) => value.code
-        );
+        values = [
+          ...get(filterOptionsData.locations, "data.data", []).map((l: any) => [
+            ...l.children,
+          ]),
+        ].map((value: any) => value.code);
         if (updatedSelectedFilters.countries.length === values.length) {
           updatedSelectedFilters.countries = [];
         } else {
@@ -248,9 +344,6 @@ export const FilterPanel = (props: FilterPanelProps) => {
             ...values,
           ];
         }
-        values = get(filterOptionsData.regions, "data.data", []).map(
-          (value: any) => value.code
-        );
         if (updatedSelectedFilters.regions.length === values.length) {
           updatedSelectedFilters.regions = [];
         } else {
@@ -452,7 +545,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={get(filterOptionsData.thematicareas, "data.data", [])}
             renderSearch
             selection={mainPanelData[0].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.THEMATIC_AREAS)
             }
             selectedItems={localSelectedFilters.tag}
@@ -467,13 +560,10 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title="Countries/Regions"
-            data={[
-              ...get(filterOptionsData.regions, "data.data", []),
-              ...get(filterOptionsData.countries, "data.data", []),
-            ]}
+            data={get(filterOptionsData.locations, "data.data", [])}
             renderSearch
             selection={mainPanelData[1].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.COUNTRIES)
             }
             selectedItems={[
@@ -494,7 +584,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={get(filterOptionsData.sectors, "data.data", [])}
             renderSearch
             selection={mainPanelData[2].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.SECTORS)
             }
             selectedItems={localSelectedFilters.sectors}
@@ -512,7 +602,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={get(filterOptionsData.organisations, "data.data", [])}
             renderSearch
             selection={mainPanelData[3].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.ORGANISATIONS)
             }
             selectedItems={[
@@ -533,7 +623,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={get(filterOptionsData.sdgs, "data.data.goals", [])}
             renderSearch
             selection={mainPanelData[4].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.SDGS)
             }
             selectedItems={localSelectedFilters.sdg}
@@ -551,7 +641,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={get(filterOptionsData.activitystatus, "data.data", [])}
             renderSearch
             selection={mainPanelData[5].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.ACTIVITY_STATUS)
             }
             selectedItems={localSelectedFilters.activitystatus}
@@ -567,7 +657,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
           <Filter
             title="Period"
             selection={mainPanelData[6].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.PERIOD)
             }
             selectedItems={localSelectedFilters.years}
@@ -594,7 +684,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={get(filterOptionsData.policymarkers, "data.data", [])}
             renderSearch
             selection={advancedPanelData[0].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.POLICY_MARKERS)
             }
             selectedItems={localSelectedFilters.policymarker}
@@ -612,7 +702,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={get(filterOptionsData.aidtypes, "data.data", [])}
             renderSearch
             selection={advancedPanelData[1].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.AID_TYPE)
             }
             selectedItems={localSelectedFilters.defaultaidtype}
@@ -630,7 +720,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={get(filterOptionsData.budgetlines, "data.data.data", [])}
             renderSearch
             selection={advancedPanelData[2].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.BUDGET_LINES)
             }
             selectedItems={localSelectedFilters.budgetlines}
@@ -657,7 +747,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             ]}
             renderSearch
             selection={advancedPanelData[3].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.BI_MULTI)
             }
             selectedItems={localSelectedFilters.collaborationtype}
@@ -675,7 +765,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={humanrightfilteroptions}
             renderSearch
             selection={advancedPanelData[4].selection}
-            onFilterCheckboxChange={(value: string) =>
+            onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.HUMAN_RIGHTS)
             }
             selectedItems={localSelectedFilters.humanrights}

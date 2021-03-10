@@ -67,8 +67,7 @@ export function getFilterChips(
 ): ChipModel[] {
   const chips: ChipModel[] = [];
   const thematicareas = get(filterOptions, "themacticareas.data.data", []);
-  const countries = get(filterOptions, "countries.data.data", []);
-  const regions = get(filterOptions, "regions.data.data", []);
+  const locations = get(filterOptions, "locations.data.data", []);
   const sectors = get(filterOptions, "sectors.data.data", []);
   const organisations = get(filterOptions, "organisations.data.data", []);
   const sdgs = get(filterOptions, "sdgs.data.data.goals", []);
@@ -108,8 +107,13 @@ export function getFilterChips(
     }
   });
 
+  let allLocations: any = [];
+  locations.forEach((region: any) => {
+    allLocations = [...allLocations, ...region.children];
+  });
+
   filters.countries.forEach((country: string) => {
-    const fCountry = find(countries, { code: country });
+    const fCountry = find(allLocations, { code: country });
     if (fCountry) {
       chips.push({
         name: fCountry.name,
@@ -120,7 +124,7 @@ export function getFilterChips(
   });
 
   filters.regions.forEach((region: string) => {
-    const fRegion = find(regions, { code: region });
+    const fRegion = find(allLocations, { code: region });
     if (fRegion) {
       chips.push({
         name: fRegion.name,

@@ -153,8 +153,7 @@ export interface StoreModel {
   // deleteUser: ApiCallModel;
   // filtering
   filterOptions: {
-    countries: ApiCallModel;
-    regions: ApiCallModel;
+    locations: ApiCallModel;
     sectors: ApiCallModel;
     thematicareas: ApiCallModel;
     organisations: ApiCallModel;

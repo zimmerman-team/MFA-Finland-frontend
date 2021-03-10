@@ -37,9 +37,9 @@ export const FilterBar = (props: FilterBarProps) => {
   const styles = createStyles(props, height);
   let container: any;
 
-  React.useEffect(() => {
-    setHeight(container ? container.clientHeight : 64);
-  }, [chips]);
+  // React.useEffect(() => {
+  //   setHeight(container ? container.clientHeight : 64);
+  // }, [chips]);
 
   React.useEffect(() => {
     setChips(getFilterChips(selectedFilters, filterOptionsData));

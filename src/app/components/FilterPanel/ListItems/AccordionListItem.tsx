@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 import { css } from "styled-components/macro";
 import { PrimaryColor } from "app/theme";
 import {
@@ -7,6 +8,7 @@ import {
   AccordionSummary,
   Checkbox,
   Typography,
+  FormControlLabel,
 } from "@material-ui/core";
 import { ArrowDropDown } from "@material-ui/icons";
 import { FilterOption } from "app/components/FilterPanel/data";
@@ -15,7 +17,8 @@ interface AccordionListItemProps {
   selected: boolean;
   node: FilterOption;
   component: React.ReactElement;
-  style: "has1NodeStyle" | "has2NodesStyle";
+  nodeStyle: "has1NodeStyle" | "has2NodesStyle";
+  onFilterCheckboxChange: (value: string | string[]) => void;
 }
 
 export const AccordionListItem = (props: AccordionListItemProps) => {
@@ -58,7 +61,7 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
       `,
       details: css`
         background-color: ${PrimaryColor[0]};
-        padding: ${props.style == "has2NodesStyle"
+        padding: ${props.nodeStyle === "has2NodesStyle"
           ? "16px 0px 16px 80px"
           : "32px 16px 24px 80px"};
         display: flex;
@@ -66,7 +69,7 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
 
         @media (max-width: 600px) {
           font-size: 14px;
-          padding: ${props.style == "has2NodesStyle"
+          padding: ${props.nodeStyle === "has2NodesStyle"
             ? "16px 0px 16px 40px"
             : "32px 16px 24px 40px"};
         }
@@ -92,10 +95,31 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
         id="expand-filter"
         css={styles.summary}
       >
-        <Checkbox
-          color="default"
-          css={styles.checkbox}
-          checked={props.selected}
+        <FormControlLabel
+          label=""
+          aria-label="checkbox"
+          onClick={(event: any) => event.stopPropagation()}
+          onFocus={(event: any) => event.stopPropagation()}
+          control={
+            <Checkbox
+              color="default"
+              css={styles.checkbox}
+              checked={props.selected}
+              onChange={() => {
+                let params: string[] = [props.node.code];
+                get(props, "node.children", []).forEach((c: FilterOption) => {
+                  params = [...params, c.code];
+                  if (c.children) {
+                    params = [
+                      ...params,
+                      ...c.children.map((cc: FilterOption) => cc.code),
+                    ];
+                  }
+                });
+                props.onFilterCheckboxChange(params);
+              }}
+            />
+          }
         />
         <Typography variant="h6" css={styles.label}>
           {props.node.name}
