@@ -23,8 +23,8 @@ export const SDGTooltip = (props: SunburstTooltipProps) => {
 
   React.useEffect(() => {
     setStyle({
-      top: y + 40 + windowScroll.y,
-      left: x - 150,
+      top: y - 100 + windowScroll.y,
+      left: x - 350,
     });
   }, [x, y, props.hoveredNode, windowScroll.y]);
 
