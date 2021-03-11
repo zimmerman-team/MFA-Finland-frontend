@@ -25,13 +25,6 @@ import {
 } from "app/components/FilterPanel/utils";
 import { ChooseAFilterPanel } from "app/components/FilterPanel/Panels/ChooseAFilterPanel";
 
-// TODO: FilterPanel Main: display selected filters
-// TODO: FilterPanel Filter: display selected filters
-// TODO: FilterPanel Filter: reset filter
-// TODO: FilterPanel Filter: select all
-// TODO: FilterPanel Filter: apply
-// TODO: FilterPanel Filter: recent/filter
-
 export const FilterPanel = (props: FilterPanelProps) => {
   const styles = createStyles(props);
   const [currentFilterOpen, setCurrentFilterOpen] = useRecoilState(
@@ -65,10 +58,34 @@ export const FilterPanel = (props: FilterPanelProps) => {
     const updatedSelectedFilters = { ...localSelectedFilters };
     switch (type) {
       case FILTER_TYPES.THEMATIC_AREAS:
-        if (updatedSelectedFilters.tag.indexOf(value) > -1) {
-          remove(updatedSelectedFilters.tag, (t: string) => t === value);
+        if (typeof param === "string") {
+          if (updatedSelectedFilters.tag.indexOf(value) > -1) {
+            updatedSelectedFilters.tag = filter(
+              updatedSelectedFilters.tag,
+              (t: string) => t !== value
+            );
+          } else {
+            updatedSelectedFilters.tag = [...updatedSelectedFilters.tag, value];
+          }
         } else {
-          updatedSelectedFilters.tag = [...updatedSelectedFilters.tag, value];
+          let areParamValuesApplied = true;
+          const fParam = filter(param, (p: string) => p !== "");
+          fParam.forEach((pvalue: string) => {
+            areParamValuesApplied =
+              areParamValuesApplied &&
+              updatedSelectedFilters.tag.indexOf(pvalue) > -1;
+          });
+          if (areParamValuesApplied) {
+            updatedSelectedFilters.tag = filter(
+              updatedSelectedFilters.tag,
+              (t: string) => fParam.indexOf(t) === -1
+            );
+          } else {
+            updatedSelectedFilters.tag = [
+              ...updatedSelectedFilters.tag,
+              ...fParam,
+            ];
+          }
         }
         break;
       case FILTER_TYPES.COUNTRIES:

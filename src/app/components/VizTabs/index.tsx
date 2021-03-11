@@ -37,7 +37,7 @@ export function VizTabs() {
     <Grid
       container
       css={`
-        padding: 0 50px;
+        // padding: 0 50px;
         @media (max-width: 992px) {
           padding: 0 12px;
         }
@@ -51,10 +51,18 @@ export function VizTabs() {
           position: absolute;
           background: #dde4ef;
           height: 87px;
-          z-index: -1;
         `}
       />
-      <Grid item sm={12} md={12} lg={4} xl={4}>
+      <Grid
+        item
+        sm={12}
+        md={12}
+        lg={4}
+        xl={4}
+        css={`
+          z-index: 1;
+        `}
+      >
         {/* <Hidden smDown> */}
         {/*  <div css="width: 100%;height: 35px;" /> */}
         {/* </Hidden> */}

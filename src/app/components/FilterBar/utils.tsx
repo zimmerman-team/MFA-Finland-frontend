@@ -66,7 +66,7 @@ export function getFilterChips(
   filterOptions: any
 ): ChipModel[] {
   const chips: ChipModel[] = [];
-  const thematicareas = get(filterOptions, "themacticareas.data.data", []);
+  const thematicareas = get(filterOptions, "thematicareas.data.data", []);
   const locations = get(filterOptions, "locations.data.data", []);
   const sectors = get(filterOptions, "sectors.data.data", []);
   const organisations = get(filterOptions, "organisations.data.data", []);
@@ -85,11 +85,25 @@ export function getFilterChips(
       code: "2",
     },
   ];
+
   filters.tag.forEach((tag: string) => {
-    const fArea = find(thematicareas, { code: tag });
+    let name = "";
+    let fArea = find(thematicareas, { code: tag });
+    if (!fArea) {
+      thematicareas.forEach((area: any) => {
+        if (!fArea) {
+          fArea = find(area.children, { code: tag });
+          if (fArea) {
+            name = `${area.name} - ${fArea.name}`;
+          }
+        }
+      });
+    } else {
+      name = fArea.name;
+    }
     if (fArea) {
       chips.push({
-        name: fArea.name,
+        name,
         value: tag,
         type: FILTER_TYPES.THEMATIC_AREAS,
       });

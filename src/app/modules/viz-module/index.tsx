@@ -261,6 +261,13 @@ export default function VizModule() {
   }
 
   React.useEffect(() => {
+    const root = document.getElementById("root");
+    if (root) {
+      root.style.background = "#fff";
+    }
+  }, []);
+
+  React.useEffect(() => {
     setVizLevel(0);
     setVizScale(1);
     setSelectedVizItem(null);
@@ -369,6 +376,10 @@ export default function VizModule() {
   useUnmount(() => {
     setPrevLocation("");
     onTabChange(get(params, "tab", ""));
+    const root = document.getElementById("root");
+    if (root) {
+      root.style.background = "";
+    }
   });
 
   React.useEffect(() => {
@@ -420,7 +431,7 @@ export default function VizModule() {
       <Grid
         container
         css={`
-          padding: 0 50px;
+          // padding: 0 50px;
           height: calc(100% - 76px);
           @media (max-width: 992px) {
             padding: 0 12px;
