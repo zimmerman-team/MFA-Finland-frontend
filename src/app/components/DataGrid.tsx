@@ -156,19 +156,20 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip="lorem ipsum"
           label="Thematic Areas"
           link="/viz/thematic-areas"
-          childrencontainerStyle={{
-            scale: 0.7,
-          }}
           detailPageFilter={props.detailPageFilter}
         >
           {props.vizDataLoading.thematic ? (
             <VizLoader />
           ) : (
-            <ThematicAreas
-              selectedVizItemId={null}
-              setSelectedVizItem={() => null}
-              data={props.thematicAreasChartData}
-            />
+            <>
+              <div css="width: 100%;height: 70px;" />
+              <ThematicAreas
+                showOnlyViz
+                selectedVizItemId={null}
+                setSelectedVizItem={() => null}
+                data={props.thematicAreasChartData}
+              />
+            </>
           )}
         </GridWidget>
       </Grid>

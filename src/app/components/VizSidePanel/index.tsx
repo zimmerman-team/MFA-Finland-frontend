@@ -47,6 +47,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
             overflow-y: auto;
             overflow-y: overlay;
             max-height: ${props.scrollableHeight - 125}px;
+            ${props.vizType === "thematic-areas" ? "pointer-events: none;" : ""}
           `}
         >
           {props.items.map((item: VizSidePanelItemProps) => (

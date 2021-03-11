@@ -486,11 +486,15 @@ export default function VizModule() {
               {vizDataLoading.thematic ? (
                 <VizLoader />
               ) : activeTab === "chart" ? (
-                <ThematicAreas
-                  data={thematicAreasChartData}
-                  selectedVizItemId={selectedVizItem}
-                  setSelectedVizItem={setSelectedVizItem}
-                />
+                <>
+                  <div css="width: 100%;height: 100px;" />
+                  <ThematicAreas
+                    showOnlyViz={false}
+                    data={thematicAreasChartData}
+                    selectedVizItemId={selectedVizItem}
+                    setSelectedVizItem={setSelectedVizItem}
+                  />
+                </>
               ) : (
                 <div
                   css={`
