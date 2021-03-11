@@ -18,6 +18,13 @@ export function VizTabs() {
     { label: "Disbursements" },
   ];
   const styles = {
+    container: css`
+      padding: 0 68px;
+      height: 88px;
+      @media (max-width: 992px) {
+        padding: 0 12px;
+      }
+    `,
     tooltip: css`
       fill: ${PrimaryColor[0]};
       :hover {
@@ -32,28 +39,37 @@ export function VizTabs() {
     title: css`
       margin-right: 12px;
     `,
+    background: css`
+      left: 0;
+      top: 136px;
+      width: 100vw;
+      position: absolute;
+      background: #dde4ef;
+      height: 88px;
+      z-index: -1;
+    `,
+    tabContainer: css`
+      right: 0;
+      bottom: 11px;
+      position: absolute;
+
+      > a {
+        border-right: 1px solid #dde4ef;
+      }
+
+      > a:first-of-type {
+        border-radius: 15px 0px 0px 0px;
+      }
+
+      > a:last-of-type {
+        border-right-style: none;
+        border-radius: 0px 15px 0px 0px;
+      }
+    `,
   };
   return (
-    <Grid
-      container
-      css={`
-        padding: 0 50px;
-        @media (max-width: 992px) {
-          padding: 0 12px;
-        }
-      `}
-    >
-      <div
-        css={`
-          left: 0;
-          top: 124px;
-          width: 100vw;
-          position: absolute;
-          background: #dde4ef;
-          height: 87px;
-          z-index: -1;
-        `}
-      />
+    <Grid container css={styles.container}>
+      <div css={styles.background} />
       <Grid item sm={12} md={12} lg={4} xl={4}>
         {/* <Hidden smDown> */}
         {/*  <div css="width: 100%;height: 35px;" /> */}
@@ -82,26 +98,7 @@ export function VizTabs() {
           position: relative;
         `}
       >
-        <div
-          css={`
-            right: 0;
-            bottom: 11px;
-            position: absolute;
-
-            > a {
-              border-right: 1px solid #dde4ef;
-            }
-
-            > a:first-of-type {
-              border-radius: 15px 0px 0px 0px;
-            }
-
-            > a:last-of-type {
-              border-right-style: none;
-              border-radius: 0px 15px 0px 0px;
-            }
-          `}
-        >
+        <div css={styles.tabContainer}>
           {vizTabs.map((tab: TabProps) => (
             <RouteTab key={tab.name} name={tab.name} url={tab.url} />
           ))}

@@ -411,7 +411,7 @@ export default function VizModule() {
       container
       css={`
         margin-top: -16px;
-        height: calc(100vh - 140px);
+        height: calc(100vh - 136px);
       `}
     >
       <Grid item sm={12}>
@@ -420,8 +420,8 @@ export default function VizModule() {
       <Grid
         container
         css={`
-          padding: 0 50px;
-          height: calc(100% - 76px);
+          padding: 0 68px;
+          height: calc(100% - 88px);
           @media (max-width: 992px) {
             padding: 0 12px;
           }

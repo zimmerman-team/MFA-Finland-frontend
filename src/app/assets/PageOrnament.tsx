@@ -9,7 +9,7 @@ export function PageOrnament(
         position: fixed;
         right: 0;
         bottom: -10px;
-        z-index: -1;
+        z-index: -3;
       `}
     >
       <svg

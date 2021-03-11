@@ -25,7 +25,8 @@ function Providers(props: ProviderProps) {
               maxWidth="lg"
               css={`
                 min-height: 100%;
-                padding: 0;
+                padding: 0 32px;
+                //border: 1px solid red;
                 //overflow: hidden;
               `}
             >

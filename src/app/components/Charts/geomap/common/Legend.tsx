@@ -2,6 +2,7 @@ import React from "react";
 import { css } from "styled-components/macro";
 import { Typography } from "@material-ui/core";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
+import { PrimaryColor } from "app/theme";
 
 interface LegendProps {
   label: string;
@@ -34,6 +35,7 @@ const bar = css`
   background: linear-gradient(269.94deg, #5f8b83 0.08%, #e5f0f0 99.97%), #e5f0f0;
   border-radius: 10px;
   margin-bottom: 6px;
+  border: 0.5px solid ${PrimaryColor[3]};
 `;
 
 const valueContainer = css`

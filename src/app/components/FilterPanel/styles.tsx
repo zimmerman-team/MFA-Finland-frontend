@@ -20,7 +20,7 @@ export const createStyles = (props: FilterPanelProps) => {
       }
     `,
     muiContainer: css`
-      padding: 0;
+      padding: 0 100px;
       @media (max-width: 600px) {
         padding: 16px;
       }
@@ -37,6 +37,7 @@ export const createStyles = (props: FilterPanelProps) => {
     `,
     closeContainer: css`
       margin-top: -12px;
+      margin-right: -12px;
     `,
     actionContainer: css`
       margin-top: 32px;

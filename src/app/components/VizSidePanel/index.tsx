@@ -47,6 +47,31 @@ export function VizSidePanel(props: VizSidePanelProps) {
             overflow-y: auto;
             overflow-y: overlay;
             max-height: ${props.scrollableHeight - 125}px;
+            &::-webkit-scrollbar {
+              width: 4px;
+              border-radius: 4px;
+              background: transparent;
+            }
+
+            &::-webkit-scrollbar-track {
+              border-radius: 4px;
+              background: ${PrimaryColor[0]};
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border-radius: 4px;
+              background: white;
+            }
+
+            ::-webkit-scrollbar-button {
+              width: 0;
+              height: 0;
+              display: none;
+            }
+
+            ::-webkit-scrollbar-corner {
+              background-color: transparent;
+            }
           `}
         >
           {props.items.map((item: VizSidePanelItemProps) => (

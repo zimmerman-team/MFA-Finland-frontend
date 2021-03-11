@@ -1,4 +1,5 @@
 import { css } from "styled-components/macro";
+import { SecondaryColor } from "app/theme";
 
 export const containercss = css`
   padding: 16px;
@@ -20,5 +21,5 @@ export const buttonscontainercss = css`
 export const dividercss = css`
   width: 100%;
   margin-top: 16px;
-  border-bottom: 1px solid rgba(188, 198, 214, 1);
+  border-bottom: 1px solid ${SecondaryColor[1]};
 `;
