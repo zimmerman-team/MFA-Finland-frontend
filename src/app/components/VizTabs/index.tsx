@@ -20,6 +20,7 @@ export function VizTabs() {
   const styles = {
     container: css`
       padding: 0 68px;
+
       height: 88px;
       @media (max-width: 992px) {
         padding: 0 12px;
@@ -46,7 +47,7 @@ export function VizTabs() {
       position: absolute;
       background: #dde4ef;
       height: 88px;
-      z-index: -1;
+      z-index: 1;
     `,
     tabContainer: css`
       right: 0;
@@ -70,7 +71,16 @@ export function VizTabs() {
   return (
     <Grid container css={styles.container}>
       <div css={styles.background} />
-      <Grid item sm={12} md={12} lg={4} xl={4}>
+      <Grid
+        item
+        sm={12}
+        md={12}
+        lg={4}
+        xl={4}
+        css={`
+          z-index: 1;
+        `}
+      >
         {/* <Hidden smDown> */}
         {/*  <div css="width: 100%;height: 35px;" /> */}
         {/* </Hidden> */}
@@ -96,6 +106,7 @@ export function VizTabs() {
         xl={8}
         css={`
           position: relative;
+          z-index: 1;
         `}
       >
         <div css={styles.tabContainer}>

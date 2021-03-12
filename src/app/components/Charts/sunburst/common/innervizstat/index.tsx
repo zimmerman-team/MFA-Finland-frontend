@@ -16,9 +16,10 @@ export function InnerVizStat(props: InnerVizStatProps) {
         variant="h3"
         color="textPrimary"
         css={`
-          font-size: 34px;
+          font-size: 24px;
           font-weight: 700;
-          margin-bottom: 10px;
+          line-height: 29px;
+          margin-bottom: 6px;
         `}
       >
         {formatMoneyWithPrefix(props.count)}

@@ -2,8 +2,8 @@ import React from "react";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { Tabs } from "app/components/FilterPanel/Card/Tabs";
-import { FilterProps } from "app/components/FilterPanel/data";
 import { Checkbox, LinearProgress, Typography } from "@material-ui/core";
+import { FilterProps, FilterOption } from "app/components/FilterPanel/data";
 import { CardContentPeriod } from "app/components/FilterPanel/Card/PeriodCardContent";
 import { CheckboxListItem } from "app/components/FilterPanel/ListItems/CheckboxListItem";
 import { AccordionListItem } from "app/components/FilterPanel/ListItems/AccordionListItem";
@@ -136,7 +136,8 @@ const CardContent = (props: FilterProps) => {
                   <AccordionListItem
                     key={node1.name}
                     node={node1}
-                    style="has2NodesStyle"
+                    nodeStyle="has2NodesStyle"
+                    onFilterCheckboxChange={props.onFilterCheckboxChange}
                     selected={props.selectedItems.indexOf(node1.code) > -1}
                     component={
                       <>
@@ -154,9 +155,12 @@ const CardContent = (props: FilterProps) => {
                                   }
                                 />
                               }
-                              style="has2NodesStyle"
+                              nodeStyle="has2NodesStyle"
                               selected={
                                 props.selectedItems.indexOf(node2.code) > -1
+                              }
+                              onFilterCheckboxChange={
+                                props.onFilterCheckboxChange
                               }
                             />
                           );
@@ -167,10 +171,23 @@ const CardContent = (props: FilterProps) => {
                 );
               }
               // Component with 2 drilldown levels
+              let isChecked = false;
+              if (node1.code.length === 0) {
+                let areParamValuesApplied = true;
+                node1.children.forEach((child: FilterOption) => {
+                  areParamValuesApplied =
+                    areParamValuesApplied &&
+                    props.selectedItems.indexOf(child.code) > -1;
+                });
+                isChecked = areParamValuesApplied;
+              } else {
+                isChecked = props.selectedItems.indexOf(node1.code) > -1;
+              }
               return (
                 <AccordionListItem
                   key={node1.name}
                   node={node1}
+                  selected={isChecked}
                   component={
                     <CheckboxGridListItem
                       {...node1}
@@ -178,8 +195,8 @@ const CardContent = (props: FilterProps) => {
                       onFilterCheckboxChange={props.onFilterCheckboxChange}
                     />
                   }
-                  style="has1NodeStyle"
-                  selected={props.selectedItems.indexOf(node1.code) > -1}
+                  nodeStyle="has1NodeStyle"
+                  onFilterCheckboxChange={props.onFilterCheckboxChange}
                 />
               );
             }

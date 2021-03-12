@@ -4,6 +4,8 @@ import { SecondaryColor } from "app/theme";
 export const containercss = css`
   padding: 16px;
   height: fit-content;
+  background-color: #f8f8f8;
+  z-index: 1;
   @media (max-width: 992px) {
     padding: 16px 12px;
   }

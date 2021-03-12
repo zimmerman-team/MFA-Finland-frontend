@@ -56,8 +56,7 @@ import detailPageName from "app/state/api/actions-reducers/detail-pages/detailPa
 
 // filtering
 import {
-  countries as fcountries,
-  regions,
+  locations,
   sectors as fsectors,
   thematicareas as fthematicareas,
   organisations as forganisations,
@@ -82,10 +81,7 @@ import filtersUpdated from "app/state/api/actions-reducers/sync/filtersUpdated";
 const storeContent: StoreModel = {
   // filtering
   filterOptions: {
-    countries: persist(fcountries, {
-      storage: "localStorage",
-    }),
-    regions: persist(regions, {
+    locations: persist(locations, {
       storage: "localStorage",
     }),
     sectors: persist(fsectors, {

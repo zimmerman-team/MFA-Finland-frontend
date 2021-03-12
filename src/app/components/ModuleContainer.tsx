@@ -6,6 +6,8 @@ import { Map, Share, CloudDownload } from "@material-ui/icons";
 import { css } from "styled-components/macro";
 import { PrimaryColor } from "app/theme";
 import { useLocation } from "react-router-dom";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { PageFloatingButtons } from "app/components/PageFloatingButtons";
 
 interface ModuleContainerProps {
   children: React.ReactNode;
@@ -14,6 +16,7 @@ interface ModuleContainerProps {
 export const ModuleContainer = (props: ModuleContainerProps) => {
   const location = useLocation();
   const isLanding = location.pathname === "/";
+  const mobile = useMediaQuery("(max-width:960px)");
 
   const styles = {
     container: css`
@@ -23,7 +26,8 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
       width: initial;
       margin: 0 64px;
       margin-right: ${isLanding ? "16px" : "64px"};
-
+      position: relative;
+      z-index: 1;
       @media (max-width: 960px) {
         //border-radius: 16px;
         //padding: 16px 16px 16px 16px;
@@ -51,40 +55,13 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
     `,
   };
 
-  function handleMapClick() {}
-
-  function handleShareClick() {}
-
-  function handleDownloadClick() {}
-
   return (
     <React.Fragment>
       <div css={styles.container}>
         <Grid container spacing={2} css={styles.gridContainer}>
           {props.children}
         </Grid>
-        {isLanding && (
-          <div css={styles.iconContainer}>
-            <IconButton
-              css={styles.iconButton}
-              onClick={() => handleMapClick()}
-            >
-              <Map css={styles.icon} />
-            </IconButton>
-            <IconButton
-              css={styles.iconButton}
-              onClick={() => handleShareClick()}
-            >
-              <Share css={styles.icon} />
-            </IconButton>
-            <IconButton
-              css={styles.iconButton}
-              onClick={() => handleDownloadClick()}
-            >
-              <CloudDownload css={styles.icon} />
-            </IconButton>
-          </div>
-        )}
+        {isLanding && !mobile && <PageFloatingButtons />}
       </div>
     </React.Fragment>
   );

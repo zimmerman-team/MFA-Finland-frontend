@@ -19,6 +19,7 @@ import { VizLoader } from "app/modules/common/viz-loader";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 import { useWindowSize } from "app/hooks/useWindowSize";
 import { Collapsable } from "./Collapseable";
+import { PageFloatingButtons } from "./PageFloatingButtons";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -118,6 +119,12 @@ export const DataGrid = (props: DataGridProps) => {
 
   return (
     <React.Fragment>
+      {/* ----------------------------- */}
+      {/*  floating buttons */}
+      {/* ----------------------------- */}
+      {/* <Hidden mdDown> */}
+      {/*  <PageFloatingButtons /> */}
+      {/* </Hidden> */}
       {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}

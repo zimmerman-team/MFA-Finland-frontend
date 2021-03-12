@@ -33,7 +33,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     container: css`
       display: flex;
       flex-direction: column;
-      height: calc(100vh - 211px);
+      height: calc(100vh - 224px);
       //height: max-content;
       //overflow: auto;
     `,

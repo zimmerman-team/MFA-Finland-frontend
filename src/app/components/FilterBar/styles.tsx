@@ -20,6 +20,19 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       padding-top: 16px;
       padding-bottom: 16px;
 
+      &::-webkit-scrollbar {
+        height: 4px;
+        background: #ededf6;
+      }
+      &::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background: #ededf6;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: #2e4063;
+      }
+
       @media (max-width: 992px) {
         padding-left: 12px;
       }
@@ -73,7 +86,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
     `,
     chipContainer: css`
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
       gap: 12px;
       margin-top: 2px;
       @media (max-width: 600px) {

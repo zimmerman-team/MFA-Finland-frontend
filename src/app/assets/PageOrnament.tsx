@@ -1,15 +1,29 @@
 import * as React from "react";
+import { useLocation } from "react-use";
 
 export function PageOrnament(
   props: JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
 ) {
+  const location = useLocation();
+  const [shouldRender, setShouldRender] = React.useState(true);
+  const nonRenderLocations = ["/viz/projects"];
+
+  React.useEffect(() => {
+    setShouldRender(
+      nonRenderLocations.some((loc) => {
+        return !nonRenderLocations.includes(location.pathname as string);
+      })
+    );
+  }, [location]);
+
   return (
     <div
       css={`
         position: fixed;
         right: 0;
         bottom: -10px;
-        z-index: -3;
+        z-index: 0;
+        display: ${shouldRender ? "initial" : "none"};
       `}
     >
       <svg

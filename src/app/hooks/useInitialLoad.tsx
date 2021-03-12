@@ -1,17 +1,12 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import get from "lodash/get";
 import { useRecoilState } from "recoil";
 import { useMount, useUpdateEffect } from "react-use";
+import { useStoreActions } from "app/state/store/hooks";
 import { selectedFilterAtom } from "app/state/recoil/atoms";
-import { useStoreActions, useStoreState } from "app/state/store/hooks";
-import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 
 export function useInitialLoad() {
-  const countriesfilterOptionsAction = useStoreActions(
-    (actions) => actions.filterOptions.countries.fetch
-  );
-  const regionsfilterOptionsAction = useStoreActions(
-    (actions) => actions.filterOptions.regions.fetch
+  const locationsfilterOptionsAction = useStoreActions(
+    (actions) => actions.filterOptions.locations.fetch
   );
   const sectorsfilterOptionsAction = useStoreActions(
     (actions) => actions.filterOptions.sectors.fetch
@@ -42,20 +37,11 @@ export function useInitialLoad() {
   );
 
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
-  const countriesfilterOptionsData = useStoreState(
-    (state) => state.filterOptions.countries.data
-  );
 
   function filterOptionsCall() {
-    countriesfilterOptionsAction({
+    locationsfilterOptionsAction({
       values: {
-        filter_type: "countries",
-        // filters: getAPIFormattedFilters(selectedFilters),
-      },
-    });
-    regionsfilterOptionsAction({
-      values: {
-        filter_type: "regions",
+        filter_type: "locations",
         // filters: getAPIFormattedFilters(selectedFilters),
       },
     });

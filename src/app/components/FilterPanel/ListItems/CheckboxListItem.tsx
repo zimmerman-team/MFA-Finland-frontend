@@ -28,7 +28,7 @@ export const CheckboxListItem = (props: CheckboxListItemProps) => {
         color="default"
         css={styles.checkbox}
         checked={props.selected}
-        onChange={() => props.onFilterCheckboxChange(props.code)}
+        onChange={(e: any) => props.onFilterCheckboxChange(props.code)}
       />
       <Typography variant="h6" css={styles.label}>
         {props.name}
