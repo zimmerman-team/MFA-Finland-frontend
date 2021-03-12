@@ -9,7 +9,7 @@ export const BackDrop = (color: string) => (
       left: 0;
       position: fixed;
       background-color: #2e4982;
-      height: 64px;
+      height: 68px;
       width: 100vw;
       @media (max-width: 600px) {
         height: 56px;

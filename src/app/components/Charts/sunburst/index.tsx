@@ -15,7 +15,7 @@ import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizsta
 
 export function SunburstChart(props: SunburstChartProps) {
   const { width } = useWindowSize();
-  const [vizSize, setVizSize] = React.useState(600);
+  const [vizSize, setVizSize] = React.useState(340);
   const [selectedCount, setSelectedCount] = React.useState(0);
   const [localData, setLocalData] = React.useState(props.data);
   const [selected, setSelected] = React.useState({ name: "", code: " " });
@@ -144,7 +144,16 @@ export function SunburstChart(props: SunburstChartProps) {
           </div>
         )}
       </Grid>
-      <Grid item xs={12} sm={12} md={12} lg={12}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={12}
+        lg={12}
+        css={`
+          padding-top: 44px;
+        `}
+      >
         <div
           css={containercss}
           id="sunburst-container"

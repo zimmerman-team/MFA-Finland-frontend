@@ -8,6 +8,8 @@ import {
   containercss,
   expandiconcss,
 } from "app/components/VizSidePanel/common/item/styles";
+import IconButton from "@material-ui/core/IconButton";
+import { ArrowDropDown } from "@material-ui/icons";
 
 interface VizSidePanelItemPropsProps extends VizSidePanelItemProps {
   vizType: string;
@@ -89,21 +91,22 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
         </div>
         <div
           css={`
-            height: 5px;
+            height: 4px;
           `}
         />
-        <Typography
-          color="textPrimary"
-          variant="subtitle2"
+        <div
           css={`
-            padding-left: 6px;
+            display: flex;
+            justify-content: space-between;
           `}
         >
-          {props.value}
-        </Typography>
-        {props.children && isNOTSectorOrgLocation && (
-          <div css={expandiconcss(props.expanded)}>&#9662;</div>
-        )}
+          <Typography color="textPrimary" variant="subtitle2">
+            {props.value}
+          </Typography>
+          {props.children && isNOTSectorOrgLocation && (
+            <ArrowDropDown css={expandiconcss(props.expanded)} />
+          )}
+        </div>
       </div>
       {props.children &&
         (props.expanded || (props.selected && props.vizType === "sectors")) &&

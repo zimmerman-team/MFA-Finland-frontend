@@ -123,7 +123,10 @@ export function getFilterChips(
 
   let allLocations: any = [];
   locations.forEach((region: any) => {
-    allLocations = [...allLocations, ...region.children];
+    console.log(region.children);
+    if (region.children) {
+      allLocations = [...allLocations, ...region.children];
+    }
   });
 
   filters.countries.forEach((country: string) => {

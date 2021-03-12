@@ -133,9 +133,13 @@ export function Geomap({ geoData }) {
         // borderColor="#fff"
         borderColor="#343249"
         layers={["features"]}
-        onClick={() => handleCountryClick()}
+        onClick={(country) =>
+          mobile
+            ? handleCountryHover({ feature: country })
+            : handleCountryClick()
+        }
         isInteractive
-        tooltip={(hoveredCountry) => handleCountryHover(hoveredCountry)}
+        tooltip={(country) => handleCountryHover(country)}
       />
       {tooltip.label && (
         <Tooltip

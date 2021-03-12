@@ -64,8 +64,8 @@ export function BudgetLinesBarChart(props: BarChartProps) {
         position: relative;
         color: ${PrimaryColor[0]};
         height: ${props.height || 550}px;
-        padding-top: ${!props.height ? "50px" : ""};
-        padding-right: ${!props.height ? "40px" : ""};
+        padding-top: ${!props.height ? "38px" : ""};
+        padding-right: ${!props.height ? "72px" : ""};
       `}
     >
       <ResponsiveBar

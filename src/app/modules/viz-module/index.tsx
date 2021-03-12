@@ -39,6 +39,9 @@ import {
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
 } from "app/state/recoil/atoms";
+import { css } from "styled-components/macro";
+import IconButton from "@material-ui/core/IconButton";
+import { MoreHoriz } from "@material-ui/icons";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -417,22 +420,50 @@ export default function VizModule() {
     }
   }, [activeTab]);
 
+  const styles = {
+    background: css`
+      background-color: #fff;
+      position: fixed;
+      top: 224px;
+      left: 0;
+      width: 50vw;
+    `,
+  };
   return (
     <Grid
       container
       css={`
         margin-top: -16px;
-        height: calc(100vh - 140px);
+        height: calc(100vh - 136px);
       `}
     >
-      <Grid item sm={12}>
+      <div
+        css={`
+          left: 0;
+          top: 0px;
+          width: 100vw;
+          position: absolute;
+          background: #fff;
+          height: 100vh;
+          z-index: 0;
+        `}
+      />
+      <Grid
+        item
+        sm={12}
+        css={`
+          z-index: 1;
+        `}
+      >
         <VizTabs />
       </Grid>
       <Grid
         container
         css={`
-          // padding: 0 50px;
-          height: calc(100% - 76px);
+          padding: 0 68px;
+          z-index: 1;
+
+          height: calc(100% - 88px);
           @media (max-width: 992px) {
             padding: 0 12px;
           }
@@ -448,17 +479,24 @@ export default function VizModule() {
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          <div
-            css={`
-              left: 0;
-              top: 0px;
-              width: 100vw;
-              position: absolute;
-              background: #fff;
-              height: 100vh;
-              z-index: -3;
-            `}
-          />
+          {!isProjects && (
+            <IconButton
+              css={`
+                margin-top: 24px;
+                margin-right: 24px;
+                display: flex;
+                margin-left: auto;
+                width: 32px;
+                height: 32px;
+                background-color: white;
+                filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12));
+                z-index: 3;
+              `}
+            >
+              <MoreHoriz />
+            </IconButton>
+          )}
+
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (
@@ -585,18 +623,16 @@ export default function VizModule() {
           </Switch>
         </Grid>
         {!isProjects && (
-          <Grid item sm={3} md={4} lg={4} xl={4}>
-            <div
-              css={`
-                right: 0;
-                top: 0px;
-                width: 50vw;
-                position: absolute;
-                background: ${PrimaryColor[1]};
-                height: 100vh;
-                z-index: -2;
-              `}
-            />
+          <Grid
+            item
+            sm={3}
+            md={4}
+            lg={4}
+            xl={4}
+            css={`
+              z-index: 1;
+            `}
+          >
             <div
               ref={ref}
               css={`

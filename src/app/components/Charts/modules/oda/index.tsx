@@ -13,6 +13,7 @@ import { SimpleBarChart } from "app/components/Charts/bar/simple";
 import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
+import IconButton from "@material-ui/core/IconButton";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
@@ -48,8 +49,9 @@ export function ODAvizModule(props: ODAvizModuleProps) {
         id="viz-oda"
         css={`
           width: 100%;
-          height: 100%;
           position: relative;
+          padding-right: 72px;
+          padding-top: 32px;
         `}
       >
         <TransitionContainer

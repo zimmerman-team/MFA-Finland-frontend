@@ -6,9 +6,9 @@ import { CookieDialog } from "app/components/CookieDialog";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
+import { PageOrnament } from "app/assets/PageOrnament";
 import { FilterBar } from "./components/FilterBar";
 import { FilterPanel } from "./components/FilterPanel";
-import { PageOrnament } from "app/assets/PageOrnament";
 
 export const App = () => {
   const { i18n } = useTranslation();
@@ -30,6 +30,7 @@ export const App = () => {
         message="The website uses cookies for tracking statistics. Read Grand Bargains data privacy for more details."
         open
       />
+      {/* {shouldRender && <PageOrnament />} */}
       <PageOrnament />
     </React.Fragment>
   );

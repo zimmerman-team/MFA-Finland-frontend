@@ -8,15 +8,17 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       display: flex;
       align-items: flex-start;
       position: sticky;
-      top: 64px;
+      top: 68px;
       margin-bottom: 16px;
-      min-height: 64px;
+      margin-left: 68px;
+      margin-right: 68px;
+      min-height: 68px;
       background-color: #ecf1fa;
       overflow-x: auto;
       overflow-y: hidden;
       z-index: 6;
-      padding-top: 12px;
-      padding-bottom: 12px;
+      padding-top: 16px;
+      padding-bottom: 16px;
 
       &::-webkit-scrollbar {
         height: 4px;
@@ -46,7 +48,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
     `,
     background: css`
       z-index: 5;
-      top: 64px;
+      top: 68px;
       left: 0;
       position: fixed;
       background-color: #ecf1fa;

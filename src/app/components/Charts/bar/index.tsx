@@ -96,7 +96,7 @@ export function BarChart(props: BarChartProps) {
     <div
       css={`
         width: 100%;
-        padding-top: 20px;
+        //padding-top: 20px;
         position: relative;
         color: ${PrimaryColor[0]};
         height: ${props.height || 450}px;

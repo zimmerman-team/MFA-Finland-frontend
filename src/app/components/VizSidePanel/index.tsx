@@ -12,10 +12,22 @@ import {
   containercss,
   buttonscontainercss,
 } from "app/components/VizSidePanel/styles";
+import { css } from "styled-components/macro";
 
 export function VizSidePanel(props: VizSidePanelProps) {
+  const styles = {
+    background: css`
+      top: 224px;
+      width: 100vw;
+      position: absolute;
+      background: #f8f8f8;
+      height: calc(100% - 224px);
+      z-index: -1;
+    `,
+  };
   return (
     <Grid container css={containercss}>
+      <div css={styles.background} />
       <Grid item xs={12} css={buttonscontainercss}>
         <FilledButton
           label="Chart"
@@ -48,6 +60,34 @@ export function VizSidePanel(props: VizSidePanelProps) {
             overflow-y: overlay;
             max-height: ${props.scrollableHeight - 125}px;
             ${props.vizType === "thematic-areas" ? "pointer-events: none;" : ""}
+
+            padding-right: 12px;
+
+            &::-webkit-scrollbar {
+              width: 4px;
+              border-radius: 4px;
+              background: transparent;
+            }
+
+            &::-webkit-scrollbar-track {
+              border-radius: 4px;
+              background: ${PrimaryColor[1]};
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border-radius: 4px;
+              background: ${SecondaryColor[0]};
+            }
+
+            ::-webkit-scrollbar-button {
+              width: 0;
+              height: 0;
+              display: none;
+            }
+
+            ::-webkit-scrollbar-corner {
+              background-color: transparent;
+            }
           `}
         >
           {props.items.map((item: VizSidePanelItemProps) => (

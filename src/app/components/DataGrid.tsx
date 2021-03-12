@@ -122,9 +122,9 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  floating buttons */}
       {/* ----------------------------- */}
-      <Hidden mdDown>
-        <PageFloatingButtons />
-      </Hidden>
+      {/* <Hidden mdDown> */}
+      {/*  <PageFloatingButtons /> */}
+      {/* </Hidden> */}
       {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}

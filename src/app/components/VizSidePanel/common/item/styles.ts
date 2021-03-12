@@ -1,4 +1,4 @@
-import { SecondaryColor } from "app/theme";
+import { PrimaryColor, SecondaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 
 export const containercss = (
@@ -12,7 +12,7 @@ export const containercss = (
   flex-direction: column;
   ${selected ? "padding-left: 16px;" : ""}
   transition: background 0.2s ease-in-out;
-  padding: 16px 16px ${expanded ? "0px" : "16px"} 16px;
+  padding: 12px 24px ${expanded ? "0px" : "12px"} 24px;
   opacity: ${selected || isChild || hasChildren ? 1 : 0.5};
 
   ${isChild ||
@@ -21,7 +21,7 @@ export const containercss = (
   vizType === "countries-regions"
     ? ""
     : `
-      border-bottom: 1px solid rgba(188, 198, 214, 1);
+      border-bottom: 1px solid ${SecondaryColor[1]};
 
       ${
         !expanded
@@ -58,10 +58,13 @@ export const circlecss = (color: string) => css`
 `;
 
 export const expandiconcss = (expanded: boolean) => css`
+  bottom: -4px;
   right: 0;
-  bottom: -3px;
   font-size: 25px;
   position: absolute;
   transition: all 0.2s ease-in-out;
   ${!expanded ? "" : "transform: rotate(180deg);"}
+  * > svg {
+    fill: ${PrimaryColor[0]};
+  }
 `;
