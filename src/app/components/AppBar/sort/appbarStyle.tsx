@@ -45,7 +45,7 @@ export const appbarStyle = {
     align-items: center;
     justify-content: center;
     margin-left: 20px;
-    margin-right: 36px;
+    margin-right: 20px;
     user-select: none;
     cursor: pointer;
     @media (max-width: 600px) {

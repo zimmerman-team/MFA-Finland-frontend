@@ -3,7 +3,7 @@ import { css } from "styled-components/macro";
 export const containercss = css`
   display: flex;
   flex-direction: column;
-  margin-right: 25px;
+  //margin-right: 25px;
 `;
 
 export const buttonscontainercss = css`
