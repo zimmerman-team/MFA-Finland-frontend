@@ -24,8 +24,8 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
     `,
     gridContainer: css`
       width: initial;
-      margin: 0 64px;
-      margin-right: ${isLanding ? "16px" : "64px"};
+      padding: 0 64px;
+      //margin-right: ${isLanding ? "16px" : "64px"};
       position: relative;
       z-index: 1;
       @media (max-width: 960px) {

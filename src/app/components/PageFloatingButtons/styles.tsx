@@ -1,13 +1,8 @@
 import { css } from "styled-components/macro";
 
 export const containercss = css`
-  //top: 20px;
-  //right: -32px;
-  //position: absolute;
-
   display: flex;
   flex-direction: column;
-  transform: translateX();
   margin-right: 25px;
 `;
 
@@ -15,6 +10,8 @@ export const buttonscontainercss = css`
   display: flex;
   position: fixed;
   flex-direction: column;
+  z-index: 100;
+  transform: translateX(-36px);
 `;
 
 export const buttoncss = css`
