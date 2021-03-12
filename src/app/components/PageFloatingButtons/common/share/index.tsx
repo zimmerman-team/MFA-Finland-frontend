@@ -8,6 +8,7 @@ import {
   LinkedinIcon,
   TwitterIcon,
 } from "react-share";
+import { Typography } from "@material-ui/core";
 
 const containercss = css`
   padding: 8px;
@@ -16,6 +17,7 @@ const containercss = css`
   font-size: 14px;
   background: #fff;
   flex-direction: column;
+  width: 268px;
 `;
 
 const iconscontainercss = css`
@@ -31,7 +33,7 @@ export function ShareTooltip() {
   const title = "MFA IATI data portal";
   return (
     <div css={containercss}>
-      <div>Share the link via</div>
+      <Typography variant="body2">Share the link via</Typography>
       <div css={iconscontainercss}>
         <FacebookShareButton url={url} quote={title}>
           <FacebookIcon size={38} round />

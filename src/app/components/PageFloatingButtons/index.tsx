@@ -9,11 +9,13 @@ import {
   buttoncss,
   containercss,
   buttonscontainercss,
+  tooltipCreateStyles,
 } from "app/components/PageFloatingButtons/styles";
 import { IconMap } from "app/assets/icons/IconMap";
 import { IconShare } from "app/assets/icons/IconShare";
 import { IconDownload } from "app/assets/icons/IconDownload";
 import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
+import { makeStyles } from "@material-ui/core";
 
 const LightTooltip = withStyles((theme: Theme) => ({
   arrow: {
@@ -50,6 +52,8 @@ export function PageFloatingButtons(props: any) {
       });
   }
 
+  const classes = tooltipCreateStyles();
+
   return (
     <div css={containercss}>
       <div css={buttonscontainercss}>
@@ -62,6 +66,9 @@ export function PageFloatingButtons(props: any) {
           arrow
           interactive
           placement="left"
+          classes={{
+            tooltip: classes.tooltip,
+          }}
           title={<ShareTooltip />}
         >
           <div css={buttoncss}>
