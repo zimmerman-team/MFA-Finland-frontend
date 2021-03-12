@@ -21,7 +21,7 @@ export const buttonscontainercss = css`
 `;
 
 export const dividercss = css`
-  width: 100%;
+  width: calc(100% - 12px);
   margin-top: 16px;
   border-bottom: 1px solid ${SecondaryColor[1]};
 `;

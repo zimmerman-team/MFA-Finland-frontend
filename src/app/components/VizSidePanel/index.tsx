@@ -59,6 +59,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
             overflow-y: auto;
             overflow-y: overlay;
             max-height: ${props.scrollableHeight - 125}px;
+            padding-right: 12px;
 
             &::-webkit-scrollbar {
               width: 4px;
@@ -68,7 +69,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
 
             &::-webkit-scrollbar-track {
               border-radius: 4px;
-              background: white;
+              background: ${PrimaryColor[1]};
             }
 
             &::-webkit-scrollbar-thumb {
