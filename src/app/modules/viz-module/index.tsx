@@ -8,7 +8,6 @@ import Grid from "@material-ui/core/Grid";
 import { useMeasure, useUnmount } from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
-
 import { PrimaryColor } from "app/theme";
 import { BarItemProps } from "@nivo/bar";
 import { VizTabs } from "app/components/VizTabs";
@@ -39,9 +38,14 @@ import {
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
 } from "app/state/recoil/atoms";
-import { css } from "styled-components/macro";
 import IconButton from "@material-ui/core/IconButton";
-import { MoreHoriz } from "@material-ui/icons";
+// @ts-ignore
+import domtoimage from "dom-to-image";
+import { Close, CloudDownload, MoreHoriz, Share } from "@material-ui/icons";
+import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
+import { LightTooltip } from "app/components/PageFloatingButtons";
+import { tooltipCreateStyles } from "app/components/PageFloatingButtons/styles";
+import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -420,15 +424,6 @@ export default function VizModule() {
     }
   }, [activeTab]);
 
-  const styles = {
-    background: css`
-      background-color: #fff;
-      position: fixed;
-      top: 224px;
-      left: 0;
-      width: 50vw;
-    `,
-  };
   return (
     <Grid
       container
@@ -459,6 +454,7 @@ export default function VizModule() {
       </Grid>
       <Grid
         container
+        id="image-container"
         css={`
           padding: 0 68px;
           z-index: 1;
@@ -479,24 +475,7 @@ export default function VizModule() {
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          {!isProjects && (
-            <IconButton
-              css={`
-                margin-top: 24px;
-                margin-right: 24px;
-                display: flex;
-                margin-left: auto;
-                width: 32px;
-                height: 32px;
-                background-color: white;
-                filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12));
-                z-index: 3;
-              `}
-            >
-              <MoreHoriz />
-            </IconButton>
-          )}
-
+          {!isProjects && <FloatingButtons />}
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (

@@ -38,6 +38,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
         props.selected,
         props.children ? props.children.length > 0 : false,
         props.vizType,
+        props.color !== null,
         props.isChild
       )}
       style={isSectorOROrgORLocation ? { opacity: 1 } : {}}
@@ -76,6 +77,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
         <div
           css={`
             display: flex;
+            flex-direction: row;
           `}
         >
           {props.color && <div css={circlecss(props.color)} />}
@@ -83,6 +85,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
             color="textPrimary"
             variant="body2"
             css={`
+              line-height: 17px;
               width: calc(100% - 25px);
             `}
           >
@@ -100,7 +103,14 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
             justify-content: space-between;
           `}
         >
-          <Typography color="textPrimary" variant="subtitle2">
+          <Typography
+            color="textPrimary"
+            variant="subtitle2"
+            css={`
+              margin-left: ${props.color ? "22px" : "0"};
+              line-height: 17px;
+            `}
+          >
             {props.value}
           </Typography>
           {props.children && isNOTSectorOrgLocation && (
@@ -115,7 +125,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
           <React.Fragment>
             <div
               css={`
-                height: 16px;
+                height: 12px;
                 pointer-events: none;
               `}
             />

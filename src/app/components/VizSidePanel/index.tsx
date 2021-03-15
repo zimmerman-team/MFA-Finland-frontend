@@ -25,9 +25,14 @@ export function VizSidePanel(props: VizSidePanelProps) {
       z-index: -1;
     `,
   };
+  const hasColor =
+    props.vizType === "organisations" ||
+    props.vizType === "countries-regions" ||
+    props.vizType === "thematic-areas" ||
+    props.vizType === "sectors";
   return (
     <Grid container css={containercss}>
-      <div css={styles.background} />
+      <div id="viz-sidepanel-background" css={styles.background} />
       <Grid item xs={12} css={buttonscontainercss}>
         <FilledButton
           label="Chart"
@@ -60,6 +65,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
             overflow-y: overlay;
             max-height: ${props.scrollableHeight - 125}px;
             ${props.vizType === "thematic-areas" ? "pointer-events: none;" : ""}
+            ${hasColor ? "padding-top: 24px;" : ""}
 
             padding-right: 12px;
 

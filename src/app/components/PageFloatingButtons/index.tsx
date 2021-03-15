@@ -17,7 +17,7 @@ import { IconDownload } from "app/assets/icons/IconDownload";
 import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
 import { makeStyles } from "@material-ui/core";
 
-const LightTooltip = withStyles((theme: Theme) => ({
+export const LightTooltip = withStyles((theme: Theme) => ({
   arrow: {
     color: theme.palette.common.white,
   },
@@ -40,10 +40,10 @@ export function PageFloatingButtons(props: any) {
     const node = document.getElementById("root");
 
     domtoimage
-      .toJpeg(node, { bgcolor: "#f8f8f8" })
+      .toPng(node, { bgcolor: "#f8f8f8" })
       .then((dataUrl: any) => {
         const link = document.createElement("a");
-        link.download = "my-image-name.jpeg";
+        link.download = "download.png";
         link.href = dataUrl;
         link.click();
       })
