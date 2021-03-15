@@ -4,6 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { Lock, LockOpen } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { PrimaryColor, ProjectPalette, SecondaryColor } from "../../../theme";
 import { PillButton } from "../../Buttons/PillButton";
 
@@ -103,7 +104,8 @@ export const Tooltip = React.memo(function TooltipMemoized(
         </div>
         <div css={ValueLabel}>Disbursements</div>
         <Typography variant="h5" css={Value}>
-          {`€ ${new Intl.NumberFormat("nl-NL").format(props.value)}`}
+          {/* {`€ ${new Intl.NumberFormat("nl-NL").format(props.value)}`} */}
+          {formatLargeAmountsWithPrefix(props.value)}
         </Typography>
       </div>
       <div css={ButtonContainerStyle}>

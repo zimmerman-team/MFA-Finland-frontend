@@ -7,6 +7,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { formatLocale } from "app/utils/formatLocale";
 import IconButton from "@material-ui/core/IconButton";
 import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
+import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 interface ProjectsListModuleProps {
   count: number;
@@ -212,7 +213,7 @@ const ListItem = (project: ProjectType) => {
           />
           <LabelValueGridItem
             label="Estimated budget"
-            value={formatLocale(project.budget)}
+            value={formatLargeAmountsWithPrefix(project.budget)}
           />
           <LabelValueGridItem
             label="Disbursement"
