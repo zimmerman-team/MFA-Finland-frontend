@@ -3,9 +3,9 @@ import { css } from "styled-components/macro";
 import IconButton from "@material-ui/core/IconButton";
 import { Lock, LockOpen } from "@material-ui/icons";
 import { Typography } from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
-import { PrimaryColor, ProjectPalette, SecondaryColor } from "../../../theme";
+import { Link } from "react-router-dom";
+import { PrimaryColor, ProjectPalette } from "../../../theme";
 import { PillButton } from "../../Buttons/PillButton";
 
 interface TooltipModel {
@@ -14,6 +14,7 @@ interface TooltipModel {
   type: string;
   isLocked: boolean;
   handleLockClick: Function;
+  ISO2Code: string;
 }
 export const HeaderContainer = css`
   display: flex;
@@ -104,12 +105,13 @@ export const Tooltip = React.memo(function TooltipMemoized(
         </div>
         <div css={ValueLabel}>Disbursements</div>
         <Typography variant="h5" css={Value}>
-          {/* {`€ ${new Intl.NumberFormat("nl-NL").format(props.value)}`} */}
           {formatLargeAmountsWithPrefix(props.value)}
         </Typography>
       </div>
       <div css={ButtonContainerStyle}>
-        <PillButton css={Button}>Country Page</PillButton>
+        <Link to={`/countries/${props.ISO2Code}`}>
+          <PillButton css={Button}>Country Page</PillButton>
+        </Link>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { css } from "styled-components/macro";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ProjectPalette } from "app/theme";
 import { useWindowSize } from "app/hooks/useWindowSize";
+import { getCountryISO2 } from "app/utils/countryISOMapping";
 import { Tooltip } from "./tooltip";
 import { geojson } from "./features";
 
@@ -130,7 +131,6 @@ export function Geomap({ geoData }) {
         projectionScale={projectionScale}
         projectionTranslation={projectionTranslation}
         borderWidth={1}
-        // borderColor="#fff"
         borderColor="#343249"
         layers={["features"]}
         onClick={(country) =>
@@ -148,6 +148,7 @@ export function Geomap({ geoData }) {
           type={get(geoData, "label", "activities")}
           isLocked={isLocked}
           handleLockClick={() => setIsLocked(!isLocked)}
+          ISO2Code={getCountryISO2(tooltip.id)}
         />
       )}
     </div>

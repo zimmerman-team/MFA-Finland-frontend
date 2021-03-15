@@ -9,3 +9,8 @@ export function formatLocale(value: number | bigint): string {
     maximumFractionDigits: 0,
   });
 }
+
+export function formatLocaleN(value: number | bigint): string {
+  if (!value) return "";
+  return Number(value).toLocaleString(locale);
+}
