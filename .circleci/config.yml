@@ -57,27 +57,12 @@ workflows:
                   if [ "${CIRCLE_BRANCH}" == "master" ]; then
                     echo 'export REACT_APP_PROJECT_URL="$STAGING_URL"' >> $BASH_ENV
                     echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH_API="$STAGING_AUTH_API"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_DOMAIN="$STAGING_AUTH0_DOMAIN"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_CLIENT="$STAGING_AUTH0_CLIENT"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_AUDIENCE="$STAGING_AUTH0_AUDIENCE"' >> $BASH_ENV
-#                    echo 'export REACT_APP_CYPRESS_baseUrl="$STAGING_URL"' >> $BASH_ENV
                   elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
                     echo 'export REACT_APP_PROJECT_URL="$TEST_URL"' >> $BASH_ENV
                     echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH_API="$STAGING_AUTH_API"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_DOMAIN="$STAGING_AUTH0_DOMAIN"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_CLIENT="$STAGING_AUTH0_CLIENT"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_AUDIENCE="$STAGING_AUTH0_AUDIENCE"' >> $BASH_ENV
-#                    echo 'export REACT_APP_CYPRESS_baseUrl="$TEST_URL"' >> $BASH_ENV
                   else
                     echo 'export REACT_APP_PROJECT_URL="$DEV_URL"' >> $BASH_ENV
                     echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH_API="$STAGING_AUTH_API"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_DOMAIN="$STAGING_AUTH0_DOMAIN"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_CLIENT="$STAGING_AUTH0_CLIENT"' >> $BASH_ENV
-#                    echo 'export REACT_APP_AUTH0_AUDIENCE="$STAGING_AUTH0_AUDIENCE"' >> $BASH_ENV
-#                    echo 'export REACT_APP_CYPRESS_baseUrl="$DEV_URL"' >> $BASH_ENV
                   fi
                   source $BASH_ENV
           #          post-steps:
