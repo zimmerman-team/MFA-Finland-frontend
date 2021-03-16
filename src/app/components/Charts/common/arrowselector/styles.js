@@ -19,7 +19,7 @@ export const containercss = css`
 
     svg {
       path {
-        fill: #fff;
+        fill: ##888;
       }
     }
 

@@ -280,16 +280,16 @@ export function getFilterChips(
     }
   });
 
-  // if (filters.years.length > 1) {
-  //   chips.push({
-  //     name:
-  //       filters.years[0] === filters.years[1]
-  //         ? filters.years[0]
-  //         : `${filters.years[0]} - ${filters.years[1]}`,
-  //     value: `${filters.years[0]},${filters.years[1]}`,
-  //     type: FILTER_TYPES.PERIOD,
-  //   });
-  // }
+  if (filters.years.length > 1) {
+    chips.push({
+      name:
+        filters.years[0] === filters.years[1]
+          ? filters.years[0]
+          : `${filters.years[0]} - ${filters.years[1]}`,
+      value: `${filters.years[0]},${filters.years[1]}`,
+      type: FILTER_TYPES.PERIOD,
+    });
+  }
 
   return chips;
 }

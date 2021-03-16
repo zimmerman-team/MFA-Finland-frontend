@@ -66,6 +66,10 @@ export function BudgetLinesBarChart(props: BarChartProps) {
         height: ${props.height || 550}px;
         padding-top: ${!props.height ? "38px" : ""};
         padding-right: ${!props.height ? "72px" : ""};
+
+        @media (max-width: 992px) {
+          padding-right: ${!props.height ? "12px" : ""};
+        }
       `}
     >
       <ResponsiveBar
