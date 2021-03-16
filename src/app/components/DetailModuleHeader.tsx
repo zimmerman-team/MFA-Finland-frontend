@@ -14,10 +14,10 @@ interface ModuleHeaderProps {
 export const DetailModuleHeader = (props: ModuleHeaderProps) => {
   return (
     <React.Fragment>
-      <Grid item lg={12}>
+      <Grid item xs={12}>
         <Breadcrumbs route={props.crumbs} />
       </Grid>
-      <Grid item lg={12} css="display: flex;justify-content: space-between;">
+      <Grid item xs={12} css="display: flex;justify-content: space-between;">
         <div
           css={`
             display: flex;

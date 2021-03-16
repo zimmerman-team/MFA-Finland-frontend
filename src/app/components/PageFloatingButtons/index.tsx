@@ -28,7 +28,7 @@ export const LightTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 
-export function PageFloatingButtons(props: any) {
+export function PageFloatingButtons() {
   function scrollToMap() {
     window.scrollTo({
       top: document.body.scrollHeight,

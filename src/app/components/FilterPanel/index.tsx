@@ -53,6 +53,14 @@ export const FilterPanel = (props: FilterPanelProps) => {
     setLocalSelectedFilters(selectedFilters);
   }, [selectedFilters]);
 
+  React.useEffect(() => {
+    if (currentFilterOpen === FILTER_TYPES.NONE) {
+      document.body.style.overflowY = "auto";
+    } else {
+      document.body.style.overflowY = "hidden";
+    }
+  }, [currentFilterOpen]);
+
   function onFilterCheckboxChange(param: string | string[], type: any): void {
     const value = param as string;
     const updatedSelectedFilters = { ...localSelectedFilters };

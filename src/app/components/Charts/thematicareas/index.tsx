@@ -37,7 +37,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
         css={containercss}
       >
         {props.data.map((item: DataProps, index: number) => (
-          <>
+          <React.Fragment key={item.name}>
             <div
               key={item.name}
               css={itemcirclecss(item.size, item.color, directions[index])}
@@ -49,7 +49,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
             </div>
             <div css={itemcirclelabelcss(directions[index])}>{item.area}</div>
-          </>
+          </React.Fragment>
         ))}
       </Grid>
       <Hidden lgUp>
@@ -61,7 +61,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
             Main priority/Secondary priority
           </div>
           {props.data.map((item: DataProps) => (
-            <div css={rightsideinfopanelitem}>
+            <div css={rightsideinfopanelitem} key={item.name}>
               <div>{item.area}</div>
               <div
                 css={progresscontainercss(

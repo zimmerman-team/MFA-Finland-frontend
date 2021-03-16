@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Sunburst, SunburstPoint } from "react-vis";
 import { getTotal } from "app/components/Charts/sunburst/common/tooltip/utils";
 import {
@@ -8,6 +9,7 @@ import {
 import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
 
 export function SunburstViz(props: any) {
+  const history = useHistory();
   const [hoveredNode, setHoveredNode] = React.useState<SunburstPoint | null>(
     null
   );
@@ -54,7 +56,13 @@ export function SunburstViz(props: any) {
       {hoveredNode && showSmTooltip && (
         <SmTooltipContainer
           showDrilldownBtn
+          detailBtnLabel="Sector Detail"
           close={() => setHoveredNode(null)}
+          gotoDetail={() =>
+            history.push(
+              `/sectors/${hoveredNode.code}${history.location.search}`
+            )
+          }
           drilldown={() => {
             props.setSelected(hoveredNode);
             props.setSelectedCount(getTotal(hoveredNode));

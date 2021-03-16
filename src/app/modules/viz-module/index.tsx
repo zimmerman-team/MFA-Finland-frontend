@@ -488,6 +488,7 @@ export default function VizModule() {
                   onZoomOut={onZoomOut}
                   data={odaBarChartData}
                   vizCompData={vizCompData}
+                  scrollableHeight={height - 56}
                   setVizCompData={setVizCompData}
                   onSelectChange={onSelectChange}
                   vizTranslation={vizTranslation}
@@ -535,8 +536,8 @@ export default function VizModule() {
                   vizLevel={vizLevel}
                   activeTab={activeTab}
                   onZoomOut={onZoomOut}
-                  scrollableHeight={height}
                   data={sectorsSunburstData}
+                  scrollableHeight={height - 56}
                   sectorDrillDown={sectorDrillDown}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
@@ -553,8 +554,8 @@ export default function VizModule() {
                 <CountriesRegionsModule
                   label=""
                   activeTab={activeTab}
-                  scrollableHeight={height}
                   data={locationsTreemapData}
+                  scrollableHeight={height - 56}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
                 />
@@ -567,7 +568,7 @@ export default function VizModule() {
                 <OrganisationsModule
                   label=""
                   activeTab={activeTab}
-                  scrollableHeight={height}
+                  scrollableHeight={height - 56}
                   data={organisationsTreemapData}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
@@ -581,8 +582,8 @@ export default function VizModule() {
                 <BudgetLinesModule
                   activeTab={activeTab}
                   onZoomOut={onZoomOut}
-                  scrollableHeight={height}
                   vizCompData={vizCompData}
+                  scrollableHeight={height - 56}
                   data={budgetLinesBarChartData}
                   setVizCompData={setVizCompData}
                   onSelectChange={onSelectChange}

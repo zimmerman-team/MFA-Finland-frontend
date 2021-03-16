@@ -36,12 +36,27 @@ const innercontainercss = css`
 const closebtncss = css`
   && {
     padding: 0;
+
+    svg {
+      fill: #2e4982;
+    }
   }
+`;
+
+const buttoncss = css`
+  color: #fff;
+  font-size: 14px;
+  padding: 6px 12px;
+  background: #2e4982;
+  border-radius: 20px;
+  text-transform: capitalize;
 `;
 
 interface SmTooltipContainerProps {
   close: Function;
-  drilldown: Function;
+  drilldown?: Function;
+  gotoDetail?: Function;
+  detailBtnLabel?: string;
   children: React.ReactNode;
   showDrilldownBtn: boolean;
 }
@@ -61,19 +76,33 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
         </IconButton>
       </div>
       {props.children}
-      {props.showDrilldownBtn && (
+      {(props.showDrilldownBtn || props.gotoDetail) && (
         <React.Fragment>
           <div css="width: 100%;height: 15px;" />
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
-              props.close();
-              props.drilldown();
-            }}
-          >
-            Drill down
-          </Button>
+          <div css="width: 100%;display: flex;justify-content: flex-end;align-items: center;gap: 16px;">
+            {props.gotoDetail && (
+              <Button
+                css={buttoncss}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                  props.close();
+                  props.gotoDetail && props.gotoDetail();
+                }}
+              >
+                {props.detailBtnLabel}
+              </Button>
+            )}
+            {props.showDrilldownBtn && (
+              <Button
+                css={buttoncss}
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                  props.close();
+                  props.drilldown && props.drilldown();
+                }}
+              >
+                Drill Down
+              </Button>
+            )}
+          </div>
         </React.Fragment>
       )}
     </div>

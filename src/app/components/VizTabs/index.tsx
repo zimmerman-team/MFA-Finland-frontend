@@ -34,8 +34,12 @@ export function VizTabs() {
     `,
     titleContainer: css`
       display: flex;
-      margin-bottom: 16px;
       margin-top: 3px;
+      margin-bottom: 16px;
+
+      @media (max-width: 992px) {
+        margin-bottom: 48px;
+      }
     `,
     title: css`
       margin-right: 12px;
@@ -44,10 +48,13 @@ export function VizTabs() {
       left: 0;
       top: 136px;
       width: 100vw;
+      height: 88px;
       position: absolute;
       background: #dde4ef;
-      height: 88px;
-      z-index: 1;
+
+      @media (max-width: 992px) {
+        height: 120px;
+      }
     `,
     tabContainer: css`
       right: 0;

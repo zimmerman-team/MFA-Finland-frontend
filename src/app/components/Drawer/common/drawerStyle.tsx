@@ -38,8 +38,11 @@ export const drawerStyle = {
   AddressContainer: css`
     padding-top: 12px;
     padding-left: 32px;
+    border-right: 1px solid #fff;
+
     @media (max-width: 960px) {
-      padding: initial;
+      padding-top: initial;
+      border-right-style: none;
     }
   `,
   SocialIconContainer: css`

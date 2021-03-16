@@ -13,12 +13,12 @@ import { SimpleBarChart } from "app/components/Charts/bar/simple";
 import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
-import IconButton from "@material-ui/core/IconButton";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
   vizLevel: number;
   activeTab: string;
+  scrollableHeight: number;
   odaBudgetLinesChartData: any;
   odaBudgetLinesChartLoading: boolean;
   onArrowSelectChange: (v: string) => void;
@@ -114,7 +114,9 @@ export function ODAvizModule(props: ODAvizModuleProps) {
   return (
     <div
       css={`
+        overflow-y: overlay;
         padding: 24px 24px 24px 0;
+        max-height: ${props.scrollableHeight}px;
       `}
     >
       <DataTable {...tableConfig} />

@@ -17,6 +17,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       overflow-x: auto;
       overflow-y: hidden;
       z-index: 6;
+      padding-left: 12px;
       padding-top: 16px;
       padding-bottom: 16px;
 
@@ -33,9 +34,6 @@ export const createStyles = (props: FilterBarProps, height: number) => {
         background: #2e4063;
       }
 
-      @media (max-width: 992px) {
-        padding-left: 12px;
-      }
       @media (max-width: 600px) {
         top: 56px;
         min-height: 56px;
@@ -43,7 +41,6 @@ export const createStyles = (props: FilterBarProps, height: number) => {
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        //padding: 16px 16px 8px;
       }
     `,
     background: css`
