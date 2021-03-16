@@ -46,9 +46,9 @@ export function VizTabs() {
     `,
     background: css`
       left: 0;
-      top: 124px;
+      top: 136px;
       width: 100vw;
-      height: 87px;
+      height: 88px;
       position: absolute;
       background: #dde4ef;
 
