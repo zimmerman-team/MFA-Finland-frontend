@@ -7,6 +7,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { formatLocale } from "app/utils/formatLocale";
 import IconButton from "@material-ui/core/IconButton";
 import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
+import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 interface ProjectsListModuleProps {
   count: number;
@@ -33,7 +34,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     container: css`
       display: flex;
       flex-direction: column;
-      height: calc(100vh - 211px);
+      height: calc(100vh - 224px);
       //height: max-content;
       //overflow: auto;
     `,
@@ -46,7 +47,6 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
       justify-content: space-between;
       align-items: flex-end;
       margin-bottom: 24px;
-      margin-top: 24px;
     `,
     iconContainer: css`
       button + button {
@@ -81,6 +81,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
 
       &::-webkit-scrollbar-thumb {
         border-radius: 4px;
+        height: 156px;
         background: #ECF1FA;
       }
 
@@ -212,7 +213,7 @@ const ListItem = (project: ProjectType) => {
           />
           <LabelValueGridItem
             label="Estimated budget"
-            value={formatLocale(project.budget)}
+            value={formatLargeAmountsWithPrefix(project.budget)}
           />
           <LabelValueGridItem
             label="Disbursement"

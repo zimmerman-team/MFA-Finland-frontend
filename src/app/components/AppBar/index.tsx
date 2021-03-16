@@ -156,6 +156,7 @@ export function AppBar() {
                 aria-label="menu"
                 onClick={toggleDrawer(true)}
                 data-cy="burger-menu-button"
+                css="transform: translateX(12px)"
               >
                 <MenuIcon
                   css={`

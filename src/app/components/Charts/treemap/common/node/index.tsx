@@ -5,6 +5,7 @@ import useFitText from "use-fit-text";
 import { css } from "styled-components/macro";
 import { PrimaryColor } from "app/theme";
 import { formatLocale } from "app/utils/formatLocale";
+import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 const containercss = css`
   display: flex;
@@ -67,7 +68,7 @@ export function TreeemapNode(props: any) {
         <div>
           <div>{node.data.name}</div>
           <div css="width: 100%;height: 5px;" />
-          <div>{formatLocale(node.data.value)}</div>
+          <div>{formatLargeAmountsWithPrefix(node.data.value)}</div>
         </div>
       )}
     </div>

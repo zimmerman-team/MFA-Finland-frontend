@@ -259,12 +259,12 @@ export default createMuiTheme({
         },
 
         // note: use this snippet if you want to customize the expanded state of the accordion component
-        /*'&$expanded': {
+        /* '&$expanded': {
           marginTop: '0!important',
           marginBottom: '0!important',
           borderBottomLeftRadius: '16px',
           borderBottomRightRadius: '16px',
-        },*/
+        }, */
       },
     },
 
@@ -276,7 +276,7 @@ export default createMuiTheme({
   },
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],
-    values: { xs: 0, lg: 1280, sm: 600, xl: 1920, md: 960 },
+    values: { xs: 0, lg: 1440, sm: 600, xl: 1920, md: 960 },
   },
   mixins: {
     toolbar: {

@@ -8,7 +8,6 @@ import Grid from "@material-ui/core/Grid";
 import { useMeasure, useUnmount } from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
-
 import { PrimaryColor } from "app/theme";
 import { BarItemProps } from "@nivo/bar";
 import { VizTabs } from "app/components/VizTabs";
@@ -39,6 +38,14 @@ import {
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
 } from "app/state/recoil/atoms";
+import IconButton from "@material-ui/core/IconButton";
+// @ts-ignore
+import domtoimage from "dom-to-image";
+import { Close, CloudDownload, MoreHoriz, Share } from "@material-ui/icons";
+import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
+import { LightTooltip } from "app/components/PageFloatingButtons";
+import { tooltipCreateStyles } from "app/components/PageFloatingButtons/styles";
+import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -422,17 +429,37 @@ export default function VizModule() {
       container
       css={`
         margin-top: -16px;
-        height: calc(100vh - 140px);
+        height: calc(100vh - 136px);
       `}
     >
-      <Grid item sm={12}>
+      <div
+        css={`
+          left: 0;
+          top: 0px;
+          width: 100vw;
+          position: absolute;
+          background: #fff;
+          height: 100vh;
+          z-index: 0;
+        `}
+      />
+      <Grid
+        item
+        sm={12}
+        css={`
+          z-index: 1;
+        `}
+      >
         <VizTabs />
       </Grid>
       <Grid
         container
+        id="image-container"
         css={`
-          // padding: 0 50px;
-          height: calc(100% - 76px);
+          padding: 0 68px;
+          z-index: 1;
+
+          height: calc(100% - 88px);
           @media (max-width: 992px) {
             padding: 0 12px;
           }
@@ -448,17 +475,7 @@ export default function VizModule() {
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          <div
-            css={`
-              left: 0;
-              top: 0px;
-              width: 100vw;
-              position: absolute;
-              background: #fff;
-              height: 100vh;
-              z-index: -3;
-            `}
-          />
+          {!isProjects && <FloatingButtons />}
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (
@@ -585,18 +602,16 @@ export default function VizModule() {
           </Switch>
         </Grid>
         {!isProjects && (
-          <Grid item sm={3} md={4} lg={4} xl={4}>
-            <div
-              css={`
-                right: 0;
-                top: 0px;
-                width: 50vw;
-                position: absolute;
-                background: ${PrimaryColor[1]};
-                height: 100vh;
-                z-index: -2;
-              `}
-            />
+          <Grid
+            item
+            sm={3}
+            md={4}
+            lg={4}
+            xl={4}
+            css={`
+              z-index: 1;
+            `}
+          >
             <div
               ref={ref}
               css={`

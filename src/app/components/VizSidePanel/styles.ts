@@ -1,8 +1,11 @@
 import { css } from "styled-components/macro";
+import { SecondaryColor } from "app/theme";
 
 export const containercss = css`
   padding: 16px;
   height: fit-content;
+  background-color: #f8f8f8;
+  z-index: 1;
   @media (max-width: 992px) {
     padding: 16px 12px;
   }
@@ -18,7 +21,7 @@ export const buttonscontainercss = css`
 `;
 
 export const dividercss = css`
-  width: 100%;
+  width: calc(100% - 12px);
   margin-top: 16px;
-  border-bottom: 1px solid rgba(188, 198, 214, 1);
+  border-bottom: 1px solid ${SecondaryColor[1]};
 `;

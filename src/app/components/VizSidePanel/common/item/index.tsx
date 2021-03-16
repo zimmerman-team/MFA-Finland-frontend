@@ -8,6 +8,8 @@ import {
   containercss,
   expandiconcss,
 } from "app/components/VizSidePanel/common/item/styles";
+import IconButton from "@material-ui/core/IconButton";
+import { ArrowDropDown } from "@material-ui/icons";
 
 interface VizSidePanelItemPropsProps extends VizSidePanelItemProps {
   vizType: string;
@@ -36,6 +38,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
         props.selected,
         props.children ? props.children.length > 0 : false,
         props.vizType,
+        props.color !== null,
         props.isChild
       )}
       style={isSectorOROrgORLocation ? { opacity: 1 } : {}}
@@ -74,6 +77,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
         <div
           css={`
             display: flex;
+            flex-direction: row;
           `}
         >
           {props.color && <div css={circlecss(props.color)} />}
@@ -81,6 +85,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
             color="textPrimary"
             variant="body2"
             css={`
+              line-height: 17px;
               width: calc(100% - 25px);
             `}
           >
@@ -89,21 +94,29 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
         </div>
         <div
           css={`
-            height: 5px;
+            height: 4px;
           `}
         />
-        <Typography
-          color="textPrimary"
-          variant="subtitle2"
+        <div
           css={`
-            padding-left: 6px;
+            display: flex;
+            justify-content: space-between;
           `}
         >
-          {props.value}
-        </Typography>
-        {props.children && isNOTSectorOrgLocation && (
-          <div css={expandiconcss(props.expanded)}>&#9662;</div>
-        )}
+          <Typography
+            color="textPrimary"
+            variant="subtitle2"
+            css={`
+              margin-left: ${props.color ? "22px" : "0"};
+              line-height: 17px;
+            `}
+          >
+            {props.value}
+          </Typography>
+          {props.children && isNOTSectorOrgLocation && (
+            <ArrowDropDown css={expandiconcss(props.expanded)} />
+          )}
+        </div>
       </div>
       {props.children &&
         (props.expanded || (props.selected && props.vizType === "sectors")) &&
@@ -112,7 +125,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
           <React.Fragment>
             <div
               css={`
-                height: 16px;
+                height: 12px;
                 pointer-events: none;
               `}
             />

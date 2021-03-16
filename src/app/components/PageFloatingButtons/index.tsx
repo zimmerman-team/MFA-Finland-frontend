@@ -9,13 +9,15 @@ import {
   buttoncss,
   containercss,
   buttonscontainercss,
+  tooltipCreateStyles,
 } from "app/components/PageFloatingButtons/styles";
 import { IconMap } from "app/assets/icons/IconMap";
 import { IconShare } from "app/assets/icons/IconShare";
 import { IconDownload } from "app/assets/icons/IconDownload";
 import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
+import { makeStyles } from "@material-ui/core";
 
-const LightTooltip = withStyles((theme: Theme) => ({
+export const LightTooltip = withStyles((theme: Theme) => ({
   arrow: {
     color: theme.palette.common.white,
   },
@@ -38,10 +40,10 @@ export function PageFloatingButtons() {
     const node = document.getElementById("root");
 
     domtoimage
-      .toJpeg(node, { bgcolor: "#f8f8f8" })
+      .toPng(node, { bgcolor: "#f8f8f8" })
       .then((dataUrl: any) => {
         const link = document.createElement("a");
-        link.download = "my-image-name.jpeg";
+        link.download = "download.png";
         link.href = dataUrl;
         link.click();
       })
@@ -49,6 +51,8 @@ export function PageFloatingButtons() {
         console.error("oops, something went wrong!", error);
       });
   }
+
+  const classes = tooltipCreateStyles();
 
   return (
     <div css={containercss}>
@@ -62,6 +66,9 @@ export function PageFloatingButtons() {
           arrow
           interactive
           placement="left"
+          classes={{
+            tooltip: classes.tooltip,
+          }}
           title={<ShareTooltip />}
         >
           <div css={buttoncss}>

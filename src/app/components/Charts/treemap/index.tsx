@@ -100,7 +100,7 @@ export function Treemap(props: TreemapProps) {
     <Grid
       container
       spacing={1}
-      css={!props.height ? "padding: 50px 10px 0 0;" : ""}
+      css={!props.height ? "padding: 32px 104px 0 0;" : ""}
     >
       <Grid item sm={12} md={2} lg={1}>
         {drilldownId && (
