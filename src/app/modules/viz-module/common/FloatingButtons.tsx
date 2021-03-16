@@ -186,10 +186,6 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
     }
   }
   function filter(node: Element) {
-    console.log(node);
-    console.log(
-      ["viz-floating-buttons", "viz-sidepanel-background"].includes(node.id)
-    );
     return !["viz-floating-buttons", "viz-sidepanel-background"].includes(
       node.id
     );
@@ -224,7 +220,6 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
   }
 
   function downloadSVG() {
-    console.log(getNode());
     const element = document.getElementById(getNode());
 
     domtoimage

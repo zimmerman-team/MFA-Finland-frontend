@@ -1,10 +1,7 @@
-import { Grid, Hidden } from "@material-ui/core";
-import React, { useState } from "react";
-import { PageOrnament } from "app/assets/PageOrnament";
-import IconButton from "@material-ui/core/IconButton";
-import { Map, Share, CloudDownload } from "@material-ui/icons";
-import { css } from "styled-components/macro";
+import React from "react";
+import { Grid } from "@material-ui/core";
 import { PrimaryColor } from "app/theme";
+import { css } from "styled-components/macro";
 import { useLocation } from "react-router-dom";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { PageFloatingButtons } from "app/components/PageFloatingButtons";
@@ -56,13 +53,11 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
   };
 
   return (
-    <React.Fragment>
-      <div css={styles.container}>
-        <Grid container spacing={2} css={styles.gridContainer}>
-          {props.children}
-        </Grid>
-        {isLanding && !mobile && <PageFloatingButtons />}
-      </div>
-    </React.Fragment>
+    <div css={styles.container}>
+      <Grid container spacing={2} css={styles.gridContainer}>
+        {props.children}
+      </Grid>
+      {isLanding && !mobile && <PageFloatingButtons />}
+    </div>
   );
 };
