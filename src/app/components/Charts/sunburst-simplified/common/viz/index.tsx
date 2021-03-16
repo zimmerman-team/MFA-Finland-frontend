@@ -60,6 +60,7 @@ export function SunburstVizSimplified(props: any) {
       {hoveredNode && showSmTooltip && (
         <SmTooltipContainer
           showDrilldownBtn
+          detailBtnLabel="Sector Detail"
           close={() => setHoveredNode(null)}
           drilldown={() => {
             props.setSelected(hoveredNode);

@@ -218,7 +218,7 @@ export const DataGrid = (props: DataGridProps) => {
               <VizLoader />
             ) : (
               <Treemap
-                label=""
+                label="locations"
                 height={230}
                 selectedVizItemId={null}
                 setSelectedVizItem={() => null}
@@ -276,7 +276,7 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader />
           ) : (
             <Treemap
-              label=""
+              label="organisations"
               height={230}
               selectedVizItemId={null}
               setSelectedVizItem={() => null}
@@ -386,7 +386,18 @@ export const DataGrid = (props: DataGridProps) => {
       {/*  row 5 */}
       {/* ----------------------------- */}
       <Hidden xsDown>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          css={`
+            @media (max-width: 960px) {
+              order: 2;
+            }
+          `}
+        >
           <GridWidget
             label="Map"
             height="680px"

@@ -16,7 +16,7 @@ export function CountriesRegionsModule(props: CountriesRegionsModuleModel) {
   if (props.activeTab === "chart") {
     return (
       <Treemap
-        label=""
+        label="locations"
         data={props.data}
         selectedVizItemId={props.selectedVizItemId}
         setSelectedVizItem={props.setSelectedVizItem}

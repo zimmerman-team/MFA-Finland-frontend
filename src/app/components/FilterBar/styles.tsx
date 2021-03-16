@@ -17,6 +17,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       z-index: 6;
       padding-top: 12px;
       padding-bottom: 12px;
+      padding-left: 12px;
 
       &::-webkit-scrollbar {
         height: 4px;
@@ -31,9 +32,6 @@ export const createStyles = (props: FilterBarProps, height: number) => {
         background: #2e4063;
       }
 
-      @media (max-width: 992px) {
-        padding-left: 12px;
-      }
       @media (max-width: 600px) {
         top: 56px;
         min-height: 56px;
@@ -41,7 +39,6 @@ export const createStyles = (props: FilterBarProps, height: number) => {
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        //padding: 16px 16px 8px;
       }
     `,
     background: css`

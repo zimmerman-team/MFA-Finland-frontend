@@ -35,14 +35,26 @@ export function Treemap(props: TreemapProps) {
   function navigateToDetailPage(node: any) {
     const detailPage = props.label;
     if (node.data.ref) {
-      if (detailPage === "Publisher types") {
-        history.push(`/publisher/${node.data.ref}/projects`);
+      if (detailPage === "locations") {
+        if (node.data.ref.length === 2) {
+          history.push(`/countries/${node.data.ref}${history.location.search}`);
+        } else {
+          history.push(`/regions/${node.data.ref}${history.location.search}`);
+        }
       }
-      if (detailPage === "Donors") {
-        history.push(`/donor/${node.data.ref}/projects`);
-      }
-      if (detailPage === "Organisations") {
-        history.push(`/organisation/${node.data.ref}/projects`);
+      if (detailPage === "organisations") {
+        history.push(
+          `/organisations/${node.data.ref}${history.location.search}`
+        );
+        if (node.data.ref.length === 2) {
+          history.push(
+            `/organisation-types/${node.data.ref}${history.location.search}`
+          );
+        } else {
+          history.push(
+            `/organisations/${node.data.ref}${history.location.search}`
+          );
+        }
       }
     }
   }
@@ -124,9 +136,19 @@ export function Treemap(props: TreemapProps) {
       </Grid>
       {smTooltip && (
         <SmTooltipContainer
-          showDrilldownBtn
+          detailBtnLabel={`${props.label} Detail`}
+          showDrilldownBtn={get(smTooltip, "data.orgs", []).length > 0}
           close={() => setSmTooltip(null)}
-          drilldown={() => onNodeClick(smTooltip, "", true)}
+          gotoDetail={
+            get(smTooltip, "id", "") === get(smTooltip, "data.name", "")
+              ? undefined
+              : () => navigateToDetailPage(smTooltip)
+          }
+          drilldown={
+            get(smTooltip, "data.orgs", []).length > 0
+              ? () => onNodeClick(smTooltip, "", true)
+              : undefined
+          }
         >
           <TreemapTooltip node={smTooltip} />
         </SmTooltipContainer>

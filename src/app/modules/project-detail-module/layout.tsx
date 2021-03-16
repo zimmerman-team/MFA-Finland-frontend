@@ -197,6 +197,8 @@ export const ProjectDetailModuleLayout = (
 
       <Box width="100%" height="60px" />
 
+      {/* ------------------------------------------------------------------ */}
+      {/* SDG's */}
       <Grid item xs={12} md={12} lg={8}>
         <Typography css={DescriptionLabelStyle}>SDGs</Typography>
         <Box width="100%" height="15px" />
@@ -205,8 +207,6 @@ export const ProjectDetailModuleLayout = (
 
       <Box width="100%" height="60px" />
 
-      {/* ------------------------------------------------------------------ */}
-      {/* SDG's */}
       <Hidden mdDown>
         <Grid item lg={3}>
           <div

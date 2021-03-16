@@ -16,8 +16,8 @@ export function OrganisationsModule(props: OrganisationsModuleModel) {
   if (props.activeTab === "chart") {
     return (
       <Treemap
-        label=""
         data={props.data}
+        label="organisations"
         selectedVizItemId={props.selectedVizItemId}
         setSelectedVizItem={props.setSelectedVizItem}
       />

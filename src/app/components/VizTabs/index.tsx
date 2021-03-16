@@ -26,8 +26,12 @@ export function VizTabs() {
     `,
     titleContainer: css`
       display: flex;
-      margin-bottom: 16px;
       margin-top: 3px;
+      margin-bottom: 16px;
+
+      @media (max-width: 992px) {
+        margin-bottom: 48px;
+      }
     `,
     title: css`
       margin-right: 12px;
@@ -48,9 +52,13 @@ export function VizTabs() {
           left: 0;
           top: 124px;
           width: 100vw;
+          height: 87px;
           position: absolute;
           background: #dde4ef;
-          height: 87px;
+
+          @media (max-width: 992px) {
+            height: 120px;
+          }
         `}
       />
       <Grid

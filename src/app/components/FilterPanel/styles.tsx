@@ -21,9 +21,9 @@ export const createStyles = (props: FilterPanelProps) => {
     `,
     muiContainer: css`
       padding: 0;
-      @media (max-width: 600px) {
-        padding: 16px;
-      }
+      padding: 12px;
+      overflow-y: auto;
+      height: calc(100vh - 160px);
     `,
     heading: css`
       color: white;
