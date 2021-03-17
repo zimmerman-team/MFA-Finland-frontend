@@ -53,7 +53,7 @@ export const ExpandableRowBudgetLines = (props: any) => {
           {props.child.year}
         </TableCell>
         <TableCell key={`${props.child.line}-line`} colSpan={1}>
-          {formatLocale(props.child.line)}
+          {props.child.line}
         </TableCell>
         <TableCell key={`${props.child.value}-value`} colSpan={1}>
           {formatLocale(props.child.value)}

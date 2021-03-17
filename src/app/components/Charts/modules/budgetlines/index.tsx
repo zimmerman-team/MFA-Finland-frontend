@@ -19,7 +19,10 @@ function formatDataForTable(data: any) {
     .map((d: any) => {
       const lineKeys = filter(
         Object.keys(d),
-        (key: string) => key.indexOf("Color") === -1 && key !== "year"
+        (key: string) =>
+          key.indexOf("Color") === -1 &&
+          key.indexOf("Code") === -1 &&
+          key !== "year"
       );
       const lines = lineKeys.map((key: string) => ({
         line: key,
