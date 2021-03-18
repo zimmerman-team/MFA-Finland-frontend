@@ -292,6 +292,7 @@ const Field = (props: FieldProps) => {
     error: css`
       margin-top: 8px;
       color: #ae4764;
+      margin-bottom: 8px;
     `,
     fieldset: css`
       ${props.error &&
