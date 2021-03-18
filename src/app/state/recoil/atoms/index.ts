@@ -6,6 +6,11 @@ export const drawerAtom = atom({
   default: false, // default value (aka initial value)
 });
 
+export const bottomDrawerAtom = atom({
+  key: "bottomDrawerAtom", // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
+});
+
 export const languageAtom = atom({
   key: "languageAtom", // unique ID (with respect to other atoms/selectors)
   default: "en", // default value (aka initial value)

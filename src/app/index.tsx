@@ -9,6 +9,7 @@ import { languageAtom } from "app/state/recoil/atoms";
 import { PageOrnament } from "app/assets/PageOrnament";
 import { FilterBar } from "./components/FilterBar";
 import { FilterPanel } from "./components/FilterPanel";
+import { MdBottomMenu } from "./components/MdBottomMenu";
 
 export const App = () => {
   const { i18n } = useTranslation();
@@ -24,6 +25,7 @@ export const App = () => {
       <FilterBar />
       <FilterPanel />
       <Drawer />
+      <MdBottomMenu />
       <ModuleRoutes />
       <CookieDialog
         data-testid="cookie-dialog"
