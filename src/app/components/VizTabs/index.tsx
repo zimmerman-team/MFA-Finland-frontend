@@ -23,6 +23,7 @@ export function VizTabs() {
 
       height: 88px;
       @media (max-width: 992px) {
+        height: 120px;
         padding: 0 12px;
       }
     `,

@@ -3,7 +3,7 @@
 
 import React from "react";
 import findIndex from "lodash/findIndex";
-import { IconChevronR } from "app/assets/icons/IconChevronR";
+import { IconTriangleArrow } from "app/assets/icons/IconTriangleArrow";
 import {
   containercss,
   disablearrowcss,
@@ -38,7 +38,7 @@ export function ArrowSelector(props: ArrowSelectorProps) {
         data-cy="arrow-selector-prev"
         css={selIndex === 0 ? disablearrowcss : ""}
       >
-        &#9664;
+        <IconTriangleArrow />
       </span>
       <div css="padding: 0 8px;" data-cy="arrow-selector-name">
         {props.selected}
@@ -48,7 +48,7 @@ export function ArrowSelector(props: ArrowSelectorProps) {
         data-cy="arrow-selector-next"
         css={selIndex === props.options.length - 1 ? disablearrowcss : ""}
       >
-        &#9654;
+        <IconTriangleArrow />
       </span>
     </div>
   );

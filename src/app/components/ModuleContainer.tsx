@@ -22,16 +22,10 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
     gridContainer: css`
       width: initial;
       padding: 0 64px;
-      //margin-right: ${isLanding ? "16px" : "64px"};
       position: relative;
       z-index: 1;
-      @media (max-width: 960px) {
-        //border-radius: 16px;
-        //padding: 16px 16px 16px 16px;
-        //width: initial;
-        margin-right: 16px;
-        margin-left: 16px;
-        width: calc(100% - 32px);
+      @media (max-width: 992px) {
+        padding: 0 12px;
       }
     `,
     iconContainer: css`

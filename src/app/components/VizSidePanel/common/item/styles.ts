@@ -11,7 +11,7 @@ const padding = (
     return "8px 0px 8px 0px";
   }
   if (hasCircle && expanded) {
-    return "8px 24px 0px 24px";
+    return "8px 24px 8px 24px";
   }
   if (hasCircle) {
     return "8px 24px 8px 24px";
@@ -23,7 +23,7 @@ const padding = (
     return "8px 0";
   }
   if (expanded) {
-    return "12px 24px 0px 24px";
+    return "12px 24px 8px 24px";
   }
   return "12px 24px 12px 24px";
 };
@@ -41,9 +41,9 @@ export const containercss = (
   ${selected ? "padding-left: 16px;" : ""}
   transition: background 0.2s ease-in-out;
   padding: ${padding(hasCircle, expanded, vizType, isChild)};
-  :last-child {
-    padding-bottom: ${vizType === "oda" ? "0" : "initial"};
-  }
+  // :last-child {
+  //   padding-bottom: ${vizType === "oda" ? "0" : "initial"};
+  // }
   padding-top: ${expanded && vizType === "oda" ? "16px" : "12px"};
   opacity: ${selected || isChild || hasChildren ? 1 : 0.5};
 

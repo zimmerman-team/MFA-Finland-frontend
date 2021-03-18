@@ -122,6 +122,9 @@ export const FilterBar = (props: FilterBarProps) => {
           (f: string) => f !== chip.value
         );
         break;
+      case FILTER_TYPES.PERIOD:
+        updatedSelectedFilters.years = [];
+        break;
       default:
         break;
     }

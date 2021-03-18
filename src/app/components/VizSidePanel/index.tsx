@@ -23,6 +23,10 @@ export function VizSidePanel(props: VizSidePanelProps) {
       background: #f8f8f8;
       height: calc(100% - 224px);
       z-index: -1;
+
+      @media (max-width: 992px) {
+        top: 260px;
+      }
     `,
   };
   const hasColor =

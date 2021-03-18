@@ -2,9 +2,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import useFitText from "use-fit-text";
-import { css } from "styled-components/macro";
 import { PrimaryColor } from "app/theme";
-import { formatLocale } from "app/utils/formatLocale";
+import { css } from "styled-components/macro";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 const containercss = css`
@@ -16,7 +15,7 @@ const containercss = css`
   align-items: flex-start;
 
   &:hover {
-    opacity: 0.5;
+    filter: grayscale(100%);
   }
 
   > div {

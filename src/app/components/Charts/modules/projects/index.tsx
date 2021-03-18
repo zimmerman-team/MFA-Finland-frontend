@@ -63,8 +63,8 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     `,
     listContainer: css`
       overflow: auto;
-      padding-right: 24px;
-      padding-left: 4px;
+      padding-right: 12px;
+      padding-left: 2px;
       padding-top: 4px;
       padding-bottom: 128px;
 
@@ -82,7 +82,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
       &::-webkit-scrollbar-thumb {
         border-radius: 4px;
         height: 156px;
-        background: #ECF1FA;
+        background: #ecf1fa;
       }
 
       ::-webkit-scrollbar-button {
@@ -92,10 +92,8 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
       }
 
       ::-webkit-scrollbar-corner {
-        background-color: #ECF1FA;
+        background-color: #ecf1fa;
       }
-
-    \` ,
     `,
   };
 
