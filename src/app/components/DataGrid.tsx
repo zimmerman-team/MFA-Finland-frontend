@@ -20,8 +20,6 @@ import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "app/components/Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 import { useWindowSize } from "app/hooks/useWindowSize";
-import { Collapsable } from "./Collapseable";
-import { PageFloatingButtons } from "./PageFloatingButtons";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -377,7 +375,6 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           height="510px"
-          label={aboutContent.label}
           tooltip={aboutContent.label}
           childrencontainerStyle={{ paddingTop: 33 }}
           label={get(cmsData, "general.about", "About")}
