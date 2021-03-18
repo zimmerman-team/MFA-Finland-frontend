@@ -10,7 +10,9 @@ import { PillButton } from "app/components/Buttons/PillButton";
 import { FILTER_TYPES } from "app/components/FilterPanel/data";
 import {
   ChipModel,
+  ChipzModel,
   getFilterChips,
+  getFilterChipz,
   shouldRender,
 } from "app/components/FilterBar/utils";
 import {
@@ -26,7 +28,7 @@ export interface FilterBarProps {
 
 export const FilterBar = (props: FilterBarProps) => {
   const location = useLocation();
-  const [chips, setChips] = React.useState<ChipModel[]>([]);
+  const [chips, setChips] = React.useState<ChipzModel[]>([]);
   const render: boolean = shouldRender(location);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
   const [selectedFilters, setSelectedFilters] = useRecoilState(
@@ -42,89 +44,95 @@ export const FilterBar = (props: FilterBarProps) => {
   // }, [chips]);
 
   React.useEffect(() => {
-    setChips(getFilterChips(selectedFilters, filterOptionsData));
+    // setChips(getFilterChips(selectedFilters, filterOptionsData));
+    setChips(getFilterChipz(selectedFilters, filterOptionsData));
   }, [selectedFilters, filterOptionsData]);
 
-  function removeChip(chip: ChipModel) {
+  function removeChip(chip: ChipzModel) {
     const updatedSelectedFilters = { ...selectedFilters };
     switch (chip.type) {
       case FILTER_TYPES.THEMATIC_AREAS:
         updatedSelectedFilters.tag = filter(
           updatedSelectedFilters.tag,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.tag.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
-      case FILTER_TYPES.COUNTRIES:
-        updatedSelectedFilters.countries = filter(
-          updatedSelectedFilters.countries,
-          (f: string) => f !== chip.value
-        );
-        updatedSelectedFilters.regions = filter(
-          updatedSelectedFilters.regions,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.SECTORS:
-        updatedSelectedFilters.sectors = filter(
-          updatedSelectedFilters.sectors,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.ORGANISATIONS:
-        updatedSelectedFilters.organisations = filter(
-          updatedSelectedFilters.organisations,
-          (f: string) => f !== chip.value
-        );
-        updatedSelectedFilters.organisationtypes = filter(
-          updatedSelectedFilters.organisationtypes,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.SDGS:
-        updatedSelectedFilters.sdg = filter(
-          updatedSelectedFilters.sdg,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.ACTIVITY_STATUS:
-        updatedSelectedFilters.activitystatus = filter(
-          updatedSelectedFilters.activitystatus,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.POLICY_MARKERS:
-        updatedSelectedFilters.policymarker = filter(
-          updatedSelectedFilters.policymarker,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.AID_TYPE:
-        updatedSelectedFilters.defaultaidtype = filter(
-          updatedSelectedFilters.defaultaidtype,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.BUDGET_LINES:
-        updatedSelectedFilters.budgetlines = filter(
-          updatedSelectedFilters.budgetlines,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.BI_MULTI:
-        updatedSelectedFilters.collaborationtype = filter(
-          updatedSelectedFilters.collaborationtype,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.HUMAN_RIGHTS:
-        updatedSelectedFilters.humanrights = filter(
-          updatedSelectedFilters.humanrights,
-          (f: string) => f !== chip.value
-        );
-        break;
-      case FILTER_TYPES.PERIOD:
-        updatedSelectedFilters.years = [];
-        break;
+      // case FILTER_TYPES.COUNTRIES:
+      //   updatedSelectedFilters.countries = filter(
+      //     updatedSelectedFilters.countries,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   updatedSelectedFilters.regions = filter(
+      //     updatedSelectedFilters.regions,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.SECTORS:
+      //   updatedSelectedFilters.sectors = filter(
+      //     updatedSelectedFilters.sectors,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.ORGANISATIONS:
+      //   updatedSelectedFilters.organisations = filter(
+      //     updatedSelectedFilters.organisations,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   updatedSelectedFilters.organisationtypes = filter(
+      //     updatedSelectedFilters.organisationtypes,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.SDGS:
+      //   updatedSelectedFilters.sdg = filter(
+      //     updatedSelectedFilters.sdg,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.ACTIVITY_STATUS:
+      //   updatedSelectedFilters.activitystatus = filter(
+      //     updatedSelectedFilters.activitystatus,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.POLICY_MARKERS:
+      //   updatedSelectedFilters.policymarker = filter(
+      //     updatedSelectedFilters.policymarker,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.AID_TYPE:
+      //   updatedSelectedFilters.defaultaidtype = filter(
+      //     updatedSelectedFilters.defaultaidtype,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.BUDGET_LINES:
+      //   updatedSelectedFilters.budgetlines = filter(
+      //     updatedSelectedFilters.budgetlines,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.BI_MULTI:
+      //   updatedSelectedFilters.collaborationtype = filter(
+      //     updatedSelectedFilters.collaborationtype,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.HUMAN_RIGHTS:
+      //   updatedSelectedFilters.humanrights = filter(
+      //     updatedSelectedFilters.humanrights,
+      //     (f: string) => f !== chip.value
+      //   );
+      //   break;
+      // case FILTER_TYPES.PERIOD:
+      //   updatedSelectedFilters.years = [];
+      //   break;
       default:
         break;
     }
@@ -157,11 +165,8 @@ export const FilterBar = (props: FilterBarProps) => {
               return (
                 <Chip
                   type={chip.type}
-                  name={chip.name}
-                  value={chip.value}
-                  key={chip.name}
-                  label={chip.name}
-                  childs={chip.childs}
+                  values={chip.values}
+                  label={chip.label}
                   onDelete={() => removeChip(chip)}
                 />
               );

@@ -106,43 +106,14 @@ export function getFilterChips(
         name = fArea.name;
       }
       if (fArea) {
-        children.push({
+        chips.push({
           name,
           value: tag,
           type: FILTER_TYPES.THEMATIC_AREAS,
         });
       }
     });
-
-    chips.push({
-      name: "Thematic Areas",
-      value: "",
-      type: FILTER_TYPES.THEMATIC_AREAS,
-      children,
-    });
   }
-
-  // filters.tag.forEach((tag: string) => {
-  //   const selectedAreas = [];
-  //   const selectedPriorities = [];
-  //
-  //   if (selectedAreas.length + selectedPriorities.length > 1) {
-  //     chips.push({
-  //       id: chips.length,
-  //       name: "Thematic Areas",
-  //       type: FILTER_TYPES.THEMATIC_AREAS,
-  //       value: "",
-  //       children:
-  //     });
-  //   }
-  //   // chips.push({
-  //   //   id: chips.length,
-  //   //   name: `${selectedAreas.length} Thematic; `,
-  //   // });
-  // });
-  //
-  // console.log("filters", filters);
-  // console.log("filterOptions", filterOptions);
 
   filters.sdg.forEach((sdg: string) => {
     const fSdg = find(sdgs, { code: sdg });
@@ -328,21 +299,121 @@ export function getFilterChips(
   return chips;
 }
 
-interface ChipzModel {
-  name: string;
-  values: string[];
+export interface ChipzModel {
+  label: string;
+  values: { label: string; value: string }[];
   type: FILTER_TYPES;
 }
 export function getFilterChipz(
   filters: SelectedFilterAtomModel,
   filterOptions: any
 ) {
-  let chips: ChipzModel[];
+  const chips: ChipzModel[] = [];
+  const thematicChip = createThematicChip(filters, filterOptions);
+  if (thematicChip) {
+    chips.push(thematicChip);
+  }
+  return chips;
 }
 
+// Fix this function
 function createThematicChip(
-  filters: SelectedFilterAtomModel,
+  selectedFilters: SelectedFilterAtomModel,
   filterOptions: any
-): any {
-  const thematicareas = get(filterOptions, "thematicareas.data.data", []);
+): ChipzModel | null {
+  const thematicAreaOptions = get(filterOptions, "thematicareas.data.data", []);
+  const type = FILTER_TYPES.THEMATIC_AREAS;
+  const values: { label: string; value: string }[] = [];
+  if (selectedFilters.tag.length > 1) {
+    selectedFilters.tag.forEach((tag: string) => {
+      let label = "";
+      let fArea = find(thematicAreaOptions, { code: tag });
+      if (!fArea) {
+        thematicAreaOptions.forEach((area: any) => {
+          if (!fArea) {
+            fArea = find(area.children, { code: tag });
+            if (fArea) {
+              label = `${area.name} - ${fArea.name}`;
+            }
+          }
+        });
+      } else {
+        label = fArea.name;
+      }
+
+      if (fArea) {
+        values.push({ label, value: tag });
+      }
+    });
+
+    return {
+      label: "Thematic Areas",
+      values,
+      type: FILTER_TYPES.THEMATIC_AREAS,
+    };
+  }
+  let label = "";
+  const tag = selectedFilters.tag[0];
+  let fArea = find(thematicAreaOptions, { code: tag });
+  if (!fArea) {
+    thematicAreaOptions.forEach((area: any) => {
+      if (!fArea) {
+        fArea = find(area.children, { code: tag });
+        if (fArea) {
+          label = `${area.name} - ${fArea.name}`;
+        }
+      }
+    });
+  } else {
+    label = fArea.name;
+  }
+
+  if (fArea) {
+    values.push({ label, value: tag });
+    return { label, values, type };
+  }
+
+  return null;
 }
+
+function createCountriesChip(
+  selectedFilters: SelectedFilterAtomModel,
+  filterOptions: any
+): ChipzModel | null {
+  const type = FILTER_TYPES.COUNTRIES;
+  const values: { label: string; value: string }[] = [];
+  const locations = get(filterOptions, "locations.data.data", []);
+  let label = "";
+
+  let allLocations: any = [];
+  locations.forEach((region: any) => {
+    if (region.children) {
+      allLocations = [...allLocations, ...region.children];
+    }
+  });
+  selectedFilters.countries.forEach((country: string, i: number) => {
+    const fCountry = find(allLocations, { code: country });
+    values.push({
+      value: country,
+      label: fCountry.name,
+    });
+  });
+
+  if (selectedFilters.countries.length > 1) {
+    label = "Countries/Regions";
+  } else {
+    label = values[0].label;
+  }
+  return { label, values, type };
+}
+
+// filters.countries.forEach((country: string) => {
+//   const fCountry = find(allLocations, { code: country });
+//   if (fCountry) {
+//     chips.push({
+//       name: fCountry.name,
+//       value: country,
+//       type: FILTER_TYPES.COUNTRIES,
+//     });
+//   }
+// });

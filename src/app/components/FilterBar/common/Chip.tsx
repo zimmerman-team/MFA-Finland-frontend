@@ -7,9 +7,8 @@ import svgoud from "./arrowRight.svg";
 type SimpleSpread<L, R> = R & Pick<L, Exclude<keyof L, keyof R>>;
 interface PropsExtra {
   type: any;
-  name: string;
-  value: string;
-  childs?: ChipModel[];
+  label: string;
+  values: { label: string; value: string }[];
 }
 type ChipModel = SimpleSpread<ChipProps, PropsExtra>;
 
@@ -45,12 +44,20 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
 
 export const Chip = (props: ChipModel) => {
   const [expanded, setExpanded] = React.useState(false);
-
+  const [label, setLabel] = React.useState(props.label);
+  React.useEffect(() => {
+    if (expanded) {
+      setLabel(props.values.map((value) => value.label).join("; "));
+    } else {
+      setLabel(props.label);
+    }
+  }, [expanded]);
   return (
     <MUIChip
       onClick={() => setExpanded(!expanded)}
-      css={chip(expanded, true)}
+      css={chip(expanded, props.values.length > 1)}
       {...props}
+      label={label}
     />
   );
 };
