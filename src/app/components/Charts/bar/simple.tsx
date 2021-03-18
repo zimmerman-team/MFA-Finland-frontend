@@ -1,8 +1,11 @@
 import React from "react";
 import get from "lodash/get";
 import max from "lodash/max";
+import { useRecoilState } from "recoil";
 import { PrimaryColor } from "app/theme";
 import { ResponsiveBar } from "@nivo/bar";
+import { useHistory } from "react-router-dom";
+import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { SimpleBarChartProps } from "app/components/Charts/bar/data";
 import {
   getRange,
@@ -10,6 +13,10 @@ import {
 } from "app/components/Charts/bar/utils";
 
 export function SimpleBarChart(props: SimpleBarChartProps) {
+  const history = useHistory();
+  const [selectedFilters, setSelectedFilters] = useRecoilState(
+    selectedFilterAtom
+  );
   const range = getRange(props.data, ["value"]);
   const maxValue: number = max(props.data.map((item: any) => item.value)) || 0;
 
@@ -35,6 +42,18 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
         maxValue={maxValue + maxValue * 0.1}
         colors={(v: any) => v.data.valueColor}
         margin={{ top: 15, right: 20, bottom: 200, left: 50 }}
+        borderWidth={0.5}
+        borderColor="#343249"
+        onClick={(node: any) => {
+          setSelectedFilters({
+            ...selectedFilters,
+            budgetlines: [...selectedFilters.budgetlines, node.data.code],
+          });
+          setTimeout(
+            () => history.push(`/viz/projects${history.location.search}`),
+            200
+          );
+        }}
         axisBottom={{
           tickSize: 0,
           tickPadding: 10,

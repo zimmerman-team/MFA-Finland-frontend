@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import useFitText from "use-fit-text";
-import { css } from "styled-components/macro";
 import { PrimaryColor } from "app/theme";
-import { formatLocale } from "app/utils/formatLocale";
+import { css } from "styled-components/macro";
+import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 const containercss = css`
   display: flex;
@@ -15,7 +15,7 @@ const containercss = css`
   align-items: flex-start;
 
   &:hover {
-    opacity: 0.5;
+    filter: grayscale(100%);
   }
 
   > div {
@@ -40,6 +40,7 @@ export function TreeemapNode(props: any) {
         color: PrimaryColor[0],
         background: node.data.color,
         cursor: node.data.orgs ? "pointer" : "default",
+        border: "0.5px solid #343249",
         borderRadius: `${node.y === 1 && node.x === 1 ? 10 : 0}px ${
           node.y === 1 && node.x + node.width + 2 > props.containerSize.width
             ? 10
@@ -66,7 +67,7 @@ export function TreeemapNode(props: any) {
         <div>
           <div>{node.data.name}</div>
           <div css="width: 100%;height: 5px;" />
-          <div>{formatLocale(node.data.value)}</div>
+          <div>{formatLargeAmountsWithPrefix(node.data.value)}</div>
         </div>
       )}
     </div>

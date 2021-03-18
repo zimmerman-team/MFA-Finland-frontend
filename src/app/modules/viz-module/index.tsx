@@ -9,7 +9,6 @@ import { useCMSData } from "app/hooks/useCMSData";
 import { useMeasure, useUnmount } from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
-
 import { PrimaryColor } from "app/theme";
 import { BarItemProps } from "@nivo/bar";
 import { VizTabs } from "app/components/VizTabs";
@@ -40,6 +39,14 @@ import {
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
 } from "app/state/recoil/atoms";
+import IconButton from "@material-ui/core/IconButton";
+// @ts-ignore
+import domtoimage from "dom-to-image";
+import { Close, CloudDownload, MoreHoriz, Share } from "@material-ui/icons";
+import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
+import { LightTooltip } from "app/components/PageFloatingButtons";
+import { tooltipCreateStyles } from "app/components/PageFloatingButtons/styles";
+import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -263,6 +270,13 @@ export default function VizModule() {
   }
 
   React.useEffect(() => {
+    const root = document.getElementById("root");
+    if (root) {
+      root.style.background = "#fff";
+    }
+  }, []);
+
+  React.useEffect(() => {
     setVizLevel(0);
     setVizScale(1);
     setSelectedVizItem(null);
@@ -366,11 +380,15 @@ export default function VizModule() {
       default:
         break;
     }
-  }, [get(params, "tab", ""), prevLocation]);
+  }, [selectedFilters, get(params, "tab", ""), prevLocation]);
 
   useUnmount(() => {
     setPrevLocation("");
     onTabChange(get(params, "tab", ""));
+    const root = document.getElementById("root");
+    if (root) {
+      root.style.background = "";
+    }
   });
 
   React.useEffect(() => {
@@ -413,17 +431,37 @@ export default function VizModule() {
       container
       css={`
         margin-top: -16px;
-        height: calc(100vh - 140px);
+        height: calc(100vh - 136px);
       `}
     >
-      <Grid item sm={12}>
+      <div
+        css={`
+          left: 0;
+          top: 0px;
+          width: 100vw;
+          position: absolute;
+          background: #fff;
+          height: 100vh;
+          z-index: 0;
+        `}
+      />
+      <Grid
+        item
+        sm={12}
+        css={`
+          z-index: 1;
+        `}
+      >
         <VizTabs />
       </Grid>
       <Grid
         container
+        id="image-container"
         css={`
-          padding: 0 50px;
-          height: calc(100% - 76px);
+          padding: 0 68px;
+          z-index: 1;
+
+          height: calc(100% - 88px);
           @media (max-width: 992px) {
             padding: 0 12px;
           }
@@ -439,17 +477,7 @@ export default function VizModule() {
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          <div
-            css={`
-              left: 0;
-              top: 0px;
-              width: 100vw;
-              position: absolute;
-              background: #fff;
-              height: 100vh;
-              z-index: -3;
-            `}
-          />
+          {!isProjects && <FloatingButtons />}
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (
@@ -462,6 +490,7 @@ export default function VizModule() {
                   onZoomOut={onZoomOut}
                   data={odaBarChartData}
                   vizCompData={vizCompData}
+                  scrollableHeight={height - 56}
                   setVizCompData={setVizCompData}
                   onSelectChange={onSelectChange}
                   vizTranslation={vizTranslation}
@@ -477,11 +506,15 @@ export default function VizModule() {
               {vizDataLoading.thematic ? (
                 <VizLoader />
               ) : activeTab === "chart" ? (
-                <ThematicAreas
-                  data={thematicAreasChartData}
-                  selectedVizItemId={selectedVizItem}
-                  setSelectedVizItem={setSelectedVizItem}
-                />
+                <>
+                  <div css="width: 100%;height: 100px;" />
+                  <ThematicAreas
+                    showOnlyViz={false}
+                    data={thematicAreasChartData}
+                    selectedVizItemId={selectedVizItem}
+                    setSelectedVizItem={setSelectedVizItem}
+                  />
+                </>
               ) : (
                 <div
                   css={`
@@ -509,8 +542,8 @@ export default function VizModule() {
                   vizLevel={vizLevel}
                   activeTab={activeTab}
                   onZoomOut={onZoomOut}
-                  scrollableHeight={height}
                   data={sectorsSunburstData}
+                  scrollableHeight={height - 56}
                   sectorDrillDown={sectorDrillDown}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
@@ -527,8 +560,8 @@ export default function VizModule() {
                 <CountriesRegionsModule
                   label=""
                   activeTab={activeTab}
-                  scrollableHeight={height}
                   data={locationsTreemapData}
+                  scrollableHeight={height - 56}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
                 />
@@ -541,7 +574,7 @@ export default function VizModule() {
                 <OrganisationsModule
                   label=""
                   activeTab={activeTab}
-                  scrollableHeight={height}
+                  scrollableHeight={height - 56}
                   data={organisationsTreemapData}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
@@ -555,8 +588,8 @@ export default function VizModule() {
                 <BudgetLinesModule
                   activeTab={activeTab}
                   onZoomOut={onZoomOut}
-                  scrollableHeight={height}
                   vizCompData={vizCompData}
+                  scrollableHeight={height - 56}
                   data={budgetLinesBarChartData}
                   setVizCompData={setVizCompData}
                   onSelectChange={onSelectChange}
@@ -576,18 +609,16 @@ export default function VizModule() {
           </Switch>
         </Grid>
         {!isProjects && (
-          <Grid item sm={3} md={4} lg={4} xl={4}>
-            <div
-              css={`
-                right: 0;
-                top: 0px;
-                width: 50vw;
-                position: absolute;
-                background: ${PrimaryColor[1]};
-                height: 100vh;
-                z-index: -2;
-              `}
-            />
+          <Grid
+            item
+            sm={3}
+            md={4}
+            lg={4}
+            xl={4}
+            css={`
+              z-index: 1;
+            `}
+          >
             <div
               ref={ref}
               css={`

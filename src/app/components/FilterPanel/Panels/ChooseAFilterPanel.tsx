@@ -4,8 +4,8 @@ import { Cancel } from "@material-ui/icons";
 import { useCMSData } from "app/hooks/useCMSData";
 import { createStyles } from "app/components/FilterPanel/styles";
 import { Grid, Hidden, IconButton, Typography } from "@material-ui/core";
-import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
 import { MailPanelInitDataItemModel } from "app/components/FilterPanel/data";
+import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
 import { ChooseAFilterListItem } from "app/components/FilterPanel/ListItems/ChooseAFilterListItem";
 
 interface Model {

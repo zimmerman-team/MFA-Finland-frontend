@@ -65,7 +65,8 @@ export const DrawerItem = (props: DrawerItemProps) => {
         key={props.label}
         css={`
           @media (max-width: 960px) {
-            padding: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
           }
           &:hover {
             background-color: initial;

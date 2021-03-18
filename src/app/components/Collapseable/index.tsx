@@ -17,6 +17,9 @@ export function Collapsable(props: any) {
       align-items: center;
       position: absolute;
       right: -32px;
+      @media (max-width: 960px) {
+        right: -15px;
+      }
       z-index: 4;
       height: 192px;
     `,

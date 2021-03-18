@@ -98,7 +98,7 @@ export function BarChart(props: BarChartProps) {
     <div
       css={`
         width: 100%;
-        padding-top: 20px;
+        //padding-top: 20px;
         position: relative;
         color: ${PrimaryColor[0]};
         height: ${props.height || 450}px;
@@ -135,6 +135,7 @@ export function BarChart(props: BarChartProps) {
             css={`
               position: relative;
               &:before {
+                border: 0.5px solid #343249;
                 background: #acd1d1;
               }
             `}
@@ -145,7 +146,8 @@ export function BarChart(props: BarChartProps) {
             css={`
               position: relative;
               &:before {
-                background: #7491ce;
+                border: 0.5px solid #343249;
+                background: #233c71;
               }
             `}
           >
@@ -155,6 +157,7 @@ export function BarChart(props: BarChartProps) {
             css={`
               position: relative;
               &:before {
+                border: 0.5px solid #343249;
                 background: #ae4764;
               }
             `}
@@ -197,10 +200,12 @@ export function BarChart(props: BarChartProps) {
         innerPadding={0}
         keys={["exclusive", "other"]}
         valueScale={{ type: "linear" }}
-        colors={["#ACD1D1", "#7491CE"]}
+        colors={["#ACD1D1", "#233C71"]}
         maxValue={maxValue + maxValue * 0.1}
         layers={["grid", "axes", Bars, LineWPoints]}
         margin={{ top: 15, right: 50, bottom: 60, left: 50 }}
+        borderWidth={1}
+        borderColor="black"
         theme={{
           axis: {
             ticks: {

@@ -197,16 +197,25 @@ export const ProjectDetailModuleLayout = (
 
       <Box width="100%" height="60px" />
 
-      <Grid item xs={12} md={12} lg={8}>
+      {/* ------------------------------------------------------------------ */}
+      {/* SDG's */}
+      <Grid
+        item
+        xs={12}
+        md={12}
+        lg={8}
+        id="sdg-container"
+        css={`
+          position: relative;
+        `}
+      >
         <Typography css={DescriptionLabelStyle}>SDGs</Typography>
         <Box width="100%" height="15px" />
-        <SDGviz data={props.sdgVizData} />
+        <SDGviz data={props.sdgVizData} containerId="sdg-container" />
       </Grid>
 
       <Box width="100%" height="60px" />
 
-      {/* ------------------------------------------------------------------ */}
-      {/* SDG's */}
       <Hidden mdDown>
         <Grid item lg={3}>
           <div

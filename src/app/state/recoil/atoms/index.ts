@@ -9,6 +9,11 @@ export const drawerAtom = atom({
   default: false, // default value (aka initial value)
 });
 
+export const bottomDrawerAtom = atom({
+  key: "bottomDrawerAtom", // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
+});
+
 export const languageAtom = atom({
   key: "languageAtom",
   default: "en",
@@ -180,6 +185,11 @@ export const GenericDialogState = atom({
 
 export const DeleteAccountDialogState = atom({
   key: "deleteAccountDialogState", // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
+});
+
+export const searchFocusAtom = atom({
+  key: "searchFocus", // unique ID (with respect to other atoms/selectors)
   default: false, // default value (aka initial value)
 });
 

@@ -1,5 +1,5 @@
 import { css } from "styled-components/macro";
-import { SecondaryColor } from "app/theme";
+import { PrimaryColor, SecondaryColor } from "app/theme";
 import { FilterBarProps } from "app/components/FilterBar/index";
 
 export const createStyles = (props: FilterBarProps, height: number) => {
@@ -8,19 +8,37 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       display: flex;
       align-items: flex-start;
       position: sticky;
-      top: 64px;
+      top: 68px;
       margin-bottom: 16px;
-      min-height: 64px;
+      margin-left: 68px;
+      margin-right: 68px;
+      min-height: 68px;
       background-color: #ecf1fa;
       overflow-x: auto;
       overflow-y: hidden;
       z-index: 6;
+      padding-left: 12px;
       padding-top: 16px;
       padding-bottom: 16px;
 
-      @media (max-width: 992px) {
-        padding-left: 12px;
+      &::-webkit-scrollbar {
+        height: 4px;
+        background: #ededf6;
       }
+      &::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background: #ededf6;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: #2e4063;
+      }
+
+      @media (max-width: 992px) {
+        margin-left: 0px;
+        margin-right: 12px;
+      }
+
       @media (max-width: 600px) {
         top: 56px;
         min-height: 56px;
@@ -28,12 +46,11 @@ export const createStyles = (props: FilterBarProps, height: number) => {
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        //padding: 16px 16px 8px;
       }
     `,
     background: css`
       z-index: 5;
-      top: 64px;
+      top: 68px;
       left: 0;
       position: fixed;
       background-color: #ecf1fa;
@@ -53,7 +70,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       min-width: 106px;
       height: 36px;
       :hover {
-        background-color: ${SecondaryColor[1]};
+        background-color: ${PrimaryColor[3]};
         box-shadow: none;
       }
 
@@ -71,7 +88,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
     `,
     chipContainer: css`
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
       gap: 12px;
       margin-top: 2px;
       @media (max-width: 600px) {

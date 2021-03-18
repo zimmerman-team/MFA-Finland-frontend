@@ -2,14 +2,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { FunctionComponent } from "react";
 import get from "lodash/get";
-import { ProjectPalette } from "app/theme";
+import { PrimaryColor, ProjectPalette } from "app/theme";
 import { Tooltip } from "@material-ui/core";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
 import { useHistory, Link } from "react-router-dom";
 import { useStoreState } from "app/state/store/hooks";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { formatLocale } from "app/utils/formatLocale";
+import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
+import { formatLocale, formatLocaleN } from "app/utils/formatLocale";
 
 const style = {
   widgetHeader: (odaWidget: boolean) => css`
@@ -54,6 +55,10 @@ const style = {
         > a {
           font-size: 10px;
           text-decoration: underline;
+
+          :hover {
+            color: ${PrimaryColor[3]};
+          }
         }
       }
     }
@@ -73,7 +78,10 @@ const style = {
     align-items: center;
   `,
   widgetTooltipIcon: css`
-    fill: #bcc6d6;
+    fill: ${PrimaryColor[0]};
+    :hover {
+      fill: ${PrimaryColor[3]};
+    }
   `,
   widgetContainer: (height: string | undefined, isHovered: boolean) => css`
     width: 100%;
@@ -98,11 +106,35 @@ const style = {
       height: initial;
     }
   `,
-  childrencontainer: (interactive?: boolean) => css`
+  link: css`
+    font-size: 10px;
+    line-height: 12px;
+    color: ${PrimaryColor[0]};
+  `,
+  childrencontainer: (
+    interactive?: boolean,
+    childrencontainerStyle?: {
+      paddingTop?: number;
+      width?: number;
+      height?: number;
+      scale?: number;
+    }
+  ) => css`
     display: flex;
     flex-direction: column;
     cursor: ${interactive ? "" : "pointer"};
-
+    padding-top: ${childrencontainerStyle?.paddingTop
+      ? `${childrencontainerStyle.paddingTop}px`
+      : "initial"};
+    width: ${childrencontainerStyle?.width
+      ? `${childrencontainerStyle.width}%`
+      : "initial"};
+    height: ${childrencontainerStyle?.height
+      ? `${childrencontainerStyle.height}%`
+      : "initial"};
+    transform: ${childrencontainerStyle?.scale
+      ? `scale(${childrencontainerStyle.scale})`
+      : "initial"};
     * {
       pointer-events: ${interactive ? "all" : "none"};
     }
@@ -115,7 +147,13 @@ interface GridWidgetProps {
   height?: string;
   tooltip?: string;
   interactive?: boolean;
-  childrencontainerStyle?: React.CSSProperties;
+  // childrencontainerStyle?: React.CSSProperties;
+  childrencontainerStyle?: {
+    paddingTop?: number;
+    width?: number;
+    height?: number;
+    scale?: number;
+  };
   disbursementsStatComponent?: FunctionComponent;
   // responsiveOrder?: number;
   detailPageFilter?: {
@@ -181,22 +219,30 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
           <div css={style.odaHeaderStats}>
             <div css={style.headerStat}>
               <div>Disbursements amount</div>
-              <div>{formatLocale(totalDisbursement)}</div>
+              <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
             </div>
             <div css={style.headerStat}>
               <div>Organisations</div>
               <div>{orgCount}</div>
               <div>
-                <Link to={`/viz/organisations${searchFilterString}`}>
+                <Link
+                  css={style.link}
+                  to={`/viz/organisations${searchFilterString}`}
+                >
                   View more
                 </Link>
               </div>
             </div>
             <div css={style.headerStat}>
               <div>{get(cmsData, "viz.projects", "Projects")}</div>
-              <div>{projCount}</div>
+              <div>{formatLocaleN(projCount)}</div>
               <div>
-                <Link to={`/viz/projects${searchFilterString}`}>View more</Link>
+                <Link
+                  css={style.link}
+                  to={`/viz/projects${searchFilterString}`}
+                >
+                  View more
+                </Link>
               </div>
             </div>
           </div>
@@ -216,8 +262,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       )}
       <div
         key={props.label}
-        style={props.childrencontainerStyle}
-        css={style.childrencontainer(props.interactive)}
+        // style={props.childrencontainerStyle}
+        css={style.childrencontainer(
+          props.interactive,
+          props.childrencontainerStyle
+        )}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => {

@@ -10,7 +10,7 @@ export const drawerStyle = {
     align-items: center;
     letter-spacing: 0.02em;
     color: ${PrimaryColor[2]};
-    margin-left: 15px;
+    margin-left: 16px;
   `,
   GreyIcon: css`
     /*filter: grayscale(1);
@@ -38,8 +38,11 @@ export const drawerStyle = {
   AddressContainer: css`
     padding-top: 12px;
     padding-left: 32px;
+    border-right: 1px solid #fff;
+
     @media (max-width: 960px) {
-      padding: initial;
+      padding-top: initial;
+      border-right-style: none;
     }
   `,
   SocialIconContainer: css`

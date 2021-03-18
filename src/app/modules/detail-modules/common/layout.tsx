@@ -17,14 +17,15 @@ export const DetailModuleLayout = (props: ModuleProps) => {
         label={props.label}
         crumbs={props.crumbs}
         flagCode={props.flagCode}
+        countryData={props.countryData}
       />
       <DataGrid
         sdgVizData={props.sdgVizData}
         geoMapData={props.geoMapData}
+        countryData={props.countryData}
         vizDataLoading={props.vizDataLoading}
         odaBarChartData={props.odaBarChartData}
         detailPageFilter={props.detailPageFilter}
-        countryIndicators={props.countryIndicators}
         sectorDescription={props.sectorDescription}
         sectorsSunburstData={props.sectorsSunburstData}
         locationsTreemapData={props.locationsTreemapData}

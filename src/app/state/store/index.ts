@@ -4,10 +4,11 @@ import { StoreModel } from "app/state/api/interfaces";
 
 // global search actions-reducers
 import searchDonors from "app/state/api/actions-reducers/global-search/donors";
+import searchSectors from "app/state/api/actions-reducers/global-search/sectors";
 import searchCountries from "app/state/api/actions-reducers/global-search/countries";
 import searchActivities from "app/state/api/actions-reducers/global-search/activities";
-import searchPublishers from "app/state/api/actions-reducers/global-search/publishers";
 import searchOrganisations from "app/state/api/actions-reducers/global-search/organisations";
+import searchThematicareas from "app/state/api/actions-reducers/global-search/thematicareas";
 
 // viz actions-reducers
 import treemap from "app/state/api/actions-reducers/treemap";
@@ -55,8 +56,7 @@ import detailPageName from "app/state/api/actions-reducers/detail-pages/detailPa
 
 // filtering
 import {
-  countries as fcountries,
-  regions,
+  locations,
   sectors as fsectors,
   thematicareas as fthematicareas,
   organisations as forganisations,
@@ -81,10 +81,7 @@ import menu from "../api/actions-reducers/cms/menu";
 const storeContent: StoreModel = {
   // filtering
   filterOptions: {
-    countries: persist(fcountries, {
-      storage: "localStorage",
-    }),
-    regions: persist(regions, {
+    locations: persist(locations, {
       storage: "localStorage",
     }),
     sectors: persist(fsectors, {
@@ -121,10 +118,11 @@ const storeContent: StoreModel = {
   },
   // global search
   searchDonors,
+  searchSectors,
   searchCountries,
   searchActivities,
-  searchPublishers,
   searchOrganisations,
+  searchThematicareas,
   // viz
   donors: persist(donors),
   sectors: persist(sectors),

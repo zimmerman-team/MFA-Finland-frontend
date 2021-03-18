@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
+import { useLocation } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import { useCMSData } from "app/hooks/useCMSData";
 import { SDGviz } from "app/components/Charts/sdg";
@@ -18,6 +19,9 @@ import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "app/components/Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
+import { useWindowSize } from "app/hooks/useWindowSize";
+import { Collapsable } from "./Collapseable";
+import { PageFloatingButtons } from "./PageFloatingButtons";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -29,7 +33,7 @@ export interface DataGridProps {
   budgetLinesBarChartData: any;
   sdgVizData: SDGvizItemProps[];
   geoMapData: any;
-  countryIndicators?: string[];
+  countryData?: any;
   unallocablePercentage: number;
   sectorDescription?: string;
   detailPageFilter?: {
@@ -51,10 +55,79 @@ export interface DataGridProps {
 // todo: check if we actually need the "childrencontainerStyle" property
 
 export const DataGrid = (props: DataGridProps) => {
+  const location = useLocation();
+  const [width] = useWindowSize();
   const cmsData = useCMSData({ returnData: true });
+
+  const isOrgTypeDetail = location.pathname.indexOf("organisation-types") > -1;
+  const isOrgDetail = location.pathname.indexOf("organisations") > -1;
+  const isSectorDetail = location.pathname.indexOf("sectors") > -1;
+  const isCountryDetail = location.pathname.indexOf("countries") > -1;
+  const isRegionDetail = location.pathname.indexOf("regions") > -1;
+
+  function getResultBlockContent() {
+    if (isOrgTypeDetail || isOrgDetail) {
+      return {
+        label: "",
+        text: "",
+      };
+    }
+    if (isSectorDetail) {
+      return {
+        label: "Sector info",
+        text: props.sectorDescription,
+      };
+    }
+    if (isCountryDetail) {
+      return {
+        label: "Contact Department in MFA",
+        text: "",
+      };
+    }
+    if (isRegionDetail) {
+      return {
+        label: "Finland and the region in development cooperation?",
+        text: "",
+      };
+    }
+    return {
+      label: "Result",
+      text:
+        "See more thoroughly about recent results of development cooperation of Finland",
+    };
+  }
+
+  function getAboutBlockContent() {
+    if (isOrgTypeDetail || isOrgDetail || isSectorDetail || isRegionDetail) {
+      return {
+        label: "",
+        text: "",
+      };
+    }
+    if (isCountryDetail) {
+      return {
+        label: "RSS Feed",
+        text: "",
+      };
+    }
+    return {
+      label: "About",
+      text:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially",
+    };
+  }
+
+  const resultContent = getResultBlockContent();
+  const aboutContent = getAboutBlockContent();
 
   return (
     <React.Fragment>
+      {/* ----------------------------- */}
+      {/*  floating buttons */}
+      {/* ----------------------------- */}
+      {/* <Hidden mdDown> */}
+      {/*  <PageFloatingButtons /> */}
+      {/* </Hidden> */}
       {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}
@@ -85,20 +158,21 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           tooltip="lorem ipsum"
           link="/viz/thematic-areas"
-          label={get(cmsData, "general.thematicareas", "Thematic areas")}
-          childrencontainerStyle={{
-            transform: "scale(0.7)",
-          }}
           detailPageFilter={props.detailPageFilter}
+          label={get(cmsData, "general.thematicareas", "Thematic areas")}
         >
           {props.vizDataLoading.thematic ? (
             <VizLoader />
           ) : (
-            <ThematicAreas
-              selectedVizItemId={null}
-              setSelectedVizItem={() => null}
-              data={props.thematicAreasChartData}
-            />
+            <>
+              <div css="width: 100%;height: 70px;" />
+              <ThematicAreas
+                showOnlyViz
+                selectedVizItemId={null}
+                setSelectedVizItem={() => null}
+                data={props.thematicAreasChartData}
+              />
+            </>
           )}
         </GridWidget>
       </Grid>
@@ -131,14 +205,14 @@ export const DataGrid = (props: DataGridProps) => {
         </GridWidget>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
-        {!props.countryIndicators ? (
+        {!props.countryData ? (
           <GridWidget
             tooltip="lorem ipsum"
             link="/viz/countries-regions"
             label={get(cmsData, "general.locations", "Regions")}
             childrencontainerStyle={{
-              width: "100%",
-              height: "100%",
+              width: 100,
+              height: 100,
               paddingTop: 20,
             }}
             detailPageFilter={props.detailPageFilter}
@@ -147,7 +221,7 @@ export const DataGrid = (props: DataGridProps) => {
               <VizLoader />
             ) : (
               <Treemap
-                label=""
+                label="locations"
                 height={230}
                 selectedVizItemId={null}
                 setSelectedVizItem={() => null}
@@ -161,16 +235,17 @@ export const DataGrid = (props: DataGridProps) => {
             label="Human Development Index"
             tooltip="Human Development Index"
             childrencontainerStyle={{
-              width: "100%",
-              height: "100%",
+              width: 100,
+              height: 100,
               paddingTop: 20,
             }}
           >
-            {props.countryIndicators.map((indicator: string) => {
+            {props.countryData.countryIndicators.map((indicator: string) => {
               const values = indicator.split(":");
               if (values.length === 2) {
                 return (
                   <div
+                    key={indicator}
                     css={`
                       margin: 8px 0;
                       font-size: 14px;
@@ -194,8 +269,8 @@ export const DataGrid = (props: DataGridProps) => {
           link="/viz/organisations"
           label={get(cmsData, "general.organisations", "Organisations")}
           childrencontainerStyle={{
-            width: "100%",
-            height: "100%",
+            width: 100,
+            height: 100,
             paddingTop: 20,
           }}
           detailPageFilter={props.detailPageFilter}
@@ -204,7 +279,7 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader />
           ) : (
             <Treemap
-              label=""
+              label="organisations"
               height={230}
               selectedVizItemId={null}
               setSelectedVizItem={() => null}
@@ -224,7 +299,7 @@ export const DataGrid = (props: DataGridProps) => {
           link="/viz/budget-lines"
           label={get(cmsData, "general.budgetlines", "Budget lines")}
           childrencontainerStyle={{
-            width: "100%",
+            width: 100,
             paddingTop: 20,
           }}
           detailPageFilter={props.detailPageFilter}
@@ -259,13 +334,12 @@ export const DataGrid = (props: DataGridProps) => {
       >
         <GridWidget
           interactive
-          label="Result"
           height="510px"
-          tooltip="lorem ipsum"
+          label={resultContent.label}
+          tooltip={resultContent.label}
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          See more thoroughly about recent results of development cooperation of
-          Finland
+          {resultContent.text}
         </GridWidget>
       </Grid>
 
@@ -303,22 +377,12 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           height="510px"
-          tooltip="lorem ipsum"
+          label={aboutContent.label}
+          tooltip={aboutContent.label}
           childrencontainerStyle={{ paddingTop: 33 }}
           label={get(cmsData, "general.about", "About")}
         >
-          {props.sectorDescription ? (
-            props.sectorDescription
-          ) : (
-            <>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry&apos;s standard dummy
-              text ever since the 1500s, when an unknown printer took a galley
-              of type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially
-            </>
-          )}
+          {aboutContent.text}
         </GridWidget>
       </Grid>
 
@@ -326,12 +390,23 @@ export const DataGrid = (props: DataGridProps) => {
       {/*  row 5 */}
       {/* ----------------------------- */}
       <Hidden xsDown>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          css={`
+            @media (max-width: 960px) {
+              order: 2;
+            }
+          `}
+        >
           <GridWidget
             height="680px"
             interactive
             label={get(cmsData, "general.map", "Map")}
-            childrencontainerStyle={{ paddingTop: 88 }}
+            childrencontainerStyle={{ paddingTop: width >= 960 ? 88 : 16 }}
           >
             {props.vizDataLoading.geo ? (
               <VizLoader />

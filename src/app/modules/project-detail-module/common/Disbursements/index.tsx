@@ -38,12 +38,25 @@ const style = {
     height: 40px;
     background-color: #2e4982;
     border-radius: 50%;
-    transform: translateX(20px) translateY(-45px);
+    transform: translateX(20px) translateY(-50px);
+
+    &:after {
+      width: 0;
+      height: 0;
+      left: 50%;
+      bottom: 0;
+      content: "";
+      position: absolute;
+      margin: 0 0 -4px -5px;
+      border: 5px solid transparent;
+      border-top-color: #2e4982;
+      border-bottom: 0;
+    }
   `,
   indicatorText: css`
     color: white;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 13px;
     line-height: 22px;
     letter-spacing: 0.5px;
   `,

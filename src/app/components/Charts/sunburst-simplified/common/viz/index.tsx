@@ -24,11 +24,15 @@ export function SunburstVizSimplified(props: any) {
       <Sunburst
         hideRootNode
         colorType="literal"
+        padAngle={0.02}
         data={props.data}
         width={props.size}
         height={props.size}
         animation={{ damping: 20, stiffness: 300 }}
-        style={{ stroke: "#ffffff", strokeWidth: 5 }}
+        style={{
+          stroke: "#343249",
+          strokeWidth: 0.5,
+        }}
         onValueClick={(
           node: SunburstPoint,
           event: React.MouseEvent<HTMLElement>
@@ -57,6 +61,7 @@ export function SunburstVizSimplified(props: any) {
       {hoveredNode && showSmTooltip && (
         <SmTooltipContainer
           showDrilldownBtn
+          detailBtnLabel="Sector Detail"
           close={() => setHoveredNode(null)}
           drilldown={() => {
             props.setSelected(hoveredNode);

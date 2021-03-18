@@ -13,14 +13,17 @@ export const createStyles = (props: FilterPanelProps) => {
       width: 100vw;
       height: 100vh;
       left: 0;
-      z-index: 5;
+      z-index: 101;
 
       @media (max-width: 600px) {
         padding: 0;
       }
     `,
     muiContainer: css`
-      padding: 0;
+      padding: 0 100px;
+      overflow-y: auto;
+      height: calc(100vh - 160px);
+
       @media (max-width: 600px) {
         padding: 16px;
       }
@@ -37,6 +40,7 @@ export const createStyles = (props: FilterPanelProps) => {
     `,
     closeContainer: css`
       margin-top: -12px;
+      margin-right: -12px;
     `,
     actionContainer: css`
       margin-top: 32px;

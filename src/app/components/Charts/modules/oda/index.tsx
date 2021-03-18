@@ -20,6 +20,7 @@ interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
   vizLevel: number;
   activeTab: string;
+  scrollableHeight: number;
   odaBudgetLinesChartData: any;
   odaBudgetLinesChartLoading: boolean;
   onArrowSelectChange: (v: string) => void;
@@ -55,8 +56,9 @@ export function ODAvizModule(props: ODAvizModuleProps) {
         id="viz-oda"
         css={`
           width: 100%;
-          height: 100%;
           position: relative;
+          padding-right: 72px;
+          padding-top: 32px;
         `}
       >
         <TransitionContainer
@@ -119,7 +121,9 @@ export function ODAvizModule(props: ODAvizModuleProps) {
   return (
     <div
       css={`
+        overflow-y: overlay;
         padding: 24px 24px 24px 0;
+        max-height: ${props.scrollableHeight}px;
       `}
     >
       <DataTable {...tableConfig} />

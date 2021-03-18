@@ -11,21 +11,32 @@ import {
 } from "app/components/Charts/sunburst/common/tooltip/styles";
 import { getFormattedPercentage } from "app/components/Charts/sunburst/common/tooltip/utils";
 
-interface SunburstTooltipProps {
+interface SDGTooltipProps {
   containerId?: string;
   hoveredNode: SunburstPoint | null;
 }
 
-export const SDGTooltip = (props: SunburstTooltipProps) => {
+export const SDGTooltip = (props: SDGTooltipProps) => {
   const { x, y } = useMousePosition();
   const windowScroll = useWindowScroll();
   const [style, setStyle] = React.useState({ top: 0, left: 0 });
 
   React.useEffect(() => {
-    setStyle({
-      top: y + 40 + windowScroll.y,
-      left: x - 150,
-    });
+    if (props.containerId) {
+      const container = document.getElementById(props.containerId);
+      if (container) {
+        const containerBounds = container.getBoundingClientRect();
+        setStyle({
+          top: y - containerBounds.top + 40,
+          left: x - containerBounds.left - 150,
+        });
+      }
+    } else {
+      setStyle({
+        top: y - 100 + windowScroll.y,
+        left: x - 350,
+      });
+    }
   }, [x, y, props.hoveredNode, windowScroll.y]);
 
   return props.hoveredNode ? (

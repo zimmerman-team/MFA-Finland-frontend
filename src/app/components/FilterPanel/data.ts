@@ -8,7 +8,7 @@ export interface FilterOption {
 
 export interface CheckboxListItemProps extends FilterOption {
   selected: boolean;
-  onFilterCheckboxChange: (value: string) => void;
+  onFilterCheckboxChange: (value: string | string[]) => void;
 }
 
 export interface FilterProps {
@@ -21,7 +21,7 @@ export interface FilterProps {
   onBackBtnClick: () => void;
   onApplyFilters: () => void;
   onSelectAllCheckboxChange: () => void;
-  onFilterCheckboxChange: (value: string) => void;
+  onFilterCheckboxChange: (value: string | string[]) => void;
 }
 
 export interface MailPanelInitDataItemModel {

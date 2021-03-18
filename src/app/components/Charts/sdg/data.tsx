@@ -8,6 +8,7 @@ export interface SDGvizItemProps {
 }
 
 export interface SDGvizProps {
+  containerId?: string;
   data: SDGvizItemProps[];
 }
 

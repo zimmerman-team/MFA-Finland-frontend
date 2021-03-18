@@ -1,10 +1,7 @@
 import { APIModel } from "app/state/api";
 import { ApiCallModel } from "app/state/api/interfaces";
 
-export const countries: ApiCallModel = {
-  ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
-};
-export const regions: ApiCallModel = {
+export const locations: ApiCallModel = {
   ...APIModel(`${process.env.REACT_APP_API}/filter-group-options`),
 };
 export const sectors: ApiCallModel = {

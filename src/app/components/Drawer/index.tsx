@@ -72,27 +72,25 @@ export const Drawer = () => {
 
         {/* ----------------------------------------------------------- */}
         {/* content */}
-        <Grid item container xs={12} sm={12} lg={12}>
+        <Grid item container xs={12} sm={12} lg={12} css="height: fit-content;">
           {/* ----------------------------------------------------------- */}
           {/* links */}
-          <Grid item xs={12} sm={12} lg={2}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            lg={2}
+            css={`
+              height: fit-content;
+              border-right: 1px solid #fff;
+            `}
+          >
             <NavList items={GlobalNavItems} />
           </Grid>
-          <div
-            css={`
-              width: 1px;
-              height: 200px;
-              background-color: white;
 
-              @media (max-width: 960px) {
-                width: 200px;
-                height: 1px;
-              }
-            `}
-          />
           {/* ----------------------------------------------------------- */}
           {/* address */}
-          <Grid item xs={12} sm={12} lg={3} css={drawerStyle.AddressContainer}>
+          <Grid item xs={12} sm={6} lg={3} css={drawerStyle.AddressContainer}>
             <Typography
               variant="body1"
               css={`
@@ -117,30 +115,23 @@ export const Drawer = () => {
               kirjaamo.um@formin.fi
             </Typography>
           </Grid>
-          <div
-            css={`
-              width: 1px;
-              height: 200px;
-              background-color: white;
 
-              @media (max-width: 960px) {
-                width: 200px;
-                height: 1px;
-              }
-            `}
-          />
+          <Grid item xs={12} sm={6} lg="auto" />
+
           {/* ----------------------------------------------------------- */}
           {/* socials */}
           <Grid
             item
             container
             xs={12}
-            sm={12}
+            sm={6}
             lg={3}
             css={`
               padding-left: 32px;
+
               @media (max-width: 960px) {
-                padding-left: initial;
+                margin-top: 64px;
+                border-left: 1px solid #fff;
               }
             `}
           >
@@ -213,9 +204,19 @@ export const Drawer = () => {
                   />
                 </IconButton>
               </div>
-            </Grid>
-            <Grid item lg={12}>
-              Lorem
+              <br />
+              <Typography
+                variant="body1"
+                css={`
+                  color: white;
+                `}
+              >
+                Web and social media sites of
+                <br />
+                Finland's missions
+                <br />
+                thisisFINLAND
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

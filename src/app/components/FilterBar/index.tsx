@@ -36,13 +36,13 @@ export const FilterBar = (props: FilterBarProps) => {
     selectedFilterAtom
   );
   const filterOptionsData = useStoreState((state) => state.filterOptions);
-  const [height, setHeight] = React.useState(64);
+  const [height, setHeight] = React.useState(68);
   const styles = createStyles(props, height);
   let container: any;
 
-  React.useEffect(() => {
-    setHeight(container ? container.clientHeight : 64);
-  }, [chips]);
+  // React.useEffect(() => {
+  //   setHeight(container ? container.clientHeight : 68);
+  // }, [chips]);
 
   React.useEffect(() => {
     setChips(getFilterChips(selectedFilters, filterOptionsData));
@@ -124,6 +124,9 @@ export const FilterBar = (props: FilterBarProps) => {
           updatedSelectedFilters.humanrights,
           (f: string) => f !== chip.value
         );
+        break;
+      case FILTER_TYPES.PERIOD:
+        updatedSelectedFilters.years = [];
         break;
       default:
         break;

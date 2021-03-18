@@ -10,14 +10,14 @@ export function SDGviz(props: SDGvizProps) {
   );
 
   return (
-    <Grid container spacing={2} id="sdg-container">
+    <Grid container spacing={2}>
       {props.data.map((d: SDGvizItemProps) => (
-        <Grid item key={d.number} xs={4} sm={3} md={4} lg={2} xl={2}>
+        <Grid item key={d.number} xs={3} sm={2} md={2} lg={2} xl={2}>
           <SDGvizItem {...d} setHoveredNode={setHoveredNode} />
         </Grid>
       ))}
       <SDGTooltip
-        containerId="sdg-container"
+        containerId={props.containerId}
         hoveredNode={
           hoveredNode
             ? {

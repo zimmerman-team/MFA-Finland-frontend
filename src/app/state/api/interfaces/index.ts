@@ -100,10 +100,11 @@ export interface ApiCallModel
 export interface StoreModel {
   // global search
   searchDonors: ApiCallModel;
+  searchSectors: ApiCallModel;
   searchCountries: ApiCallModel;
   searchActivities: ApiCallModel;
-  searchPublishers: ApiCallModel;
   searchOrganisations: ApiCallModel;
+  searchThematicareas: ApiCallModel;
   // viz
   donors: ApiCallModel;
   sectors: ApiCallModel;
@@ -153,8 +154,7 @@ export interface StoreModel {
   // deleteUser: ApiCallModel;
   // filtering
   filterOptions: {
-    countries: ApiCallModel;
-    regions: ApiCallModel;
+    locations: ApiCallModel;
     sectors: ApiCallModel;
     thematicareas: ApiCallModel;
     organisations: ApiCallModel;

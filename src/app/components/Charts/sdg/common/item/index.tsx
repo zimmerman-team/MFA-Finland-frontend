@@ -1,4 +1,9 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
+import { useRecoilState } from "recoil";
+import { useHistory } from "react-router-dom";
+import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 
 interface CompProps extends SDGvizItemProps {
@@ -6,6 +11,11 @@ interface CompProps extends SDGvizItemProps {
 }
 
 export function SDGvizItem(props: CompProps) {
+  const history = useHistory();
+  const [selectedFilters, setSelectedFilters] = useRecoilState(
+    selectedFilterAtom
+  );
+
   return (
     <div
       css={`
@@ -35,6 +45,16 @@ export function SDGvizItem(props: CompProps) {
         if (!props.disabled) {
           props.setHoveredNode(null);
         }
+      }}
+      onClick={() => {
+        setSelectedFilters({
+          ...selectedFilters,
+          sdg: [...selectedFilters.sdg, props.number.toString()],
+        });
+        setTimeout(
+          () => history.push(`/viz/projects${history.location.search}`),
+          200
+        );
       }}
     >
       <img src={props.icon} alt={`${props.number} - ${props.name}`} />

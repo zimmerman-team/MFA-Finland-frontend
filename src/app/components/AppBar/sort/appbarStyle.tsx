@@ -6,7 +6,7 @@ export const appbarStyle = {
     box-shadow: initial;
     position: sticky;
     top: 0;
-    height: 64px;
+    height: 68px;
     display: flex;
     justify-content: center;
     z-index: 102; //mui-datatable header has a default z-index of 100...
@@ -16,15 +16,24 @@ export const appbarStyle = {
       height: 56px;
     }
   `,
-  toolBar: css`
+  toolBar: (searchOpen: boolean) => css`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 0;
+    align-items: center;
+    justify-content: space-between;
     background-color: ${PrimaryColor[0]};
+    @media (min-width: 600px) {
+      min-height: 68px;
+    }
+    @media (max-width: 992px) {
+      justify-content: ${searchOpen ? "flex-end" : "space-between"};
+    }
   `,
-  logoLink: css`
+  logoLink: (show: boolean) => css`
     display: flex;
+    @media (max-width: 992px) {
+      display: ${show ? "flex" : "none"};
+    }
     text-decoration: none;
     @media (max-width: 960px) {
       margin-left: 12px;
@@ -61,7 +70,7 @@ export const appbarStyle = {
     align-items: center;
     letter-spacing: 0.02em;
     color: ${color};
-    margin-left: 15px;
+    margin-left: 16px;
 
     @media (max-width: 600px) {
       font-size: 13px;
