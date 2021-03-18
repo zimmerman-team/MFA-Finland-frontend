@@ -22,6 +22,7 @@ import {
   rightsideinfopanelvalues,
 } from "app/components/Charts/thematicareas/styles";
 import { formatLocale } from "app/utils/formatLocale";
+import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 export function ThematicAreas(props: ThematicAreasProps) {
   const maxValue = get(maxBy(props.data, "value"), "value", 0);
@@ -48,7 +49,16 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
               <div />
             </div>
-            <div css={itemcirclelabelcss(directions[index])}>{item.area}</div>
+            <div css={itemcirclelabelcss(index)}>
+              {item.area}
+              {props.showOnlyViz && (
+                <div css="margin-top: 5px;">
+                  {formatMoneyWithPrefix(
+                    item.primary.value + item.secondary.value
+                  )}
+                </div>
+              )}
+            </div>
           </React.Fragment>
         ))}
       </Grid>

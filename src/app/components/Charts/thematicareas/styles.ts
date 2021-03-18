@@ -84,14 +84,77 @@ export const itemcirclecss = (
   `;
 };
 
-export const itemcirclelabelcss = (dimensions: string[]) => css`
-  width: 100px;
+const itemlabellinecss = [
+  `
+    display: inline-block;
+    left: 53%;
+    top: 45px;
+    content: "";
+    height: 25px;
+    position: absolute;
+    transform: rotate(-32deg);
+    border-right: 1px solid #2E4982;
+  `,
+  `
+    display: inline-block;
+    left: -23%;
+    content: "";
+    width: 60px;
+    bottom: -32px;
+    position: absolute;
+    transform: rotate(-70deg);
+    border-bottom: 1px solid #2E4982;
+  `,
+  `
+    display: inline-block;
+    left: 19%;
+    content: "";
+    height: 25px;
+    bottom: 48px;
+    position: absolute;
+    transform: rotate(-10deg);
+    border-right: 1px solid #2E4982;
+  `,
+  `
+    display: inline-block;
+    top: -50%;
+    right: -15%;
+    content: "";
+    width: 35px;
+    position: absolute;
+    transform: rotate(-65deg);
+    border-top: 1px solid #2E4982;
+  `,
+];
+
+const itemlabeltextcss = [
+  `
+    left: 0;
+    top: -35%;
+  `,
+  `
+    top: 0%;
+    right: -60%;
+  `,
+  `    
+    right: 0%;
+    bottom: -40%;
+  `,
+  `
+    bottom: 0%;
+    left: -60%;
+  `,
+];
+
+export const itemcirclelabelcss = (index: number) => css`
+  width: 105px;
   font-size: 10px;
   position: absolute;
-  ${dimensions[1]}: 30%;
-  ${dimensions[0]}: ${dimensions[0] === "top" || dimensions[0] === "bottom"
-    ? "-30%"
-    : "-60%"};
+  ${itemlabeltextcss[index]}
+
+  &:after {
+    ${itemlabellinecss[index]}
+  }
 `;
 
 export const singleitemcontainercss = css`
