@@ -136,8 +136,8 @@ const buttonStyles = (active: boolean) => {
   `;
 };
 
-const yearLow = 1920;
-const yearHigh = 2021;
+const yearLow = 2015;
+const yearHigh = 2025;
 
 export const CardContentPeriod = (props: FilterProps) => {
   const [selectedFromYear, setSelectedFromYear] = React.useState(
