@@ -1,6 +1,8 @@
 import React from "react";
+import get from "lodash/get";
 import { SunburstPoint } from "react-vis";
 import { useWindowScroll } from "react-use";
+import { useCMSData } from "app/hooks/useCMSData";
 import { formatLocale } from "app/utils/formatLocale";
 import useMousePosition from "app/hooks/useMousePosition";
 import {
@@ -19,6 +21,7 @@ interface SDGTooltipProps {
 export const SDGTooltip = (props: SDGTooltipProps) => {
   const { x, y } = useMousePosition();
   const windowScroll = useWindowScroll();
+  const cmsData = useCMSData({ returnData: true });
   const [style, setStyle] = React.useState({ top: 0, left: 0 });
 
   React.useEffect(() => {
@@ -48,7 +51,8 @@ export const SDGTooltip = (props: SDGTooltipProps) => {
       <div css={tooltiprowcss}>
         <div>
           <b>
-            Disbursed {getFormattedPercentage(props.hoveredNode.percentage)}
+            {get(cmsData, "viz.disbursed", "Disbursed")}{" "}
+            {getFormattedPercentage(props.hoveredNode.percentage)}
           </b>
         </div>
         <div>
@@ -65,7 +69,7 @@ export const SDGTooltip = (props: SDGTooltipProps) => {
       </div>
       <div css="width: 100%;height: 15px;" />
       <div css={tooltiprowcss}>
-        <div>Committed</div>
+        <div>{get(cmsData, "viz.committed", "Committed")}</div>
         <div>
           {props.hoveredNode.committed
             ? formatLocale(props.hoveredNode.committed)

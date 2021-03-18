@@ -11,11 +11,12 @@ import { getTreemapLegends } from "app/components/Charts/treemap/utils";
 export function getSidebarLegendItems(
   vizType: string,
   data: any,
-  filter: string | number | null
+  filter: string | number | null,
+  cmsData: any
 ): VizSidePanelItemProps[] {
   switch (vizType) {
     case "oda":
-      return getODALegendItems(data[vizType]);
+      return getODALegendItems(data[vizType], cmsData);
     case "oda-drilldown":
       return getSimpleBarLegendItems(data[vizType]);
     case "thematic-areas":

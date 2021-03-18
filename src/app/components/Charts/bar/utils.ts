@@ -59,7 +59,10 @@ export function getMoneyValueWithMetricPrefix(
   return n.toString();
 }
 
-export function getODALegendItems(data: any): VizSidePanelItemProps[] {
+export function getODALegendItems(
+  data: any,
+  cmsData: any
+): VizSidePanelItemProps[] {
   return orderBy(data, "year", "desc").map((d: any) => ({
     id: d.year,
     name: `${d.year} Total ODA`,
@@ -67,13 +70,13 @@ export function getODALegendItems(data: any): VizSidePanelItemProps[] {
     children: [
       {
         id: "Exclusive ODA",
-        name: "Exclusive ODA",
+        name: get(cmsData, "viz.exclusiveoda", "Exclusive ODA"),
         value: formatLocale(get(d, "exclusive", 0)),
         color: get(d, "exclusiveColor", ""),
       },
       {
         id: "Other ODA",
-        name: "Other ODA",
+        name: get(cmsData, "viz.otheroda", "Other ODA"),
         value: formatLocale(get(d, "other", 0)),
         color: get(d, "otherColor", ""),
       },

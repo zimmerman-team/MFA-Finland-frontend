@@ -10,6 +10,7 @@ export const vizTabs: TabProps[] = [
   {
     name: "Overview",
     url: "/viz/oda",
+    cmsKey: "viz.overview",
   },
   {
     name: "Thematic areas",

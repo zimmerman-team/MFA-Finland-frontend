@@ -38,12 +38,30 @@ export const datapath = "data.data";
 export const countpath = "data.count";
 
 export const searchNavItems = [
-  "Projects",
-  "Thematic areas",
-  "Sectors",
-  "Organisations",
-  "Countries",
-  "All",
+  {
+    name: "Projects",
+    cmsKey: "viz.projects",
+  },
+  {
+    name: "Thematic areas",
+    cmsKey: "general.thematicareas",
+  },
+  {
+    name: "Sectors",
+    cmsKey: "general.sectors",
+  },
+  {
+    name: "Organisations",
+    cmsKey: "general.organisations",
+  },
+  {
+    name: "Countries",
+    cmsKey: "viz.countriesregions",
+  },
+  {
+    name: "All",
+    cmsKey: "filters.all",
+  },
 ];
 
 const mockResultItem = {

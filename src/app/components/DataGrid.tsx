@@ -121,12 +121,6 @@ export const DataGrid = (props: DataGridProps) => {
   return (
     <React.Fragment>
       {/* ----------------------------- */}
-      {/*  floating buttons */}
-      {/* ----------------------------- */}
-      {/* <Hidden mdDown> */}
-      {/*  <PageFloatingButtons /> */}
-      {/* </Hidden> */}
-      {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}
       <Grid item xs={12} sm={12} md={12} lg={8}>
@@ -416,9 +410,13 @@ export const DataGrid = (props: DataGridProps) => {
                 <Collapsable unallocable={props.unallocablePercentage} />
                 <Geomap geoData={props.geoMapData} />
                 <Legend
-                  label="Disbursements Amount"
                   startValue={0}
                   totalValue={get(maxBy(props.geoMapData, "value"), "value", 0)}
+                  label={get(
+                    cmsData,
+                    "viz.disbursementsamount",
+                    "Disbursements amount"
+                  )}
                 />
               </div>
             )}

@@ -206,7 +206,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     >
       <header css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <div css={style.widgetLabel}>{props.label}</div>
+          <div css={style.widgetLabel}>
+            {!odaWidget
+              ? props.label
+              : get(cmsData, "general.overview", "Overview Disbursements")}
+          </div>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip}>
@@ -218,18 +222,26 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         {odaWidget && (
           <div css={style.odaHeaderStats}>
             <div css={style.headerStat}>
-              <div>Disbursements amount</div>
+              <div>
+                {get(
+                  cmsData,
+                  "viz.disbursementsamount",
+                  "Disbursements amount"
+                )}
+              </div>
               <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
             </div>
             <div css={style.headerStat}>
-              <div>Organisations</div>
+              <div>
+                {get(cmsData, "general.organisations", "Organisations")}
+              </div>
               <div>{orgCount}</div>
               <div>
                 <Link
                   css={style.link}
                   to={`/viz/organisations${searchFilterString}`}
                 >
-                  View more
+                  {get(cmsData, "viz.viewmore", "View more")}
                 </Link>
               </div>
             </div>
@@ -241,7 +253,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
                   css={style.link}
                   to={`/viz/projects${searchFilterString}`}
                 >
-                  View more
+                  {get(cmsData, "viz.viewmore", "View more")}
                 </Link>
               </div>
             </div>

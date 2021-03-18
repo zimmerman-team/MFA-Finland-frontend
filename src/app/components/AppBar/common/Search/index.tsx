@@ -16,7 +16,7 @@ export function SearchComponent() {
   const [value, setValue] = React.useState("");
   const targetRef = React.useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useRecoilState(searchFocusAtom);
-  const [resultType, setResultType] = React.useState(searchNavItems[0]);
+  const [resultType, setResultType] = React.useState(searchNavItems[0].name);
   const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
 
   const loading = useStoreState(
@@ -198,19 +198,19 @@ export function SearchComponent() {
   // load more items of result type selected
   function loadMore() {
     switch (resultType) {
-      case searchNavItems[0]:
+      case searchNavItems[0].name:
         setProjectsPage(ProjectsPage + 1);
         break;
-      case searchNavItems[4]:
+      case searchNavItems[4].name:
         setCountriesPage(CountriesPage + 1);
         break;
-      case searchNavItems[3]:
+      case searchNavItems[3].name:
         setOrganisationsPage(OrganisationsPage + 1);
         break;
-      case searchNavItems[2]:
+      case searchNavItems[2].name:
         setSectorsPage(SectorsPage + 1);
         break;
-      case searchNavItems[5]:
+      case searchNavItems[5].name:
         setProjectsPage(ProjectsPage + 1);
         setCountriesPage(CountriesPage + 1);
         setOrganisationsPage(OrganisationsPage + 1);
