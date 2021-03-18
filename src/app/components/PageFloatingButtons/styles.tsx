@@ -11,7 +11,7 @@ export const buttonscontainercss = css`
   display: flex;
   position: fixed;
   flex-direction: column;
-  z-index: 100;
+  z-index: 4;
   transform: translateX(-44px);
 `;
 

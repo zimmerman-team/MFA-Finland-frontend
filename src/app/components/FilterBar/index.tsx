@@ -36,7 +36,7 @@ export const FilterBar = (props: FilterBarProps) => {
   const [height, setHeight] = React.useState(68);
   const styles = createStyles(props, height);
   let container: any;
-
+  console.log(selectedFilters);
   // React.useEffect(() => {
   //   setHeight(container ? container.clientHeight : 68);
   // }, [chips]);
@@ -153,8 +153,12 @@ export const FilterBar = (props: FilterBarProps) => {
             {chips.map((chip: any, index) => {
               return (
                 <Chip
+                  type={chip.type}
+                  name={chip.name}
+                  value={chip.value}
                   key={chip.name}
                   label={chip.name}
+                  childs={chip.childs}
                   onDelete={() => removeChip(chip)}
                 />
               );

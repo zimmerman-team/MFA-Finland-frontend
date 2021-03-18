@@ -56,9 +56,11 @@ export function getMockData() {
 }
 
 export interface ChipModel {
+  // id: number;
   type: any;
   name: string;
   value: string;
+  children?: ChipModel[];
 }
 
 export function getFilterChips(
@@ -86,29 +88,61 @@ export function getFilterChips(
     },
   ];
 
-  filters.tag.forEach((tag: string) => {
-    let name = "";
-    let fArea = find(thematicareas, { code: tag });
-    if (!fArea) {
-      thematicareas.forEach((area: any) => {
-        if (!fArea) {
-          fArea = find(area.children, { code: tag });
-          if (fArea) {
-            name = `${area.name} - ${fArea.name}`;
+  if (filters.tag.length > 1) {
+    const children: ChipModel[] = [];
+    filters.tag.forEach((tag: string) => {
+      let name = "";
+      let fArea = find(thematicareas, { code: tag });
+      if (!fArea) {
+        thematicareas.forEach((area: any) => {
+          if (!fArea) {
+            fArea = find(area.children, { code: tag });
+            if (fArea) {
+              name = `${area.name} - ${fArea.name}`;
+            }
           }
-        }
-      });
-    } else {
-      name = fArea.name;
-    }
-    if (fArea) {
-      chips.push({
-        name,
-        value: tag,
-        type: FILTER_TYPES.THEMATIC_AREAS,
-      });
-    }
-  });
+        });
+      } else {
+        name = fArea.name;
+      }
+      if (fArea) {
+        children.push({
+          name,
+          value: tag,
+          type: FILTER_TYPES.THEMATIC_AREAS,
+        });
+      }
+    });
+
+    chips.push({
+      name: "Thematic Areas",
+      value: "",
+      type: FILTER_TYPES.THEMATIC_AREAS,
+      children,
+    });
+  }
+
+  // filters.tag.forEach((tag: string) => {
+  //   const selectedAreas = [];
+  //   const selectedPriorities = [];
+  //
+  //   if (selectedAreas.length + selectedPriorities.length > 1) {
+  //     chips.push({
+  //       id: chips.length,
+  //       name: "Thematic Areas",
+  //       type: FILTER_TYPES.THEMATIC_AREAS,
+  //       value: "",
+  //       children:
+  //     });
+  //   }
+  //   // chips.push({
+  //   //   id: chips.length,
+  //   //   name: `${selectedAreas.length} Thematic; `,
+  //   // });
+  // });
+  //
+  // console.log("filters", filters);
+  // console.log("filterOptions", filterOptions);
 
   filters.sdg.forEach((sdg: string) => {
     const fSdg = find(sdgs, { code: sdg });
@@ -280,16 +314,35 @@ export function getFilterChips(
     }
   });
 
-  // if (filters.years.length > 1) {
-  //   chips.push({
-  //     name:
-  //       filters.years[0] === filters.years[1]
-  //         ? filters.years[0]
-  //         : `${filters.years[0]} - ${filters.years[1]}`,
-  //     value: `${filters.years[0]},${filters.years[1]}`,
-  //     type: FILTER_TYPES.PERIOD,
-  //   });
-  // }
+  if (filters.years.length > 1) {
+    chips.push({
+      name:
+        filters.years[0] === filters.years[1]
+          ? filters.years[0]
+          : `${filters.years[0]} - ${filters.years[1]}`,
+      value: `${filters.years[0]},${filters.years[1]}`,
+      type: FILTER_TYPES.PERIOD,
+    });
+  }
 
   return chips;
+}
+
+interface ChipzModel {
+  name: string;
+  values: string[];
+  type: FILTER_TYPES;
+}
+export function getFilterChipz(
+  filters: SelectedFilterAtomModel,
+  filterOptions: any
+) {
+  let chips: ChipzModel[];
+}
+
+function createThematicChip(
+  filters: SelectedFilterAtomModel,
+  filterOptions: any
+): any {
+  const thematicareas = get(filterOptions, "thematicareas.data.data", []);
 }
