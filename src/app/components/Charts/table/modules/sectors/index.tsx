@@ -69,7 +69,7 @@ export function SectorsFragmentTable(props: DataTableProps) {
   return (
     <DataTable
       data={shownData}
-      columns={SectorsDataTableColumns}
+      columns={props.columns}
       options={{
         ...SectorsDataTableOptions,
         count: shownData.length,

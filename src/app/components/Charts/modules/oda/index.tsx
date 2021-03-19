@@ -15,6 +15,7 @@ import { SimpleBarChart } from "app/components/Charts/bar/simple";
 import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
+import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
@@ -36,7 +37,7 @@ export function ODAvizModule(props: ODAvizModuleProps) {
           year: props.selectedVizItemId,
         })),
         options: ODAbudgetLinesDataTableOptions,
-        columns: ODAbudgetLinesDataTableColumns,
+        columns: getTranslatedCols(ODAbudgetLinesDataTableColumns, cmsData),
         title: `${props.odaBudgetLinesChartData.length} ${get(
           cmsData,
           "general.budgetlines",
@@ -46,7 +47,7 @@ export function ODAvizModule(props: ODAvizModuleProps) {
     : {
         data: props.data,
         options: ODADataTableOptions,
-        columns: ODADataTableColumns,
+        columns: getTranslatedCols(ODADataTableColumns, cmsData),
         title: `${props.data.length} ${get(cmsData, "filters.years", "years")}`,
       };
 

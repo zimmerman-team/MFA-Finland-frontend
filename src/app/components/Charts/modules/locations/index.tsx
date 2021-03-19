@@ -8,6 +8,7 @@ import {
   LocationsDataTableColumns,
   SectorsDataTableOptions,
 } from "app/components/Charts/table/data";
+import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface CountriesRegionsModuleModel extends TreemapProps {
   activeTab: string;
@@ -39,7 +40,7 @@ export function CountriesRegionsModule(props: CountriesRegionsModuleModel) {
         type="location"
         data={props.data.children}
         options={SectorsDataTableOptions}
-        columns={LocationsDataTableColumns}
+        columns={getTranslatedCols(LocationsDataTableColumns, cmsData)}
         title={`${props.data.children.length} ${get(
           cmsData,
           "viz.countriesregions",

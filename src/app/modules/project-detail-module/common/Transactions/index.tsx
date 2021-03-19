@@ -13,6 +13,7 @@ import {
   TransactionsDataTableOptions,
   transactionsTableTheme,
 } from "app/components/Charts/table/data";
+import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 
 interface TransactionsProps {
   data: any;
@@ -89,8 +90,11 @@ export const Transactions = (props: TransactionsProps) => {
             title=""
             data={props.data}
             theme={transactionsTableTheme}
-            columns={TransactionsDataTableColumns}
             options={TransactionsDataTableOptions}
+            columns={getTranslatedCols(
+              TransactionsDataTableColumns,
+              props.cmsData
+            )}
           />
         )}
       </div>

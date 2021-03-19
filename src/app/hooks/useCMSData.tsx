@@ -11,8 +11,8 @@ interface useCMSDataProps {
 }
 
 export function useCMSData(props: useCMSDataProps) {
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [cmsData, setCMSData] = useRecoilState(cmsDataAtom);
-  const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
 
   const generalCMSAction = useStoreActions(
     (actions) => actions.cms.general.fetch
@@ -95,7 +95,13 @@ export function useCMSData(props: useCMSDataProps) {
     if (props.loadData) {
       formatCMSData();
     }
-  }, [generalCMSData, currentLanguage]);
+  }, [
+    generalCMSData,
+    vizCMSData,
+    filtersCMSData,
+    menuCMSData,
+    currentLanguage,
+  ]);
 
   if (props.returnData) {
     return cmsData;

@@ -41,6 +41,7 @@ import {
   languageAtom,
 } from "app/state/recoil/atoms";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
+import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -520,7 +521,10 @@ export default function VizModule() {
                   <DataTable
                     data={thematicAreasChartData}
                     options={thematicAreasDataTableOptions}
-                    columns={thematicAreasDataTableColumns}
+                    columns={getTranslatedCols(
+                      thematicAreasDataTableColumns,
+                      cmsData
+                    )}
                     title={`${thematicAreasChartData.length} ${get(
                       cmsData,
                       "general.thematicareas",
