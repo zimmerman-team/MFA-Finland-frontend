@@ -194,6 +194,11 @@ export function InPageNavigation(props: InPageNavModel) {
           id={index}
           key={index}
           disabled={isDisabled(item, props.actualData)}
+          label={
+            props.cmsData
+              ? get(props.cmsData, item.cmsKey, item.label)
+              : item.label
+          }
         />
       ))}
       <Controls>

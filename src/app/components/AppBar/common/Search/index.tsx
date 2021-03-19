@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import { useRecoilState } from "recoil";
+import { useCMSData } from "app/hooks/useCMSData";
 import { searchFocusAtom } from "app/state/recoil/atoms";
 import { useDebounce, useUpdateEffect, useUnmount } from "react-use";
 import { useStoreActions, useStoreState } from "app/state/store/hooks";
@@ -14,6 +15,7 @@ import {
 
 export function SearchComponent() {
   const [value, setValue] = React.useState("");
+  const cmsData = useCMSData({ returnData: true });
   const targetRef = React.useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useRecoilState(searchFocusAtom);
   const [resultType, setResultType] = React.useState(searchNavItems[0].name);
@@ -236,6 +238,7 @@ export function SearchComponent() {
   return (
     <SearchComponentLayout
       value={value}
+      cmsData={cmsData}
       loading={loading}
       close={onClickAway}
       loadMore={loadMore}

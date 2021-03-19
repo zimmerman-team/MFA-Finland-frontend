@@ -1,5 +1,7 @@
 // @ts-nocheck
 import React from "react";
+import get from "lodash/get";
+import find from "lodash/find";
 import {
   Box,
   useMediaQuery,
@@ -28,17 +30,12 @@ import {
   DescriptionStyle,
 } from "app/modules/project-detail-module/style";
 import { SDGviz } from "app/components/Charts/sdg";
-import theme, { PrimaryColor, SecondaryColor } from "app/theme";
+import theme from "app/theme";
 import { GridSpacingFix } from "app/utils/GridSpacingFix";
 import { useRecoilState } from "recoil";
-import get from "lodash/get";
+import { SDGvizItemProps } from "app/components/Charts/sdg/data";
+import { useCMSData } from "app/hooks/useCMSData";
 import { TotalDisbursements } from "./common/Disbursements";
-import { css } from "styled-components/macro";
-import { PillButton } from "../../components/Buttons/PillButton";
-import {
-  TransactionsBar,
-  transactionsBarData,
-} from "../../components/Charts/bar/variations/transactions";
 import { Transactions } from "./common/Transactions";
 
 const crumbs: BreadcrumbLinkModel[] = [
@@ -49,6 +46,7 @@ const crumbs: BreadcrumbLinkModel[] = [
 export const ProjectDetailModuleLayout = (
   props: ActivityDetailModuleLayoutProps
 ) => {
+  const cmsData = useCMSData({ returnData: true });
   const mobile = useMediaQuery(theme.breakpoints.up("md"));
   const [activeNavItem, setActiveNavItem] = React.useState(0);
 
@@ -68,6 +66,11 @@ export const ProjectDetailModuleLayout = (
       return [...newState];
     });
   }
+
+  const hasSDGData = find(
+    props.sdgVizData,
+    (item: SDGvizItemProps) => item.committed > 0 || item.disbursed > 0
+  );
 
   return (
     <ModuleContainer>
@@ -192,27 +195,29 @@ export const ProjectDetailModuleLayout = (
       {/* ------------------------------------------------------------------ */}
       {/* transactions */}
       <Grid item xs={12} lg={12}>
-        <Transactions data={props.transactions} />
+        <Transactions data={props.transactions} cmsData={cmsData} />
       </Grid>
 
       <Box width="100%" height="60px" />
 
       {/* ------------------------------------------------------------------ */}
       {/* SDG's */}
-      <Grid
-        item
-        xs={12}
-        md={12}
-        lg={8}
-        id="sdg-container"
-        css={`
-          position: relative;
-        `}
-      >
-        <Typography css={DescriptionLabelStyle}>SDGs</Typography>
-        <Box width="100%" height="15px" />
-        <SDGviz data={props.sdgVizData} containerId="sdg-container" />
-      </Grid>
+      {hasSDGData && (
+        <Grid
+          item
+          xs={12}
+          md={12}
+          lg={8}
+          id="sdg-container"
+          css={`
+            position: relative;
+          `}
+        >
+          <Typography css={DescriptionLabelStyle}>SDGs</Typography>
+          <Box width="100%" height="15px" />
+          <SDGviz data={props.sdgVizData} containerId="sdg-container" />
+        </Grid>
+      )}
 
       <Box width="100%" height="60px" />
 
@@ -226,6 +231,7 @@ export const ProjectDetailModuleLayout = (
             `}
           >
             <InPageNavigation
+              cmsData={cmsData}
               active={activeNavItem}
               setActive={setActiveNavItem}
               setActivityListState={setActivityListState}
@@ -252,6 +258,7 @@ export const ProjectDetailModuleLayout = (
               {...item}
               index={index}
               handleClick={handleNavItemClick}
+              label={get(cmsData, item.cmsKey, item.label)}
               data={get(props.metadata, item.dataPath, null)}
             />
           </Grid>

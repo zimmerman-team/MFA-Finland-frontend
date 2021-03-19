@@ -38,6 +38,7 @@ import {
   BudgetLinesLatestFiltersAtom,
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
+  languageAtom,
 } from "app/state/recoil/atoms";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 
@@ -59,6 +60,7 @@ export default function VizModule() {
   const [vizTranslation, setVizTranslation] = React.useState({ x: 0, y: 0 });
   const [sectorDrillDown, setSectorDrillDown] = React.useState("");
   const [prevTab, setPrevTab] = React.useState(get(params, "tab", ""));
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
   const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
     ODAlatestFiltersAtom
@@ -179,6 +181,7 @@ export default function VizModule() {
       values: {
         filters,
         page: projectListPage,
+        lang: currentLanguage,
       },
     });
     setProjectListPage(projectListPage + 1);
@@ -521,7 +524,7 @@ export default function VizModule() {
                     title={`${thematicAreasChartData.length} ${get(
                       cmsData,
                       "general.thematicareas",
-                      "budget lines"
+                      "thematic areas"
                     ).toLowerCase()}`}
                   />
                 </div>

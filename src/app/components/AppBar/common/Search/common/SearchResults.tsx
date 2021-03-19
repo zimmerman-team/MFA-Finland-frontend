@@ -14,6 +14,7 @@ import { SearchResultItem } from "app/components/AppBar/common/Search/common/Sea
 import { SearchResultNavigation } from "app/components/AppBar/common/Search/common/SearchResultNavigation";
 
 interface SearchResultsProps {
+  cmsData: any;
   width: number;
   loading: boolean;
   resultType: string;
@@ -81,6 +82,7 @@ export const SearchResults = (props: SearchResultsProps) => {
     <div css={containercss} data-cy="search-result">
       <SearchResultNavigation
         results={props.results}
+        cmsData={props.cmsData}
         activeTab={props.resultType}
         onChange={props.changeResultType}
       />

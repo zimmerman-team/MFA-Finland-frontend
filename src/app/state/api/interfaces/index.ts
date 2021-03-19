@@ -77,6 +77,7 @@ export interface ApiCallParams {
   search?: string;
   extra_param?: string;
   detail_type?: string;
+  lang?: string;
 
   token?: string;
   user_id?: string;

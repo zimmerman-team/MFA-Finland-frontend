@@ -1,7 +1,6 @@
 import React from "react";
 import get from "lodash/get";
 import { css } from "styled-components/macro";
-import { useCMSData } from "app/hooks/useCMSData";
 import { SearchResultNavItem } from "app/components/AppBar/common/Search/common/SearchResultNavItem";
 import {
   searchNavItems,
@@ -9,6 +8,7 @@ import {
 } from "app/components/AppBar/common/Search/data";
 
 type Props = {
+  cmsData: any;
   noAll?: boolean;
   activeTab: string;
   onChange: Function;
@@ -23,8 +23,6 @@ const containercss = css`
 `;
 
 export const SearchResultNavigation = (props: Props) => {
-  const cmsData = useCMSData({ returnData: true });
-
   return (
     <div css={containercss} data-cy="search-result-navigation">
       {(!props.noAll ? searchNavItems : searchNavItems.slice(0, 5)).map(
@@ -35,8 +33,8 @@ export const SearchResultNavigation = (props: Props) => {
               key={`search-nav-item-${index}`}
               active={props.activeTab === navItem}
               onClick={() => props.onChange(navItem.name)}
-              name={get(cmsData, navItem.cmsKey, navItem.name)}
-              count={get(props.results, `[${navItem}]`, []).count}
+              name={get(props.cmsData, navItem.cmsKey, navItem.name)}
+              count={get(props.results, `[${navItem.name}]`, []).count}
             />
           );
         }

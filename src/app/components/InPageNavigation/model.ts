@@ -14,6 +14,7 @@ export type InPageNavModel = {
   handleClickUp?: Function;
   handleClickDown?: Function;
   setActivityListState?: any;
+  cmsData?: any;
 };
 
 export interface InpageNavItemModel {

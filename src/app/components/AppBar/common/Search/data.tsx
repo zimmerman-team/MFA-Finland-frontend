@@ -1,6 +1,7 @@
 import React from "react";
 
 export interface SearchComponentLayoutProps {
+  cmsData: any;
   width: number;
   value: string;
   close: Function;

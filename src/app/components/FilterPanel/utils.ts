@@ -69,6 +69,11 @@ export function getMainFilterPanelData(
     "filters.advancedfilters",
     "Advanced Filters"
   );
+  updatedData[7].label = `5 ${get(
+    cmsData,
+    "filters.advancedfilters",
+    "Advanced Filters"
+  )}`;
 
   const thematicareas = filter(
     selectedFilters.tag,
@@ -139,14 +144,14 @@ export function getAdvancedFilterPanelData(
     updatedData[2].heading
   }`;
   updatedData[3].selection = [];
-  updatedData[3].heading = get(cmsData, "general.bimulti", "Bi/Multi");
+  updatedData[3].heading = get(cmsData, "filters.bimulti", "Bi/Multi");
   updatedData[3].label = `${get(cmsData, "filters.all", "All")} ${
     updatedData[3].heading
   }`;
   updatedData[4].selection = [];
   updatedData[4].heading = get(
     cmsData,
-    "general.humanrights",
+    "filters.humanrights",
     "Human rights approach"
   );
   updatedData[4].label = `${get(cmsData, "filters.all", "All")} ${

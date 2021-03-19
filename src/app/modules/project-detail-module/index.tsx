@@ -1,9 +1,11 @@
 import React from "react";
 import get from "lodash/get";
 import filter from "lodash/filter";
+import { useRecoilState } from "recoil";
 import { AppName } from "app/const/Path";
 import useTitle from "react-use/lib/useTitle";
 import { useRouteMatch } from "react-router-dom";
+import { languageAtom } from "app/state/recoil/atoms";
 import { useStoreActions, useStoreState } from "app/state/store/hooks";
 import { initActivityDetailData } from "app/components/ActivityAccordion/model";
 import { ProjectDetailModuleLayout } from "app/modules/project-detail-module/layout";
@@ -16,6 +18,7 @@ export function ProjectDetailModule() {
 
   const { params } = useRouteMatch();
   const activityId = get(params, "param", "");
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   const activityDetailData = useStoreState((state) => {
     if (get(state.activityDetail, "data.data.metadata", null)) {
@@ -46,6 +49,7 @@ export function ProjectDetailModule() {
     activityDetailAction({
       values: {
         activityId: decodeURIComponent(activityId),
+        lang: currentLanguage,
       },
     });
     sdgVizAction({
@@ -56,7 +60,7 @@ export function ProjectDetailModule() {
       },
     });
     return () => activityDetailClearAction();
-  }, [activityId]);
+  }, [activityId, currentLanguage]);
 
   return (
     <React.Fragment>

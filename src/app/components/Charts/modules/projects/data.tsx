@@ -13,6 +13,7 @@ const project: ProjectType = {
   country_region: ["Kenya"],
   budget: 10000000,
   disbursementPercentage: 75,
+  cmsData: {},
 };
 
 export const projects: ProjectType[] = [
