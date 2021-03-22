@@ -58,6 +58,7 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
       `,
       checkbox: css`
         color: white;
+        margin-left: 0;
       `,
       details: css`
         background-color: ${PrimaryColor[0]};
@@ -81,6 +82,9 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
           //padding: initial;
         }
       `,
+      formControl: css`
+        margin-left: 0;
+      `,
     };
   };
 
@@ -100,6 +104,7 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
           aria-label="checkbox"
           onClick={(event: any) => event.stopPropagation()}
           onFocus={(event: any) => event.stopPropagation()}
+          css={styles.formControl}
           control={
             <Checkbox
               color="default"

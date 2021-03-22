@@ -12,7 +12,7 @@ import { PillButton } from "app/components/Buttons/PillButton";
 import { FILTER_TYPES } from "app/components/FilterPanel/data";
 import {
   ChipModel,
-  getFilterChips,
+  getFilterChip,
   shouldRender,
 } from "app/components/FilterBar/utils";
 import {
@@ -39,13 +39,12 @@ export const FilterBar = (props: FilterBarProps) => {
   const [height, setHeight] = React.useState(68);
   const styles = createStyles(props, height);
   let container: any;
-
   // React.useEffect(() => {
   //   setHeight(container ? container.clientHeight : 68);
   // }, [chips]);
 
   React.useEffect(() => {
-    setChips(getFilterChips(selectedFilters, filterOptionsData));
+    setChips(getFilterChip(selectedFilters, filterOptionsData));
   }, [selectedFilters, filterOptionsData]);
 
   function removeChip(chip: ChipModel) {
@@ -54,75 +53,140 @@ export const FilterBar = (props: FilterBarProps) => {
       case FILTER_TYPES.THEMATIC_AREAS:
         updatedSelectedFilters.tag = filter(
           updatedSelectedFilters.tag,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.tag.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.COUNTRIES:
         updatedSelectedFilters.countries = filter(
           updatedSelectedFilters.countries,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.countries.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         updatedSelectedFilters.regions = filter(
           updatedSelectedFilters.regions,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.regions.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.SECTORS:
         updatedSelectedFilters.sectors = filter(
           updatedSelectedFilters.sectors,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.sectors.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.ORGANISATIONS:
         updatedSelectedFilters.organisations = filter(
           updatedSelectedFilters.organisations,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.organisations.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         updatedSelectedFilters.organisationtypes = filter(
           updatedSelectedFilters.organisationtypes,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.organisationtypes.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.SDGS:
         updatedSelectedFilters.sdg = filter(
           updatedSelectedFilters.sdg,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.sdg.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.ACTIVITY_STATUS:
         updatedSelectedFilters.activitystatus = filter(
           updatedSelectedFilters.activitystatus,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.activitystatus.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.POLICY_MARKERS:
         updatedSelectedFilters.policymarker = filter(
           updatedSelectedFilters.policymarker,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.policymarker.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.AID_TYPE:
         updatedSelectedFilters.defaultaidtype = filter(
           updatedSelectedFilters.defaultaidtype,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.defaultaidtype.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.BUDGET_LINES:
         updatedSelectedFilters.budgetlines = filter(
           updatedSelectedFilters.budgetlines,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.budgetlines.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.BI_MULTI:
         updatedSelectedFilters.collaborationtype = filter(
           updatedSelectedFilters.collaborationtype,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.collaborationtype.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.HUMAN_RIGHTS:
         updatedSelectedFilters.humanrights = filter(
           updatedSelectedFilters.humanrights,
-          (f: string) => f !== chip.value
+          (f: string) => {
+            if (updatedSelectedFilters.humanrights.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
         );
         break;
       case FILTER_TYPES.PERIOD:
@@ -159,8 +223,9 @@ export const FilterBar = (props: FilterBarProps) => {
             {chips.map((chip: any, index) => {
               return (
                 <Chip
-                  key={chip.name}
-                  label={chip.name}
+                  type={chip.type}
+                  values={chip.values}
+                  label={chip.label}
                   onDelete={() => removeChip(chip)}
                 />
               );
