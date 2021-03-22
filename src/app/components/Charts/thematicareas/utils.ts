@@ -8,7 +8,7 @@ export function getThematicAreasLegends(
 ): VizSidePanelItemProps[] {
   return orderBy(data, "size", "desc").map((d: DataProps) => ({
     id: d.name,
-    name: d.name,
+    name: d.area,
     color: d.color,
     value: formatLocale(d.value),
   }));

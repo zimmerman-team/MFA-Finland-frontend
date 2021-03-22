@@ -116,7 +116,7 @@ export const thematicAreasDataTableColumns: MUIDataTableColumnDef[] = [
     },
   },
   {
-    name: "name",
+    name: "area",
     label: "Area",
     options: {
       customBodyRender: (value, tableMeta) => {
