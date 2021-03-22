@@ -5,24 +5,31 @@ import { css } from "styled-components/macro";
 import { Breadcrumbs } from "app/components/Breadcrumb";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { Path } from "app/const/Path";
-import { PageOrnament } from "app/assets/PageOrnament";
 import { Anchor, InPageNavigation } from "app/components/InPageNavigation";
 import { InpageNavItemModel } from "app/components/InPageNavigation/model";
 
-const widgetContainer = (height: string | undefined, isHovered: boolean) => css`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  border-radius: 32px;
-  flex-direction: column;
-  background-color: #ffffff;
-  padding: 32px;
-  height: ${height || "328px"};
-  box-shadow: ${isHovered
-    ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
-    : ""};
-  transition: box-shadow 0.3s ease-in-out;
-`;
+export const styles = {
+  container: css`
+    width: 100%;
+    padding: 28px;
+    padding-bottom: 44px;
+    background-color: white;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 30px;
+    margin-bottom: 24px;
+  `,
+  gridContainer: css`
+    .MuiGrid-root {
+      flex-grow: 1;
+    }
+  `,
+  paragraphHeader: css`
+    margin-bottom: 16px;
+  `,
+  paragraph: css`
+    margin-bottom: 24px;
+  `,
+};
 
 const privacyCrumbs: BreadcrumbLinkModel[] = [
   { label: "Homepage", path: Path.home },
@@ -69,11 +76,11 @@ export const AboutModuleLayout = () => {
           </Grid>
         </Hidden>
         <Grid item lg={9}>
-          <Anchor id="about-mfa-portal" />
-          <div css={widgetContainer(undefined, false)}>
+          <Anchor id="about" />
+          <div css={styles.container}>
             <Typography variant="h5">About</Typography>
             <Box width="100%" height="24px" />
-            <Typography variant="body1" paragraph>
+            <Typography variant="body1" css={styles.paragraph}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
