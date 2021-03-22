@@ -110,7 +110,7 @@ export const Drawer = () => {
                 color: white;
               `}
             >
-              Switchboard +358 295 16001
+              {get(cmsData, "menu.telephone", "Switchboard +358 295 16001")}
               <br />
               kirjaamo.um@formin.fi
             </Typography>
@@ -211,11 +211,7 @@ export const Drawer = () => {
                   color: white;
                 `}
               >
-                Web and social media sites of
-                <br />
-                Finland's missions
-                <br />
-                thisisFINLAND
+                {get(cmsData, "menu.social", "")}
               </Typography>
             </Grid>
           </Grid>
