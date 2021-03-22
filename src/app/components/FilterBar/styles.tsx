@@ -12,7 +12,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       margin-bottom: 16px;
       margin-left: 68px;
       margin-right: 68px;
-      min-height: 68px;
+      height: 68px;
       background-color: #ecf1fa;
       overflow-x: auto;
       overflow-y: hidden;

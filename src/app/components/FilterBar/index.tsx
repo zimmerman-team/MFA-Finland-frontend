@@ -10,9 +10,7 @@ import { PillButton } from "app/components/Buttons/PillButton";
 import { FILTER_TYPES } from "app/components/FilterPanel/data";
 import {
   ChipModel,
-  ChipzModel,
-  getFilterChips,
-  getFilterChipz,
+  getFilterChip,
   shouldRender,
 } from "app/components/FilterBar/utils";
 import {
@@ -28,7 +26,7 @@ export interface FilterBarProps {
 
 export const FilterBar = (props: FilterBarProps) => {
   const location = useLocation();
-  const [chips, setChips] = React.useState<ChipzModel[]>([]);
+  const [chips, setChips] = React.useState<ChipModel[]>([]);
   const render: boolean = shouldRender(location);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
   const [selectedFilters, setSelectedFilters] = useRecoilState(
@@ -38,17 +36,15 @@ export const FilterBar = (props: FilterBarProps) => {
   const [height, setHeight] = React.useState(68);
   const styles = createStyles(props, height);
   let container: any;
-  console.log(selectedFilters);
   // React.useEffect(() => {
   //   setHeight(container ? container.clientHeight : 68);
   // }, [chips]);
 
   React.useEffect(() => {
-    // setChips(getFilterChips(selectedFilters, filterOptionsData));
-    setChips(getFilterChipz(selectedFilters, filterOptionsData));
+    setChips(getFilterChip(selectedFilters, filterOptionsData));
   }, [selectedFilters, filterOptionsData]);
 
-  function removeChip(chip: ChipzModel) {
+  function removeChip(chip: ChipModel) {
     const updatedSelectedFilters = { ...selectedFilters };
     switch (chip.type) {
       case FILTER_TYPES.THEMATIC_AREAS:
@@ -62,77 +58,137 @@ export const FilterBar = (props: FilterBarProps) => {
           }
         );
         break;
-      // case FILTER_TYPES.COUNTRIES:
-      //   updatedSelectedFilters.countries = filter(
-      //     updatedSelectedFilters.countries,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   updatedSelectedFilters.regions = filter(
-      //     updatedSelectedFilters.regions,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.SECTORS:
-      //   updatedSelectedFilters.sectors = filter(
-      //     updatedSelectedFilters.sectors,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.ORGANISATIONS:
-      //   updatedSelectedFilters.organisations = filter(
-      //     updatedSelectedFilters.organisations,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   updatedSelectedFilters.organisationtypes = filter(
-      //     updatedSelectedFilters.organisationtypes,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.SDGS:
-      //   updatedSelectedFilters.sdg = filter(
-      //     updatedSelectedFilters.sdg,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.ACTIVITY_STATUS:
-      //   updatedSelectedFilters.activitystatus = filter(
-      //     updatedSelectedFilters.activitystatus,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.POLICY_MARKERS:
-      //   updatedSelectedFilters.policymarker = filter(
-      //     updatedSelectedFilters.policymarker,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.AID_TYPE:
-      //   updatedSelectedFilters.defaultaidtype = filter(
-      //     updatedSelectedFilters.defaultaidtype,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.BUDGET_LINES:
-      //   updatedSelectedFilters.budgetlines = filter(
-      //     updatedSelectedFilters.budgetlines,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.BI_MULTI:
-      //   updatedSelectedFilters.collaborationtype = filter(
-      //     updatedSelectedFilters.collaborationtype,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.HUMAN_RIGHTS:
-      //   updatedSelectedFilters.humanrights = filter(
-      //     updatedSelectedFilters.humanrights,
-      //     (f: string) => f !== chip.value
-      //   );
-      //   break;
-      // case FILTER_TYPES.PERIOD:
-      //   updatedSelectedFilters.years = [];
-      //   break;
+      case FILTER_TYPES.COUNTRIES:
+        updatedSelectedFilters.countries = filter(
+          updatedSelectedFilters.countries,
+          (f: string) => {
+            if (updatedSelectedFilters.countries.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        updatedSelectedFilters.regions = filter(
+          updatedSelectedFilters.regions,
+          (f: string) => {
+            if (updatedSelectedFilters.regions.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.SECTORS:
+        updatedSelectedFilters.sectors = filter(
+          updatedSelectedFilters.sectors,
+          (f: string) => {
+            if (updatedSelectedFilters.sectors.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.ORGANISATIONS:
+        updatedSelectedFilters.organisations = filter(
+          updatedSelectedFilters.organisations,
+          (f: string) => {
+            if (updatedSelectedFilters.organisations.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        updatedSelectedFilters.organisationtypes = filter(
+          updatedSelectedFilters.organisationtypes,
+          (f: string) => {
+            if (updatedSelectedFilters.organisationtypes.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.SDGS:
+        updatedSelectedFilters.sdg = filter(
+          updatedSelectedFilters.sdg,
+          (f: string) => {
+            if (updatedSelectedFilters.sdg.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.ACTIVITY_STATUS:
+        updatedSelectedFilters.activitystatus = filter(
+          updatedSelectedFilters.activitystatus,
+          (f: string) => {
+            if (updatedSelectedFilters.activitystatus.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.POLICY_MARKERS:
+        updatedSelectedFilters.policymarker = filter(
+          updatedSelectedFilters.policymarker,
+          (f: string) => {
+            if (updatedSelectedFilters.policymarker.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.AID_TYPE:
+        updatedSelectedFilters.defaultaidtype = filter(
+          updatedSelectedFilters.defaultaidtype,
+          (f: string) => {
+            if (updatedSelectedFilters.defaultaidtype.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.BUDGET_LINES:
+        updatedSelectedFilters.budgetlines = filter(
+          updatedSelectedFilters.budgetlines,
+          (f: string) => {
+            if (updatedSelectedFilters.budgetlines.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.BI_MULTI:
+        updatedSelectedFilters.collaborationtype = filter(
+          updatedSelectedFilters.collaborationtype,
+          (f: string) => {
+            if (updatedSelectedFilters.collaborationtype.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.HUMAN_RIGHTS:
+        updatedSelectedFilters.humanrights = filter(
+          updatedSelectedFilters.humanrights,
+          (f: string) => {
+            if (updatedSelectedFilters.humanrights.length > 1) {
+              return false;
+            }
+            return f !== chip.values[0].value;
+          }
+        );
+        break;
+      case FILTER_TYPES.PERIOD:
+        updatedSelectedFilters.years = [];
+        break;
       default:
         break;
     }
