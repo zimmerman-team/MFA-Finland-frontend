@@ -12,12 +12,12 @@ import { Typography } from "@material-ui/core";
 
 const containercss = css`
   padding: 8px;
+  width: 250px;
   display: flex;
   color: #2e4982;
   font-size: 14px;
   background: #fff;
   flex-direction: column;
-  width: 268px;
 `;
 
 const iconscontainercss = css`

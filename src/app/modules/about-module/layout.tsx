@@ -3,7 +3,6 @@ import { ModuleContainer } from "app/components/ModuleContainer";
 import { Box, Grid, Hidden, Typography } from "@material-ui/core";
 import { css } from "styled-components/macro";
 import { Breadcrumbs } from "app/components/Breadcrumb";
-import { crumbs } from "app/modules/feedback-module/layout";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { Path } from "app/const/Path";
 import { PageOrnament } from "app/assets/PageOrnament";

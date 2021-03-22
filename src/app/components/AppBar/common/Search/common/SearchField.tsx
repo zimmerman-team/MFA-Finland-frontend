@@ -37,7 +37,7 @@ export const SearchField = (props: Props) => {
           transition: width 0.5s ease-in-out;
         }
         @media (max-width: 992px) {
-          width: ${isFocused ? "calc(100vw - 135px)" : "144px"};
+          width: ${isFocused ? "calc(100vw - 165px)" : "144px"};
         }
       `}
       value={props.value}

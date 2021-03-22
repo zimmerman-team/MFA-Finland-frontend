@@ -1,265 +1,333 @@
-// @ts-nocheck
-
-import { Box, Hidden } from "@material-ui/core";
-import { Button, LinearProgress, TextField } from "@material-ui/core";
-import { Grid } from "@material-ui/core";
-import { Breadcrumbs } from "app/components/Breadcrumb";
-import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
-import { ModuleContainer } from "app/components/ModuleContainer";
-import { Path } from "app/const/Path";
-import { Field, Form, Formik } from "formik";
-import { TextFieldProps } from "formik-material-ui";
 import React from "react";
 import { css } from "styled-components/macro";
-import { InpageNavItemModel } from "app/components/InPageNavigation/model";
 import { Anchor, InPageNavigation } from "app/components/InPageNavigation";
+import { InpageNavItemModel } from "app/components/InPageNavigation/model";
+import { Breadcrumbs } from "app/components/Breadcrumb";
+import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
+import { Path } from "app/const/Path";
+import { ModuleContainer } from "app/components/ModuleContainer";
+import {
+  Box,
+  FormControl,
+  Grid,
+  Hidden,
+  OutlinedInput,
+  Typography,
+} from "@material-ui/core";
+import { PillButton } from "app/components/Buttons/PillButton";
+import { PrimaryColor } from "app/theme";
 
-interface Values {
-  feedback: string;
-  name: string;
-  email: string;
-  misc: string;
-  organisation: string;
-}
-const MfaTextField = (props: TextFieldProps) => {
-  return <TextField {...props} fullWidth variant="outlined" />;
-};
-
-const MfaTextFieldFull = (props: TextFieldProps) => {
-  return (
-    <TextField {...props} multiline rows={5} fullWidth variant="outlined" />
-  );
-};
-
-const widgetContainer = (height: string | undefined, isHovered: boolean) => css`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  border-radius: 32px;
-  flex-direction: column;
-  background-color: #ffffff;
-  padding: 32px;
-  height: ${height || "328px"};
-  box-shadow: ${isHovered
-    ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
-    : ""};
-  transition: box-shadow 0.3s ease-in-out;
-`;
-
-const gridSetting = {
-  item: true,
-  xs: 12,
-  sm: 12,
-  md: 12,
-  lg: 12,
-};
-
-const FaqList = [
-  {
-    label: "The data of my organisation is not correct. How can I change it?",
-    content:
-      'The map and tables show the data your organisation published through IATI. If your organisation’s IATI publication is not fully accurate you will indeed see that reflected here. We can advise you on your IATI publication so your IATI publication will provide an accurate image of your organisation’s activities. <a href="contact">Contact us</a>.',
-  },
-
-  {
-    label: "What is an activity?",
-    content:
-      "An activity is the IATI name given to any piece of work an organisation does. ",
-  },
-  {
-    label: "What is an organisation?",
-    content:
-      "An organisation involved with the activity. This may be a donor, fund, agency, etc.",
-  },
-  {
-    label: "What is a publisher?",
-    content:
-      "The reporting organisation that published the information to the IATI standard. A reporting organisation may provide information on its own activities, as well as reporting on behalf of other organisations involved in the delivery of aid.",
-  },
-  {
-    label: "What is a donor?",
-    content:
-      "The organisation providing the money for the transaction. An organisation that receives money from one donor and then passes it on to another partner organisation is therefore both receiver and donor.",
-  },
-  {
-    label: "How and in what format can I download datasets?",
-    content:
-      "In the table view of the data, click the cloud icon in the top right corner of the table. This will allow you to download the current selection in CSV format.",
-  },
-];
-
-export const crumbs: BreadcrumbLinkModel[] = [
+const crumbs: BreadcrumbLinkModel[] = [
   { label: "Homepage", path: Path.home },
   { label: "Feedback" },
 ];
 
-export const questionAnswer = () => {
-  return (
-    <React.Fragment>
-      <div
-        css={`
-          font-family: Finlandica;
-          font-style: normal;
-          font-weight: bold;
-          font-size: 16px;
-          line-height: 19px;
-          color: #2e4982;
-        `}
-      >
-        What is the?
-      </div>
-      <div
-        css={`
-          font-family: Finlandica;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 16px;
-          line-height: 19px;
-          color: #2e4982;
-        `}
-      >
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially{" "}
-      </div>
-    </React.Fragment>
-  );
-};
-
 const navList: InpageNavItemModel[] = [
   {
+    label: "FAQs",
+    path: "faq",
+  },
+  {
     label: "Feedback",
-    path: "about-mfa-portal",
+    path: "feedback",
   },
 ];
 
-export const FeedbackModuleLayout = () => {
+export const styles = {
+  container: css`
+    width: 100%;
+    padding: 28px;
+    background-color: white;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 30px;
+  `,
+  gridContainer: css`
+    .MuiGrid-root {
+      flex-grow: 1;
+    }
+  `,
+  paragraphHeader: css`
+    margin-bottom: 16px;
+  `,
+  paragraph: css`
+    margin-bottom: 24px;
+  `,
+  button: css`
+    display: flex;
+    margin-left: auto;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    border-radius: 20px;
+    text-transform: unset;
+    padding: 10px 32px;
+    line-height: 17px;
+    :hover {
+      background-color: ${PrimaryColor[3]};
+    }
+  `,
+};
+
+export const FeedbackLayout = () => {
   const [active, setActive] = React.useState(0);
+  const [feedback, setFeedback] = React.useState("");
+  const [feedbackError, setFeedbackError] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [nameError, setNameError] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [emailError, setEmailError] = React.useState(false);
+  const [emailErrorMsg, setEmailErrorMsg] = React.useState(
+    "This field is required"
+  );
+  const [other, setOther] = React.useState("");
+  const [organisation, setOrganisation] = React.useState("");
 
   function handleClick(id: any) {
     setActive(parseInt(id, 10));
   }
 
-  return (
-    <ModuleContainer>
-      <Box width="100%" height="16px" />
-      <Grid item lg={12}>
-        <Breadcrumbs route={crumbs} />
-      </Grid>
+  function handleFeedbackChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setFeedbackError(false);
+    setFeedback(event.target.value);
+  }
 
-      <Hidden mdDown>
-        <Grid item lg={3}>
-          <div
-            css={`
-              position: sticky;
-              top: 140px;
-            `}
-          >
-            <InPageNavigation
-              lists={navList}
-              handleClick={handleClick}
-              active={active}
-              setActive={setActive}
-            />
+  function handleNameChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setNameError(false);
+    setName(event.target.value);
+  }
+
+  function handleEmailChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setEmailError(false);
+    setEmail(event.target.value);
+  }
+
+  function handleOtherChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setOther(event.target.value);
+  }
+
+  function handleOrganisationChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setOrganisation(event.target.value);
+  }
+
+  function handleSend() {
+    if (feedback && name && email && validateEmail()) {
+      setFeedbackError(false);
+      setNameError(false);
+      setEmailError(false);
+      setEmailErrorMsg("This field is required");
+      // Do request
+    }
+    if (!feedback) {
+      setFeedback("");
+      setFeedbackError(true);
+    }
+    if (!name) {
+      setName("");
+      setNameError(true);
+    }
+    if (!email) {
+      setEmail("");
+      setEmailError(true);
+    }
+    if (!validateEmail()) {
+      setEmail("");
+      setEmailError(true);
+      setEmailErrorMsg("Please provide a correct e-mail address");
+    }
+  }
+
+  function validateEmail() {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  const faqMockItem = {
+    title: "1. What is the .....?",
+    paragraph:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting\n" +
+      "industry. Lorem Ipsum has been the industry's standard dummy text\n" +
+      "ever since the 1500s, when an unknown printer took a galley of\n" +
+      "type and scrambled it to make a type specimen book. It has\n" +
+      "survived not only five centuries, but also the leap into\n" +
+      "electronic typesetting, remaining essentially",
+  };
+  const faqMockList = [];
+  for (let i = 0; i < 6; i++) {
+    faqMockList.push(faqMockItem);
+  }
+
+  return (
+    <>
+      <ModuleContainer>
+        <Box width="100%" height="16px" />
+        <Grid item lg={12}>
+          <Breadcrumbs route={crumbs} />
+        </Grid>
+
+        <Hidden mdDown>
+          <Grid item lg={3}>
+            <div
+              css={`
+                position: sticky;
+                top: 140px;
+              `}
+            >
+              <InPageNavigation
+                lists={navList}
+                handleClick={() => handleClick}
+                active={active}
+                setActive={setActive}
+              />
+            </div>
+          </Grid>
+        </Hidden>
+        <Grid item lg={9}>
+          <Anchor id="faq" />
+          <div css={styles.container}>
+            <Typography variant="h5">FAQs</Typography>
+            <Box width="100%" height="24px" />
+
+            {faqMockList.map((item: any) => {
+              return (
+                <>
+                  <Typography variant="subtitle1" css={styles.paragraphHeader}>
+                    {item.title}
+                  </Typography>
+                  <Typography variant="body1" css={styles.paragraph}>
+                    {item.paragraph}
+                  </Typography>
+                </>
+              );
+            })}
           </div>
         </Grid>
-      </Hidden>
+        <Hidden mdDown>
+          <Grid item lg={3} />
+        </Hidden>
+        <Grid item xl={9} lg={9} md={12} css={styles.gridContainer}>
+          <Anchor id="feedback" />
+          <div css={styles.container}>
+            <Typography variant="h5">Feedback</Typography>
+            <Box width="100%" height="24px" />
+            <Typography variant="body2">* Required</Typography>
+            <Box width="100%" height="24px" />
 
-      <Grid item xs={12} sm={12} md={12} lg={9}>
-        <Anchor id="about-mfa-portal" />
-        <div css={widgetContainer}>
-          <Formik
-            initialValues={{
-              feedback: "",
-              name: "",
-              email: "",
-              misc: "",
-              organisation: "",
-            }}
-            validate={(values) => {
-              const errors: Partial<Values> = {};
-              if (!values.email) {
-                errors.email = "Required";
-              } else if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-              ) {
-                errors.email = "Invalid email address";
-              }
-              return errors;
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                setSubmitting(false);
-                alert(JSON.stringify(values, null, 2));
-              }, 500);
-            }}
-          >
-            {({ submitForm, isSubmitting }) => (
-              <Form>
-                <Grid {...gridSetting}>
-                  <Field
-                    component={MfaTextFieldFull}
-                    name="feedback"
-                    type="feedback"
-                    label="Feedback"
-                  />
-                </Grid>
-                <Box width="100%" height="24px" />
-                <Grid {...gridSetting}>
-                  <Field
-                    component={MfaTextField}
-                    name="name"
-                    type="name"
-                    label="Name"
-                  />
-                </Grid>
-                <Box width="100%" height="24px" />
-                <Grid {...gridSetting}>
-                  <Field
-                    component={MfaTextField}
-                    name="email"
-                    type="email"
-                    label="E-mail"
-                  />
-                </Grid>
-                <Box width="100%" height="24px" />
-                <Grid {...gridSetting}>
-                  <Field
-                    component={MfaTextField}
-                    name="misc"
-                    type="misc"
-                    label="Or other contact information"
-                  />
-                </Grid>
-                <Box width="100%" height="24px" />
+            <Field
+              value={feedback}
+              label="Feedback*"
+              handleChange={handleFeedbackChange}
+              error={feedbackError}
+              errorMessage="This field is required"
+              isMultiline
+            />
 
-                <Grid {...gridSetting}>
-                  <Field
-                    component={MfaTextField}
-                    name="organisation"
-                    type="organisation"
-                    label="Organisation"
-                  />
-                </Grid>
-                <Box width="100%" height="24px" />
-                {isSubmitting && <LinearProgress />}
-                <Box width="100%" height="24px" />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={isSubmitting}
-                  onClick={submitForm}
-                >
-                  Send
-                </Button>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </Grid>
-    </ModuleContainer>
+            <Field
+              value={name}
+              label="Name*"
+              handleChange={handleNameChange}
+              error={nameError}
+              errorMessage="This field is required"
+            />
+
+            <Field
+              value={email}
+              label="Email*"
+              handleChange={handleEmailChange}
+              error={emailError}
+              errorMessage={emailErrorMsg}
+            />
+
+            <Field
+              value={other}
+              label="or other contact information"
+              handleChange={handleOtherChange}
+              error={false}
+            />
+
+            <Field
+              value={organisation}
+              label="Organisation"
+              handleChange={handleOrganisationChange}
+              error={false}
+            />
+
+            <PillButton css={styles.button} onClick={() => handleSend()}>
+              Send
+            </PillButton>
+          </div>
+        </Grid>
+      </ModuleContainer>
+    </>
+  );
+};
+
+interface FieldProps {
+  label: string;
+  value: string;
+  error: boolean;
+  // eslint-disable-next-line react/require-default-props
+  errorMessage?: string;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  // eslint-disable-next-line react/require-default-props
+  isMultiline?: boolean;
+}
+const Field = (props: FieldProps) => {
+  const fieldStyles = {
+    container: css`
+      margin-bottom: 16px;
+    `,
+    label: css`
+      margin-bottom: 4px;
+    `,
+    error: css`
+      margin-top: 8px;
+      color: #ae4764;
+      margin-bottom: 8px;
+    `,
+    fieldset: css`
+      ${props.error &&
+      `
+            && > fieldset {
+        border-color: #ae4764 !important;
+        background-color: #edd2da;
+      }
+            `}
+    `,
+  };
+  return (
+    <FormControl
+      variant="outlined"
+      fullWidth
+      hiddenLabel
+      css={fieldStyles.container}
+    >
+      <label htmlFor={props.label} css={fieldStyles.label}>
+        {props.label}
+      </label>
+      <OutlinedInput
+        id={props.label}
+        value={props.value}
+        rows={4}
+        onChange={(e) => props.handleChange(e)}
+        error={props.error}
+        multiline={props.isMultiline}
+        css={fieldStyles.fieldset}
+      />
+      {props.error && (
+        <Typography variant="subtitle2" css={fieldStyles.error}>
+          {props.errorMessage}
+        </Typography>
+      )}
+    </FormControl>
   );
 };

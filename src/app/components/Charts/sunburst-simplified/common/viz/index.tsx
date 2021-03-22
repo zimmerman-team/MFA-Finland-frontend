@@ -24,6 +24,7 @@ export function SunburstVizSimplified(props: any) {
       <Sunburst
         hideRootNode
         colorType="literal"
+        padAngle={0.02}
         data={props.data}
         width={props.size}
         height={props.size}
