@@ -1,5 +1,7 @@
 import React from "react";
+import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
+import { useCMSData } from "app/hooks/useCMSData";
 import { PrimaryColor, SecondaryColor } from "app/theme";
 import { FilledButton } from "app/components/Buttons/FilledButton";
 import { VizSidePanelItem } from "app/components/VizSidePanel/common/item";
@@ -15,6 +17,8 @@ import {
 import { css } from "styled-components/macro";
 
 export function VizSidePanel(props: VizSidePanelProps) {
+  const cmsData = useCMSData({ returnData: true });
+
   const styles = {
     background: css`
       top: 224px;
@@ -39,7 +43,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
       <div id="viz-sidepanel-background" css={styles.background} />
       <Grid item xs={12} css={buttonscontainercss}>
         <FilledButton
-          label="Chart"
+          label={get(cmsData, "general.chart", "Chart")}
           onClick={() => props.setActiveTab("chart")}
           backgroundColor={
             props.activeTab === "chart" ? PrimaryColor[0] : SecondaryColor[1]
@@ -51,7 +55,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
           `}
         />
         <FilledButton
-          label="Table"
+          label={get(cmsData, "general.table", "Table")}
           onClick={() => props.setActiveTab("table")}
           backgroundColor={
             props.activeTab === "table" ? PrimaryColor[0] : SecondaryColor[1]

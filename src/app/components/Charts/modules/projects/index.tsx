@@ -1,10 +1,11 @@
 import React from "react";
+import get from "lodash/get";
 import { Link } from "react-router-dom";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { MoreHoriz } from "@material-ui/icons";
+import { useCMSData } from "app/hooks/useCMSData";
 import SearchIcon from "@material-ui/icons/Search";
-import { formatLocale } from "app/utils/formatLocale";
 import IconButton from "@material-ui/core/IconButton";
 import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
@@ -27,9 +28,11 @@ export type ProjectType = {
   description: string;
   country_region: string[];
   disbursementPercentage: number;
+  cmsData: any;
 };
 
 export const ProjectsListModule = (props: ProjectsListModuleProps) => {
+  const cmsData = useCMSData({ returnData: true });
   const styles = {
     container: css`
       display: flex;
@@ -120,7 +123,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     <div css={styles.container}>
       <div css={styles.titleContainer}>
         <Typography variant="h6" css={styles.title}>
-          {props.count} Projects
+          {props.count} {get(cmsData, "viz.projects", "projects").toLowerCase()}
         </Typography>
         <div css={styles.iconContainer}>
           <IconButton css={styles.iconButton}>
@@ -136,11 +139,11 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
           if (index === props.projects.length - 1) {
             return (
               <span ref={bottomItemRef} key={project.code}>
-                <ListItem {...project} />
+                <ListItem {...project} cmsData={cmsData} />
               </span>
             );
           }
-          return <ListItem {...project} key={project.code} />;
+          return <ListItem {...project} key={project.code} cmsData={cmsData} />;
         })}
         {props.loading && <div css="text-align: center;">Loading...</div>}
       </div>
@@ -189,32 +192,51 @@ const ListItem = (project: ProjectType) => {
         </Typography>
         <Grid container item xs={10}>
           <LabelValueGridItem
-            label="Planned start date"
+            label={get(project.cmsData, "viz.startdate", "Planned start date")}
             value={project.startDate}
           />
           <LabelValueGridItem
-            label="Sector"
+            label={get(project.cmsData, "viz.sector", "Sector")}
             value={project.sectors.join(", ")}
           />
-          <LabelValueGridItem label="Status" value={project.status} />
           <LabelValueGridItem
-            value="MFA Finland"
-            label="Reporting organisation"
+            label={get(project.cmsData, "viz.status", "Status")}
+            value={project.status}
           />
           <LabelValueGridItem
-            label="Planned end date"
+            value="MFA Finland"
+            label={get(
+              project.cmsData,
+              "viz.reportingorg",
+              "Reporting organisation"
+            )}
+          />
+          <LabelValueGridItem
+            label={get(project.cmsData, "viz.enddate", "Planned end date")}
             value={project.endDate}
           />
           <LabelValueGridItem
-            label="Country/region"
+            label={get(
+              project.cmsData,
+              "viz.countriesregions",
+              "Country/region"
+            )}
             value={project.country_region.join(", ")}
           />
           <LabelValueGridItem
-            label="Estimated budget"
+            label={get(
+              project.cmsData,
+              "viz.estimatedbudget",
+              "Estimated budget"
+            )}
             value={formatLargeAmountsWithPrefix(project.budget)}
           />
           <LabelValueGridItem
-            label="Disbursement"
+            label={get(
+              project.cmsData,
+              "viz.disbursementsamount",
+              "Disbursements amount"
+            )}
             value={project.disbursementPercentage}
           />
         </Grid>

@@ -1,7 +1,9 @@
 import React from "react";
+import get from "lodash/get";
 import MUIDrawer from "@material-ui/core/Drawer";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import { useCMSData } from "app/hooks/useCMSData";
 import { Grid } from "@material-ui/core";
 import { GlobalNavItems } from "app/components/Drawer/common/data";
 import { useRecoilState } from "recoil";
@@ -19,6 +21,7 @@ import LogoLinkedin from "app/assets/icons/logo_linkedin.png";
 import LogoTwitter from "app/assets/icons/logo_twitter.png";
 
 export const Drawer = () => {
+  const cmsData = useCMSData({ returnData: true });
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
 
   // todo: simplify this logic
@@ -53,7 +56,9 @@ export const Drawer = () => {
             <IconButton edge="start" color="inherit" aria-label="menu">
               <MfaLogo />
             </IconButton>
-            <div css={drawerStyle.LogoText}>IATI Portal for MFA Finland</div>
+            <div css={drawerStyle.LogoText}>
+              {get(cmsData, "general.pagetitle", "")}
+            </div>
           </NavLink>
           <IconButton
             onClick={toggleDrawer(false)}
@@ -105,7 +110,7 @@ export const Drawer = () => {
                 color: white;
               `}
             >
-              Switchboard +358 295 16001
+              {get(cmsData, "menu.telephone", "Switchboard +358 295 16001")}
               <br />
               kirjaamo.um@formin.fi
             </Typography>
@@ -206,11 +211,7 @@ export const Drawer = () => {
                   color: white;
                 `}
               >
-                Web and social media sites of
-                <br />
-                Finland's missions
-                <br />
-                thisisFINLAND
+                {get(cmsData, "menu.social", "")}
               </Typography>
             </Grid>
           </Grid>

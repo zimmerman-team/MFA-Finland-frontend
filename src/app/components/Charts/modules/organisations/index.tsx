@@ -6,6 +6,8 @@ import {
   SectorsDataTableOptions,
   OrganisationTypesDataTableColumns,
 } from "app/components/Charts/table/data";
+import { useCMSData } from "app/hooks/useCMSData";
+import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface OrganisationsModuleModel extends TreemapProps {
   activeTab: string;
@@ -13,6 +15,7 @@ interface OrganisationsModuleModel extends TreemapProps {
 }
 
 export function OrganisationsModule(props: OrganisationsModuleModel) {
+  const cmsData = useCMSData({ returnData: true });
   if (props.activeTab === "chart") {
     return (
       <Treemap
@@ -35,8 +38,8 @@ export function OrganisationsModule(props: OrganisationsModuleModel) {
         type="org"
         data={props.data.children}
         options={SectorsDataTableOptions}
-        columns={OrganisationTypesDataTableColumns}
         title={`${props.data.children.length} organisation types`}
+        columns={getTranslatedCols(OrganisationTypesDataTableColumns, cmsData)}
       />
     </div>
   );

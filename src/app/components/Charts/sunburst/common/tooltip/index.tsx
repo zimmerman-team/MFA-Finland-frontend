@@ -1,5 +1,7 @@
 import React from "react";
+import get from "lodash/get";
 import { SunburstPoint } from "react-vis";
+import { useCMSData } from "app/hooks/useCMSData";
 import { formatLocale } from "app/utils/formatLocale";
 import useMousePosition from "app/hooks/useMousePosition";
 import {
@@ -40,6 +42,8 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
 };
 
 export function SunburstTooltipContent(props: SunburstTooltipProps) {
+  const cmsData = useCMSData({ returnData: true });
+
   return props.hoveredNode ? (
     <>
       <div css={tooltiprowcss}>
@@ -49,7 +53,8 @@ export function SunburstTooltipContent(props: SunburstTooltipProps) {
       <div css={tooltiprowcss}>
         <div>
           <b>
-            Disbursed {getFormattedPercentage(props.hoveredNode.percentage)}
+            {get(cmsData, "viz.disbursed", "Disbursed")}{" "}
+            {getFormattedPercentage(props.hoveredNode.percentage)}
           </b>
         </div>
         <div>
@@ -66,7 +71,7 @@ export function SunburstTooltipContent(props: SunburstTooltipProps) {
       </div>
       <div css="width: 100%;height: 15px;" />
       <div css={tooltiprowcss}>
-        <div>Committed</div>
+        <div>{get(cmsData, "viz.committed", "Committed")}</div>
         <div>
           {props.hoveredNode.committed
             ? formatLocale(props.hoveredNode.committed)

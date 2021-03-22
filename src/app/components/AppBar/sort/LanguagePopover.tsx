@@ -36,7 +36,6 @@ export function LanguagePopover(
           div {
             user-select: none;
             cursor: pointer;
-            text-transform: uppercase;
             margin-bottom: 16px;
 
             &:hover {
@@ -51,25 +50,25 @@ export function LanguagePopover(
       >
         <div
           onClick={() => {
-            setLanguage("fi");
-          }}
-        >
-          fi
-        </div>
-        <div
-          onClick={() => {
-            setLanguage("sv");
-          }}
-        >
-          sv
-        </div>
-        <div
-          onClick={() => {
             setLanguage("en");
           }}
         >
-          en
+          English
         </div>
+        <div
+          onClick={() => {
+            setLanguage("fi");
+          }}
+        >
+          Finnish
+        </div>
+        {/* <div
+          onClick={() => {
+            setLanguage("se");
+          }}
+        >
+          Swedish
+        </div> */}
       </div>
     </Popover>
   );

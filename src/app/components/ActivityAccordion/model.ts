@@ -28,6 +28,7 @@ export interface ActivityItemProps {
   data?: any;
   dataType: "object" | "array" | "string";
   expanded?: boolean;
+  cmsKey: string;
   handleClick?: Function;
 }
 
@@ -49,6 +50,7 @@ export const activityList: ActivityItemProps[] = [
     dataPath: "participating_orgs",
     dataType: "array",
     expanded: false,
+    cmsKey: "viz.participatingorgs",
   },
   {
     id: "activity_summary",
@@ -58,6 +60,7 @@ export const activityList: ActivityItemProps[] = [
     dataPath: "summary",
     dataType: "object",
     expanded: false,
+    cmsKey: "viz.activitysummary",
   },
   {
     id: "recipient_countries",
@@ -67,6 +70,7 @@ export const activityList: ActivityItemProps[] = [
     dataPath: "countries",
     dataType: "array",
     expanded: false,
+    cmsKey: "general.countries",
   },
   {
     id: "recipient_regions",
@@ -76,6 +80,7 @@ export const activityList: ActivityItemProps[] = [
     dataPath: "regions",
     dataType: "array",
     expanded: false,
+    cmsKey: "general.regions",
   },
   // {
   //   id: "locations",
@@ -103,6 +108,7 @@ export const activityList: ActivityItemProps[] = [
     dataPath: "sectors",
     dataType: "array",
     expanded: false,
+    cmsKey: "viz.sector",
   },
   {
     id: "default_aid_type",
@@ -112,6 +118,7 @@ export const activityList: ActivityItemProps[] = [
     dataPath: "default_aid_types",
     dataType: "array",
     expanded: false,
+    cmsKey: "filters.typeofaid",
   },
   {
     id: "policy_marker",
@@ -121,6 +128,7 @@ export const activityList: ActivityItemProps[] = [
     dataPath: "policy_markers",
     dataType: "array",
     expanded: false,
+    cmsKey: "filters.policymarkers",
   },
   // {
   //   id: "tags",

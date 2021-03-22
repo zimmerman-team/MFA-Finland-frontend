@@ -7,6 +7,7 @@ import { PageLoader } from "app/modules/common/page-loader";
 import { NoMatchPage } from "app/modules/common/no-match-page";
 
 import VizModule from "app/modules/viz-module";
+import { useCMSData } from "app/hooks/useCMSData";
 import { useUrlFilters } from "app/hooks/useUrlFilters";
 import { useInitialLoad } from "app/hooks/useInitialLoad";
 // import { useScrollToTop } from "app/hooks/useScrollToTop";
@@ -27,6 +28,9 @@ import { Path } from "app/const/Path";
 import { ResultModule } from "app/modules/result-module";
 
 export function ModuleRoutes() {
+  useCMSData({
+    loadData: true,
+  });
   useUrlFilters();
   useInitialLoad();
   // useScrollToTop();

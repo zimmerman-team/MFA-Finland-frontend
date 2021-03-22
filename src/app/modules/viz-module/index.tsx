@@ -5,6 +5,7 @@ import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
+import { useCMSData } from "app/hooks/useCMSData";
 import { useMeasure, useUnmount } from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
@@ -37,13 +38,14 @@ import {
   BudgetLinesLatestFiltersAtom,
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
+  languageAtom,
 } from "app/state/recoil/atoms";
-// @ts-ignore
-import domtoimage from "dom-to-image";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
+import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
+  const cmsData = useCMSData({ returnData: true });
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   const [activeTab, setActiveTab] = React.useState("chart");
   const [expandedVizItem, setExpandedVizItem] = React.useState<
@@ -59,6 +61,7 @@ export default function VizModule() {
   const [vizTranslation, setVizTranslation] = React.useState({ x: 0, y: 0 });
   const [sectorDrillDown, setSectorDrillDown] = React.useState("");
   const [prevTab, setPrevTab] = React.useState(get(params, "tab", ""));
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
   const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
     ODAlatestFiltersAtom
@@ -179,6 +182,7 @@ export default function VizModule() {
       values: {
         filters,
         page: projectListPage,
+        lang: currentLanguage,
       },
     });
     setProjectListPage(projectListPage + 1);
@@ -517,8 +521,15 @@ export default function VizModule() {
                   <DataTable
                     data={thematicAreasChartData}
                     options={thematicAreasDataTableOptions}
-                    columns={thematicAreasDataTableColumns}
-                    title={`${thematicAreasChartData.length} thematic areas`}
+                    columns={getTranslatedCols(
+                      thematicAreasDataTableColumns,
+                      cmsData
+                    )}
+                    title={`${thematicAreasChartData.length} ${get(
+                      cmsData,
+                      "general.thematicareas",
+                      "thematic areas"
+                    ).toLowerCase()}`}
                   />
                 </div>
               )}
@@ -644,7 +655,8 @@ export default function VizModule() {
                     organisations: organisationsTreemapData,
                     "budget-lines": budgetLinesBarChartData,
                   },
-                  selectedVizItem
+                  selectedVizItem,
+                  cmsData
                 )}
                 activeTab={activeTab}
                 scrollableHeight={height}

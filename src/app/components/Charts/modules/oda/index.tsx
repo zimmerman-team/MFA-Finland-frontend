@@ -1,4 +1,6 @@
 import React from "react";
+import get from "lodash/get";
+import { useCMSData } from "app/hooks/useCMSData";
 import { BarChart } from "app/components/Charts/bar";
 import {
   BarChartProps,
@@ -13,6 +15,7 @@ import { SimpleBarChart } from "app/components/Charts/bar/simple";
 import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
+import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
@@ -26,6 +29,7 @@ interface ODAvizModuleProps extends BarChartProps {
 }
 
 export function ODAvizModule(props: ODAvizModuleProps) {
+  const cmsData = useCMSData({ returnData: true });
   const tableConfig = props.selectedVizItemId
     ? {
         data: props.odaBudgetLinesChartData.map((item: any) => ({
@@ -33,14 +37,18 @@ export function ODAvizModule(props: ODAvizModuleProps) {
           year: props.selectedVizItemId,
         })),
         options: ODAbudgetLinesDataTableOptions,
-        columns: ODAbudgetLinesDataTableColumns,
-        title: `${props.odaBudgetLinesChartData.length} budget lines`,
+        columns: getTranslatedCols(ODAbudgetLinesDataTableColumns, cmsData),
+        title: `${props.odaBudgetLinesChartData.length} ${get(
+          cmsData,
+          "general.budgetlines",
+          "budget lines"
+        ).toLowerCase()}`,
       }
     : {
         data: props.data,
         options: ODADataTableOptions,
-        columns: ODADataTableColumns,
-        title: `${props.data.length} years`,
+        columns: getTranslatedCols(ODADataTableColumns, cmsData),
+        title: `${props.data.length} ${get(cmsData, "filters.years", "years")}`,
       };
 
   if (props.activeTab === "chart" || props.selectedVizItemId) {

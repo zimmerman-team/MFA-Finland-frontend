@@ -1,12 +1,15 @@
 import React from "react";
+import get from "lodash/get";
 import { Slide, Typography } from "@material-ui/core";
 import { css } from "styled-components/macro";
 import { PlayArrow } from "@material-ui/icons";
 import { ResponsivePie } from "@nivo/pie";
+import { useCMSData } from "app/hooks/useCMSData";
 import { PillButton } from "../Buttons/PillButton";
 import { SecondaryColor } from "../../theme";
 
 export function Collapsable(props: any) {
+  const cmsData = useCMSData({ returnData: true });
   const styles = {
     container: css`
       display: flex;
@@ -81,7 +84,11 @@ export function Collapsable(props: any) {
       <Slide direction="left" in={isCollapsed} mountOnEnter unmountOnExit>
         <div css={styles.card}>
           <Typography variant="subtitle2" css={styles.title}>
-            Geographically unallocable ODA
+            {get(
+              cmsData,
+              "viz.unallocableoda",
+              "Geographically unallocable ODA"
+            )}
           </Typography>
           <div css={styles.chartContainer}>
             <PieChart
@@ -100,8 +107,12 @@ export function Collapsable(props: any) {
             />
           </div>
           <Typography variant="overline" css={styles.subtitle}>
-            {props.unallocable}% of actual exclusive ODA is NOT showing on the
-            map.
+            {props.unallocable}%{" "}
+            {get(
+              cmsData,
+              "viz.unallocableodaexplanation",
+              "of actual exclusive ODA is NOT showing on the map"
+            )}
           </Typography>
         </div>
       </Slide>

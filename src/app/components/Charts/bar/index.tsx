@@ -4,6 +4,7 @@ import max from "lodash/max";
 import find from "lodash/find";
 import { PrimaryColor } from "app/theme";
 import { useWindowSize } from "react-use";
+import { useCMSData } from "app/hooks/useCMSData";
 import { Line } from "app/components/Charts/bar/common/line";
 import { BarChartProps } from "app/components/Charts/bar/data";
 import { BarNode } from "app/components/Charts/bar/common/node";
@@ -16,6 +17,7 @@ import {
 
 export function BarChart(props: BarChartProps) {
   const { width } = useWindowSize();
+  const cmsData = useCMSData({ returnData: true });
   const range = getRange(props.data, ["exclusive", "other"]);
   const maxValue: number =
     max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
@@ -138,7 +140,7 @@ export function BarChart(props: BarChartProps) {
               }
             `}
           >
-            Exclusive ODA
+            {get(cmsData, "viz.exclusiveoda", "Exclusive ODA")}
           </div>
           <div
             css={`
@@ -149,7 +151,7 @@ export function BarChart(props: BarChartProps) {
               }
             `}
           >
-            Other ODA
+            {get(cmsData, "viz.otheroda", "Other ODA")}
           </div>
           <div
             css={`

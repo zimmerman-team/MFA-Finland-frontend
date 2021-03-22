@@ -70,6 +70,7 @@ export const transactionsBarData = [
 
 interface TransactionsBarProps {
   data: any;
+  cmsData: any;
 }
 
 const keys = ["disbursed", "commitment"];
@@ -127,11 +128,11 @@ export const TransactionsBar = (props: TransactionsBarProps) => {
         <div css={styles.legendContainer}>
           <div css={styles.legendItem}>
             <div css={circle(colors.commitment)} />
-            Commitment
+            {get(props.cmsData, "viz.committed", "Committed")}
           </div>
           <div css={styles.legendItem}>
             <div css={circle(colors.disbursed)} />
-            Disbursements
+            {get(props.cmsData, "viz.disbursed", "Disbursed")}
           </div>
         </div>
       </div>

@@ -57,12 +57,18 @@ workflows:
                   if [ "${CIRCLE_BRANCH}" == "master" ]; then
                     echo 'export REACT_APP_PROJECT_URL="$STAGING_URL"' >> $BASH_ENV
                     echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
+                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
+                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
                   elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
                     echo 'export REACT_APP_PROJECT_URL="$TEST_URL"' >> $BASH_ENV
                     echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
+                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
+                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
                   else
                     echo 'export REACT_APP_PROJECT_URL="$DEV_URL"' >> $BASH_ENV
                     echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
+                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
+                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
                   fi
                   source $BASH_ENV
           #          post-steps:

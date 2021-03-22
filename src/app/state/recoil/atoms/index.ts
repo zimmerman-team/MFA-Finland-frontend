@@ -1,5 +1,8 @@
 import { FILTER_TYPES } from "app/components/FilterPanel/data";
 import { atom, RecoilState } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 export const drawerAtom = atom({
   key: "drawerAtom", // unique ID (with respect to other atoms/selectors)
@@ -12,8 +15,19 @@ export const bottomDrawerAtom = atom({
 });
 
 export const languageAtom = atom({
-  key: "languageAtom", // unique ID (with respect to other atoms/selectors)
-  default: "en", // default value (aka initial value)
+  key: "languageAtom",
+  default: "en",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const cmsDataAtom = atom({
+  key: "cmsDataAtom",
+  default: {
+    general: {},
+    viz: {},
+    filters: {},
+  },
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const currentFilterOpenAtom = atom({

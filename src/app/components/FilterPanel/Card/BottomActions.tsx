@@ -1,6 +1,8 @@
 import React from "react";
+import get from "lodash/get";
 import { ProjectPalette } from "app/theme";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
 import { PillButton } from "app/components/Buttons/PillButton";
 
 interface BottomActions {
@@ -9,6 +11,7 @@ interface BottomActions {
 }
 
 export const BottomActions = (props: BottomActions) => {
+  const cmsData = useCMSData({ returnData: true });
   const styles = {
     secondaryButton: css`
       text-transform: unset;
@@ -40,10 +43,10 @@ export const BottomActions = (props: BottomActions) => {
         css={styles.secondaryButton}
         onClick={props.onReset}
       >
-        Reset filters
+        {get(cmsData, "filters.reset", "Reset filters")}
       </PillButton>
       <PillButton css={styles.primaryButton} onClick={props.onApply}>
-        Apply
+        {get(cmsData, "filters.apply", "Apply")}
       </PillButton>
     </>
   );

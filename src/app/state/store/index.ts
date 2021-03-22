@@ -72,11 +72,11 @@ import syncSearch from "app/state/api/actions-reducers/sync/search";
 import { projectListPage } from "app/state/api/actions-reducers/sync/generic";
 import filtersUpdated from "app/state/api/actions-reducers/sync/filtersUpdated";
 
-// auth
-// import user from "app/state/api/actions-reducers/auth/user";
-// import users from "app/state/api/actions-reducers/auth/users";
-// import updateUser from "app/state/api/actions-reducers/auth/updateUser";
-// import deleteUser from "app/state/api/actions-reducers/auth/deleteUser";
+// cms
+import general from "app/state/api/actions-reducers/cms/general";
+import viz from "../api/actions-reducers/cms/viz";
+import filters from "../api/actions-reducers/cms/filters";
+import menu from "../api/actions-reducers/cms/menu";
 
 const storeContent: StoreModel = {
   // filtering
@@ -108,6 +108,13 @@ const storeContent: StoreModel = {
     budgetlines: persist(budgetlines, {
       storage: "localStorage",
     }),
+  },
+  // cms
+  cms: {
+    general: persist(general),
+    viz: persist(viz),
+    filters: persist(filters),
+    menu: persist(menu),
   },
   // global search
   searchDonors,
@@ -161,11 +168,6 @@ const storeContent: StoreModel = {
   syncSearch: persist(syncSearch),
   filtersUpdated: persist(filtersUpdated),
   projectListPage: persist(projectListPage),
-  // auth
-  // users: persist(users),
-  // user: persist(user),
-  // updateUser: persist(updateUser),
-  // deleteUser: persist(deleteUser),
 };
 
 export const store = createStore(storeContent);

@@ -3,6 +3,7 @@ import get from "lodash/get";
 import maxBy from "lodash/maxBy";
 import { useLocation } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
+import { useCMSData } from "app/hooks/useCMSData";
 import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
@@ -16,10 +17,9 @@ import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budget
 import { TreemapDataModel } from "app/components/Charts/treemap/data";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { VizLoader } from "app/modules/common/viz-loader";
+import { Collapsable } from "app/components/Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 import { useWindowSize } from "app/hooks/useWindowSize";
-import { Collapsable } from "./Collapseable";
-import { PageFloatingButtons } from "./PageFloatingButtons";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -55,6 +55,7 @@ export interface DataGridProps {
 export const DataGrid = (props: DataGridProps) => {
   const location = useLocation();
   const [width] = useWindowSize();
+  const cmsData = useCMSData({ returnData: true });
 
   const isOrgTypeDetail = location.pathname.indexOf("organisation-types") > -1;
   const isOrgDetail = location.pathname.indexOf("organisations") > -1;
@@ -120,12 +121,6 @@ export const DataGrid = (props: DataGridProps) => {
   return (
     <React.Fragment>
       {/* ----------------------------- */}
-      {/*  floating buttons */}
-      {/* ----------------------------- */}
-      {/* <Hidden mdDown> */}
-      {/*  <PageFloatingButtons /> */}
-      {/* </Hidden> */}
-      {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}
       <Grid item xs={12} sm={12} md={12} lg={8}>
@@ -154,9 +149,9 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={6} md={4} lg={4}>
         <GridWidget
           tooltip="lorem ipsum"
-          label="Thematic Areas"
           link="/viz/thematic-areas"
           detailPageFilter={props.detailPageFilter}
+          label={get(cmsData, "general.thematicareas", "Thematic areas")}
         >
           {props.vizDataLoading.thematic ? (
             <VizLoader />
@@ -179,10 +174,10 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       <Grid item xs={12} sm={6} md={4} lg={4}>
         <GridWidget
-          label="Sectors"
           link="/viz/sectors"
           tooltip="lorem ipsum"
           detailPageFilter={props.detailPageFilter}
+          label={get(cmsData, "general.sectors", "Sectors")}
         >
           {props.vizDataLoading.sectors ? (
             <VizLoader />
@@ -204,9 +199,9 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={6} md={4} lg={4}>
         {!props.countryData ? (
           <GridWidget
-            label="Regions"
             tooltip="lorem ipsum"
             link="/viz/countries-regions"
+            label={get(cmsData, "general.locations", "Regions")}
             childrencontainerStyle={{
               width: 100,
               height: 100,
@@ -262,9 +257,9 @@ export const DataGrid = (props: DataGridProps) => {
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={4}>
         <GridWidget
-          label="Organisations"
           tooltip="lorem ipsum"
           link="/viz/organisations"
+          label={get(cmsData, "general.organisations", "Organisations")}
           childrencontainerStyle={{
             width: 100,
             height: 100,
@@ -292,9 +287,9 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={12} md={8} lg={8}>
         <GridWidget
           height="510px"
-          label="Budget Lines"
           tooltip="lorem ipsum"
           link="/viz/budget-lines"
+          label={get(cmsData, "general.budgetlines", "Budget lines")}
           childrencontainerStyle={{
             width: 100,
             paddingTop: 20,
@@ -346,11 +341,11 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={12} md={12} lg={8}>
         <GridWidget
           interactive
-          label="SDGs"
           // todo: create responsive solution for height
           height="510px"
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}
+          label={get(cmsData, "general.sdgs", "SDGs")}
         >
           {props.vizDataLoading.sdg ? (
             <VizLoader />
@@ -374,9 +369,9 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           height="510px"
-          label={aboutContent.label}
           tooltip={aboutContent.label}
           childrencontainerStyle={{ paddingTop: 33 }}
+          label={get(cmsData, "general.about", "About")}
         >
           {aboutContent.text}
         </GridWidget>
@@ -399,9 +394,9 @@ export const DataGrid = (props: DataGridProps) => {
           `}
         >
           <GridWidget
-            label="Map"
             height="680px"
             interactive
+            label={get(cmsData, "general.map", "Map")}
             childrencontainerStyle={{ paddingTop: width >= 960 ? 88 : 16 }}
           >
             {props.vizDataLoading.geo ? (
@@ -415,9 +410,13 @@ export const DataGrid = (props: DataGridProps) => {
                 <Collapsable unallocable={props.unallocablePercentage} />
                 <Geomap geoData={props.geoMapData} />
                 <Legend
-                  label="Disbursements Amount"
                   startValue={0}
                   totalValue={get(maxBy(props.geoMapData, "value"), "value", 0)}
+                  label={get(
+                    cmsData,
+                    "viz.disbursementsamount",
+                    "Disbursements amount"
+                  )}
                 />
               </div>
             )}

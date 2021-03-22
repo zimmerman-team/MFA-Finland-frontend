@@ -8,6 +8,8 @@ import {
   BarChartProps,
   ODAbudgetLinesDataTableColumns,
 } from "app/components/Charts/bar/data";
+import { useCMSData } from "app/hooks/useCMSData";
+import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface BudgetLinesModuleModel extends BarChartProps {
   activeTab: string;
@@ -38,6 +40,7 @@ function formatDataForTable(data: any) {
 }
 
 export function BudgetLinesModule(props: BudgetLinesModuleModel) {
+  const cmsData = useCMSData({ returnData: true });
   if (props.activeTab === "chart") {
     return (
       <BudgetLinesBarChart
@@ -61,9 +64,9 @@ export function BudgetLinesModule(props: BudgetLinesModuleModel) {
     >
       <BudgetLinesFragmentTable
         data={formatDataForTable(props.data)}
-        columns={ODAbudgetLinesDataTableColumns}
         options={SectorsDataTableOptions}
         title={`${props.data.length} budget line years`}
+        columns={getTranslatedCols(ODAbudgetLinesDataTableColumns, cmsData)}
       />
     </div>
   );

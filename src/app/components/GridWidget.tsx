@@ -5,6 +5,7 @@ import get from "lodash/get";
 import { PrimaryColor, ProjectPalette } from "app/theme";
 import { Tooltip } from "@material-ui/core";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
 import { useHistory, Link } from "react-router-dom";
 import { useStoreState } from "app/state/store/hooks";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
@@ -163,6 +164,7 @@ interface GridWidgetProps {
 
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const history = useHistory();
+  const cmsData = useCMSData({ returnData: true });
   const [isHovered, setIsHovered] = React.useState(false);
   const odaWidget = props.label === "Overview Disbursements";
   const totalDisbursement = useStoreState((state) =>
@@ -204,7 +206,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     >
       <header css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <div css={style.widgetLabel}>{props.label}</div>
+          <div css={style.widgetLabel}>
+            {!odaWidget
+              ? props.label
+              : get(cmsData, "general.overview", "Overview Disbursements")}
+          </div>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip}>
@@ -216,30 +222,38 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         {odaWidget && (
           <div css={style.odaHeaderStats}>
             <div css={style.headerStat}>
-              <div>Disbursements amount</div>
+              <div>
+                {get(
+                  cmsData,
+                  "viz.disbursementsamount",
+                  "Disbursements amount"
+                )}
+              </div>
               <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
             </div>
             <div css={style.headerStat}>
-              <div>Organisations</div>
+              <div>
+                {get(cmsData, "general.organisations", "Organisations")}
+              </div>
               <div>{orgCount}</div>
               <div>
                 <Link
                   css={style.link}
                   to={`/viz/organisations${searchFilterString}`}
                 >
-                  View more
+                  {get(cmsData, "viz.viewmore", "View more")}
                 </Link>
               </div>
             </div>
             <div css={style.headerStat}>
-              <div>Projects</div>
+              <div>{get(cmsData, "viz.projects", "Projects")}</div>
               <div>{formatLocaleN(projCount)}</div>
               <div>
                 <Link
                   css={style.link}
                   to={`/viz/projects${searchFilterString}`}
                 >
-                  View more
+                  {get(cmsData, "viz.viewmore", "View more")}
                 </Link>
               </div>
             </div>

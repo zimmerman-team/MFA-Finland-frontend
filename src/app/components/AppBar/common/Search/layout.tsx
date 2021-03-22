@@ -9,10 +9,15 @@ export function SearchComponentLayout(props: SearchComponentLayoutProps) {
   return (
     <ClickAwayListener mouseEvent="onMouseDown" onClickAway={props.onClickAway}>
       <div ref={props.targetRef} css={containercss}>
-        <SearchField value={props.value} setValue={props.setValue} />
+        <SearchField
+          value={props.value}
+          cmsData={props.cmsData}
+          setValue={props.setValue}
+        />
         {props.value.length > 3 && (
           <SearchResults
             width={props.width}
+            cmsData={props.cmsData}
             loading={props.loading}
             results={props.searchData}
             resultType={props.resultType}

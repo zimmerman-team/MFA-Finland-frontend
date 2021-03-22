@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
 import { TabProps } from "app/components/VizTabs/data";
 import { PrimaryColor, SecondaryColor } from "app/theme";
 import { NavLink, useRouteMatch, useLocation } from "react-router-dom";
@@ -23,12 +24,14 @@ const tabcss = (active: boolean) => css`
 export function RouteTab(props: TabProps) {
   const location = useLocation();
   const { params } = useRouteMatch();
+  const cmsData = useCMSData({ returnData: true });
+
   return (
     <NavLink
       to={`${props.url}${location.search}`}
       css={tabcss(get(params, "tab", "") === props.url.split("/")[2])}
     >
-      {props.name}
+      {props.cmsKey ? get(cmsData, props.cmsKey, props.name) : props.name}
     </NavLink>
   );
 }

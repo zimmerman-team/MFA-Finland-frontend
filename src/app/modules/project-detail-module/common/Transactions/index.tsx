@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React from "react";
+import get from "lodash/get";
 import { css } from "styled-components/macro";
 import { Typography } from "@material-ui/core";
 import { PrimaryColor, SecondaryColor } from "app/theme";
@@ -12,6 +13,7 @@ import {
   TransactionsDataTableOptions,
   transactionsTableTheme,
 } from "app/components/Charts/table/data";
+import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 
 interface TransactionsProps {
   data: any;
@@ -44,14 +46,15 @@ export const Transactions = (props: TransactionsProps) => {
   const tab = (active: boolean) => {
     return css`
       height: 36px;
+      box-shadow: none;
       padding: 9px 16px;
       border-radius: 22px;
       text-transform: unset;
-      background-color: ${active ? PrimaryColor[0] : SecondaryColor[1]};
       color: ${active ? "white" : PrimaryColor[0]};
-      box-shadow: none;
+      background-color: ${active ? PrimaryColor[0] : SecondaryColor[1]};
 
       :hover {
+        color: ${active ? PrimaryColor[0] : "white"};
         background-color: ${active ? SecondaryColor[1] : PrimaryColor[0]};
       }
     `;
@@ -59,7 +62,7 @@ export const Transactions = (props: TransactionsProps) => {
 
   return (
     <>
-      {/*Header with tabs*/}
+      {/* Header with tabs */}
       <div css={styles.container}>
         <Typography css={DescriptionLabelStyle}>Transactions</Typography>
         <div css={styles.tabContainer}>
@@ -67,28 +70,31 @@ export const Transactions = (props: TransactionsProps) => {
             css={tab(activeTab === "chart")}
             onClick={() => setActiveTab("chart")}
           >
-            Chart
+            {get(props.cmsData, "general.chart", "Chart")}
           </PillButton>
           <PillButton
             css={tab(activeTab === "table")}
             onClick={() => setActiveTab("table")}
           >
-            Table
+            {get(props.cmsData, "general.table", "Table")}
           </PillButton>
         </div>
       </div>
 
-      {/*Rendered panel based on active tab*/}
+      {/* Rendered panel based on active tab */}
       <div css={styles.contentContainer}>
         {activeTab === "chart" ? (
-          <TransactionsBar data={props.data} />
+          <TransactionsBar data={props.data} cmsData={props.cmsData} />
         ) : (
           <DataTable
-            options={TransactionsDataTableOptions}
-            title={""}
-            columns={TransactionsDataTableColumns}
+            title=""
             data={props.data}
             theme={transactionsTableTheme}
+            options={TransactionsDataTableOptions}
+            columns={getTranslatedCols(
+              TransactionsDataTableColumns,
+              props.cmsData
+            )}
           />
         )}
       </div>

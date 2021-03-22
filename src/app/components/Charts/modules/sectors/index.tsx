@@ -15,6 +15,8 @@ import {
   SectorsDataTableOptions,
 } from "app/components/Charts/table/data";
 import { SimpleActivitiesTableModule } from "app/components/Charts/table/modules/activities/simple";
+import { useCMSData } from "app/hooks/useCMSData";
+import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface SectorsVizModuleProps extends SunburstChartProps {
   vizLevel: number;
@@ -24,6 +26,7 @@ interface SectorsVizModuleProps extends SunburstChartProps {
 }
 
 export function SectorsVizModule(props: SectorsVizModuleProps) {
+  const cmsData = useCMSData({ returnData: true });
   const [tablePage, setTablePage] = React.useState(0);
   const [tableRows, setTableRows] = React.useState(10);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
@@ -129,7 +132,7 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
         title=""
         data={props.data.children}
         options={SectorsDataTableOptions}
-        columns={SectorsDataTableColumns}
+        columns={getTranslatedCols(SectorsDataTableColumns, cmsData)}
       />
     </div>
   );

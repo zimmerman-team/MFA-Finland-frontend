@@ -1,7 +1,9 @@
 // @ts-nocheck
 import React from "react";
+import get from "lodash/get";
 import MUIAppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import { useCMSData } from "app/hooks/useCMSData";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { PrimaryColor } from "app/theme";
@@ -26,6 +28,7 @@ import { SearchComponent } from "app/components/AppBar/common/Search";
 import { IconDots } from "app/assets/icons/IconDots";
 
 export function AppBar() {
+  const cmsData = useCMSData({ returnData: true });
   const [isFocused] = useRecoilState(searchFocusAtom);
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
@@ -110,7 +113,7 @@ export function AppBar() {
               </IconButton>
             </Hidden>
             <div css={appbarStyle.logoText(PrimaryColor[2])}>
-              IATI Portal for MFA Finland
+              {get(cmsData, "general.pagetitle", "")}
             </div>
           </NavLink>
 

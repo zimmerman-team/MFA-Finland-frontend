@@ -5,6 +5,7 @@ import filter from "lodash/filter";
 import remove from "lodash/remove";
 import { useRecoilState } from "recoil";
 import { Container } from "@material-ui/core";
+import { useCMSData } from "app/hooks/useCMSData";
 import { useStoreState } from "app/state/store/hooks";
 import { createStyles } from "app/components/FilterPanel/styles";
 import { Filter } from "app/components/FilterPanel/Panels/Filter";
@@ -30,6 +31,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
   const [currentFilterOpen, setCurrentFilterOpen] = useRecoilState(
     currentFilterOpenAtom
   );
+  const cmsData = useCMSData({ returnData: true });
   const filterOptionsData = useStoreState((state) => state.filterOptions);
   const [selectedFilters, setSelectedFilters] = useRecoilState(
     selectedFilterAtom
@@ -45,9 +47,11 @@ export const FilterPanel = (props: FilterPanelProps) => {
   >([]);
 
   React.useEffect(() => {
-    setMainPanelData(getMainFilterPanelData(localSelectedFilters));
-    setAdvancedPanelData(getAdvancedFilterPanelData(localSelectedFilters));
-  }, [localSelectedFilters]);
+    setMainPanelData(getMainFilterPanelData(localSelectedFilters, cmsData));
+    setAdvancedPanelData(
+      getAdvancedFilterPanelData(localSelectedFilters, cmsData)
+    );
+  }, [localSelectedFilters, cmsData]);
 
   React.useEffect(() => {
     setLocalSelectedFilters(selectedFilters);
@@ -566,7 +570,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.THEMATIC_AREAS:
         return (
           <Filter
-            title="Thematic Areas"
+            title={get(cmsData, "general.thematicareas", "Thematic Areas")}
             data={get(filterOptionsData.thematicareas, "data.data", [])}
             renderSearch
             selection={mainPanelData[0].selection}
@@ -584,7 +588,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.COUNTRIES:
         return (
           <Filter
-            title="Countries/Regions"
+            title={get(cmsData, "viz.countriesregions", "Countries/Regions")}
             data={get(filterOptionsData.locations, "data.data", [])}
             renderSearch
             selection={mainPanelData[1].selection}
@@ -605,7 +609,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.SECTORS:
         return (
           <Filter
-            title="Sector"
+            title={get(cmsData, "general.sectors", "Sectors")}
             data={get(filterOptionsData.sectors, "data.data", [])}
             renderSearch
             selection={mainPanelData[2].selection}
@@ -623,7 +627,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.ORGANISATIONS:
         return (
           <Filter
-            title="Organisations"
+            title={get(cmsData, "general.organisations", "Organisations")}
             data={get(filterOptionsData.organisations, "data.data", [])}
             renderSearch
             selection={mainPanelData[3].selection}
@@ -644,7 +648,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.SDGS:
         return (
           <Filter
-            title="SDGs"
+            title={get(cmsData, "general.sgds", "SDGs")}
             data={get(filterOptionsData.sdgs, "data.data.goals", [])}
             renderSearch
             selection={mainPanelData[4].selection}
@@ -662,7 +666,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.ACTIVITY_STATUS:
         return (
           <Filter
-            title="Activity Status"
+            title={get(cmsData, "filters.activitystatus", "Activity Status")}
             data={get(filterOptionsData.activitystatus, "data.data", [])}
             renderSearch
             selection={mainPanelData[5].selection}
@@ -680,7 +684,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.PERIOD:
         return (
           <Filter
-            title="Period"
+            isPeriod
+            title={get(cmsData, "filters.period", "Period")}
             selection={mainPanelData[6].selection}
             onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.PERIOD)
@@ -705,7 +710,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.POLICY_MARKERS:
         return (
           <Filter
-            title="Policy Markers"
+            title={get(cmsData, "filters.policymarkers", "Policy Markers")}
             data={get(filterOptionsData.policymarkers, "data.data", [])}
             renderSearch
             selection={advancedPanelData[0].selection}
@@ -723,7 +728,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.AID_TYPE:
         return (
           <Filter
-            title="Type of aid"
+            title={get(cmsData, "filters.typeofaid", "Type of aid")}
             data={get(filterOptionsData.aidtypes, "data.data", [])}
             renderSearch
             selection={advancedPanelData[1].selection}
@@ -741,7 +746,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.BUDGET_LINES:
         return (
           <Filter
-            title="Budget lines"
+            title={get(cmsData, "general.budgetlines", "Budget lines")}
             data={get(filterOptionsData.budgetlines, "data.data.data", [])}
             renderSearch
             selection={advancedPanelData[2].selection}
@@ -759,7 +764,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.BI_MULTI:
         return (
           <Filter
-            title="Budget lines"
+            title={get(cmsData, "general.bimulti", "Bi/Multi")}
             data={[
               {
                 name: "Bi",
@@ -786,7 +791,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.HUMAN_RIGHTS:
         return (
           <Filter
-            title="Human rights approach"
+            title={get(cmsData, "general.humanrights", "Human rights approach")}
             data={humanrightfilteroptions}
             renderSearch
             selection={advancedPanelData[4].selection}

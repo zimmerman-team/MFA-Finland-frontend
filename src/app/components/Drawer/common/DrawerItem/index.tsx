@@ -1,8 +1,9 @@
 // @ts-nocheck
 import React, { useState } from "react";
+import get from "lodash/get";
 import { NavLink } from "react-router-dom";
+import { useCMSData } from "app/hooks/useCMSData";
 import MUIListItem from "@material-ui/core/ListItem";
-import MUIListItemIcon from "@material-ui/core/ListItemIcon";
 import MUIListItemText from "@material-ui/core/ListItemText";
 import { PrimaryColor, ProjectPalette } from "app/theme";
 import { css } from "styled-components/macro";
@@ -44,6 +45,7 @@ const ItemIconInActiveStyle = css`
 `;
 
 export const DrawerItem = (props: DrawerItemProps) => {
+  const cmsData = useCMSData({ returnData: true });
   const [activeState, setNavLinkState] = useState(false);
 
   return (
@@ -74,7 +76,11 @@ export const DrawerItem = (props: DrawerItemProps) => {
         <MUIListItemText
           // eslint-disable-next-line sonarjs/no-all-duplicated-branches
           css={ItemInActiveStyle}
-          primary={props.label}
+          primary={get(
+            cmsData,
+            `menu.${props.label.toLowerCase()}`,
+            props.label
+          )}
         />
       </MUIListItem>
     </NavLink>

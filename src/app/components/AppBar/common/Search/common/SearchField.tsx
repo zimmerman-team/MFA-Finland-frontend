@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 import { useRecoilState } from "recoil";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
@@ -7,6 +8,7 @@ import { PrimaryColor, SecondaryColor } from "app/theme";
 import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 type Props = {
+  cmsData: any;
   value: string;
   setValue: Function;
 };
@@ -41,9 +43,9 @@ export const SearchField = (props: Props) => {
         }
       `}
       value={props.value}
-      placeholder="Search"
       data-cy="search-field"
       onChange={(e) => props.setValue(e.target.value)}
+      placeholder={get(props.cmsData, "general.search", "Search")}
       endAdornment={
         <div
           css={`
