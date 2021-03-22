@@ -22,6 +22,13 @@ module.exports = {
       // }),
       // new WebpackPluginRamdisk(),
     ],
+    configure: (config, { env, paths }) => {
+      config.module.rules.push({
+        test: /react-spring/,
+        sideEffects: true,
+      });
+      return config;
+    },
   },
 
   plugins: [
