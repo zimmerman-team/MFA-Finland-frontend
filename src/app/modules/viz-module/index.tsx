@@ -38,13 +38,8 @@ import {
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
 } from "app/state/recoil/atoms";
-import IconButton from "@material-ui/core/IconButton";
 // @ts-ignore
 import domtoimage from "dom-to-image";
-import { Close, CloudDownload, MoreHoriz, Share } from "@material-ui/icons";
-import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
-import { LightTooltip } from "app/components/PageFloatingButtons";
-import { tooltipCreateStyles } from "app/components/PageFloatingButtons/styles";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 
 export default function VizModule() {
@@ -475,7 +470,7 @@ export default function VizModule() {
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          {!isProjects && <FloatingButtons />}
+          {!isProjects && activeTab !== "table" && <FloatingButtons />}
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (
