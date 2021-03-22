@@ -474,7 +474,7 @@ export default function VizModule() {
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          {!isProjects && <FloatingButtons />}
+          {!isProjects && activeTab !== "table" && <FloatingButtons />}
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (

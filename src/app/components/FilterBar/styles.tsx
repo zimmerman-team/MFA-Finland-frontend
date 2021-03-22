@@ -17,7 +17,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       overflow-x: auto;
       overflow-y: hidden;
       z-index: 6;
-      padding-left: 12px;
+      //padding-left: 12px;
       padding-top: 16px;
       padding-bottom: 16px;
 
