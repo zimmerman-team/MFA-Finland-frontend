@@ -21,7 +21,7 @@ import {
 interface useDataGridDataProps {
   detailPageFilter: {
     key: string;
-    value: string;
+    value: string | string[];
   };
 }
 
@@ -148,7 +148,10 @@ export function useDataGridData(props: useDataGridDataProps) {
     if (isDetailPage) {
       filters = {
         ...filters,
-        [props.detailPageFilter.key]: [props.detailPageFilter.value],
+        [props.detailPageFilter.key]:
+          typeof props.detailPageFilter.value === "string"
+            ? [props.detailPageFilter.value]
+            : [...props.detailPageFilter.value],
       };
       detailPageNameAction({
         values: {

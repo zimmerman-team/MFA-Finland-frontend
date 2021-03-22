@@ -34,7 +34,10 @@ export function ThematicDetailModule() {
   } = useDataGridData({
     detailPageFilter: {
       key: "tag_code",
-      value: decodeURIComponent(get(params, "theme", "")),
+      value: [
+        `${decodeURIComponent(get(params, "theme", ""))}, primary`,
+        `${decodeURIComponent(get(params, "theme", ""))}, secondary`,
+      ],
     },
   });
 
