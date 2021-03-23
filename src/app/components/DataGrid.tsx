@@ -143,6 +143,14 @@ export const DataGrid = (props: DataGridProps) => {
               setVizCompData={() => null}
               onSelectChange={() => null}
               setSelectedVizItem={() => null}
+              hideODAGNI={
+                isOrgTypeDetail ||
+                isOrgDetail ||
+                isSectorDetail ||
+                isCountryDetail ||
+                isRegionDetail ||
+                isAreaDetail
+              }
             />
           )}
         </GridWidget>

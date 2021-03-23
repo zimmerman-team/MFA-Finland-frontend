@@ -153,17 +153,19 @@ export function BarChart(props: BarChartProps) {
           >
             {get(cmsData, "viz.otheroda", "Other ODA")}
           </div>
-          <div
-            css={`
-              position: relative;
-              &:before {
-                border: 0.5px solid #343249;
-                background: #ae4764;
-              }
-            `}
-          >
-            ODA/GNI
-          </div>
+          {!props.hideODAGNI && (
+            <div
+              css={`
+                position: relative;
+                &:before {
+                  border: 0.5px solid #343249;
+                  background: #ae4764;
+                }
+              `}
+            >
+              ODA/GNI
+            </div>
+          )}
         </div>
         {showGni && <div>%</div>}
       </div>
