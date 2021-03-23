@@ -34,11 +34,7 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
             {props.label}
           </Typography>
           {props.flagCode && (
-            <Flag
-              code={props.flagCode}
-              height={30}
-              css="margin-left: 10px;border-radius: 6px;"
-            />
+            <Flag code={props.flagCode} height={30} css="margin-left: 10px;" />
           )}
         </div>
         {props.countryData && (
