@@ -1,6 +1,10 @@
 import React from "react";
 
-export function VizLoader() {
+interface Props {
+  loading: boolean;
+}
+
+export function VizLoader(props: Props) {
   return (
     <div
       css={`
@@ -12,7 +16,7 @@ export function VizLoader() {
         justify-content: center;
       `}
     >
-      <div>Loading...</div>
+      {props.loading ? <div>Loading...</div> : <div>No data available</div>}
     </div>
   );
 }
