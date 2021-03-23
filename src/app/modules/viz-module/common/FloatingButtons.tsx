@@ -6,6 +6,7 @@ import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
 import { css } from "styled-components/macro";
 import { tooltipCreateStyles } from "app/components/PageFloatingButtons/styles";
 import { Typography, IconButton, Popover, makeStyles } from "@material-ui/core";
+import JSPDF from "jspdf";
 // @ts-ignore
 import domtoimage from "dom-to-image";
 import { useLocation } from "react-router-dom";
@@ -185,12 +186,15 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
         return "root";
     }
   }
+
   function filter(node: Element) {
     return !["viz-floating-buttons", "viz-sidepanel-background"].includes(
       node.id
     );
   }
+
   function downloadCSV() {}
+
   function downloadPNG() {
     // viz-floating-buttons
     // viz-sidepanel-background
@@ -234,8 +238,29 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
         console.error("oops, something went wrong!", error);
       });
   }
-  function downloadPDF() {}
+
+  function downloadPDF() {
+    const element: HTMLElement | null = document.getElementById(
+      "image-container"
+    );
+    domtoimage
+      .toPng(element, { bgcolor: "#f8f8f8" })
+      .then((dataUrl: any) => {
+        const htmlImage = new Image();
+        htmlImage.src = dataUrl;
+        const pdf = new JSPDF("p", "mm", "a4");
+        const width = pdf.internal.pageSize.getWidth();
+        const height = pdf.internal.pageSize.getHeight();
+        pdf.addImage(htmlImage, 0, 0, width, height);
+        pdf.save("download.pdf");
+      })
+      .catch((error: any) => {
+        console.error("oops, something went wrong!", error);
+      });
+  }
+
   const classes = popoverStyles();
+
   return (
     <Popover
       // id={id}
@@ -273,7 +298,11 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
         >
           Chart (SVG)
         </Typography>
-        <Typography variant="body2" css={styles.listItem}>
+        <Typography
+          variant="body2"
+          css={styles.listItem}
+          onClick={() => downloadPDF()}
+        >
           Report (PDF)
         </Typography>
       </div>
