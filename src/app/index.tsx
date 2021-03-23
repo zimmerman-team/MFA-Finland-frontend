@@ -33,7 +33,6 @@ export const App = () => {
         message="The website uses cookies for tracking statistics. Read Grand Bargains data privacy for more details."
         open
       />
-      {/* {shouldRender && <PageOrnament />} */}
       <PageOrnament />
     </React.Fragment>
   );

@@ -6,18 +6,17 @@ export function PageOrnament(
 ) {
   const location = useLocation();
   const [shouldRender, setShouldRender] = React.useState(true);
-  const nonRenderLocations = ["/viz/projects"];
+  const nonRenderLocations = ["/viz/projects", "/project"];
 
   React.useEffect(() => {
-    setShouldRender(
-      nonRenderLocations.some((loc) => {
-        return !nonRenderLocations.includes(location.pathname as string);
-      })
-    );
+    if (location.pathname) {
+      setShouldRender(nonRenderLocations.includes(location?.pathname));
+    }
   }, [location]);
 
   return (
     <div
+      id="page-ornament"
       css={`
         position: fixed;
         right: 0;

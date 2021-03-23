@@ -12,19 +12,23 @@ interface ModuleContainerProps {
 
 export const ModuleContainer = (props: ModuleContainerProps) => {
   const location = useLocation();
-  const isLandingORDetail =
-    location.pathname === "/" ||
-    location.pathname.indexOf("/regions") ||
-    location.pathname.indexOf("/countries") ||
-    location.pathname.indexOf("/sectors") ||
-    location.pathname.indexOf("/organisations") ||
-    location.pathname.indexOf("/organisation-types") ||
-    location.pathname.indexOf("/thematic-area");
+
+  const isLandingOrDetail = [
+    "/",
+    "/regions",
+    "/countries",
+    "/sectors",
+    "/organisations",
+    "/organisation-types",
+    "/thematic-area",
+  ].includes(location.pathname);
+
   const mobile = useMediaQuery("(max-width:960px)");
 
   const styles = {
     container: css`
       display: flex;
+      //background-color: white;
     `,
     gridContainer: css`
       width: initial;
@@ -58,7 +62,7 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
       <Grid container spacing={2} css={styles.gridContainer}>
         {props.children}
       </Grid>
-      {isLandingORDetail && !mobile && <PageFloatingButtons />}
+      {isLandingOrDetail && !mobile && <PageFloatingButtons />}
     </div>
   );
 };

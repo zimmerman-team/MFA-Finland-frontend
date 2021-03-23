@@ -42,13 +42,23 @@ export const DescriptionLabelStyle = css`
   font-weight: bold;
   font-size: 24px;
   line-height: 29px;
-  color: #2e4063;
+  color: #2e4982;
+
   @media (max-width: 600px) {
     font-size: 16px;
   }
 `;
 
 export const DescriptionStyle = css`
+  font-family: Finlandica;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+
+  /* Primary/Blue */
+
+  color: #2e4982;
   //@media (max-width: 600px) {
   //  font-size: 12px;
   //}

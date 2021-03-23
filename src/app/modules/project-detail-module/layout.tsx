@@ -99,7 +99,7 @@ export const ProjectDetailModuleLayout = (
         `}
       >
         <Hidden smDown>
-          <Box width="100%" height="24px" />
+          <Box width="100%" height="32px" />
         </Hidden>
         {/* ----------------------------------- */}
         {/* id */}
