@@ -1,5 +1,4 @@
 import React from "react";
-import find from "lodash/find";
 import filter from "lodash/filter";
 // import { useRecoilState } from "recoil";
 import { DataTable } from "app/components/Charts/table";
@@ -25,34 +24,23 @@ export function LocationsFragmentTable(props: LocationsFragmentTableProps) {
   function onSearchChange(value: string | null) {
     if (value) {
       const fvalue = value.toLowerCase();
-      setShownData(
-        filter(props.data, (td: any) => {
-          const orgCat = td.name.toLowerCase().indexOf(fvalue) > -1;
-          if (orgCat) {
-            return true;
+      const updatedData: any[] = [];
+      props.data.forEach((td: any) => {
+        const orgCat = td.name.toLowerCase().indexOf(fvalue) > -1;
+        if (orgCat) {
+          updatedData.push(td);
+        }
+        if (td.orgs) {
+          const children = filter(
+            td.orgs,
+            (child: any) => child.name.toLowerCase().indexOf(fvalue) > -1
+          );
+          if (children.length > 0) {
+            updatedData.push({ ...td, orgs: children });
           }
-          if (td.orgs) {
-            const lvl2 = find(td.orgs, (child: any) => {
-              const lvl2child = child.name.toLowerCase().indexOf(fvalue) > -1;
-              if (lvl2child) {
-                return true;
-              }
-              if (child.orgs) {
-                return find(
-                  child.orgs,
-                  (gchild: any) =>
-                    gchild.name.toLowerCase().indexOf(fvalue) > -1
-                );
-              }
-              return false;
-            });
-            if (lvl2) {
-              return true;
-            }
-          }
-          return false;
-        }) as never[]
-      );
+        }
+      });
+      setShownData(updatedData);
     } else {
       setShownData(props.data);
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
+import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import { useCMSData } from "app/hooks/useCMSData";
@@ -9,6 +10,7 @@ import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
 import { GridWidget } from "app/components/GridWidget";
 import { Treemap } from "app/components/Charts/treemap";
+import { selectedFilterAtom } from "app/state/recoil/atoms";
 
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { Legend } from "app/components/Charts/geomap/common/Legend";
@@ -56,6 +58,7 @@ export const DataGrid = (props: DataGridProps) => {
   const location = useLocation();
   const [width] = useWindowSize();
   const cmsData = useCMSData({ returnData: true });
+  const [selectedFilters] = useRecoilState(selectedFilterAtom);
 
   const isOrgTypeDetail = location.pathname.indexOf("organisation-types") > -1;
   const isOrgDetail = location.pathname.indexOf("organisations") > -1;
@@ -63,6 +66,18 @@ export const DataGrid = (props: DataGridProps) => {
   const isCountryDetail = location.pathname.indexOf("countries") > -1;
   const isRegionDetail = location.pathname.indexOf("regions") > -1;
   const isAreaDetail = location.pathname.indexOf("thematic-area") > -1;
+  let showSingleAreaCircle = isAreaDetail;
+  if (selectedFilters.tag.length > 0) {
+    if (selectedFilters.tag.length === 1) {
+      showSingleAreaCircle = true;
+    } else if (selectedFilters.tag.length === 2) {
+      const splits = [
+        selectedFilters.tag[0].split("|"),
+        selectedFilters.tag[1].split("|"),
+      ];
+      showSingleAreaCircle = splits[0][0] === splits[1][0];
+    }
+  }
 
   function getResultBlockContent() {
     if (isOrgTypeDetail || isOrgDetail) {
@@ -131,8 +146,8 @@ export const DataGrid = (props: DataGridProps) => {
           label="Overview Disbursements"
           detailPageFilter={props.detailPageFilter}
         >
-          {props.vizDataLoading.oda ? (
-            <VizLoader />
+          {props.vizDataLoading.oda || props.odaBarChartData.length === 0 ? (
+            <VizLoader loading={props.vizDataLoading.oda} />
           ) : (
             <BarChart
               height={250}
@@ -143,6 +158,14 @@ export const DataGrid = (props: DataGridProps) => {
               setVizCompData={() => null}
               onSelectChange={() => null}
               setSelectedVizItem={() => null}
+              hideODAGNI={
+                isOrgTypeDetail ||
+                isOrgDetail ||
+                isSectorDetail ||
+                isCountryDetail ||
+                isRegionDetail ||
+                isAreaDetail
+              }
             />
           )}
         </GridWidget>
@@ -155,16 +178,16 @@ export const DataGrid = (props: DataGridProps) => {
           label={get(cmsData, "general.thematicareas", "Thematic areas")}
         >
           {props.vizDataLoading.thematic ? (
-            <VizLoader />
+            <VizLoader loading={props.vizDataLoading.thematic} />
           ) : (
             <>
-              {!isAreaDetail && <div css="width: 100%;height: 70px;" />}
+              {!showSingleAreaCircle && <div css="width: 100%;height: 70px;" />}
               <ThematicAreas
                 showOnlyViz
                 selectedVizItemId={null}
-                showSingleCircle={isAreaDetail}
                 setSelectedVizItem={() => null}
                 data={props.thematicAreasChartData}
+                showSingleCircle={showSingleAreaCircle}
               />
             </>
           )}
@@ -180,9 +203,14 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip="lorem ipsum"
           detailPageFilter={props.detailPageFilter}
           label={get(cmsData, "general.sectors", "Sectors")}
+          childrencontainerStyle={{
+            width: 100,
+            height: 100,
+          }}
         >
-          {props.vizDataLoading.sectors ? (
-            <VizLoader />
+          {props.vizDataLoading.sectors ||
+          props.sectorsSunburstData.children.length === 0 ? (
+            <VizLoader loading={props.vizDataLoading.sectors} />
           ) : (
             <div>
               <SunburstChartSimplified
@@ -211,8 +239,9 @@ export const DataGrid = (props: DataGridProps) => {
             }}
             detailPageFilter={props.detailPageFilter}
           >
-            {props.vizDataLoading.locations ? (
-              <VizLoader />
+            {props.vizDataLoading.locations ||
+            props.locationsTreemapData.children.length === 0 ? (
+              <VizLoader loading={props.vizDataLoading.locations} />
             ) : (
               <Treemap
                 label="locations"
@@ -269,8 +298,9 @@ export const DataGrid = (props: DataGridProps) => {
           }}
           detailPageFilter={props.detailPageFilter}
         >
-          {props.vizDataLoading.organisations ? (
-            <VizLoader />
+          {props.vizDataLoading.organisations ||
+          props.organisationsTreemapData.children.length === 0 ? (
+            <VizLoader loading={props.vizDataLoading.organisations} />
           ) : (
             <Treemap
               label="organisations"
@@ -298,8 +328,9 @@ export const DataGrid = (props: DataGridProps) => {
           }}
           detailPageFilter={props.detailPageFilter}
         >
-          {props.vizDataLoading.budgetLines ? (
-            <VizLoader />
+          {props.vizDataLoading.budgetLines ||
+          props.budgetLinesBarChartData.length === 0 ? (
+            <VizLoader loading={props.vizDataLoading.budgetLines} />
           ) : (
             <BudgetLinesBarChart
               height={450}
@@ -350,7 +381,7 @@ export const DataGrid = (props: DataGridProps) => {
           label={get(cmsData, "general.sdgs", "SDGs")}
         >
           {props.vizDataLoading.sdg ? (
-            <VizLoader />
+            <VizLoader loading={props.vizDataLoading.sdg} />
           ) : (
             <SDGviz data={props.sdgVizData} />
           )}
@@ -402,7 +433,7 @@ export const DataGrid = (props: DataGridProps) => {
             childrencontainerStyle={{ paddingTop: width >= 960 ? 88 : 16 }}
           >
             {props.vizDataLoading.geo ? (
-              <VizLoader />
+              <VizLoader loading={props.vizDataLoading.geo} />
             ) : (
               <div
                 css={`

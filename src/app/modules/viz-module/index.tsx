@@ -2,7 +2,6 @@
 import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
-import filter from "lodash/filter";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
@@ -492,7 +491,7 @@ export default function VizModule() {
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (
-                <VizLoader />
+                <VizLoader loading={vizDataLoading.oda} />
               ) : (
                 <ODAvizModule
                   vizScale={vizScale}
@@ -515,7 +514,7 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/thematic-areas">
               {vizDataLoading.thematic ? (
-                <VizLoader />
+                <VizLoader loading={vizDataLoading.thematic} />
               ) : activeTab === "chart" ? (
                 <>
                   <div css="width: 100%;height: 100px;" />
@@ -555,7 +554,7 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/sectors">
               {vizDataLoading.sectors ? (
-                <VizLoader />
+                <VizLoader loading={vizDataLoading.sectors} />
               ) : (
                 <SectorsVizModule
                   vizLevel={vizLevel}
@@ -574,7 +573,7 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/countries-regions">
               {vizDataLoading.locations ? (
-                <VizLoader />
+                <VizLoader loading={vizDataLoading.locations} />
               ) : (
                 <CountriesRegionsModule
                   label=""
@@ -588,7 +587,7 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/organisations">
               {vizDataLoading.organisations ? (
-                <VizLoader />
+                <VizLoader loading={vizDataLoading.organisations} />
               ) : (
                 <OrganisationsModule
                   label=""
@@ -602,7 +601,7 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/budget-lines">
               {vizDataLoading.budgetLines ? (
-                <VizLoader />
+                <VizLoader loading={vizDataLoading.budgetLines} />
               ) : (
                 <BudgetLinesModule
                   activeTab={activeTab}

@@ -31,8 +31,9 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "main" ]; then
               rsync -O -ave ssh ~/project/build "$SSH_USER"@"$SSH_HOST":~/staging
-            elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
               rsync -O -ave ssh ~/project/build "$SSH_USER"@"$SSH_HOST":~/test
+            # elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+            #   rsync -O -ave ssh ~/project/build "$SSH_USER"@"$SSH_HOST":~/test
             else
               rsync -O -ave ssh ~/project/build "$SSH_USER"@"$SSH_HOST":~/dev
             fi

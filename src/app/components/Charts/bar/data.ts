@@ -14,6 +14,7 @@ export interface BarChartProps {
     selection: string | number | null;
     translation: { x: number; y: number };
   }) => void;
+  hideODAGNI?: boolean;
 }
 
 export interface SimpleBarChartProps {
