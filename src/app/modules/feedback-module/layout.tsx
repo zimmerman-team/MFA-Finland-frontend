@@ -8,6 +8,7 @@ import { Path } from "app/const/Path";
 import { ModuleContainer } from "app/components/ModuleContainer";
 import {
   Box,
+  CircularProgress,
   FormControl,
   Grid,
   Hidden,
@@ -16,6 +17,11 @@ import {
 } from "@material-ui/core";
 import { PillButton } from "app/components/Buttons/PillButton";
 import { PrimaryColor } from "app/theme";
+import { styles } from "app/modules/feedback-module/styles";
+import { FormField } from "app/modules/feedback-module/common/FormField";
+import { useStoreActions, useStoreState } from "app/state/store/hooks";
+import get from "lodash/get";
+import { initActivityDetailData } from "app/components/ActivityAccordion/model";
 
 const crumbs: BreadcrumbLinkModel[] = [
   { label: "Homepage", path: Path.home },
@@ -33,40 +39,6 @@ const navList: InpageNavItemModel[] = [
   },
 ];
 
-export const styles = {
-  container: css`
-    width: 100%;
-    padding: 28px;
-    background-color: white;
-    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
-    border-radius: 30px;
-  `,
-  gridContainer: css`
-    .MuiGrid-root {
-      flex-grow: 1;
-    }
-  `,
-  paragraphHeader: css`
-    margin-bottom: 16px;
-  `,
-  paragraph: css`
-    margin-bottom: 24px;
-  `,
-  button: css`
-    display: flex;
-    margin-left: auto;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    border-radius: 20px;
-    text-transform: unset;
-    padding: 10px 32px;
-    line-height: 17px;
-    :hover {
-      background-color: ${PrimaryColor[3]};
-    }
-  `,
-};
-
 export const FeedbackLayout = () => {
   const [active, setActive] = React.useState(0);
   const [feedback, setFeedback] = React.useState("");
@@ -80,6 +52,33 @@ export const FeedbackLayout = () => {
   );
   const [other, setOther] = React.useState("");
   const [organisation, setOrganisation] = React.useState("");
+  const [displaySucces, setDisplaySuccess] = React.useState(false);
+  const [displayError, setDisplayError] = React.useState();
+
+  const feedbackSendResponse = useStoreState((state) => {
+    return state.feedback;
+  });
+
+  const feedbackSendAction = useStoreActions(
+    (actions) => actions.feedback.fetch
+  );
+  const clearAction = useStoreActions((actions) => actions.feedback.clear);
+
+  const loading = useStoreState((state) => state.feedback.loading);
+
+  React.useEffect(() => {
+    if (
+      feedbackSendResponse &&
+      // @ts-ignore
+      feedbackSendResponse.data?.status === "success"
+    ) {
+      setDisplaySuccess(true);
+    }
+  }, [feedbackSendResponse]);
+
+  React.useEffect(() => {
+    clearAction();
+  }, []);
 
   function handleClick(id: any) {
     setActive(parseInt(id, 10));
@@ -118,14 +117,9 @@ export const FeedbackLayout = () => {
     setOrganisation(event.target.value);
   }
 
+  function validateForm() {}
+
   function handleSend() {
-    if (feedback && name && email && validateEmail()) {
-      setFeedbackError(false);
-      setNameError(false);
-      setEmailError(false);
-      setEmailErrorMsg("This field is required");
-      // Do request
-    }
     if (!feedback) {
       setFeedback("");
       setFeedbackError(true);
@@ -143,6 +137,25 @@ export const FeedbackLayout = () => {
       setEmailError(true);
       setEmailErrorMsg("Please provide a correct e-mail address");
     }
+
+    if (feedback && name && email && validateEmail()) {
+      setFeedbackError(false);
+      setNameError(false);
+      setEmailError(false);
+      setEmailErrorMsg("This field is required");
+
+      // Do request
+      feedbackSendAction({
+        values: {
+          name,
+          // @ts-ignore
+          email,
+          feedback,
+          other,
+          organisation,
+        },
+      });
+    }
   }
 
   function validateEmail() {
@@ -159,6 +172,7 @@ export const FeedbackLayout = () => {
       "survived not only five centuries, but also the leap into\n" +
       "electronic typesetting, remaining essentially",
   };
+
   const faqMockList = [];
   for (let i = 0; i < 6; i++) {
     faqMockList.push(faqMockItem);
@@ -215,119 +229,81 @@ export const FeedbackLayout = () => {
         <Grid item xl={9} lg={9} md={12} css={styles.gridContainer}>
           <Anchor id="feedback" />
           <div css={styles.container}>
-            <Typography variant="h5">Feedback</Typography>
-            <Box width="100%" height="24px" />
-            <Typography variant="body2">* Required</Typography>
-            <Box width="100%" height="24px" />
+            {loading && (
+              <div css={styles.loading}>
+                <CircularProgress />
+              </div>
+            )}
 
-            <Field
-              value={feedback}
-              label="Feedback*"
-              handleChange={handleFeedbackChange}
-              error={feedbackError}
-              errorMessage="This field is required"
-              isMultiline
-            />
+            {!loading && !displaySucces && (
+              <>
+                <Typography variant="h5">Feedback</Typography>
+                <Box width="100%" height="24px" />
+                <Typography variant="body2">* Required</Typography>
+                <Box width="100%" height="24px" />
 
-            <Field
-              value={name}
-              label="Name*"
-              handleChange={handleNameChange}
-              error={nameError}
-              errorMessage="This field is required"
-            />
+                <FormField
+                  value={feedback}
+                  label="Feedback*"
+                  handleChange={handleFeedbackChange}
+                  error={feedbackError}
+                  errorMessage="This field is required"
+                  isMultiline
+                />
 
-            <Field
-              value={email}
-              label="Email*"
-              handleChange={handleEmailChange}
-              error={emailError}
-              errorMessage={emailErrorMsg}
-            />
+                <FormField
+                  value={name}
+                  label="Name*"
+                  handleChange={handleNameChange}
+                  error={nameError}
+                  errorMessage="This field is required"
+                />
 
-            <Field
-              value={other}
-              label="or other contact information"
-              handleChange={handleOtherChange}
-              error={false}
-            />
+                <FormField
+                  value={email}
+                  label="Email*"
+                  handleChange={handleEmailChange}
+                  error={emailError}
+                  errorMessage={emailErrorMsg}
+                />
 
-            <Field
-              value={organisation}
-              label="Organisation"
-              handleChange={handleOrganisationChange}
-              error={false}
-            />
+                <FormField
+                  value={other}
+                  label="or other contact information"
+                  handleChange={handleOtherChange}
+                  error={false}
+                />
 
-            <PillButton css={styles.button} onClick={() => handleSend()}>
-              Send
-            </PillButton>
+                <FormField
+                  value={organisation}
+                  label="Organisation"
+                  handleChange={handleOrganisationChange}
+                  error={false}
+                />
+
+                <PillButton css={styles.button} onClick={() => handleSend()}>
+                  Send
+                </PillButton>
+              </>
+            )}
+
+            {displaySucces && (
+              <>
+                <Typography variant="h5">
+                  Thank you for your feedback
+                </Typography>
+                <Box width="100%" height="24px" />
+                <Typography variant="body1" css={styles.paragraph}>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Dolore, dolores maxime neque odio optio pariatur perspiciatis
+                  quam voluptatem. Assumenda dolor error eum facilis ipsa
+                  nostrum quod. Ab aliquid sed voluptatem.
+                </Typography>
+              </>
+            )}
           </div>
         </Grid>
       </ModuleContainer>
     </>
-  );
-};
-
-interface FieldProps {
-  label: string;
-  value: string;
-  error: boolean;
-  // eslint-disable-next-line react/require-default-props
-  errorMessage?: string;
-  handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-  // eslint-disable-next-line react/require-default-props
-  isMultiline?: boolean;
-}
-const Field = (props: FieldProps) => {
-  const fieldStyles = {
-    container: css`
-      margin-bottom: 16px;
-    `,
-    label: css`
-      margin-bottom: 4px;
-    `,
-    error: css`
-      margin-top: 8px;
-      color: #ae4764;
-      margin-bottom: 8px;
-    `,
-    fieldset: css`
-      ${props.error &&
-      `
-            && > fieldset {
-        border-color: #ae4764 !important;
-        background-color: #edd2da;
-      }
-            `}
-    `,
-  };
-  return (
-    <FormControl
-      variant="outlined"
-      fullWidth
-      hiddenLabel
-      css={fieldStyles.container}
-    >
-      <label htmlFor={props.label} css={fieldStyles.label}>
-        {props.label}
-      </label>
-      <OutlinedInput
-        id={props.label}
-        value={props.value}
-        rows={4}
-        onChange={(e) => props.handleChange(e)}
-        error={props.error}
-        multiline={props.isMultiline}
-        css={fieldStyles.fieldset}
-      />
-      {props.error && (
-        <Typography variant="subtitle2" css={fieldStyles.error}>
-          {props.errorMessage}
-        </Typography>
-      )}
-    </FormControl>
   );
 };

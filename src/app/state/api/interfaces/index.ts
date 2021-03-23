@@ -37,14 +37,14 @@ export interface ApiModel<QueryModel, ResponseModel> {
   >;
   onRequest: Action<ApiModel<QueryModel, ResponseModel>>;
   fetch: Thunk<ApiModel<QueryModel, ResponseModel>, RequestValues<QueryModel>>;
-  /*authPostFetch: Thunk<
+  /* authPostFetch: Thunk<
     ApiModel<QueryModel, ResponseModel>,
     RequestValues<QueryModel>
   >;
   authGetFetch: Thunk<
     ApiModel<QueryModel, ResponseModel>,
     RequestValues<QueryModel>
-  >;*/
+  >; */
   clear: Action<ApiModel<QueryModel, ResponseModel>>;
 }
 
@@ -92,11 +92,10 @@ export interface ApiResponseModel {
   vizData: any[];
 }
 
-export interface ApiCallModel
-  extends ApiModel<
-    ApiCallParams | ApiCallParams[] | string,
-    ApiResponseModel
-  > {}
+export type ApiCallModel = ApiModel<
+  ApiCallParams | ApiCallParams[] | string,
+  ApiResponseModel
+>;
 
 export interface StoreModel {
   // global search
@@ -148,6 +147,7 @@ export interface StoreModel {
   activitySDG: ApiCallModel;
   donorsTreemap: ApiCallModel;
   detailPageName: ApiCallModel;
+  feedback: ApiCallModel;
   // auth
   // users: ApiCallModel;
   // user: ApiCallModel;
