@@ -170,7 +170,7 @@ export const ProjectDetailModuleLayout = (
       {/* ------------------------------------------------------------------ */}
       {/* description */}
       <Grid item container xs={12} lg={12}>
-        <Grid item lg={12}>
+        <Grid item lg={10}>
           <Typography css={DescriptionLabelStyle}>Description</Typography>
           <Box width="100%" height="16px" />
           <Typography css={DescriptionStyle}>

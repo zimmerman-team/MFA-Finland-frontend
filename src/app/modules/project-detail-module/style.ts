@@ -53,8 +53,8 @@ export const DescriptionStyle = css`
   font-family: Finlandica;
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
+  font-size: 16px;
+  line-height: 22px;
 
   /* Primary/Blue */
 
