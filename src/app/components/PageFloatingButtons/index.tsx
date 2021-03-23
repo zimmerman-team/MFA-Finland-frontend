@@ -14,6 +14,7 @@ import { IconShare } from "app/assets/icons/IconShare";
 import { IconDownload } from "app/assets/icons/IconDownload";
 import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
 import { exportPage } from "app/utils/exportPage";
+import { ExportTooltip } from "./common/export";
 
 export const LightTooltip = withStyles((theme: Theme) => ({
   arrow: {
@@ -57,8 +58,16 @@ export function PageFloatingButtons() {
             <IconShare />
           </div>
         </LightTooltip>
-        <LightTooltip placement="left" title="Export page">
-          <div css={buttoncss} onClick={() => exportPage("png")}>
+        <LightTooltip
+          arrow
+          interactive
+          placement="left"
+          classes={{
+            tooltip: classes.tooltip,
+          }}
+          title={<ExportTooltip />}
+        >
+          <div css={buttoncss}>
             <IconDownload />
           </div>
         </LightTooltip>

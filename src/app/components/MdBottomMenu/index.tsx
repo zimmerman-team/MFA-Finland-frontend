@@ -129,13 +129,13 @@ export const MdBottomMenu = () => {
             <div css="width: 100%; height: 32px;" />
           </Grid>
           <Grid item xs={4} sm={4} md={4}>
-            <div css={style.downloadButton} onClick={() => exportPage("jpg")}>
-              JPG
+            <div css={style.downloadButton} onClick={() => exportPage("png")}>
+              PNG
             </div>
           </Grid>
           <Grid item xs={4} sm={4} md={4}>
-            <div css={style.downloadButton} onClick={() => exportPage("png")}>
-              PNG
+            <div css={style.downloadButton} onClick={() => exportPage("pdf")}>
+              PDF
             </div>
           </Grid>
           <Grid item xs={4} sm={4} md={4}>
