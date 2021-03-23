@@ -33,10 +33,10 @@ export function ThematicDetailModule() {
     detailPageNameData,
   } = useDataGridData({
     detailPageFilter: {
-      key: "tag_code",
+      key: "tag_narrative",
       value: [
-        `${decodeURIComponent(get(params, "theme", ""))}, primary`,
-        `${decodeURIComponent(get(params, "theme", ""))}, secondary`,
+        `${decodeURIComponent(get(params, "theme", ""))}| primary`,
+        `${decodeURIComponent(get(params, "theme", ""))}| secondary`,
       ],
     },
   });
@@ -57,8 +57,11 @@ export function ThematicDetailModule() {
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
       detailPageFilter={{
-        key: "tag_code",
-        value: decodeURIComponent(get(params, "theme", "")),
+        key: "tag_narrative",
+        value: [
+          `${decodeURIComponent(get(params, "theme", ""))}| primary`,
+          `${decodeURIComponent(get(params, "theme", ""))}| secondary`,
+        ],
       }}
     />
   );

@@ -3,8 +3,11 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
+import { PrimaryColor } from "app/theme";
 import Grid from "@material-ui/core/Grid";
+import { ResponsivePie } from "@nivo/pie";
 import Hidden from "@material-ui/core/Hidden";
+import { hexToRGBA } from "app/utils/hexToRgba";
 import {
   directions,
   DataProps,
@@ -26,6 +29,68 @@ import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 export function ThematicAreas(props: ThematicAreasProps) {
   const maxValue = get(maxBy(props.data, "value"), "value", 0);
+
+  if (props.showSingleCircle) {
+    const selected = props.data[0];
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        css={`
+          height: 300px;
+          text {
+            font-size: 10px !important;
+            font-family: Finlandica !important;
+          }
+        `}
+      >
+        <ResponsivePie
+          margin={{ top: 40, right: 0, bottom: 30, left: 0 }}
+          data={[
+            {
+              id: "Main priority",
+              label: "Main priority",
+              value: selected.primary.value,
+              color: selected.color,
+            },
+            {
+              id: "Secondary priority",
+              label: "Secondary priority",
+              value: selected.secondary.value,
+              color: hexToRGBA(selected.color, 0.5),
+            },
+          ]}
+          legends={[
+            {
+              translateX: 0,
+              justify: false,
+              translateY: 30,
+              itemWidth: 100,
+              itemHeight: 18,
+              itemOpacity: 1,
+              symbolSize: 12,
+              itemsSpacing: 0,
+              direction: "row",
+              anchor: "bottom",
+              symbolShape: "square",
+              itemDirection: "left-to-right",
+              itemTextColor: PrimaryColor[0],
+            },
+          ]}
+          padAngle={0}
+          borderWidth={1}
+          innerRadius={0}
+          isInteractive={false}
+          enableRadialLabels={false}
+          sliceLabelsTextColor={PrimaryColor[0]}
+          colors={(tProps: any) => tProps.data.color}
+          sliceLabel={(tProps: any) => formatMoneyWithPrefix(tProps.value)}
+        />
+      </Grid>
+    );
+  }
 
   return (
     <Grid container justify="center" alignItems="center" direction="row">

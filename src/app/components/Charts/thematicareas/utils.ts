@@ -4,12 +4,17 @@ import { DataProps } from "app/components/Charts/thematicareas/data";
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
 
 export function getThematicAreasLegends(
-  data: DataProps[]
+  data: DataProps[],
+  thematicAreaChartSingle: boolean
 ): VizSidePanelItemProps[] {
-  return orderBy(data, "size", "desc").map((d: DataProps) => ({
+  const items = orderBy(data, "size", "desc").map((d: DataProps) => ({
     id: d.name,
     name: d.area,
     color: d.color,
     value: formatLocale(d.value),
   }));
+  if (thematicAreaChartSingle) {
+    return items.slice(0, 1);
+  }
+  return items;
 }

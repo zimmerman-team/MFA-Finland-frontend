@@ -12,7 +12,8 @@ export function getSidebarLegendItems(
   vizType: string,
   data: any,
   filter: string | number | null,
-  cmsData: any
+  cmsData: any,
+  thematicAreaChartSingle: boolean
 ): VizSidePanelItemProps[] {
   switch (vizType) {
     case "oda":
@@ -20,7 +21,7 @@ export function getSidebarLegendItems(
     case "oda-drilldown":
       return getSimpleBarLegendItems(data[vizType]);
     case "thematic-areas":
-      return getThematicAreasLegends(data[vizType]);
+      return getThematicAreasLegends(data[vizType], thematicAreaChartSingle);
     case "sectors":
       return getSectorsLegends(data[vizType], filter);
     case "countries-regions":

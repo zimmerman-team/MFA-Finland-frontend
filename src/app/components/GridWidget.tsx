@@ -158,7 +158,7 @@ interface GridWidgetProps {
   // responsiveOrder?: number;
   detailPageFilter?: {
     key: string;
-    value: string;
+    value: string | string[];
   };
 }
 
@@ -190,7 +190,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   let searchFilterString = `${
     props.detailPageFilter
-      ? `${props.detailPageFilter.key}=${props.detailPageFilter.value}`
+      ? `${props.detailPageFilter.key}=${
+          typeof props.detailPageFilter.value === "string"
+            ? props.detailPageFilter.value
+            : props.detailPageFilter.value.join(",")
+        }`
       : ""
   }${history.location.search.replace("?", "")}`;
   if (searchFilterString !== "") {

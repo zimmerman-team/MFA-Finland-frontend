@@ -25,6 +25,7 @@ export interface DataProps {
 export interface ThematicAreasProps {
   data: DataProps[];
   showOnlyViz: boolean;
+  showSingleCircle?: boolean;
   selectedVizItemId: string | number | null;
   setSelectedVizItem: (name: string | number | null) => void;
 }

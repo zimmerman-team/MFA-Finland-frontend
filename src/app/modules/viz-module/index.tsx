@@ -2,6 +2,7 @@
 import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
+import filter from "lodash/filter";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
@@ -423,6 +424,19 @@ export default function VizModule() {
     }
   }, [activeTab]);
 
+  let thematicAreaChartSingle = false;
+  if (selectedFilters.tag.length > 0) {
+    if (selectedFilters.tag.length === 1) {
+      thematicAreaChartSingle = true;
+    } else if (selectedFilters.tag.length === 2) {
+      const splits = [
+        selectedFilters.tag[0].split("|"),
+        selectedFilters.tag[1].split("|"),
+      ];
+      thematicAreaChartSingle = splits[0][0] === splits[1][0];
+    }
+  }
+
   return (
     <Grid
       container
@@ -510,6 +524,7 @@ export default function VizModule() {
                     data={thematicAreasChartData}
                     selectedVizItemId={selectedVizItem}
                     setSelectedVizItem={setSelectedVizItem}
+                    showSingleCircle={thematicAreaChartSingle}
                   />
                 </>
               ) : (
@@ -519,7 +534,11 @@ export default function VizModule() {
                   `}
                 >
                   <DataTable
-                    data={thematicAreasChartData}
+                    data={
+                      thematicAreaChartSingle
+                        ? thematicAreasChartData.slice(0, 1)
+                        : thematicAreasChartData
+                    }
                     options={thematicAreasDataTableOptions}
                     columns={getTranslatedCols(
                       thematicAreasDataTableColumns,
@@ -656,7 +675,8 @@ export default function VizModule() {
                     "budget-lines": budgetLinesBarChartData,
                   },
                   selectedVizItem,
-                  cmsData
+                  cmsData,
+                  thematicAreaChartSingle
                 )}
                 activeTab={activeTab}
                 scrollableHeight={height}

@@ -36,7 +36,7 @@ export interface DataGridProps {
   sectorDescription?: string;
   detailPageFilter?: {
     key: string;
-    value: string;
+    value: string | string[];
   };
   vizDataLoading: {
     oda: boolean;
@@ -62,6 +62,7 @@ export const DataGrid = (props: DataGridProps) => {
   const isSectorDetail = location.pathname.indexOf("sectors") > -1;
   const isCountryDetail = location.pathname.indexOf("countries") > -1;
   const isRegionDetail = location.pathname.indexOf("regions") > -1;
+  const isAreaDetail = location.pathname.indexOf("thematic-area") > -1;
 
   function getResultBlockContent() {
     if (isOrgTypeDetail || isOrgDetail) {
@@ -157,10 +158,11 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader />
           ) : (
             <>
-              <div css="width: 100%;height: 70px;" />
+              {!isAreaDetail && <div css="width: 100%;height: 70px;" />}
               <ThematicAreas
                 showOnlyViz
                 selectedVizItemId={null}
+                showSingleCircle={isAreaDetail}
                 setSelectedVizItem={() => null}
                 data={props.thematicAreasChartData}
               />
