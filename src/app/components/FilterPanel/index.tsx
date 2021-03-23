@@ -10,9 +10,9 @@ import { useStoreState } from "app/state/store/hooks";
 import { createStyles } from "app/components/FilterPanel/styles";
 import { Filter } from "app/components/FilterPanel/Panels/Filter";
 import {
-  selectedFilterAtom,
   currentFilterOpenAtom,
   defaultfilters,
+  selectedFilterAtom,
 } from "app/state/recoil/atoms";
 import {
   FILTER_TYPES,
@@ -21,8 +21,8 @@ import {
   MailPanelInitDataItemModel,
 } from "app/components/FilterPanel/data";
 import {
-  getMainFilterPanelData,
   getAdvancedFilterPanelData,
+  getMainFilterPanelData,
 } from "app/components/FilterPanel/utils";
 import { ChooseAFilterPanel } from "app/components/FilterPanel/Panels/ChooseAFilterPanel";
 
@@ -540,8 +540,66 @@ export const FilterPanel = (props: FilterPanelProps) => {
     setCurrentFilterOpen(FILTER_TYPES.NONE);
   }
 
-  function resetFilters() {
+  function resetAllFilters() {
+    setSelectedFilters(defaultfilters);
     setLocalSelectedFilters(defaultfilters);
+  }
+
+  function filterTypeToObjectKeyMapping(filterType: FILTER_TYPES): string[] {
+    switch (filterType) {
+      case FILTER_TYPES.THEMATIC_AREAS:
+        return ["tag"];
+        break;
+      case FILTER_TYPES.COUNTRIES:
+        return ["countries", "regions"];
+        break;
+      case FILTER_TYPES.SECTORS:
+        return ["sectors"];
+        break;
+      case FILTER_TYPES.ORGANISATIONS:
+        return ["organisations"];
+        break;
+      case FILTER_TYPES.SDGS:
+        return ["sdg"];
+        break;
+      case FILTER_TYPES.ACTIVITY_STATUS:
+        return ["activitystatus"];
+        break;
+      case FILTER_TYPES.POLICY_MARKERS:
+        return ["policymarker"];
+        break;
+      case FILTER_TYPES.AID_TYPE:
+        return ["defaultaidtype"];
+        break;
+      case FILTER_TYPES.BUDGET_LINES:
+        return ["budgetlines"];
+        break;
+      case FILTER_TYPES.BI_MULTI:
+        return ["collaborationtype"];
+        break;
+      case FILTER_TYPES.HUMAN_RIGHTS:
+        return ["humanrights"];
+        break;
+      default:
+        return [""];
+        break;
+    }
+  }
+
+  function resetFilter(filterType: FILTER_TYPES) {
+    const keys = filterTypeToObjectKeyMapping(filterType);
+    const updatedValues: any = {};
+
+    keys.forEach((key) => {
+      updatedValues[key] = [];
+    });
+
+    setLocalSelectedFilters({
+      ...localSelectedFilters,
+      ...updatedValues,
+    });
+
+    setMainPanelData(getMainFilterPanelData(localSelectedFilters, cmsData));
   }
 
   function close() {
@@ -564,7 +622,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={mainPanelData}
             onCloseBtnClick={close}
             onApplyFilters={applyFilters}
-            onResetFilters={resetFilters}
+            onResetFilters={resetAllFilters}
           />
         );
       case FILTER_TYPES.THEMATIC_AREAS:
@@ -582,7 +640,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.THEMATIC_AREAS)
             }
             onBackBtnClick={backToMain}
-            onApplyFilters={backToMain}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.THEMATIC_AREAS)}
           />
         );
       case FILTER_TYPES.COUNTRIES:
@@ -603,7 +662,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.COUNTRIES)
             }
             onBackBtnClick={backToMain}
-            onApplyFilters={backToMain}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.COUNTRIES)}
           />
         );
       case FILTER_TYPES.SECTORS:
@@ -621,7 +681,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.SECTORS)
             }
             onBackBtnClick={backToMain}
-            onApplyFilters={backToMain}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.SECTORS)}
           />
         );
       case FILTER_TYPES.ORGANISATIONS:
@@ -642,7 +703,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.ORGANISATIONS)
             }
             onBackBtnClick={backToMain}
-            onApplyFilters={backToMain}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.ORGANISATIONS)}
           />
         );
       case FILTER_TYPES.SDGS:
@@ -660,7 +722,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.SDGS)
             }
             onBackBtnClick={backToMain}
-            onApplyFilters={backToMain}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.SDGS)}
           />
         );
       case FILTER_TYPES.ACTIVITY_STATUS:
@@ -678,7 +741,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.ACTIVITY_STATUS)
             }
             onBackBtnClick={backToMain}
-            onApplyFilters={backToMain}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.ACTIVITY_STATUS)}
           />
         );
       case FILTER_TYPES.PERIOD:
@@ -695,7 +759,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.PERIOD)
             }
             onBackBtnClick={backToMain}
-            onApplyFilters={backToMain}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.PERIOD)}
           />
         );
       case FILTER_TYPES.ADVANCED_FILTERS:
@@ -704,7 +769,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             data={advancedPanelData}
             onCloseBtnClick={backToMain}
             onApplyFilters={applyFilters}
-            onResetFilters={resetFilters}
+            onResetFilters={resetAllFilters}
           />
         );
       case FILTER_TYPES.POLICY_MARKERS:
@@ -722,7 +787,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.POLICY_MARKERS)
             }
             onBackBtnClick={backToAdvanced}
-            onApplyFilters={backToAdvanced}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.POLICY_MARKERS)}
           />
         );
       case FILTER_TYPES.AID_TYPE:
@@ -740,7 +806,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.AID_TYPE)
             }
             onBackBtnClick={backToAdvanced}
-            onApplyFilters={backToAdvanced}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.AID_TYPE)}
           />
         );
       case FILTER_TYPES.BUDGET_LINES:
@@ -758,7 +825,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.BUDGET_LINES)
             }
             onBackBtnClick={backToAdvanced}
-            onApplyFilters={backToAdvanced}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.BUDGET_LINES)}
           />
         );
       case FILTER_TYPES.BI_MULTI:
@@ -785,7 +853,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.BI_MULTI)
             }
             onBackBtnClick={backToAdvanced}
-            onApplyFilters={backToAdvanced}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.BI_MULTI)}
           />
         );
       case FILTER_TYPES.HUMAN_RIGHTS:
@@ -803,7 +872,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
               onSelectAllCheckboxChange(FILTER_TYPES.HUMAN_RIGHTS)
             }
             onBackBtnClick={backToAdvanced}
-            onApplyFilters={backToAdvanced}
+            onApplyFilters={applyFilters}
+            onResetFilter={() => resetFilter(FILTER_TYPES.HUMAN_RIGHTS)}
           />
         );
       default:

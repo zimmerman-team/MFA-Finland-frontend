@@ -4,9 +4,10 @@ import { ProjectPalette } from "app/theme";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
 import { PillButton } from "app/components/Buttons/PillButton";
+import filters from "app/state/api/actions-reducers/cms/filters";
 
 interface BottomActions {
-  onApply: () => void;
+  onApply?: () => void;
   onReset: () => void;
 }
 
@@ -16,7 +17,7 @@ export const BottomActions = (props: BottomActions) => {
     secondaryButton: css`
       text-transform: unset;
       color: white;
-      margin-right: 40px;
+      margin-right: ${props.onApply ? "40px" : "0"};
 
       :hover {
         color: #bcc6d6;
@@ -43,11 +44,15 @@ export const BottomActions = (props: BottomActions) => {
         css={styles.secondaryButton}
         onClick={props.onReset}
       >
-        {get(cmsData, "filters.reset", "Reset filters")}
+        {props.onApply
+          ? get(cmsData, "filters.reset", "Reset filter")
+          : get(cmsData, "filters.resetall", "Reset filters")}
       </PillButton>
-      <PillButton css={styles.primaryButton} onClick={props.onApply}>
-        {get(cmsData, "filters.apply", "Apply")}
-      </PillButton>
+      {props.onApply && (
+        <PillButton css={styles.primaryButton} onClick={props.onApply}>
+          {get(cmsData, "filters.apply", "Apply")}
+        </PillButton>
+      )}
     </>
   );
 };

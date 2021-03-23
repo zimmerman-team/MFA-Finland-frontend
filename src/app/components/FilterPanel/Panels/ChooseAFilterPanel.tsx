@@ -79,10 +79,7 @@ export const ChooseAFilterPanel = (props: Model) => {
           justify="flex-end"
           css={styles.actionContainer}
         >
-          <BottomActions
-            onApply={props.onApplyFilters}
-            onReset={props.onResetFilters}
-          />
+          <BottomActions onReset={props.onResetFilters} />
         </Grid>
       </Grid>
     </>

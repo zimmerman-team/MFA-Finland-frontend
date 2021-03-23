@@ -10,6 +10,7 @@ export const createStyles = (props: FilterProps) => {
   return {
     container: css``,
     selected: css`
+      height: 14px;
       margin-left: 104px;
       color: white;
       font-size: 12px;
@@ -45,7 +46,7 @@ export const Filter = (props: FilterProps) => {
       <div css={styles.bottomActionsContainer}>
         <BottomActions
           onApply={props.onApplyFilters}
-          onReset={props.onApplyFilters}
+          onReset={props.onResetFilter}
         />
       </div>
     </Grid>

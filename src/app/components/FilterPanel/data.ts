@@ -20,6 +20,7 @@ export interface FilterProps {
   selectedItems: string[];
   onBackBtnClick: () => void;
   onApplyFilters: () => void;
+  onResetFilter: () => void;
   onSelectAllCheckboxChange: () => void;
   onFilterCheckboxChange: (value: string | string[]) => void;
 }
