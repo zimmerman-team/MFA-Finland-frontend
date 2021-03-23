@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
+import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
 import { Grid, Hidden } from "@material-ui/core";
 import { useCMSData } from "app/hooks/useCMSData";
@@ -9,6 +10,7 @@ import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
 import { GridWidget } from "app/components/GridWidget";
 import { Treemap } from "app/components/Charts/treemap";
+import { selectedFilterAtom } from "app/state/recoil/atoms";
 
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { Legend } from "app/components/Charts/geomap/common/Legend";
@@ -56,6 +58,7 @@ export const DataGrid = (props: DataGridProps) => {
   const location = useLocation();
   const [width] = useWindowSize();
   const cmsData = useCMSData({ returnData: true });
+  const [selectedFilters] = useRecoilState(selectedFilterAtom);
 
   const isOrgTypeDetail = location.pathname.indexOf("organisation-types") > -1;
   const isOrgDetail = location.pathname.indexOf("organisations") > -1;
@@ -63,6 +66,18 @@ export const DataGrid = (props: DataGridProps) => {
   const isCountryDetail = location.pathname.indexOf("countries") > -1;
   const isRegionDetail = location.pathname.indexOf("regions") > -1;
   const isAreaDetail = location.pathname.indexOf("thematic-area") > -1;
+  let showSingleAreaCircle = isAreaDetail;
+  if (selectedFilters.tag.length > 0) {
+    if (selectedFilters.tag.length === 1) {
+      showSingleAreaCircle = true;
+    } else if (selectedFilters.tag.length === 2) {
+      const splits = [
+        selectedFilters.tag[0].split("|"),
+        selectedFilters.tag[1].split("|"),
+      ];
+      showSingleAreaCircle = splits[0][0] === splits[1][0];
+    }
+  }
 
   function getResultBlockContent() {
     if (isOrgTypeDetail || isOrgDetail) {
@@ -166,13 +181,13 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader />
           ) : (
             <>
-              {!isAreaDetail && <div css="width: 100%;height: 70px;" />}
+              {!showSingleAreaCircle && <div css="width: 100%;height: 70px;" />}
               <ThematicAreas
                 showOnlyViz
                 selectedVizItemId={null}
-                showSingleCircle={isAreaDetail}
                 setSelectedVizItem={() => null}
                 data={props.thematicAreasChartData}
+                showSingleCircle={showSingleAreaCircle}
               />
             </>
           )}

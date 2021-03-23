@@ -2,7 +2,6 @@
 import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
-import filter from "lodash/filter";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
