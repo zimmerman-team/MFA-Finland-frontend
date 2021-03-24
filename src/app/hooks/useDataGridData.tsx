@@ -151,7 +151,7 @@ export function useDataGridData(props: useDataGridDataProps) {
         [props.detailPageFilter.key]:
           typeof props.detailPageFilter.value === "string"
             ? [props.detailPageFilter.value]
-            : [...props.detailPageFilter.value],
+            : props.detailPageFilter.value,
       };
       detailPageNameAction({
         values: {
@@ -264,11 +264,15 @@ export function useDataGridData(props: useDataGridDataProps) {
     if (isDetailPage) {
       filters = {
         ...filters,
-        [props.detailPageFilter.key]: [props.detailPageFilter.value],
+        [props.detailPageFilter.key]:
+          typeof props.detailPageFilter.value === "string"
+            ? [props.detailPageFilter.value]
+            : props.detailPageFilter.value,
       };
       detailPageNameAction({
         values: {
           filters,
+          detail_type: props.detailPageFilter.key,
         },
       });
     }
