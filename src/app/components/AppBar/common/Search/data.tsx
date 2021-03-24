@@ -6,7 +6,7 @@ export interface SearchComponentLayoutProps {
   value: string;
   close: Function;
   loading: boolean;
-  setValue: Function;
+  setValue: (value: string) => void;
   resultType: string;
   loadMore: Function;
   hasMoreOfType: boolean;

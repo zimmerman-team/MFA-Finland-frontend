@@ -8,31 +8,36 @@ import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
 type Props = {
   cmsData: any;
   value: string;
-  setValue: Function;
-  isFocused?: boolean;
-  setIsFocused?: (isFocused: boolean) => void;
+  isFocused: boolean;
+  smallWidth?: string;
+  onBlur?: () => void;
+  setValue: (value: string) => void;
+  setIsFocused: (isFocused: boolean) => void;
 };
 
 const StyledInput = withStyles((theme: Theme) =>
   createStyles({
     input: {
-      padding: 10,
+      padding: "10px 0px",
       fontSize: 14,
       borderRadius: 32,
       color: PrimaryColor[0],
       backgroundColor: "#bcc6d6",
-      "::placeholder": {
-        color: SecondaryColor[2],
-      },
     },
   })
 )(InputBase);
 
 export const SearchField = (props: Props) => {
+  const unfocusedWidth = props.smallWidth ? props.smallWidth : "144px";
   return (
     <StyledInput
       css={`
-        width: ${props.isFocused ? "600px" : "144px"};
+        width: ${props.isFocused ? "600px" : unfocusedWidth};
+        input {
+          padding: ${unfocusedWidth === "0px" && !props.isFocused
+            ? "10px 0px"
+            : "10px"};
+        }
         @media (min-width: 992px) {
           transition: width 0.5s ease-in-out;
         }
@@ -47,10 +52,13 @@ export const SearchField = (props: Props) => {
       endAdornment={
         <div
           css={`
-            right: 0px;
-            width: 32px;
-            height: 32px;
-            display: flex;
+            right: -2px;
+            width: 36px;
+            height: 36px;
+            filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12));
+            display: ${unfocusedWidth === "0px" && !props.isFocused
+              ? "none"
+              : "flex"};
             position: absolute;
             border-radius: 50%;
             align-items: center;
@@ -65,9 +73,10 @@ export const SearchField = (props: Props) => {
           />
         </div>
       }
-      onFocus={() => {
-        if (props.setIsFocused) {
-          props.setIsFocused(true);
+      onFocus={() => props.setIsFocused(true)}
+      onBlur={() => {
+        if (props.onBlur) {
+          props.onBlur();
         }
       }}
     />

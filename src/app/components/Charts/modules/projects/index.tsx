@@ -9,12 +9,15 @@ import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
+import { SearchField } from "app/components/AppBar/common/Search/common/SearchField";
 
 interface ProjectsListModuleProps {
   count: number;
   loading: boolean;
+  searchKey: string;
   loadMore: () => void;
   projects: ProjectType[];
+  setSearchKey: (searchKey: string) => void;
 }
 
 export type ProjectType = {
@@ -32,6 +35,7 @@ export type ProjectType = {
 };
 
 export const ProjectsListModule = (props: ProjectsListModuleProps) => {
+  const [isFocused, setIsFocused] = React.useState(false);
   const cmsData = useCMSData({ returnData: true });
   const styles = {
     container: css`
@@ -52,14 +56,16 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
       margin-bottom: 24px;
     `,
     iconContainer: css`
-      button + button {
-        margin-left: 16px;
+      gap: 16px;
+      display: flex;
+      > div {
+        margin-right: -50px;
       }
     `,
     iconButton: css`
+      padding: 6px;
       background-color: white;
       filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12));
-      padding: 4px;
     `,
     icon: css`
       color: ${PrimaryColor[0]};
@@ -126,7 +132,23 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
           {props.count} {get(cmsData, "viz.projects", "projects").toLowerCase()}
         </Typography>
         <div css={styles.iconContainer}>
-          <IconButton css={styles.iconButton}>
+          <SearchField
+            smallWidth="0px"
+            cmsData={cmsData}
+            isFocused={isFocused}
+            value={props.searchKey}
+            setIsFocused={setIsFocused}
+            setValue={props.setSearchKey}
+            onBlur={
+              props.searchKey.length === 0
+                ? () => setIsFocused(false)
+                : undefined
+            }
+          />
+          <IconButton
+            css={styles.iconButton}
+            onClick={() => setIsFocused(true)}
+          >
             <SearchIcon css={styles.icon} />
           </IconButton>
           <IconButton css={styles.iconButton}>

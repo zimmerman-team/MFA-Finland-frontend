@@ -107,6 +107,7 @@ export const Header = (props: HeaderProps) => {
           value={props.searchKey}
           setIsFocused={setIsFocused}
           setValue={props.setSearchKey}
+          onBlur={() => setIsFocused(false)}
         />
       )}
     </div>

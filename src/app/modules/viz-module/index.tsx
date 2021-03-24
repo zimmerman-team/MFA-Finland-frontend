@@ -6,7 +6,7 @@ import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
 import { useCMSData } from "app/hooks/useCMSData";
-import { useMeasure, useUnmount } from "react-use";
+import { useMeasure, useUnmount, useDebounce } from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { PrimaryColor } from "app/theme";
@@ -46,6 +46,7 @@ import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslat
 export default function VizModule() {
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
+  const [searchKey, setSearchKey] = React.useState("");
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   const [activeTab, setActiveTab] = React.useState("chart");
   const [expandedVizItem, setExpandedVizItem] = React.useState<
@@ -182,8 +183,9 @@ export default function VizModule() {
         addOnData: true,
         values: {
           filters,
-          page: projectListPage,
+          search: searchKey,
           lang: currentLanguage,
+          page: projectListPage + 1,
         },
       });
       setProjectListPage(projectListPage + 1);
@@ -282,7 +284,7 @@ export default function VizModule() {
     setExpandedVizItem(null);
     onTabChange(prevTab);
     setActiveTab("chart");
-    setProjectListPage(1);
+    setProjectListPage(0);
 
     const filters = getAPIFormattedFilters(selectedFilters);
     switch (get(params, "tab", "")) {
@@ -373,7 +375,8 @@ export default function VizModule() {
           projectsAction({
             values: {
               filters,
-              page: projectListPage,
+              page: 0,
+              search: searchKey,
               lang: currentLanguage,
             },
           });
@@ -421,6 +424,23 @@ export default function VizModule() {
   React.useEffect(() => {
     setActiveTab(sectorDrillDown.length > 0 ? "table" : "chart");
   }, [sectorDrillDown]);
+
+  useDebounce(
+    () => {
+      const filters = getAPIFormattedFilters(selectedFilters);
+      setProjectListPage(0);
+      projectsAction({
+        values: {
+          filters,
+          page: 0,
+          search: searchKey,
+          lang: currentLanguage,
+        },
+      });
+    },
+    500,
+    [searchKey]
+  );
 
   React.useEffect(() => {
     if (activeTab === "chart") {
@@ -623,9 +643,11 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/projects">
               <ProjectsListModule
+                searchKey={searchKey}
                 projects={projectsData}
                 count={projectsCountData}
                 loadMore={loadMoreProjects}
+                setSearchKey={setSearchKey}
                 loading={vizDataLoading.projects}
               />
             </Route>
