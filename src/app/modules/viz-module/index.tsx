@@ -177,15 +177,17 @@ export default function VizModule() {
 
   function loadMoreProjects() {
     const filters = getAPIFormattedFilters(selectedFilters);
-    projectsAction({
-      addOnData: true,
-      values: {
-        filters,
-        page: projectListPage,
-        lang: currentLanguage,
-      },
-    });
-    setProjectListPage(projectListPage + 1);
+    if (projectsCountData > projectListPage * 10) {
+      projectsAction({
+        addOnData: true,
+        values: {
+          filters,
+          page: projectListPage,
+          lang: currentLanguage,
+        },
+      });
+      setProjectListPage(projectListPage + 1);
+    }
   }
 
   function onSelectChange(e: {
@@ -280,6 +282,7 @@ export default function VizModule() {
     setExpandedVizItem(null);
     onTabChange(prevTab);
     setActiveTab("chart");
+    setProjectListPage(1);
 
     const filters = getAPIFormattedFilters(selectedFilters);
     switch (get(params, "tab", "")) {
@@ -370,6 +373,8 @@ export default function VizModule() {
           projectsAction({
             values: {
               filters,
+              page: projectListPage,
+              lang: currentLanguage,
             },
           });
         }

@@ -201,10 +201,12 @@ function createCountriesChip(
   });
   selectedFilters.countries.forEach((country: string, i: number) => {
     const fCountry = find(allLocations, { code: country });
-    values.push({
-      value: country,
-      label: fCountry.name,
-    });
+    if (fCountry) {
+      values.push({
+        value: country,
+        label: fCountry.name,
+      });
+    }
   });
 
   if (selectedFilters.countries.length > 1) {
