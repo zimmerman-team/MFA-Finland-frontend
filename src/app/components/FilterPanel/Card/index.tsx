@@ -77,7 +77,11 @@ const CardHeader = (props: FilterProps) => {
           color="default"
           css={styles.checkbox}
           onChange={props.onSelectAllCheckboxChange}
-          checked={allDataCount === props.selectedItems.length}
+          checked={
+            allDataCount > 0
+              ? allDataCount === props.selectedItems.length
+              : false
+          }
         />
         <Typography variant="button" css={styles.checkboxLabel}>
           {get(cmsData, "filters.selectall", "Select all")}
@@ -216,7 +220,8 @@ const CardContent = (props: FilterProps) => {
         </>
       );
     }
-    return <LinearProgress />;
+    // return <LinearProgress />;
+    return <></>;
   }
 
   return <div css={styles.container}>{renderContent()}</div>;

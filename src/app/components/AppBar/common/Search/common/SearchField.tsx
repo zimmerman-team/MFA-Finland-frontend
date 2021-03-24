@@ -1,9 +1,7 @@
 import React from "react";
 import get from "lodash/get";
-import { useRecoilState } from "recoil";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
-import { searchFocusAtom } from "app/state/recoil/atoms";
 import { PrimaryColor, SecondaryColor } from "app/theme";
 import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
 
@@ -11,6 +9,8 @@ type Props = {
   cmsData: any;
   value: string;
   setValue: Function;
+  isFocused?: boolean;
+  setIsFocused?: (isFocused: boolean) => void;
 };
 
 const StyledInput = withStyles((theme: Theme) =>
@@ -29,17 +29,15 @@ const StyledInput = withStyles((theme: Theme) =>
 )(InputBase);
 
 export const SearchField = (props: Props) => {
-  const [isFocused, setIsFocused] = useRecoilState(searchFocusAtom);
-
   return (
     <StyledInput
       css={`
-        width: ${isFocused ? "600px" : "144px"};
+        width: ${props.isFocused ? "600px" : "144px"};
         @media (min-width: 992px) {
           transition: width 0.5s ease-in-out;
         }
         @media (max-width: 992px) {
-          width: ${isFocused ? "calc(100vw - 165px)" : "144px"};
+          width: ${props.isFocused ? "calc(100vw - 165px)" : "144px"};
         }
       `}
       value={props.value}
@@ -67,7 +65,11 @@ export const SearchField = (props: Props) => {
           />
         </div>
       }
-      onFocus={() => setIsFocused(true)}
+      onFocus={() => {
+        if (props.setIsFocused) {
+          props.setIsFocused(true);
+        }
+      }}
     />
   );
 };

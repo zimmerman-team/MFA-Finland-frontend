@@ -5,11 +5,14 @@ import { useCMSData } from "app/hooks/useCMSData";
 import { ArrowBackIos } from "@material-ui/icons";
 import { IconButton, Typography } from "@material-ui/core";
 import { SearchPlaceholder } from "app/components/AppBar/sort/SearchPlaceholder";
+import { SearchField } from "app/components/AppBar/common/Search/common/SearchField";
 
 interface HeaderProps {
   title: string;
+  searchKey: string;
   renderSearch?: boolean;
   onBackBtnClick: () => void;
+  setSearchKey: (searchKey: string) => void;
 }
 
 const createStyles = (title: string) => {
@@ -79,6 +82,7 @@ const createStyles = (title: string) => {
 export const Header = (props: HeaderProps) => {
   const styles = createStyles(props.title);
   const cmsData = useCMSData({ returnData: true });
+  const [isFocused, setIsFocused] = React.useState(false);
 
   return (
     <div css={styles.container}>
@@ -97,7 +101,13 @@ export const Header = (props: HeaderProps) => {
         </div>
       </div>
       {props.renderSearch && (
-        <SearchPlaceholder placeholder={get(cmsData, "general.search", "")} />
+        <SearchField
+          cmsData={cmsData}
+          isFocused={isFocused}
+          value={props.searchKey}
+          setIsFocused={setIsFocused}
+          setValue={props.setSearchKey}
+        />
       )}
     </div>
   );

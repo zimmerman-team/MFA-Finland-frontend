@@ -29,8 +29,7 @@ export function LocationsFragmentTable(props: LocationsFragmentTableProps) {
         const orgCat = td.name.toLowerCase().indexOf(fvalue) > -1;
         if (orgCat) {
           updatedData.push(td);
-        }
-        if (td.orgs) {
+        } else if (td.orgs) {
           const children = filter(
             td.orgs,
             (child: any) => child.name.toLowerCase().indexOf(fvalue) > -1
