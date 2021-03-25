@@ -114,7 +114,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
               <div />
             </div>
-            <div css={itemcirclelabelcss(index)}>
+            <div css={itemcirclelabelcss(index, !props.showOnlyViz)}>
               {item.area}
               {props.showOnlyViz && (
                 <div css="margin-top: 5px;">
