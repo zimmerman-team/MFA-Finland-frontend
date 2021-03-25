@@ -35,7 +35,7 @@ export const createStyles = (props: FilterBarProps, height: number) => {
       }
 
       @media (max-width: 992px) {
-        margin-left: 0px;
+        margin-left: 12px;
         margin-right: 12px;
       }
 

@@ -79,6 +79,10 @@ div {
     "Helvetica Neue", sans-serif;
 }
 
+#atlwdg-trigger {
+  z-index: 4;
+}
+
 * {
   /*outline: 1px solid rgba(31, 116, 162, 0.07);*/
 }
