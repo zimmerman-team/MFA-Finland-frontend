@@ -270,6 +270,20 @@ export default function VizModule() {
     setPrevTab(get(params, "tab", ""));
   }
 
+  function getActiveVizData() {
+    const viz = get(params, "tab", "");
+    const data = {
+      oda: odaBarChartData,
+      "thematic-areas": thematicAreasChartData,
+      sectors: sectorsSunburstData,
+      "countries-regions": locationsTreemapData,
+      organisations: organisationsTreemapData,
+      "budget-lines": budgetLinesBarChartData,
+      projects: projectsData,
+    };
+    return get(data, viz, []);
+  }
+
   React.useEffect(() => {
     const root = document.getElementById("root");
     if (root) {
@@ -512,7 +526,12 @@ export default function VizModule() {
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          {!isProjects && activeTab !== "table" && <FloatingButtons />}
+          {!isProjects && activeTab !== "table" && (
+            <FloatingButtons
+              data={getActiveVizData()}
+              viz={get(params, "tab", "")}
+            />
+          )}
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (

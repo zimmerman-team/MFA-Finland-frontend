@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { SearchField } from "app/components/AppBar/common/Search/common/SearchField";
+import { FloatingButtons } from "./common/FloatingButtons";
 
 interface ProjectsListModuleProps {
   count: number;
@@ -58,6 +59,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     iconContainer: css`
       gap: 16px;
       display: flex;
+      padding-right: 50px;
       > div {
         margin-right: -50px;
       }
@@ -151,9 +153,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
           >
             <SearchIcon css={styles.icon} />
           </IconButton>
-          <IconButton css={styles.iconButton}>
-            <MoreHoriz css={styles.icon} />
-          </IconButton>
+          <FloatingButtons searchKey={props.searchKey} />
         </div>
       </div>
       <div css={styles.listContainer}>
