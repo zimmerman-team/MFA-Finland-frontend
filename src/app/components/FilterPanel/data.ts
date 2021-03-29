@@ -48,6 +48,7 @@ export enum FILTER_TYPES {
   BUDGET_LINES,
   BI_MULTI,
   HUMAN_RIGHTS,
+  ORGANISATION_TYPE,
 }
 
 export const mailPanelInitData: MailPanelInitDataItemModel[] = [
