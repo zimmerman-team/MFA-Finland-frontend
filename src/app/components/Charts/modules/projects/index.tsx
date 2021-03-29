@@ -3,7 +3,6 @@ import get from "lodash/get";
 import { Link } from "react-router-dom";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
-import { MoreHoriz } from "@material-ui/icons";
 import { useCMSData } from "app/hooks/useCMSData";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
