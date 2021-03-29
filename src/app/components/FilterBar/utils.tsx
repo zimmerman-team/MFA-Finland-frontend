@@ -327,7 +327,11 @@ function createOrganisationTypeChip(
     };
   }
   if (selectedFilters.organisationtypes.length === 1) {
-    return { label: values[0].label, values, type: FILTER_TYPES.ORGANISATIONS };
+    return {
+      label: values[0].label,
+      values,
+      type: FILTER_TYPES.ORGANISATION_TYPE,
+    };
   }
   return null;
 }
@@ -372,7 +376,6 @@ function createSDGChip(
 ) {
   const sdgs = get(filterOptions, "sdgs.data.data.goals", []);
   const values: { label: string; value: string }[] = [];
-
   selectedFilters.sdg.forEach((sdg: string) => {
     const fSdg = find(sdgs, { code: sdg });
     if (fSdg) {

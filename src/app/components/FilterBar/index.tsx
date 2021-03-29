@@ -36,15 +36,24 @@ export const FilterBar = (props: FilterBarProps) => {
     selectedFilterAtom
   );
   const filterOptionsData = useStoreState((state) => state.filterOptions);
-  const [height, setHeight] = React.useState(68);
-  const styles = createStyles(props, height);
-  let container: any;
-  // React.useEffect(() => {
-  //   setHeight(container ? container.clientHeight : 68);
-  // }, [chips]);
+  const filterOptionsLoading = useStoreState(
+    (state) =>
+      state.filterOptions.locations.loading ||
+      state.filterOptions.sectors.loading ||
+      state.filterOptions.thematicareas.loading ||
+      state.filterOptions.organisations.loading ||
+      state.filterOptions.sdgs.loading ||
+      state.filterOptions.activitystatus.loading ||
+      state.filterOptions.policymarkers.loading ||
+      state.filterOptions.aidtypes.loading ||
+      state.filterOptions.budgetlines.loading
+  );
+  const styles = createStyles(props);
 
   React.useEffect(() => {
-    setChips(getFilterChip(selectedFilters, filterOptionsData));
+    if (!filterOptionsLoading) {
+      setChips(getFilterChip(selectedFilters, filterOptionsData));
+    }
   }, [selectedFilters, filterOptionsData]);
 
   function removeChip(chip: ChipModel) {
@@ -201,13 +210,7 @@ export const FilterBar = (props: FilterBarProps) => {
   if (render) {
     return (
       <>
-        <div
-          css={styles.container}
-          id="filterbar-container"
-          ref={(ref) => {
-            container = ref;
-          }}
-        >
+        <div css={styles.container} id="filterbar-container">
           <div css={styles.buttonContainer}>
             <PillButton
               css={styles.button}
@@ -223,6 +226,7 @@ export const FilterBar = (props: FilterBarProps) => {
             {chips.map((chip: any, index) => {
               return (
                 <Chip
+                  key={index}
                   type={chip.type}
                   values={chip.values}
                   label={chip.label}
@@ -232,7 +236,6 @@ export const FilterBar = (props: FilterBarProps) => {
             })}
           </div>
         </div>
-        <div css={styles.background} />
         <Hidden smUp>
           <div
             css={`

@@ -20,6 +20,14 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
     font-size: 14px;
     line-height: 17px;
     color: ${PrimaryColor[0]};
+    min-height: 32px;
+    height: unset;
+
+    .MuiChip-label {
+      padding-top: 7px;
+      padding-bottom: 7px;
+      white-space: break-spaces;
+    }
 
     ${hasChildren &&
     `
@@ -39,12 +47,19 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
         color: ${PrimaryColor[3]};
       }
     }
+
+    @media (max-width: 600px) {
+      .MuiChip-label {
+        white-space: nowrap;
+      }
+    }
   `;
 };
 
 export const Chip = (props: ChipModel) => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(props.values.length <= 1);
   const [label, setLabel] = React.useState(props.label);
+
   React.useEffect(() => {
     if (expanded) {
       setLabel(props.values.map((value) => value.label).join("; "));
@@ -52,6 +67,7 @@ export const Chip = (props: ChipModel) => {
       setLabel(props.label);
     }
   }, [expanded]);
+
   return (
     <MUIChip
       onClick={() => setExpanded(!expanded)}

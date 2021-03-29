@@ -165,7 +165,7 @@ const itemlabellinevizcss = [
     left: -1%;
     content: "";
     width: 36%;
-    bottom: -138%;
+    bottom: -30px;
     position: absolute;
     transform: rotate(-70deg);
     border-bottom: 1px solid #2E4982;

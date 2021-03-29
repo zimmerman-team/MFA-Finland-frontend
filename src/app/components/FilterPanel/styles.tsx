@@ -7,7 +7,7 @@ export const createStyles = (props: FilterPanelProps) => {
     container: css`
       background-color: ${ProjectPalette.primary.main};
       margin-top: -16px;
-      padding-top: 24px;
+      padding-top: 12px;
 
       position: fixed;
       width: 100vw;
@@ -21,6 +21,7 @@ export const createStyles = (props: FilterPanelProps) => {
     `,
     muiContainer: css`
       padding: 0 100px;
+      padding-top: 12px;
       overflow-y: auto;
       height: calc(100vh - 160px);
 
