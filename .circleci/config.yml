@@ -3,7 +3,7 @@ orbs:
   happo: happo/happo@2.0.1
 version: 2.1
 
-# have a look at https://circleci.com/orbs/registry/orb/germade/rsync
+## have a look at https://circleci.com/orbs/registry/orb/germade/rsync
 executors:
   cypress-executor:
     docker:
@@ -86,8 +86,7 @@ workflows:
       #            - deploy
       - cypress/run:
           executor: cypress-executor
-          command: |
-            echo "npx cypress run --record $REACT_APP_CYPRESS_RECORD_KEY"
+          command: npx cypress run --record
           requires:
             - cypress/install
           pre-steps:
@@ -117,8 +116,6 @@ workflows:
           start: yarn start
           wait-on: "http://localhost:3000"
           record: true
-          # parallel: true
-          # parallelism: 6
           group: "all tests"
       - deploy:
           requires:
