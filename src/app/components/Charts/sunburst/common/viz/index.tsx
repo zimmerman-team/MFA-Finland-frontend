@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Sunburst, SunburstPoint } from "react-vis";
+import { Hint, Sunburst, SunburstPoint } from "react-vis";
 import { getTotal } from "app/components/Charts/sunburst/common/tooltip/utils";
 import {
   SunburstTooltip,
@@ -25,6 +25,7 @@ export function SunburstViz(props: any) {
         width={props.size}
         height={props.size}
         animation={{ damping: 20, stiffness: 300 }}
+        getLabel={(d) => d.name}
         style={{
           stroke: "#343249",
           strokeWidth: 0.5,
@@ -52,6 +53,11 @@ export function SunburstViz(props: any) {
           }
         }}
       >
+        {hoveredNode && (
+          <Hint value={hoveredNode}>
+            When I grow up I want to be a big and beautiful label
+          </Hint>
+        )}
         {!showSmTooltip && <SunburstTooltip hoveredNode={hoveredNode} />}
       </Sunburst>
       {hoveredNode && showSmTooltip && (
