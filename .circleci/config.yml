@@ -86,7 +86,8 @@ workflows:
       #            - deploy
       - cypress/run:
           executor: cypress-executor
-          command: npx happo-cypress -- npx cypress run --record
+          command: |
+            echo "npx cypress run --record $REACT_APP_CYPRESS_RECORD_KEY"
           requires:
             - cypress/install
           pre-steps:
