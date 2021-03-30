@@ -84,45 +84,52 @@ workflows:
       #      - happo:
       #          requires:
       #            - deploy
-      - cypress/run:
-          executor: cypress-executor
-          command: npx cypress run --record
-          requires:
-            - cypress/install
-          pre-steps:
-            - run:
-                name: Set env variables
-                command: |
-                  if [ "${CIRCLE_BRANCH}" == "master" ]; then
-                    echo 'export REACT_APP_PROJECT_URL="$TEST_URL"' >> $BASH_ENV
-                    echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
-                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
-                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
-                    echo 'export NODE_ENV="development"' >> $BASH_ENV
-                    echo 'export BABEL_ENV="development"' >> $BASH_ENV
-                  elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
-                    echo 'export REACT_APP_PROJECT_URL="$TEST_URL"' >> $BASH_ENV
-                    echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
-                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
-                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
-                    echo 'export NODE_ENV="development"' >> $BASH_ENV
-                    echo 'export BABEL_ENV="development"' >> $BASH_ENV
-                  else
-                    echo 'export REACT_APP_PROJECT_URL="$DEV_URL"' >> $BASH_ENV
-                    echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
-                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
-                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
-                    echo 'export NODE_ENV="development"' >> $BASH_ENV
-                    echo 'export BABEL_ENV="development"' >> $BASH_ENV
-                  fi
-                  echo 'export CYPRESS_BASEURL=http://localhost:3000' >> $BASH_ENV
-                  source $BASH_ENV
-          browser: chrome
-          yarn: true
-          start: yarn start
-          wait-on: "http://localhost:3000"
-          record: true
-          group: "all tests"
+
+# Cypress/run job is commented out to reduce the time to finish the worklflow.
+# We can uncomment this when we've written e2e tests
+# Proof of work:
+# https://dashboard.cypress.io/projects/e5ariw/runs/3/overview
+# https://app.circleci.com/pipelines/github/zimmerman-team/MFA-Finland-frontend/286/workflows/221075c0-8b24-4596-b6a9-d2dc63bb271f
+#      - cypress/run:
+#          executor: cypress-executor
+#          command: npx cypress run --record
+#          requires:
+#            - cypress/install
+#          pre-steps:
+#            - run:
+#                name: Set env variables
+#                command: |
+#                  if [ "${CIRCLE_BRANCH}" == "master" ]; then
+#                    echo 'export REACT_APP_PROJECT_URL="$TEST_URL"' >> $BASH_ENV
+#                    echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
+#                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
+#                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
+#                    echo 'export NODE_ENV="development"' >> $BASH_ENV
+#                    echo 'export BABEL_ENV="development"' >> $BASH_ENV
+#                  elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+#                    echo 'export REACT_APP_PROJECT_URL="$TEST_URL"' >> $BASH_ENV
+#                    echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
+#                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
+#                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
+#                    echo 'export NODE_ENV="development"' >> $BASH_ENV
+#                    echo 'export BABEL_ENV="development"' >> $BASH_ENV
+#                  else
+#                    echo 'export REACT_APP_PROJECT_URL="$DEV_URL"' >> $BASH_ENV
+#                    echo 'export REACT_APP_API="$STAGING_API"' >> $BASH_ENV
+#                    echo 'export REACT_APP_CMS_API="$STAGING_CMS_API"' >> $BASH_ENV
+#                    echo 'export REACT_APP_CMS_TOKEN="$STAGING_CMS_TOKEN"' >> $BASH_ENV
+#                    echo 'export NODE_ENV="development"' >> $BASH_ENV
+#                    echo 'export BABEL_ENV="development"' >> $BASH_ENV
+#                  fi
+#                  echo 'export CYPRESS_BASEURL=http://localhost:3000' >> $BASH_ENV
+#                  source $BASH_ENV
+#          browser: chrome
+#          yarn: true
+#          start: yarn start
+#          wait-on: "http://localhost:3000"
+#          record: true
+#          group: "all tests"
+
       - deploy:
           requires:
             - cypress/install
