@@ -148,6 +148,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
             }
           />
           <IconButton
+            aria-label="Search"
             css={styles.iconButton}
             onClick={() => setIsFocused(true)}
           >

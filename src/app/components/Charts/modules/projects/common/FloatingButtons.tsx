@@ -78,6 +78,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
   return (
     <div id="viz-floating-buttons" css={styles.container}>
       <IconButton
+        aria-label="Toggle more options"
         css={styles.moreIconButton}
         onClick={() => setMoreActive(!moreActive)}
       >
@@ -89,7 +90,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
       </IconButton>
       {moreActive && (
         <>
-          <IconButton css={styles.shareIconButton}>
+          <IconButton css={styles.shareIconButton} aria-label="Share">
             <LightTooltip
               arrow
               interactive
@@ -105,6 +106,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
           <IconButton
             css={styles.downloadIconButton}
             onClick={(e) => handleDownloadClick(e)}
+            aria-label="Download"
           >
             <CloudDownload css={styles.downloadIcon} />
           </IconButton>

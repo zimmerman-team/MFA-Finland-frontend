@@ -17,7 +17,7 @@ export const ActivityAccordion = (props: ActivityItemProps) => {
     <React.Fragment>
       <Anchor id={props.id} positionRelativeToTop={64} />
 
-      <div css={AccordionStyle(props.expanded)}>
+      <div css={AccordionStyle(props.expanded)} id={`${props.id}-content`}>
         {/* <Accordion> */}
         <MUIAccordionSummary
           onClick={() =>

@@ -87,7 +87,6 @@ export function AppBar() {
           <Hidden smUp>
             {!isFocused && (
               <IconButton
-                tabIndex={1}
                 color="inherit"
                 aria-label="menu"
                 onClick={toggleDrawer(true)}
@@ -110,7 +109,6 @@ export function AppBar() {
             to={`/${location.search}`}
             css={appbarStyle.logoLink(!isFocused)}
             onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
-            tabIndex={2}
           >
             <Hidden xsDown>
               <IconButton edge="start" color="inherit" aria-label="menu">

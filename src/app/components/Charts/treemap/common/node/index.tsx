@@ -32,6 +32,7 @@ export function TreeemapNode(props: any) {
       tabIndex={0}
       role="button"
       id={node.id}
+      aria-label={node.data.name}
       ref={ref}
       style={{
         fontSize,

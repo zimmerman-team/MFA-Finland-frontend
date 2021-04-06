@@ -115,6 +115,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
           `}
         >
           <Typography
+            component="p"
             color="textPrimary"
             variant="subtitle2"
             css={`

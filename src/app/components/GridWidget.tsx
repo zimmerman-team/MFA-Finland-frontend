@@ -215,9 +215,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   return (
     <div
-      aria-label={
-        props.interactive ? `Go to ${props.label} detail page` : undefined
-      }
+      aria-label={`Go to ${props.label} detail page`}
       role="button"
       tabIndex={0}
       onKeyPress={(e) => {
