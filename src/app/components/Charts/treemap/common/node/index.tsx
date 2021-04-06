@@ -29,6 +29,8 @@ export function TreeemapNode(props: any) {
   const { fontSize, ref } = useFitText({ logLevel: "none" });
   return (
     <div
+      tabIndex={0}
+      role="button"
       id={node.id}
       ref={ref}
       style={{
@@ -62,6 +64,8 @@ export function TreeemapNode(props: any) {
       onMouseMove={node.onMouseMove}
       onMouseEnter={node.onMouseEnter}
       onMouseLeave={node.onMouseLeave}
+      onKeyPress={node.onClick}
+      onFocus={node.onMouseEnter}
     >
       {(node.width > 99 || node.height > 99) && (
         <div>

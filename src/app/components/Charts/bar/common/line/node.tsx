@@ -51,6 +51,7 @@ export function LineNodes(props: any) {
             key={item.key}
             css="pointer-events: none;"
             transform={`translate(${item.x + item.width / 2}, ${item.updateY})`}
+            tabIndex={0}
           >
             <circle
               r="6"

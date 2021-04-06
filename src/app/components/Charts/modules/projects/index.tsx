@@ -160,7 +160,12 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
         {props.projects.map((project: ProjectType, index: number) => {
           if (index === props.projects.length - 1) {
             return (
-              <span ref={bottomItemRef} key={project.code}>
+              <span
+                ref={bottomItemRef}
+                key={project.code}
+                role="button"
+                tabIndex={0}
+              >
                 <ListItem {...project} cmsData={cmsData} />
               </span>
             );
@@ -186,6 +191,13 @@ const ListItem = (project: ProjectType) => {
         box-shadow: 0 3px 6px rgba(46, 73, 130, 0.16),
           0 3px 6px rgba(46, 73, 130, 0.23);
         transition: box-shadow 0.3s ease-in-out;
+        cursor: pointer;
+      }
+
+      &&:focus {
+        box-shadow: 0 3px 6px rgba(46, 73, 130, 0.16),
+          0 3px 6px rgba(46, 73, 130, 0.23);
+        //transition: box-shadow 0.3s ease-in-out;
         cursor: pointer;
       }
     `,

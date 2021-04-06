@@ -207,6 +207,12 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     searchFilterString = `?${searchFilterString}`;
   }
 
+  function handleClick() {
+    if (props.link) {
+      history.push(`${props.link}${searchFilterString}`);
+    }
+  }
+
   return (
     <div
       aria-label={
@@ -214,6 +220,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       }
       role="button"
       tabIndex={0}
+      onKeyPress={(e) => {
+        if (e.code === "Enter") {
+          handleClick();
+        }
+      }}
       css={style.widgetContainer(
         props.height,
         isHovered && !props.interactive && props.link !== undefined
@@ -296,11 +307,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         )}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => {
-          if (props.link) {
-            history.push(`${props.link}${searchFilterString}`);
-          }
-        }}
+        onClick={() => handleClick()}
       >
         {props.children}
       </div>
