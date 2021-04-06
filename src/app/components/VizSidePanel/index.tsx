@@ -27,6 +27,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
       background: #f8f8f8;
       height: calc(100% - 224px);
       z-index: -1;
+      transform: translateX(-16px);
 
       @media (max-width: 992px) {
         top: 260px;
@@ -38,9 +39,10 @@ export function VizSidePanel(props: VizSidePanelProps) {
     props.vizType === "countries-regions" ||
     props.vizType === "thematic-areas" ||
     props.vizType === "sectors";
+
   return (
     <Grid container css={containercss}>
-      <div id="viz-sidepanel-background" css={styles.background} />
+      {/* <div id="viz-sidepanel-background" css={styles.background} /> */}
       <Grid item xs={12} css={buttonscontainercss}>
         <FilledButton
           label={get(cmsData, "general.chart", "Chart")}
@@ -69,9 +71,13 @@ export function VizSidePanel(props: VizSidePanelProps) {
           id="legend-items"
           css={`
             width: 100%;
-            overflow-y: auto;
+            //overflow-y: auto;
             overflow-y: overlay;
-            max-height: ${props.scrollableHeight - 125}px;
+            max-height: ${props.scrollableHeight}px;
+            height: 100%;
+            min-height: 100%;
+            //max-height: ${props.scrollableHeight - 125}px;
+            //max-height: 100%;
             ${props.vizType === "thematic-areas" ? "pointer-events: none;" : ""}
             ${hasColor ? "padding-top: 24px;" : ""}
 

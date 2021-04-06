@@ -8,9 +8,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { PageLoader } from "app/modules/common/page-loader";
 import { StoreProvider, useStoreRehydrated } from "easy-peasy";
 import { Container, StylesProvider, CssBaseline } from "@material-ui/core";
+import { AppBar } from "app/components/AppBar";
+import { FilterBar } from "app/components/FilterBar";
 
 type ProviderProps = {
-  children?: React.ReactNode;
+  children?: any;
 };
 
 function Providers(props: ProviderProps) {
@@ -22,19 +24,23 @@ function Providers(props: ProviderProps) {
           <CssBaseline />
           <StoreProvider store={store}>
             <AppContainer>
-              <Container
-                maxWidth="lg"
-                css={`
-                  min-height: 100%;
-                  padding: 0 32px;
+              <Router>
+                <AppBar />
+                <FilterBar />
+                <Container
+                  maxWidth="lg"
+                  css={`
+                    //min-height: 100%;
+                    padding: 0 32px;
 
-                  @media (max-width: 992px) {
-                    padding: 0;
-                  }
-                `}
-              >
-                <Router>{props.children}</Router>
-              </Container>
+                    @media (max-width: 992px) {
+                      padding: 0;
+                    }
+                  `}
+                >
+                  {props.children}
+                </Container>
+              </Router>
             </AppContainer>
           </StoreProvider>
         </ThemeProvider>

@@ -7,17 +7,33 @@ import { PrimaryColor, SecondaryColor } from "app/theme";
 import { NavLink, useRouteMatch, useLocation } from "react-router-dom";
 
 const tabcss = (active: boolean) => css`
-  // WCAG changes
-  // color: #fff;
-  color: ${active ? "#fff" : PrimaryColor[0]};
-  padding: 10px;
-  font-size: 14px;
-  font-weight: bold;
+  height: 35px;
   transition: background 0.2s ease-in-out;
   background: ${active ? PrimaryColor[0] : SecondaryColor[1]};
+  display: flex;
+  align-items: center;
+  margin-right: 1px;
+
+  :first-of-type {
+    border-radius: 15px 0px 0px 0px;
+  }
+
+  :last-of-type {
+    border-right-style: none;
+    border-radius: 0px 15px 0px 0px;
+  }
+
   &:hover {
     color: #fff;
     background: ${PrimaryColor[3]};
+  }
+
+  a {
+    color: ${active ? "#fff" : PrimaryColor[0]};
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
   }
 `;
 
@@ -27,11 +43,10 @@ export function RouteTab(props: TabProps) {
   const cmsData = useCMSData({ returnData: true });
 
   return (
-    <NavLink
-      to={`${props.url}${location.search}`}
-      css={tabcss(get(params, "tab", "") === props.url.split("/")[2])}
-    >
-      {props.cmsKey ? get(cmsData, props.cmsKey, props.name) : props.name}
-    </NavLink>
+    <li css={tabcss(get(params, "tab", "") === props.url.split("/")[2])}>
+      <NavLink to={`${props.url}${location.search}`}>
+        {props.cmsKey ? get(cmsData, props.cmsKey, props.name) : props.name}
+      </NavLink>
+    </li>
   );
 }

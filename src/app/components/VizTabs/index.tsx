@@ -10,7 +10,7 @@ import { Path } from "app/const/Path";
 import { css } from "styled-components/macro";
 import { Tooltip } from "@material-ui/core";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import { PrimaryColor } from "app/theme";
+import { PrimaryColor, SecondaryColor } from "app/theme";
 
 export function VizTabs() {
   const crumbs: BreadcrumbLinkModel[] = [
@@ -20,8 +20,10 @@ export function VizTabs() {
   const styles = {
     container: css`
       padding: 0 68px;
-
       height: 88px;
+      background-color: red;
+      //transform: translateY(-16px);
+
       @media (max-width: 992px) {
         height: 120px;
         padding: 0 12px;
@@ -37,54 +39,93 @@ export function VizTabs() {
       display: flex;
       margin-top: 3px;
       margin-bottom: 16px;
-
-      @media (max-width: 992px) {
-        margin-bottom: 48px;
-      }
     `,
     title: css`
       margin-right: 12px;
     `,
     background: css`
-      left: 0;
-      top: 136px;
-      width: 100vw;
-      height: 88px;
-      position: absolute;
-      background: #dde4ef;
+      //left: 0;
+      //top: 136px;
+      //width: 100vw;
+      //height: 88px;
+      //position: absolute;
+      //background: #dde4ef;
+      //
+      //@media (max-width: 992px) {
+      //  height: 120px;
+      //}
+    `,
+    // tabContainer: css`
+    //   //right: 0;
+    //   //bottom: 11px;
+    //   //position: absolute;
+    //   //position: relative;
+    //   //top: -21px;
+    //   //margin-left: auto;
+    //   //width: fit-content;
+    //   //height: 35px;
+    //
+    //   @media (max-width: 992px) {
+    //     margin-left: 36px;
+    //     overflow-x: scroll;
+    //     width: unset;
+    //     white-space: nowrap;
+    //   }
+    //   > a {
+    //     border-right: 1px solid #dde4ef;
+    //   }
+    //
+    //   > a:first-of-type {
+    //     border-radius: 15px 0px 0px 0px;
+    //   }
+    //
+    //   > a:last-of-type {
+    //     border-right-style: none;
+    //     border-radius: 0px 15px 0px 0px;
+    //   }
+    // `,
+    tabGrid: css`
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+    `,
+    tabsList: css`
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
 
       @media (max-width: 992px) {
-        height: 120px;
-      }
-    `,
-    tabContainer: css`
-      right: 0;
-      bottom: 11px;
-      position: absolute;
-
-      > a {
-        border-right: 1px solid #dde4ef;
+        margin-left: 36px;
       }
 
-      > a:first-of-type {
-        border-radius: 15px 0px 0px 0px;
+      &::-webkit-scrollbar {
+        width: 1px;
+        height: 3px;
+        background: #ededf6;
       }
-
-      > a:last-of-type {
-        border-right-style: none;
-        border-radius: 0px 15px 0px 0px;
+      &::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background: #ededf6;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: #2e4063;
       }
     `,
   };
+
   return (
-    <Grid container css={styles.container}>
-      <div css={styles.background} />
+    <Grid container item xs={12} sm={12} css={styles.container}>
+      {/* <div css={styles.background} /> */}
       <Grid
         item
+        xs={12}
         sm={12}
-        md={12}
-        lg={4}
-        xl={4}
+        md={3}
+        lg={3}
+        xl={3}
         css={`
           z-index: 1;
         `}
@@ -106,23 +147,30 @@ export function VizTabs() {
         {/*  <div css="width: 100%;height: 35px;" /> */}
         {/* </Hidden> */}
       </Grid>
-      <Grid
-        item
-        sm={12}
-        md={12}
-        lg={8}
-        xl={8}
-        css={`
-          position: relative;
-          z-index: 1;
-        `}
-      >
-        <div css={styles.tabContainer}>
+      <Grid item xs={12} sm={12} md={9} lg={9} xl={9} css={styles.tabGrid}>
+        <ul css={styles.tabsList}>
           {vizTabs.map((tab: TabProps) => (
             <RouteTab key={tab.name} {...tab} />
           ))}
-        </div>
+        </ul>
       </Grid>
+      {/* <Grid */}
+      {/*  item */}
+      {/*  sm={12} */}
+      {/*  md={12} */}
+      {/*  lg={8} */}
+      {/*  xl={8} */}
+      {/*  css={` */}
+      {/*    //position: relative; */}
+      {/*    z-index: 1; */}
+      {/*  `} */}
+      {/* > */}
+      {/*  <div css={styles.tabContainer}> */}
+      {/*    {vizTabs.map((tab: TabProps) => ( */}
+      {/*      <RouteTab key={tab.name} {...tab} /> */}
+      {/*    ))} */}
+      {/*  </div> */}
+      {/* </Grid> */}
     </Grid>
   );
 }

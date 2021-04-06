@@ -39,6 +39,7 @@ import {
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
   languageAtom,
+  filterbarHeightAtom,
 } from "app/state/recoil/atoms";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
@@ -64,6 +65,9 @@ export default function VizModule() {
   const [prevTab, setPrevTab] = React.useState(get(params, "tab", ""));
   const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
+  const [filterbarHeight, setFilterbarHeight] = useRecoilState(
+    filterbarHeightAtom
+  );
   const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
     ODAlatestFiltersAtom
   );
@@ -151,7 +155,7 @@ export default function VizModule() {
     (actions) => actions.odaBudgetLinesChart.clear
   );
   const odaBudgetLinesChartData = useStoreState((state) =>
-    get(state.odaBudgetLinesChart, "data.vizData", [])
+    get(state.odaBudgetLinesChart, "datscroa.vizData", [])
   );
   const odaBudgetLinesChartLoading = useStoreState(
     (state) => state.odaBudgetLinesChart.loading
@@ -478,31 +482,28 @@ export default function VizModule() {
   return (
     <Grid
       container
+      item
       css={`
-        margin-top: -16px;
-        height: calc(100vh - 136px);
+        //margin-top: -16px;
+        //100vh - filterbar + appbar
+        height: calc(100vh - (${filterbarHeight}px + 68px));
+        @media (max-width: 600px) {
+          height: calc(100vh - (${filterbarHeight}px + 56px));
+        } ;
       `}
     >
-      <div
-        css={`
-          left: 0;
-          top: 0px;
-          width: 100vw;
-          position: absolute;
-          background: #fff;
-          height: 100vh;
-          z-index: 0;
-        `}
-      />
-      <Grid
-        item
-        sm={12}
-        css={`
-          z-index: 1;
-        `}
-      >
-        <VizTabs />
-      </Grid>
+      {/* <div */}
+      {/*  css={` */}
+      {/*    left: 0; */}
+      {/*    top: 0px; */}
+      {/*    width: 100vw; */}
+      {/*    position: absolute; */}
+      {/*    background: #fff; */}
+      {/*    height: 100vh; */}
+      {/*    z-index: 0; */}
+      {/*  `} */}
+      {/* /> */}
+      <VizTabs />
       <Grid
         container
         id="image-container"
@@ -521,7 +522,8 @@ export default function VizModule() {
           css={`
             background: #fff;
           `}
-          sm={isProjects ? 12 : 9}
+          xs={isProjects ? 12 : 12}
+          sm={isProjects ? 12 : 12}
           md={isProjects ? 12 : 8}
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
@@ -675,7 +677,8 @@ export default function VizModule() {
         {!isProjects && (
           <Grid
             item
-            sm={3}
+            xs={12}
+            sm={12}
             md={4}
             lg={4}
             xl={4}
@@ -692,13 +695,13 @@ export default function VizModule() {
                 background: ${PrimaryColor[1]};
 
                 ${vizLevel > 0
-                  ? `
-                  #legend-items {
-                    * {
-                      opacity: 1;
-                      pointer-events: none;
-                    }
-                  }
+                  ? ` 
+                  #legend-items { 
+                    * { 
+                      opacity: 1; 
+                      pointer-events: none; 
+                    } 
+                  } 
                 `
                   : ""}
               `}

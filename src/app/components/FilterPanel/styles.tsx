@@ -6,7 +6,7 @@ export const createStyles = (props: FilterPanelProps) => {
   return {
     container: css`
       background-color: ${ProjectPalette.primary.main};
-      margin-top: -16px;
+      //margin-top: -16px;
       padding-top: 12px;
 
       position: fixed;
@@ -25,7 +25,7 @@ export const createStyles = (props: FilterPanelProps) => {
       overflow-y: auto;
       height: calc(100vh - 160px);
 
-      @media (max-width: 600px) {
+      @media (max-width: 960px) {
         padding: 16px;
       }
     `,

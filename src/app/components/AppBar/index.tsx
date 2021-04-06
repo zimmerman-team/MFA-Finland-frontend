@@ -79,7 +79,6 @@ export function AppBar() {
   const id = open ? "simple-popover" : undefined;
 
   const location = useLocation();
-
   return (
     <React.Fragment>
       <MUIAppBar position="relative" color="inherit" css={appbarStyle.appBar}>
@@ -103,7 +102,7 @@ export function AppBar() {
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
-            to={`/${location.search}`}
+            to={`/${window.location.search}`}
             css={appbarStyle.logoLink(!isFocused)}
             onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
           >
@@ -200,7 +199,7 @@ export function AppBar() {
           </div>
         </Toolbar>
       </MUIAppBar>
-      <BackDrop />
+      {/* <BackDrop /> */}
     </React.Fragment>
   );
 }
