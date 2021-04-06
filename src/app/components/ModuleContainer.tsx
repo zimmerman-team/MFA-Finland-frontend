@@ -58,11 +58,11 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
   };
 
   return (
-    <div css={styles.container}>
+    <main id="main" css={styles.container}>
       <Grid container spacing={2} css={styles.gridContainer}>
         {props.children}
       </Grid>
       {isLandingOrDetail && !mobile && <PageFloatingButtons />}
-    </div>
+    </main>
   );
 };

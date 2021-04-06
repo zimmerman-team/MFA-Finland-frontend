@@ -76,4 +76,17 @@ export const appbarStyle = {
       font-size: 13px;
     }
   `,
+  skipLink: css`
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000000;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+
+    :focus {
+      top: 0;
+    }
+  `,
 };

@@ -100,6 +100,9 @@ export function AppBar() {
               </IconButton>
             )}
           </Hidden>
+          <a css={appbarStyle.skipLink} href="#main">
+            Skip to main
+          </a>
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
