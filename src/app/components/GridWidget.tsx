@@ -105,6 +105,12 @@ const style = {
       width: initial;
       height: initial;
     }
+
+    :focus {
+      box-shadow: ${isHovered
+        ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
+        : ""};
+    }
   `,
   link: css`
     font-size: 10px;
@@ -203,6 +209,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   return (
     <div
+      aria-label={
+        props.interactive ? `Go to ${props.label} detail page` : undefined
+      }
+      role="button"
+      tabIndex={0}
       css={style.widgetContainer(
         props.height,
         isHovered && !props.interactive && props.link !== undefined
@@ -217,7 +228,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
           </div>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
-              <Tooltip title={props.tooltip}>
+              <Tooltip title={props.tooltip} interactive tabIndex={0}>
                 <InfoOutlinedIcon css={style.widgetTooltipIcon} />
               </Tooltip>
             </div>

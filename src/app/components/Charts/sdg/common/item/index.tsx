@@ -17,8 +17,13 @@ export function SDGvizItem(props: CompProps) {
   );
 
   return (
-    <div
+    <button
+      aria-label={`SDG: ${props.number} - ${props.name}`}
       css={`
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
         width: 100%;
         height: 100%;
         opacity: ${props.disabled ? 0.1 : 1};
@@ -28,8 +33,13 @@ export function SDGvizItem(props: CompProps) {
           width: 100%;
           height: 100%;
         }
+        :focus {
+          outline: 2px solid rgba(0, 0, 0, 0.1);
+        }
       `}
-      onMouseEnter={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      onMouseEnter={(
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      ) => {
         if (!props.disabled) {
           props.setHoveredNode({
             name: props.name,
@@ -41,7 +51,9 @@ export function SDGvizItem(props: CompProps) {
           });
         }
       }}
-      onMouseLeave={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      onMouseLeave={(
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      ) => {
         if (!props.disabled) {
           props.setHoveredNode(null);
         }
@@ -58,6 +70,6 @@ export function SDGvizItem(props: CompProps) {
       }}
     >
       <img src={props.icon} alt={`${props.number} - ${props.name}`} />
-    </div>
+    </button>
   );
 }

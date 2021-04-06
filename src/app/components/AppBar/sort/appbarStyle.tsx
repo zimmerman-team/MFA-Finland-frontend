@@ -40,6 +40,12 @@ export const appbarStyle = {
     }
   `,
   langSwitchContainer: css`
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+
     display: flex;
     flex-direction: column;
     align-items: center;
