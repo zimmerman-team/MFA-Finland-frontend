@@ -21,13 +21,27 @@ export function VizTabs() {
     container: css`
       padding: 0 68px;
       height: 88px;
-      background-color: red;
+      background-color: #dde4ef;
       //transform: translateY(-16px);
 
       @media (max-width: 992px) {
         height: 120px;
         padding: 0 12px;
       }
+
+      @media (max-width: 1440px) {
+        box-shadow: -669px 0px 0px 0px #dde4ef, 669px 0px 0px 0px #dde4ef;
+      }
+
+      @media (max-width: 800px) {
+        box-shadow: -300px 0px 0px 0px #dde4ef, 300px 0px 0px 0px #dde4ef;
+      }
+
+      @media (max-width: 600px) {
+        box-shadow: -100px 0px 0px 0px #dde4ef, 100px 0px 0px 0px #dde4ef;
+      }
+
+      box-shadow: -1240px 0px 0px 0px #dde4ef, 1240px 0px 0px 0px #dde4ef;
     `,
     tooltip: css`
       fill: ${PrimaryColor[0]};

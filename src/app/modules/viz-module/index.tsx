@@ -684,6 +684,11 @@ export default function VizModule() {
             xl={4}
             css={`
               z-index: 1;
+              box-shadow: 200px 0px 0px 0px #f8f8f8, 400px 0px 0px 0px #f8f8f8,
+                600px 0px 0px 0px #f8f8f8, 800px 0px 0px 0px #f8f8f8,
+                1000px 0px 0px 0px #f8f8f8, 1200px 0px 0px 0px #f8f8f8,
+                1400px 0px 0px 0px #f8f8f8, 1600px 0px 0px 0px #f8f8f8,
+                1800px 0px 0px 0px #f8f8f8;
             `}
           >
             <div
