@@ -118,8 +118,8 @@ export const MoreActions = (props: FloatingButtonsProps) => {
           <DownloadPopover
             // viz={props.viz}
             // data={props.data}
-            viz=""
-            data={{}}
+            viz={props.viz}
+            data={props.data}
             anchorEl={anchorEl}
             handleClose={handleClose}
           />

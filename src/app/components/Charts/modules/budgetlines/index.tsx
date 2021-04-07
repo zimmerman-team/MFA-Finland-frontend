@@ -6,14 +6,17 @@ import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budget
 import { BudgetLinesFragmentTable } from "app/components/Charts/table/modules/budgetlines";
 import {
   BarChartProps,
+  MoreButton,
   ODAbudgetLinesDataTableColumns,
 } from "app/components/Charts/bar/data";
 import { useCMSData } from "app/hooks/useCMSData";
 import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
+import { useRouteMatch } from "react-router-dom";
 
 interface BudgetLinesModuleModel extends BarChartProps {
   activeTab: string;
   scrollableHeight: number;
+  getActiveTabData: () => any;
 }
 
 function formatDataForTable(data: any) {
@@ -41,6 +44,8 @@ function formatDataForTable(data: any) {
 
 export function BudgetLinesModule(props: BudgetLinesModuleModel) {
   const cmsData = useCMSData({ returnData: true });
+  const { params } = useRouteMatch();
+
   if (props.activeTab === "chart") {
     return (
       <BudgetLinesBarChart
@@ -64,7 +69,12 @@ export function BudgetLinesModule(props: BudgetLinesModuleModel) {
     >
       <BudgetLinesFragmentTable
         data={formatDataForTable(props.data)}
-        options={SectorsDataTableOptions}
+        options={{
+          ...SectorsDataTableOptions,
+          customToolbar: () => (
+            <MoreButton data={props.getActiveTabData()} params={params} />
+          ),
+        }}
         title={`${props.data.length} budget line years`}
         columns={getTranslatedCols(ODAbudgetLinesDataTableColumns, cmsData)}
       />

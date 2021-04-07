@@ -5,9 +5,9 @@ import { BarChart } from "app/components/Charts/bar";
 import {
   BarChartProps,
   ODADataTableColumns,
-  ODADataTableOptions,
   ODAbudgetLinesDataTableColumns,
-  ODAbudgetLinesDataTableOptions,
+  getODADataTableOptions,
+  getODAbudgetLinesDataTableOptions,
 } from "app/components/Charts/bar/data";
 import { DataTable } from "app/components/Charts/table";
 import { VizLoader } from "app/modules/common/viz-loader";
@@ -16,6 +16,7 @@ import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
 import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
+import { useRouteMatch } from "react-router-dom";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
@@ -26,17 +27,20 @@ interface ODAvizModuleProps extends BarChartProps {
   odaBudgetLinesChartLoading: boolean;
   onArrowSelectChange: (v: string) => void;
   vizTranslation: { x: number; y: number };
+  getActiveTabData: () => any;
 }
 
 export function ODAvizModule(props: ODAvizModuleProps) {
   const cmsData = useCMSData({ returnData: true });
+  const { params } = useRouteMatch();
+
   const tableConfig = props.selectedVizItemId
     ? {
         data: props.odaBudgetLinesChartData.map((item: any) => ({
           ...item,
           year: props.selectedVizItemId,
         })),
-        options: ODAbudgetLinesDataTableOptions,
+        options: getODAbudgetLinesDataTableOptions,
         columns: getTranslatedCols(ODAbudgetLinesDataTableColumns, cmsData),
         title: `${props.odaBudgetLinesChartData.length} ${get(
           cmsData,
@@ -46,7 +50,8 @@ export function ODAvizModule(props: ODAvizModuleProps) {
       }
     : {
         data: props.data,
-        options: ODADataTableOptions,
+        // @ts-ignore
+        options: getODADataTableOptions(params, props.getActiveTabData),
         columns: getTranslatedCols(ODADataTableColumns, cmsData),
         title: `${props.data.length} ${get(cmsData, "filters.years", "years")}`,
       };

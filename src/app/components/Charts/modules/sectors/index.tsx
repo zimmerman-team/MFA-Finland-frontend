@@ -17,12 +17,16 @@ import {
 import { SimpleActivitiesTableModule } from "app/components/Charts/table/modules/activities/simple";
 import { useCMSData } from "app/hooks/useCMSData";
 import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
+import { ODAvizModule } from "app/components/Charts/modules/oda";
+import { MoreButton } from "app/components/Charts/bar/data";
+import { useRouteMatch } from "react-router-dom";
 
 interface SectorsVizModuleProps extends SunburstChartProps {
   vizLevel: number;
   activeTab: string;
   clearSectorDrillDown: () => void;
   scrollableHeight: number;
+  getActiveTabData: () => any;
 }
 
 export function SectorsVizModule(props: SectorsVizModuleProps) {
@@ -120,6 +124,8 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
       </React.Fragment>
     );
   }
+  const { params } = useRouteMatch();
+
   return (
     <div
       css={`
@@ -131,7 +137,12 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
       <SectorsFragmentTable
         title=""
         data={props.data.children}
-        options={SectorsDataTableOptions}
+        options={{
+          ...SectorsDataTableOptions,
+          customToolbar: () => (
+            <MoreButton data={props.getActiveTabData} params={params} />
+          ),
+        }}
         columns={getTranslatedCols(SectorsDataTableColumns, cmsData)}
       />
     </div>
