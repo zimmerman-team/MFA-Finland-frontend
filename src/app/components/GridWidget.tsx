@@ -221,7 +221,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       history.push(`${props.link}${searchFilterString}`);
     }
   }
-  console.log(props);
+
   return (
     <div
       aria-label={`Go to ${props.label} detail page`}
