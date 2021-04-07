@@ -41,6 +41,9 @@ export function SDGvizItem(props: CompProps) {
         height: 100%;
         opacity: ${props.disabled ? 0.1 : 1};
         cursor: ${props.disabled ? "default" : "pointer"};
+        :hover {
+          cursor: ${props.disabled ? "default" : "pointer"};
+        }
 
         > img {
           width: 100%;
@@ -64,14 +67,16 @@ export function SDGvizItem(props: CompProps) {
         }
       }}
       onClick={() => {
-        setSelectedFilters({
-          ...selectedFilters,
-          sdg: [...selectedFilters.sdg, props.number.toString()],
-        });
-        setTimeout(
-          () => history.push(`/viz/projects${history.location.search}`),
-          200
-        );
+        if (!props.disabled) {
+          setSelectedFilters({
+            ...selectedFilters,
+            sdg: [...selectedFilters.sdg, props.number.toString()],
+          });
+          setTimeout(
+            () => history.push(`/viz/projects${history.location.search}`),
+            200
+          );
+        }
       }}
     >
       <img src={props.icon} alt={`${props.number} - ${props.name}`} />
