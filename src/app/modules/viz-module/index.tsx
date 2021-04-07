@@ -42,6 +42,7 @@ import {
 } from "app/state/recoil/atoms";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
+import { MoreButton } from "app/components/Charts/bar/data";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -553,6 +554,7 @@ export default function VizModule() {
                   onArrowSelectChange={onZoomInLevelSelectorChange}
                   odaBudgetLinesChartData={odaBudgetLinesChartData}
                   odaBudgetLinesChartLoading={odaBudgetLinesChartLoading}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -582,7 +584,12 @@ export default function VizModule() {
                         ? thematicAreasChartData.slice(0, 1)
                         : thematicAreasChartData
                     }
-                    options={thematicAreasDataTableOptions}
+                    options={{
+                      ...thematicAreasDataTableOptions,
+                      customToolbar: () => (
+                        <MoreButton data={getActiveVizData()} params={params} />
+                      ),
+                    }}
                     columns={getTranslatedCols(
                       thematicAreasDataTableColumns,
                       cmsData
@@ -612,6 +619,7 @@ export default function VizModule() {
                   activitiesCount={sectorsSunburstDataCount}
                   onSectorSelectChange={onSectorSelectChange}
                   clearSectorDrillDown={() => setSectorDrillDown("")}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -626,6 +634,7 @@ export default function VizModule() {
                   scrollableHeight={height - 56}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -640,6 +649,7 @@ export default function VizModule() {
                   data={organisationsTreemapData}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -657,6 +667,7 @@ export default function VizModule() {
                   onSelectChange={onSelectChange}
                   selectedVizItemId={expandedVizItem}
                   setSelectedVizItem={setExpandedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>

@@ -110,6 +110,17 @@ export const tableTheme: ThemeOptions = createMuiTheme({
         zIndex: 4,
       },
     },
+    // @ts-ignore
+    MUIDataTableToolbar: {
+      icon: {
+        padding: 0,
+        width: "32px",
+        height: "32px",
+        backgroundColor: "white",
+        filter: "drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12))",
+        marginRight: "16px",
+      },
+    },
   },
 });
 
@@ -177,7 +188,7 @@ export const ActivitiesDataTableColumns: MUIDataTableColumnDef[] = [
     options: {
       setCellProps: () => ({ style: { minWidth: "120px", maxWidth: "150px" } }),
       customBodyRender: (value) => {
-        return <>{value ? value : "Date missing"}</>;
+        return <>{value || "Date missing"}</>;
       },
     },
   },
@@ -186,7 +197,7 @@ export const ActivitiesDataTableColumns: MUIDataTableColumnDef[] = [
     options: {
       setCellProps: () => ({ style: { minWidth: "120px", maxWidth: "150px" } }),
       customBodyRender: (value) => {
-        return <>{value ? value : "Date missing"}</>;
+        return <>{value || "Date missing"}</>;
       },
     },
   },
@@ -569,14 +580,14 @@ export const SectorsDataTableOptions: MUIDataTableOptions = {
     rowData: string[],
     rowMeta: { dataIndex: number; rowIndex: number }
   ) => {
-    //@ts-ignore
+    // @ts-ignore
     const childData = SectorsDataTableMockData[rowMeta.rowIndex].children;
     if (childData) {
       return <ExpandableRows data={childData} level={1} />;
     }
   },
   isRowExpandable: (dataIndex: number, expandedRows?: MUIDataTableIsRowCheck) =>
-    //@ts-ignore
+    // @ts-ignore
     SectorsDataTableMockData[dataIndex].children,
 };
 

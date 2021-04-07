@@ -8,15 +8,19 @@ import {
   LocationsDataTableColumns,
   SectorsDataTableOptions,
 } from "app/components/Charts/table/data";
+import { MoreButton } from "app/components/Charts/bar/data";
+import { useRouteMatch } from "react-router-dom";
 import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface CountriesRegionsModuleModel extends TreemapProps {
   activeTab: string;
   scrollableHeight: number;
+  getActiveTabData: () => any;
 }
 
 export function CountriesRegionsModule(props: CountriesRegionsModuleModel) {
   const cmsData = useCMSData({ returnData: true });
+  const { params } = useRouteMatch();
 
   if (props.activeTab === "chart") {
     return (
@@ -39,7 +43,12 @@ export function CountriesRegionsModule(props: CountriesRegionsModuleModel) {
       <LocationsFragmentTable
         type="location"
         data={props.data.children}
-        options={SectorsDataTableOptions}
+        options={{
+          ...SectorsDataTableOptions,
+          customToolbar: () => (
+            <MoreButton data={props.getActiveTabData()} params={params} />
+          ),
+        }}
         columns={getTranslatedCols(LocationsDataTableColumns, cmsData)}
         title={`${props.data.children.length} ${get(
           cmsData,

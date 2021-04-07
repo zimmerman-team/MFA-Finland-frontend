@@ -1,6 +1,10 @@
 import { formatLocale } from "app/utils/formatLocale";
 import { BarExtendedDatum, BarItemProps } from "@nivo/bar";
 import { MUIDataTableOptions, MUIDataTableColumnDef } from "mui-datatables";
+import { Tooltip } from "@material-ui/core";
+import { MoreActions } from "app/components/Charts/table/common/toolbar/MoreButton";
+import get from "lodash/get";
+import React from "react";
 
 export interface BarChartProps {
   data: any;
@@ -655,18 +659,31 @@ export const ODADataTableColumns: MUIDataTableColumnDef[] = [
   },
 ];
 
-export const ODADataTableOptions: MUIDataTableOptions = {
-  print: false,
-  elevation: 0,
-  search: true,
-  filter: false,
-  download: false,
-  rowHover: false,
-  pagination: true,
-  viewColumns: false,
-  responsive: "standard",
-  selectableRows: "none",
-  selectableRowsHeader: false,
+export const MoreButton = (params: any, data: any) => (
+  <Tooltip disableFocusListener title="More Options">
+    <MoreActions data={data} viz={get(params, "tab", "")} />
+  </Tooltip>
+);
+
+// @ts-ignore
+export const getODADataTableOptions: MUIDataTableOptions = (
+  params: any,
+  data: any
+) => {
+  return {
+    print: false,
+    elevation: 0,
+    search: true,
+    filter: false,
+    download: false,
+    rowHover: false,
+    pagination: true,
+    viewColumns: false,
+    responsive: "standard",
+    selectableRows: "none",
+    selectableRowsHeader: false,
+    customToolbar: () => <MoreButton data={data} params={params} />,
+  };
 };
 
 export const ODAbudgetLinesDataTableColumns: MUIDataTableColumnDef[] = [
@@ -690,16 +707,21 @@ export const ODAbudgetLinesDataTableColumns: MUIDataTableColumnDef[] = [
   },
 ];
 
-export const ODAbudgetLinesDataTableOptions: MUIDataTableOptions = {
-  print: false,
-  elevation: 0,
-  search: true,
-  filter: false,
-  download: false,
-  rowHover: false,
-  pagination: false,
-  viewColumns: false,
-  responsive: "standard",
-  selectableRows: "none",
-  selectableRowsHeader: false,
+// @ts-ignore
+export const getODAbudgetLinesDataTableOptions: MUIDataTableOptions = (
+  params: any
+) => {
+  return {
+    print: false,
+    elevation: 0,
+    search: true,
+    filter: false,
+    download: false,
+    rowHover: false,
+    pagination: false,
+    viewColumns: false,
+    responsive: "standard",
+    selectableRows: "none",
+    selectableRowsHeader: false,
+  };
 };
