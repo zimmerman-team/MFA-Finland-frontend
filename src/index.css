@@ -89,6 +89,6 @@ div {
 }
 
 :focus {
-  outline: none;
+  outline: 1px solid rgba(0, 0, 0, 0.1);
   filter: brightness(95%);
 }

@@ -83,7 +83,11 @@ const style = {
       fill: ${PrimaryColor[3]};
     }
   `,
-  widgetContainer: (height: string | undefined, isHovered: boolean) => css`
+  widgetContainer: (
+    height: string | undefined,
+    isHovered: boolean,
+    label: string | undefined
+  ) => css`
     width: 100%;
     //height: 100%;
     display: flex;
@@ -107,6 +111,10 @@ const style = {
     }
 
     :focus {
+      ${label === "Map" && "filter: none !important;"}
+      ${label === "Map" && "outline: none !important;"}
+      // filter: ${label !== "Map" ? "none !important" : "initial"};
+      // outline: ${label !== "Map" ? "none !important" : "initial"};
       box-shadow: ${isHovered
         ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
         : ""};
@@ -212,7 +220,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       history.push(`${props.link}${searchFilterString}`);
     }
   }
-
+  console.log(props);
   return (
     <div
       aria-label={`Go to ${props.label} detail page`}
@@ -225,7 +233,8 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       }}
       css={style.widgetContainer(
         props.height,
-        isHovered && !props.interactive && props.link !== undefined
+        isHovered && !props.interactive && props.link !== undefined,
+        props.label
       )}
     >
       <header css={style.widgetHeader(odaWidget)}>

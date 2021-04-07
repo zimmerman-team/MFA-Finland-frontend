@@ -22,6 +22,7 @@ import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "app/components/Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 import { useWindowSize } from "app/hooks/useWindowSize";
+import { ResponsiveChoropleth } from "@nivo/geo";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -150,6 +151,7 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader loading={props.vizDataLoading.oda} />
           ) : (
             <BarChart
+              aria-label="Bar chart displaying the disbursed amount of euro's per year"
               height={250}
               vizCompData={[]}
               data={props.odaBarChartData}
@@ -183,6 +185,7 @@ export const DataGrid = (props: DataGridProps) => {
             <>
               {!showSingleAreaCircle && <div css="width: 100%;height: 70px;" />}
               <ThematicAreas
+                aria-label="Visualisation displaying which thematic area has been worked on the most/has the most money funded to."
                 showOnlyViz
                 selectedVizItemId={null}
                 setSelectedVizItem={() => null}
@@ -214,6 +217,7 @@ export const DataGrid = (props: DataGridProps) => {
           ) : (
             <div>
               <SunburstChartSimplified
+                aria-label="Visualisation displaying which thematic area has been worked on the most/has the most money funded to."
                 sectorDrillDown=""
                 onZoomOut={() => null}
                 selectedVizItemId={null}
@@ -244,6 +248,7 @@ export const DataGrid = (props: DataGridProps) => {
               <VizLoader loading={props.vizDataLoading.locations} />
             ) : (
               <Treemap
+                aria-label="Treemap visualisation displaying which region has the most euro's disbursed to."
                 label="locations"
                 height={230}
                 selectedVizItemId={null}
@@ -303,6 +308,7 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader loading={props.vizDataLoading.organisations} />
           ) : (
             <Treemap
+              aria-label="Treemap visualisation displaying which organisation type has the most euro's disbursed."
               label="organisations"
               height={230}
               selectedVizItemId={null}
