@@ -38,6 +38,10 @@ export function CountriesRegionsModule(props: CountriesRegionsModuleModel) {
         overflow-y: overlay;
         padding: 24px 24px 24px 0;
         max-height: ${props.scrollableHeight}px;
+
+        @media (max-width: 600px) {
+          max-height: 100%;
+        }
       `}
     >
       <LocationsFragmentTable

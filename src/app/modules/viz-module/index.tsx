@@ -497,7 +497,7 @@ export default function VizModule() {
       />
       <Grid
         item
-        sm={12}
+        xs={12}
         css={`
           z-index: 1;
         `}
@@ -508,11 +508,12 @@ export default function VizModule() {
         container
         id="image-container"
         css={`
-          padding: 0 68px;
           z-index: 1;
-
+          padding: 0 68px;
           height: calc(100% - 88px);
+
           @media (max-width: 992px) {
+            width: 100%;
             padding: 0 12px;
           }
         `}
@@ -522,6 +523,7 @@ export default function VizModule() {
           css={`
             background: #fff;
           `}
+          xs={12}
           sm={isProjects ? 12 : 9}
           md={isProjects ? 12 : 8}
           lg={isProjects ? 12 : 8}
@@ -576,6 +578,10 @@ export default function VizModule() {
                 <div
                   css={`
                     padding: 24px 24px 24px 0;
+
+                    @media (max-width: 600px) {
+                      max-height: 100%;
+                    }
                   `}
                 >
                   <DataTable
@@ -686,6 +692,7 @@ export default function VizModule() {
         {!isProjects && (
           <Grid
             item
+            xs={12}
             sm={3}
             md={4}
             lg={4}

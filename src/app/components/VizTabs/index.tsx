@@ -26,6 +26,9 @@ export function VizTabs() {
         height: 120px;
         padding: 0 12px;
       }
+      @media (max-width: 600px) {
+        height: 150px;
+      }
     `,
     tooltip: css`
       fill: ${PrimaryColor[0]};
@@ -56,10 +59,16 @@ export function VizTabs() {
       @media (max-width: 992px) {
         height: 120px;
       }
+      @media (max-width: 600px) {
+        top: 124px;
+        height: 150px;
+      }
     `,
     tabContainer: css`
       right: 0;
       bottom: 11px;
+      max-width: 100%;
+      overflow-x: auto;
       position: absolute;
 
       > a {
@@ -74,6 +83,10 @@ export function VizTabs() {
         border-right-style: none;
         border-radius: 0px 15px 0px 0px;
       }
+
+      @media (max-width: 600px) {
+        display: flex;
+      }
     `,
   };
   return (
@@ -81,6 +94,7 @@ export function VizTabs() {
       <div css={styles.background} />
       <Grid
         item
+        xs={12}
         sm={12}
         md={12}
         lg={4}
@@ -108,6 +122,7 @@ export function VizTabs() {
       </Grid>
       <Grid
         item
+        xs={12}
         sm={12}
         md={12}
         lg={8}

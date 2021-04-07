@@ -2,24 +2,23 @@ import React from "react";
 import get from "lodash/get";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
+import { useRouteMatch } from "react-router-dom";
+import { useCMSData } from "app/hooks/useCMSData";
 import { VizLoader } from "app/modules/common/viz-loader";
+import { MoreButton } from "app/components/Charts/bar/data";
 import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { SunburstChart } from "app/components/Charts/sunburst";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { SunburstChartProps } from "app/components/Charts/sunburst/data";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import { SectorsFragmentTable } from "app/components/Charts/table/modules/sectors";
+import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
 import {
   SectorsDataTableColumns,
   SectorsDataTableOptions,
 } from "app/components/Charts/table/data";
 import { SimpleActivitiesTableModule } from "app/components/Charts/table/modules/activities/simple";
-import { useCMSData } from "app/hooks/useCMSData";
-import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
-import { ODAvizModule } from "app/components/Charts/modules/oda";
-import { MoreButton } from "app/components/Charts/bar/data";
-import { useRouteMatch } from "react-router-dom";
 
 interface SectorsVizModuleProps extends SunburstChartProps {
   vizLevel: number;
@@ -30,6 +29,7 @@ interface SectorsVizModuleProps extends SunburstChartProps {
 }
 
 export function SectorsVizModule(props: SectorsVizModuleProps) {
+  const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
   const [tablePage, setTablePage] = React.useState(0);
   const [tableRows, setTableRows] = React.useState(10);
@@ -109,6 +109,9 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
             @media (max-width: 992px) {
               padding-top: 20%;
             }
+            @media (max-width: 600px) {
+              padding: 10px 0;
+            }
           `}
         >
           <SunburstChart
@@ -124,14 +127,16 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
       </React.Fragment>
     );
   }
-  const { params } = useRouteMatch();
-
   return (
     <div
       css={`
         overflow-y: overlay;
         padding: 24px 24px 24px 0;
         max-height: ${props.scrollableHeight}px;
+
+        @media (max-width: 600px) {
+          max-height: 100%;
+        }
       `}
     >
       <SectorsFragmentTable

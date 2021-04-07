@@ -65,6 +65,10 @@ export function ODAvizModule(props: ODAvizModuleProps) {
           position: relative;
           padding-right: 72px;
           padding-top: 32px;
+
+          @media (max-width: 767px) {
+            padding-right: 0;
+          }
         `}
       >
         <TransitionContainer
@@ -130,6 +134,10 @@ export function ODAvizModule(props: ODAvizModuleProps) {
         overflow-y: overlay;
         padding: 24px 24px 24px 0;
         max-height: ${props.scrollableHeight}px;
+
+        @media (max-width: 600px) {
+          max-height: 100%;
+        }
       `}
     >
       <DataTable {...tableConfig} />

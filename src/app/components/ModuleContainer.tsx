@@ -27,11 +27,12 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
 
   const styles = {
     container: css`
+      width: 100%;
       display: flex;
       //background-color: white;
     `,
     gridContainer: css`
-      width: initial;
+      width: 100%;
       padding: 0 64px;
       position: relative;
       z-index: 1;

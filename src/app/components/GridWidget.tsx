@@ -153,6 +153,9 @@ const style = {
     * {
       pointer-events: ${interactive ? "all" : "none"};
     }
+    #viz-scroller {
+      pointer-events: auto;
+    }
   `,
 };
 

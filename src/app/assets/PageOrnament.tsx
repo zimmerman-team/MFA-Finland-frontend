@@ -30,6 +30,10 @@ export function PageOrnament(
         bottom: -10px;
         z-index: 0;
         display: ${shouldRender ? "initial" : "none"};
+
+        @media (max-width: 767px) {
+          display: none;
+        }
       `}
     >
       <svg

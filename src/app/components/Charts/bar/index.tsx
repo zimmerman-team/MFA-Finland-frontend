@@ -84,10 +84,41 @@ export function BarChart(props: BarChartProps) {
 
   return (
     <div
+      id="viz-scroller"
       css={`
         width: 100%;
         position: relative;
         color: ${PrimaryColor[0]};
+
+        @media (max-width: 600px) {
+          overflow-x: auto;
+          overflow-y: hidden;
+
+          &::-webkit-scrollbar {
+            height: 4px;
+            border-radius: 4px;
+            background: ${PrimaryColor[2]};
+          }
+
+          &::-webkit-scrollbar-track {
+            border-radius: 4px;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background: ${PrimaryColor[0]};
+          }
+
+          ::-webkit-scrollbar-button {
+            width: 0;
+            height: 0;
+            display: none;
+          }
+
+          ::-webkit-scrollbar-corner {
+            background-color: transparent;
+          }
+        }
       `}
     >
       <div
@@ -114,6 +145,10 @@ export function BarChart(props: BarChartProps) {
                 content: "";
                 border-radius: 50%;
               }
+            }
+
+            @media (max-width: 600px) {
+              padding-top: 25px;
             }
           `}
         >
@@ -166,6 +201,10 @@ export function BarChart(props: BarChartProps) {
             width: calc(100% - 17px);
             height: ${props.height || 450}px;
 
+            @media (max-width: 600px) {
+              width: 1000px;
+            }
+
             circle {
               r: 6px;
             }
@@ -190,6 +229,10 @@ export function BarChart(props: BarChartProps) {
         css={`
           width: 100%;
           height: ${props.height || 450}px;
+
+          @media (max-width: 600px) {
+            width: 1000px;
+          }
         `}
       >
         <ResponsiveBar

@@ -59,87 +59,125 @@ export function BudgetLinesBarChart(props: BarChartProps) {
 
   return (
     <div
+      id="viz-scroller"
       css={`
-        width: 100%;
-        position: relative;
-        color: ${PrimaryColor[0]};
-        height: ${props.height || 550}px;
-        padding-top: ${!props.height ? "38px" : ""};
-        padding-right: ${!props.height ? "72px" : ""};
+        @media (max-width: 600px) {
+          overflow-x: auto;
+          overflow-y: hidden;
 
-        @media (max-width: 992px) {
-          padding-right: ${!props.height ? "12px" : ""};
+          &::-webkit-scrollbar {
+            height: 4px;
+            border-radius: 4px;
+            background: ${PrimaryColor[2]};
+          }
+
+          &::-webkit-scrollbar-track {
+            border-radius: 4px;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background: ${PrimaryColor[0]};
+          }
+
+          ::-webkit-scrollbar-button {
+            width: 0;
+            height: 0;
+            display: none;
+          }
+
+          ::-webkit-scrollbar-corner {
+            background-color: transparent;
+          }
         }
       `}
     >
-      <ResponsiveBar
-        enableGridX
-        padding={0.5}
-        indexBy="year"
-        data={props.data}
-        enableLabel={false}
-        enableGridY={false}
-        innerPadding={0}
-        layout="horizontal"
-        keys={budgetLineKeys}
-        valueScale={{ type: "linear" }}
-        maxValue={maxValue + maxValue * 0.2}
-        colors={(v: any) => get(v.data, `${v.id}Color`, "")}
-        layers={["grid", "axes", Bars]}
-        margin={{ top: 15, right: 0, bottom: 70, left: 45 }}
-        theme={{
-          axis: {
-            ticks: {
-              text: {
-                fontSize: 14,
-                fill: PrimaryColor[0],
-                fontFamily: "Finlandica",
+      <div
+        css={`
+          width: 100%;
+          position: relative;
+          color: ${PrimaryColor[0]};
+          height: ${props.height || 550}px;
+          padding-top: ${!props.height ? "38px" : ""};
+          padding-right: ${!props.height ? "72px" : ""};
+
+          @media (max-width: 992px) {
+            padding-right: ${!props.height ? "12px" : ""};
+          }
+          @media (max-width: 600px) {
+            width: 1000px;
+          }
+        `}
+      >
+        <ResponsiveBar
+          enableGridX
+          padding={0.5}
+          indexBy="year"
+          data={props.data}
+          enableLabel={false}
+          enableGridY={false}
+          innerPadding={0}
+          layout="horizontal"
+          keys={budgetLineKeys}
+          valueScale={{ type: "linear" }}
+          maxValue={maxValue + maxValue * 0.2}
+          colors={(v: any) => get(v.data, `${v.id}Color`, "")}
+          layers={["grid", "axes", Bars]}
+          margin={{ top: 15, right: 0, bottom: 70, left: 45 }}
+          theme={{
+            axis: {
+              ticks: {
+                text: {
+                  fontSize: 14,
+                  fill: PrimaryColor[0],
+                  fontFamily: "Finlandica",
+                },
+              },
+              legend: {
+                text: {
+                  fontSize: 14,
+                  fill: PrimaryColor[0],
+                  fontFamily: "Finlandica",
+                },
+              },
+              domain: {
+                line: {
+                  strokeWidth: 1,
+                  stroke: "rgba(224, 224, 224, 0.4)",
+                },
               },
             },
-            legend: {
-              text: {
-                fontSize: 14,
-                fill: PrimaryColor[0],
-                fontFamily: "Finlandica",
-              },
-            },
-            domain: {
+            grid: {
               line: {
                 strokeWidth: 1,
                 stroke: "rgba(224, 224, 224, 0.4)",
               },
             },
-          },
-          grid: {
-            line: {
-              strokeWidth: 1,
-              stroke: "rgba(224, 224, 224, 0.4)",
-            },
-          },
-        }}
-        axisLeft={{
-          tickSize: 0,
-          tickPadding: 10,
-          tickRotation: 0,
-        }}
-        axisTop={{
-          tickSize: 0,
-          format: (v: any) => "",
-        }}
-        axisRight={{
-          tickSize: 0,
-          format: (v: any) => "",
-        }}
-        axisBottom={{
-          tickSize: 0,
-          tickPadding: 15,
-          tickRotation: 0,
-          // tickValues: 5,
-          legendOffset: 50,
-          legend: range.abbr,
-          format: (v: any) => getMoneyValueWithMetricPrefix(v, range.index),
-        }}
-      />
+          }}
+          axisLeft={{
+            tickSize: 0,
+            tickPadding: 10,
+            tickRotation: 0,
+          }}
+          axisTop={{
+            tickSize: 0,
+            format: (v: any) => "",
+          }}
+          axisRight={{
+            tickSize: 0,
+            format: (v: any) => "",
+          }}
+          axisBottom={{
+            tickSize: 0,
+            tickPadding: 15,
+            tickRotation: 0,
+            // tickValues: 5,
+            legendOffset: 50,
+            legend: range.abbr,
+            format: (v: any) => getMoneyValueWithMetricPrefix(v, range.index),
+          }}
+        />
+      </div>
     </div>
   );
 }
