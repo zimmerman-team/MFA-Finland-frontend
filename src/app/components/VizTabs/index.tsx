@@ -66,9 +66,8 @@ export function VizTabs() {
     `,
     tabContainer: css`
       right: 0;
-      bottom: 11px;
-      max-width: 100%;
-      overflow-x: auto;
+      bottom: 0;
+      display: flex;
       position: absolute;
 
       > a {
@@ -85,7 +84,8 @@ export function VizTabs() {
       }
 
       @media (max-width: 600px) {
-        display: flex;
+        max-width: 100%;
+        overflow-x: auto;
       }
     `,
   };
