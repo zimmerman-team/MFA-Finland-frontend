@@ -8,7 +8,6 @@ import { useCMSData } from "app/hooks/useCMSData";
 import { Line } from "app/components/Charts/bar/common/line";
 import { BarChartProps } from "app/components/Charts/bar/data";
 import { BarNode } from "app/components/Charts/bar/common/node";
-import { LineNodes } from "app/components/Charts/bar/common/line/node";
 import { ResponsiveBar, BarItemProps, BarExtendedDatum } from "@nivo/bar";
 import {
   getRange,
@@ -58,17 +57,6 @@ export function BarChart(props: BarChartProps) {
 
   const showGni = find(props.data, (d: any) => d.gni > 0);
 
-  const LineWPoints = (lprops: any) => {
-    return showGni ? (
-      <LineNodes
-        {...lprops}
-        selected={selected}
-        height={props.height || 450}
-        hoveredXIndex={hoveredXIndex}
-      />
-    ) : null;
-  };
-
   React.useEffect(
     () =>
       props.setSelectedVizItem(
@@ -98,10 +86,8 @@ export function BarChart(props: BarChartProps) {
     <div
       css={`
         width: 100%;
-        //padding-top: 20px;
         position: relative;
         color: ${PrimaryColor[0]};
-        height: ${props.height || 450}px;
       `}
     >
       <div
@@ -159,7 +145,7 @@ export function BarChart(props: BarChartProps) {
                 position: relative;
                 &:before {
                   border: 0.5px solid #343249;
-                  background: #ae4764;
+                  background: #d495a7;
                 }
               `}
             >
@@ -169,15 +155,20 @@ export function BarChart(props: BarChartProps) {
         </div>
         {showGni && <div>%</div>}
       </div>
+      <div css="width: 100%;height: 15px;" />
       {showGni && (
         <div
           css={`
             left: 0;
-            top: 14px;
-            width: 100%;
-            padding-top: 50px;
+            top: 30px;
             position: absolute;
+            padding-left: 17px;
+            width: calc(100% - 17px);
             height: ${props.height || 450}px;
+
+            circle {
+              r: 6px;
+            }
           `}
         >
           <Line
@@ -190,60 +181,69 @@ export function BarChart(props: BarChartProps) {
                 })),
               },
             ]}
+            selected={selected}
+            hovered={hoveredXIndex}
           />
         </div>
       )}
-      <ResponsiveBar
-        padding={0.3}
-        indexBy="year"
-        data={props.data}
-        enableLabel={false}
-        enableGridY={false}
-        innerPadding={0}
-        keys={["exclusive", "other"]}
-        valueScale={{ type: "linear" }}
-        colors={["#ACD1D1", "#233C71"]}
-        maxValue={maxValue + maxValue * 0.1}
-        layers={["grid", "axes", Bars, LineWPoints]}
-        margin={{ top: 15, right: 50, bottom: 60, left: 50 }}
-        borderWidth={1}
-        borderColor="black"
-        theme={{
-          axis: {
-            ticks: {
-              text: {
-                fontSize: 14,
-                fill: PrimaryColor[0],
-                fontFamily: "Finlandica",
+      <div
+        css={`
+          width: 100%;
+          height: ${props.height || 450}px;
+        `}
+      >
+        <ResponsiveBar
+          padding={0.3}
+          indexBy="year"
+          data={props.data}
+          enableLabel={false}
+          enableGridY={false}
+          innerPadding={0}
+          keys={["exclusive", "other"]}
+          valueScale={{ type: "linear" }}
+          layers={["grid", "axes", Bars]}
+          colors={["#ACD1D1", "#233C71"]}
+          maxValue={maxValue + maxValue * 0.1}
+          margin={{ top: 15, right: 60, bottom: 60, left: 50 }}
+          borderWidth={1}
+          borderColor="black"
+          theme={{
+            axis: {
+              ticks: {
+                text: {
+                  fontSize: 14,
+                  fill: PrimaryColor[0],
+                  fontFamily: "Finlandica",
+                },
+              },
+              domain: {
+                line: {
+                  strokeWidth: 1,
+                  stroke: "rgba(224, 224, 224, 0.4)",
+                },
               },
             },
-            domain: {
+            grid: {
               line: {
                 strokeWidth: 1,
                 stroke: "rgba(224, 224, 224, 0.4)",
               },
             },
-          },
-          grid: {
-            line: {
-              strokeWidth: 1,
-              stroke: "rgba(224, 224, 224, 0.4)",
-            },
-          },
-        }}
-        axisBottom={{
-          tickSize: 0,
-          tickPadding: 10,
-          tickRotation: width > 800 ? 45 : 75,
-        }}
-        axisLeft={{
-          tickSize: 0,
-          tickValues: 5,
-          tickPadding: 15,
-          tickRotation: 0,
-          format: (v: any) => getMoneyValueWithMetricPrefix(v, range.index),
-        }}
-      />
+          }}
+          axisBottom={{
+            tickSize: 0,
+            tickPadding: 10,
+            tickRotation: width > 800 ? 45 : 75,
+          }}
+          axisLeft={{
+            tickSize: 0,
+            tickValues: 5,
+            tickPadding: 15,
+            tickRotation: 0,
+            format: (v: any) => getMoneyValueWithMetricPrefix(v, range.index),
+          }}
+        />
+      </div>
     </div>
   );
 }
