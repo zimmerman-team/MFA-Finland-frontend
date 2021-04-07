@@ -243,7 +243,7 @@ export const FilterBar = (props: FilterBarProps) => {
               height: 40px;
               background-color: #2e4982;
               position: fixed;
-              top: 70vh;
+              bottom: 5vh;
               right: 8px;
               z-index: 4;
               display: flex;
