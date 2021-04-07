@@ -16,6 +16,19 @@ export function SDGvizItem(props: CompProps) {
     selectedFilterAtom
   );
 
+  function handleMouseEnter() {
+    if (!props.disabled) {
+      props.setHoveredNode({
+        name: props.name,
+        number: props.number,
+        icon: props.icon,
+        disabled: props.disabled,
+        disbursed: props.disbursed,
+        committed: props.committed,
+      });
+    }
+  }
+
   return (
     <button
       aria-label={`SDG: ${props.number} - ${props.name}`}
@@ -40,17 +53,9 @@ export function SDGvizItem(props: CompProps) {
       onMouseEnter={(
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
       ) => {
-        if (!props.disabled) {
-          props.setHoveredNode({
-            name: props.name,
-            number: props.number,
-            icon: props.icon,
-            disabled: props.disabled,
-            disbursed: props.disbursed,
-            committed: props.committed,
-          });
-        }
+        handleMouseEnter();
       }}
+      onFocus={() => handleMouseEnter()}
       onMouseLeave={(
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
       ) => {

@@ -355,10 +355,13 @@ export const DataGrid = (props: DataGridProps) => {
         item
         xs={12}
         sm={6}
-        md={4}
+        md={6}
         lg={4}
         css={`
           @media (max-width: 960px) {
+            order: 1;
+          }
+          @media (max-width: 1440px) {
             order: 1;
           }
         `}
@@ -381,7 +384,7 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           // todo: create responsive solution for height
-          height="510px"
+          // height="510px"
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}
           label={get(cmsData, "general.sdgs", "SDGs")}
@@ -397,10 +400,13 @@ export const DataGrid = (props: DataGridProps) => {
         item
         xs={12}
         sm={6}
-        md={4}
+        md={6}
         lg={4}
         css={`
           @media (max-width: 960px) {
+            order: 1;
+          }
+          @media (max-width: 1440px) {
             order: 1;
           }
         `}
@@ -428,6 +434,9 @@ export const DataGrid = (props: DataGridProps) => {
           lg={12}
           css={`
             @media (max-width: 960px) {
+              order: 2;
+            }
+            @media (max-width: 1440px) {
               order: 2;
             }
           `}
@@ -461,10 +470,6 @@ export const DataGrid = (props: DataGridProps) => {
             )}
           </GridWidget>
         </Grid>
-      </Hidden>
-
-      <Hidden smDown>
-        <div css="width: 100%; height: 100px;" />
       </Hidden>
     </React.Fragment>
   );

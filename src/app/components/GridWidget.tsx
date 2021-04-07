@@ -71,31 +71,20 @@ const style = {
     //opacity: 0.9;
     line-height: 1;
   `,
-  widgeTooltip: css`
-    margin-left: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  widgetTooltipIcon: css`
-    fill: ${PrimaryColor[0]};
-    :hover {
-      fill: ${PrimaryColor[3]};
-    }
-  `,
   widgetContainer: (
     height: string | undefined,
     isHovered: boolean,
     label: string | undefined
   ) => css`
     width: 100%;
-    //height: 100%;
+    height: 100%;
     display: flex;
     border-radius: 32px;
     flex-direction: column;
     background-color: #ffffff;
     padding: 24px 32px 32px 32px;
-    height: ${height || "375px"};
+    height: ${height || "100%"};
+    // height: ${height || "375px"};
     min-height: 375px;
     overflow: hidden;
     box-shadow: ${isHovered
@@ -107,7 +96,7 @@ const style = {
       border-radius: 16px;
       padding: 16px 16px 16px 16px;
       width: initial;
-      height: initial;
+      height: 100%;
     }
 
     :focus {
@@ -118,6 +107,18 @@ const style = {
       box-shadow: ${isHovered
         ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
         : ""};
+    }
+  `,
+  widgeTooltip: css`
+    margin-left: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+  widgetTooltipIcon: css`
+    fill: ${PrimaryColor[0]};
+    :hover {
+      fill: ${PrimaryColor[3]};
     }
   `,
   link: css`
