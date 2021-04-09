@@ -123,6 +123,12 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     [props.loading]
   );
 
+  React.useEffect(() => {
+    if (props.searchKey.length > 0 && !isFocused) {
+      setIsFocused(true);
+    }
+  }, [props.searchKey]);
+
   return (
     <div css={styles.container}>
       <div css={styles.titleContainer}>

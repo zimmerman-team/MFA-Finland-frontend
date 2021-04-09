@@ -47,7 +47,9 @@ import { MoreButton } from "app/components/Charts/bar/data";
 export default function VizModule() {
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
-  const [searchKey, setSearchKey] = React.useState("");
+  const [searchKey, setSearchKey] = React.useState(
+    localStorage.getItem("searchValue") || ""
+  );
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   const [activeTab, setActiveTab] = React.useState("chart");
   const [expandedVizItem, setExpandedVizItem] = React.useState<
@@ -290,6 +292,7 @@ export default function VizModule() {
     if (root) {
       root.style.background = "#fff";
     }
+    setTimeout(() => localStorage.removeItem("searchValue"), 500);
   }, []);
 
   React.useEffect(() => {

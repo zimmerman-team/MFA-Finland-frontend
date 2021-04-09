@@ -22,6 +22,8 @@ export function SearchComponentLayout(props: SearchComponentLayoutProps) {
         {props.value.length > 3 && (
           <SearchResults
             width={props.width}
+            value={props.value}
+            close={props.close}
             cmsData={props.cmsData}
             loading={props.loading}
             results={props.searchData}
