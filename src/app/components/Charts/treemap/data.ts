@@ -21,6 +21,7 @@ export interface TreemapProps {
   label: string;
   height?: number;
   data: TreemapDataModel;
+  showSmTooltip?: boolean;
   selectedVizItemId: string | number | null;
   setSelectedVizItem: React.Dispatch<string | number | null>;
 }

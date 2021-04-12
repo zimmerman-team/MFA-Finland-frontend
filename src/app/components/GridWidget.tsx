@@ -63,13 +63,17 @@ const style = {
       }
     }
   `,
-  widgetLabel: css`
+  widgetLabel: (linkable?: boolean) => css`
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
     color: ${ProjectPalette.primary.main};
-    //opacity: 0.9;
     line-height: 1;
+    cursor: ${linkable ? "pointer" : ""};
+
+    &:focus {
+      text-decoration: underline;
+    }
   `,
   widgetContainer: (
     height: string | undefined,
@@ -98,16 +102,6 @@ const style = {
       width: initial;
       height: 100%;
     }
-
-    :focus {
-      ${label === "Map" && "filter: none !important;"}
-      ${label === "Map" && "outline: none !important;"}
-      // filter: ${label !== "Map" ? "none !important" : "initial"};
-      // outline: ${label !== "Map" ? "none !important" : "initial"};
-      box-shadow: ${isHovered
-        ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
-        : ""};
-    }
   `,
   widgeTooltip: css`
     margin-left: 12px;
@@ -127,7 +121,7 @@ const style = {
     color: ${PrimaryColor[0]};
   `,
   childrencontainer: (
-    interactive?: boolean,
+    itemLinkable?: boolean,
     childrencontainerStyle?: {
       paddingTop?: number;
       width?: number;
@@ -137,7 +131,7 @@ const style = {
   ) => css`
     display: flex;
     flex-direction: column;
-    cursor: ${interactive ? "" : "pointer"};
+    cursor: ${itemLinkable ? "pointer" : "default"};
     padding-top: ${childrencontainerStyle?.paddingTop
       ? `${childrencontainerStyle.paddingTop}px`
       : "initial"};
@@ -151,7 +145,7 @@ const style = {
       ? `scale(${childrencontainerStyle.scale})`
       : "initial"};
     * {
-      pointer-events: ${interactive ? "all" : "none"};
+      pointer-events: ${itemLinkable ? "none" : "all"};
     }
     #viz-scroller {
       pointer-events: auto;
@@ -225,16 +219,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     }
   }
 
+  const itemLinkable =
+    props.link === "/viz/oda" || props.link === "/viz/budget-lines";
+
   return (
     <div
-      aria-label={`Go to ${props.label} detail page`}
-      role="button"
-      tabIndex={0}
-      onKeyPress={(e) => {
-        if (e.code === "Enter") {
-          handleClick();
-        }
-      }}
       css={style.widgetContainer(
         props.height,
         isHovered && !props.interactive && props.link !== undefined,
@@ -243,7 +232,20 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     >
       <header css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <div css={style.widgetLabel}>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleClick()}
+            aria-label={`Go to ${props.label} detail page`}
+            onKeyPress={(e) => {
+              if (e.code === "Enter") {
+                handleClick();
+              }
+            }}
+            css={style.widgetLabel(props.link !== undefined)}
+            onMouseEnter={() => !itemLinkable && setIsHovered(true)}
+            onMouseLeave={() => !itemLinkable && setIsHovered(false)}
+          >
             {!odaWidget
               ? props.label
               : get(cmsData, "general.overview", "Overview Disbursements")}
@@ -299,7 +301,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       </header>
       {odaWidget && (
         <div css="display: flex;align-items: center;">
-          <div css={style.widgetLabel}>ODA</div>
+          <div css={style.widgetLabel(false)}>ODA</div>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip}>
@@ -311,14 +313,13 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       )}
       <div
         key={props.label}
-        // style={props.childrencontainerStyle}
         css={style.childrencontainer(
-          props.interactive,
+          itemLinkable,
           props.childrencontainerStyle
         )}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={() => handleClick()}
+        onClick={() => itemLinkable && handleClick()}
+        onMouseEnter={() => itemLinkable && setIsHovered(true)}
+        onMouseLeave={() => itemLinkable && setIsHovered(false)}
       >
         {props.children}
       </div>

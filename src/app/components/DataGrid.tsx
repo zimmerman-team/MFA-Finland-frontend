@@ -53,8 +53,6 @@ export interface DataGridProps {
   };
 }
 
-// todo: check if we actually need the "childrencontainerStyle" property
-
 export const DataGrid = (props: DataGridProps) => {
   const location = useLocation();
   const [width] = useWindowSize();
@@ -185,12 +183,13 @@ export const DataGrid = (props: DataGridProps) => {
             <>
               {!showSingleAreaCircle && <div css="width: 100%;height: 70px;" />}
               <ThematicAreas
-                aria-label="Visualisation displaying which thematic area has been worked on the most/has the most money funded to."
                 showOnlyViz
+                linkedLabels
                 selectedVizItemId={null}
                 setSelectedVizItem={() => null}
                 data={props.thematicAreasChartData}
                 showSingleCircle={showSingleAreaCircle}
+                aria-label="Visualisation displaying which thematic area has been worked on the most/has the most money funded to."
               />
             </>
           )}
@@ -248,12 +247,13 @@ export const DataGrid = (props: DataGridProps) => {
               <VizLoader loading={props.vizDataLoading.locations} />
             ) : (
               <Treemap
-                aria-label="Treemap visualisation displaying which region has the most euro's disbursed to."
-                label="locations"
                 height={230}
+                showSmTooltip
+                label="locations"
                 selectedVizItemId={null}
                 setSelectedVizItem={() => null}
                 data={props.locationsTreemapData}
+                aria-label="Treemap visualisation displaying which region has the most euro's disbursed to."
               />
             )}
           </GridWidget>
@@ -308,12 +308,13 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader loading={props.vizDataLoading.organisations} />
           ) : (
             <Treemap
-              aria-label="Treemap visualisation displaying which organisation type has the most euro's disbursed."
-              label="organisations"
               height={230}
+              showSmTooltip
+              label="organisations"
               selectedVizItemId={null}
               setSelectedVizItem={() => null}
               data={props.organisationsTreemapData}
+              aria-label="Treemap visualisation displaying which organisation type has the most euro's disbursed."
             />
           )}
         </GridWidget>

@@ -135,7 +135,7 @@ const itemlabeltextcardcss = [
   `,
   `
     top: -13%;
-    right: -38%;
+    right: -50%;
   `,
   ` 
     width: 153px;   
@@ -200,7 +200,7 @@ const itemlabeltextvizcss = [
   `,
   `
     top: -13%;
-    right: -38%;
+    right: -50%;
   `,
   ` 
     width: 153px;   
@@ -214,7 +214,11 @@ const itemlabeltextvizcss = [
   `,
 ];
 
-export const itemcirclelabelcss = (index: number, vizView?: boolean) => css`
+export const itemcirclelabelcss = (
+  index: number,
+  vizView?: boolean,
+  linkable?: boolean
+) => css`
   width: 105px;
   font-size: 11px;
   position: absolute;
@@ -222,6 +226,11 @@ export const itemcirclelabelcss = (index: number, vizView?: boolean) => css`
 
   &:after {
     ${vizView ? itemlabellinevizcss[index] : itemlabellinecardcss[index]}
+  }
+
+  &:hover {
+    cursor: ${linkable ? "pointer" : ""};
+    text-decoration: ${linkable ? "underline" : ""};
   }
 `;
 

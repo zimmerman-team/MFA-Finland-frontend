@@ -1,23 +1,21 @@
 import React from "react";
-import { useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
 import { Sunburst, SunburstPoint } from "react-vis";
-
-import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { getTotal } from "app/components/Charts/sunburst/common/tooltip/utils";
-import { SunburstTooltip } from "app/components/Charts/sunburst/common/tooltip";
 import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
+import {
+  SunburstTooltip,
+  SunburstTooltipContent,
+} from "app/components/Charts/sunburst/common/tooltip";
 
 export function SunburstVizSimplified(props: any) {
   const history = useHistory();
-  const [selectedFilters, setSelectedFilters] = useRecoilState(
-    selectedFilterAtom
-  );
   const [hoveredNode, setHoveredNode] = React.useState<SunburstPoint | null>(
     null
   );
-
-  const showSmTooltip = "ontouchstart" in document.documentElement;
+  const [clickedNode, setClickedNode] = React.useState<SunburstPoint | null>(
+    null
+  );
 
   return (
     <React.Fragment>
@@ -37,12 +35,8 @@ export function SunburstVizSimplified(props: any) {
           node: SunburstPoint,
           event: React.MouseEvent<HTMLElement>
         ) => {
-          if (node._children) {
-            props.setSelected(node);
-            props.setSelectedCount(node.size);
-          } else {
-            props.onSectorSelectChange(node.code);
-          }
+          setClickedNode(node);
+          setHoveredNode(null);
         }}
         onValueMouseOver={(
           node: SunburstPoint,
@@ -56,20 +50,25 @@ export function SunburstVizSimplified(props: any) {
           }
         }}
       >
-        {!showSmTooltip && <SunburstTooltip hoveredNode={hoveredNode} />}
+        <SunburstTooltip showOnlyTitle hoveredNode={hoveredNode} />
       </Sunburst>
-      {hoveredNode && showSmTooltip && (
+      {clickedNode && (
         <SmTooltipContainer
           showDrilldownBtn
           detailBtnLabel="Sector Detail"
-          close={() => setHoveredNode(null)}
+          close={() => setClickedNode(null)}
+          gotoDetail={() =>
+            history.push(
+              `/sectors/${clickedNode.code}${history.location.search}`
+            )
+          }
           drilldown={() => {
-            props.setSelected(hoveredNode);
-            props.setSelectedCount(getTotal(hoveredNode));
-            setHoveredNode(null);
+            props.setSelected(clickedNode);
+            props.setSelectedCount(getTotal(clickedNode));
+            setClickedNode(null);
           }}
         >
-          <SunburstTooltip hoveredNode={hoveredNode} />
+          <SunburstTooltipContent hoveredNode={clickedNode} />
         </SmTooltipContainer>
       )}
     </React.Fragment>

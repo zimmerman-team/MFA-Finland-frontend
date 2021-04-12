@@ -4,6 +4,7 @@ import { MUIDataTableOptions, MUIDataTableColumnDef } from "mui-datatables";
 import { LinkCell } from "app/components/Charts/table/common/cells/LinkCell";
 
 export interface DataProps {
+  ref: string;
   name: string;
   size: number;
   area: string;
@@ -25,6 +26,7 @@ export interface DataProps {
 export interface ThematicAreasProps {
   data: DataProps[];
   showOnlyViz: boolean;
+  linkedLabels?: boolean;
   showSingleCircle?: boolean;
   selectedVizItemId: string | number | null;
   setSelectedVizItem: (name: string | number | null) => void;
