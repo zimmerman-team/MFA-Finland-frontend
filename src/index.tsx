@@ -11,12 +11,10 @@ import reportWebVitals from "reportWebVitals";
 import * as _ from "styled-components/cssprop";
 import Providers from "app/Providers";
 import { App } from "app";
-import { Sunburstoe } from "app/components/Charts/sunburst/Test";
 
 ReactDOM.render(
   <Providers>
-    {/* <App /> */}
-    <Sunburstoe />
+    <App />
   </Providers>,
   document.getElementById("root")
 );

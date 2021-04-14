@@ -118,6 +118,7 @@ const style = {
       width?: number;
       height?: number;
       scale?: number;
+      placeContent?: string;
     }
   ) => css`
     display: flex;
@@ -135,6 +136,9 @@ const style = {
     transform: ${childrencontainerStyle?.scale
       ? `scale(${childrencontainerStyle.scale})`
       : "initial"};
+    place-content: ${childrencontainerStyle?.placeContent
+      ? childrencontainerStyle.placeContent
+      : "ïnitial"};
     * {
       pointer-events: ${interactive ? "all" : "none"};
     }
@@ -153,6 +157,7 @@ interface GridWidgetProps {
     width?: number;
     height?: number;
     scale?: number;
+    placeContent?: string;
   };
   disbursementsStatComponent?: FunctionComponent;
   // responsiveOrder?: number;

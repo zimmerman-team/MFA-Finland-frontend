@@ -53,11 +53,6 @@ export function SunburstViz(props: any) {
           }
         }}
       >
-        {hoveredNode && (
-          <Hint value={hoveredNode}>
-            When I grow up I want to be a big and beautiful label
-          </Hint>
-        )}
         {!showSmTooltip && <SunburstTooltip hoveredNode={hoveredNode} />}
       </Sunburst>
       {hoveredNode && showSmTooltip && (

@@ -206,23 +206,22 @@ export const DataGrid = (props: DataGridProps) => {
           childrencontainerStyle={{
             width: 100,
             height: 100,
+            placeContent: "center",
           }}
         >
           {props.vizDataLoading.sectors ||
           props.sectorsSunburstData.children.length === 0 ? (
             <VizLoader loading={props.vizDataLoading.sectors} />
           ) : (
-            <div>
-              <SunburstChartSimplified
-                sectorDrillDown=""
-                onZoomOut={() => null}
-                selectedVizItemId={null}
-                setSelectedVizItem={() => null}
-                data={props.sectorsSunburstData}
-                onSectorSelectChange={() => null}
-                activitiesCount={props.sectorsSunburstDataCount}
-              />
-            </div>
+            <SunburstChartSimplified
+              sectorDrillDown=""
+              onZoomOut={() => null}
+              selectedVizItemId={null}
+              setSelectedVizItem={() => null}
+              data={props.sectorsSunburstData}
+              onSectorSelectChange={() => null}
+              activitiesCount={props.sectorsSunburstDataCount}
+            />
           )}
         </GridWidget>
       </Grid>

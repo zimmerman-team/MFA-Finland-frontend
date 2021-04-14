@@ -8,7 +8,7 @@ export const containercssSimplified = css`
   //flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 32px;
+  //margin-top: 32px;
 
   div:nth-of-type(2) {
     z-index: 2;
