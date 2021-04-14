@@ -14,6 +14,7 @@ import { getFormattedPercentage } from "app/components/Charts/sunburst/common/to
 
 interface SunburstTooltipProps {
   containerId?: string;
+  showOnlyTitle?: boolean;
   hoveredNode: SunburstPoint | null;
 }
 
@@ -29,13 +30,19 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
       const containerBounds = container.getBoundingClientRect();
       setStyle({
         top: y - containerBounds.top + 40,
-        left: x - containerBounds.left - 150,
+        left: x - containerBounds.left - 100,
       });
     }
   }, [x, y, props.hoveredNode]);
 
   return props.hoveredNode ? (
-    <div css={tooltipcss} id="sunburst-tooltip" style={style}>
+    <div
+      css={`
+        ${tooltipcss}${props.showOnlyTitle ? "width: fit-content;" : ""}
+      `}
+      id="sunburst-tooltip"
+      style={style}
+    >
       <SunburstTooltipContent {...props} />
     </div>
   ) : null;
@@ -44,41 +51,51 @@ export const SunburstTooltip = (props: SunburstTooltipProps) => {
 export function SunburstTooltipContent(props: SunburstTooltipProps) {
   const cmsData = useCMSData({ returnData: true });
 
-  return props.hoveredNode ? (
-    <>
-      <div css={tooltiprowcss}>
-        <b>{props.hoveredNode.title}</b>
-      </div>
-      <div css="width: 100%;height: 30px;" />
-      <div css={tooltiprowcss}>
-        <div>
-          <b>
-            {get(cmsData, "viz.disbursed", "Disbursed")}{" "}
-            {getFormattedPercentage(props.hoveredNode.percentage)}
-          </b>
+  if (props.hoveredNode) {
+    if (props.showOnlyTitle) {
+      return (
+        <div css={tooltiprowcss}>
+          <b>{props.hoveredNode.title}</b>
         </div>
-        <div>
-          <b>
-            {formatLocale(
-              props.hoveredNode.disbursed || props.hoveredNode.size
-            )}
-          </b>
+      );
+    }
+    return (
+      <>
+        <div css={tooltiprowcss}>
+          <b>{props.hoveredNode.title}</b>
         </div>
-      </div>
-      <div css="width: 100%;height: 12px;" />
-      <div css={progressbarcontainercss}>
-        <div css={progressbarcss(props.hoveredNode.percentage)} />
-      </div>
-      <div css="width: 100%;height: 15px;" />
-      <div css={tooltiprowcss}>
-        <div>{get(cmsData, "viz.committed", "Committed")}</div>
-        <div>
-          {props.hoveredNode.committed
-            ? formatLocale(props.hoveredNode.committed)
-            : "NA"}
+        <div css="width: 100%;height: 30px;" />
+        <div css={tooltiprowcss}>
+          <div>
+            <b>
+              {get(cmsData, "viz.disbursed", "Disbursed")}{" "}
+              {getFormattedPercentage(props.hoveredNode.percentage)}
+            </b>
+          </div>
+          <div>
+            <b>
+              {formatLocale(
+                props.hoveredNode.disbursed || props.hoveredNode.size
+              )}
+            </b>
+          </div>
         </div>
-      </div>
-      <div css="width: 100%;height: 15px;" />
-    </>
-  ) : null;
+        <div css="width: 100%;height: 12px;" />
+        <div css={progressbarcontainercss}>
+          <div css={progressbarcss(props.hoveredNode.percentage)} />
+        </div>
+        <div css="width: 100%;height: 15px;" />
+        <div css={tooltiprowcss}>
+          <div>{get(cmsData, "viz.committed", "Committed")}</div>
+          <div>
+            {props.hoveredNode.committed
+              ? formatLocale(props.hoveredNode.committed)
+              : "NA"}
+          </div>
+        </div>
+        <div css="width: 100%;height: 15px;" />
+      </>
+    );
+  }
+  return null;
 }

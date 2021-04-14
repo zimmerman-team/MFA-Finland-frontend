@@ -13,6 +13,7 @@ const tabcss = (active: boolean) => css`
   padding: 10px;
   font-size: 14px;
   font-weight: bold;
+  white-space: nowrap;
   transition: background 0.2s ease-in-out;
   background: ${active ? PrimaryColor[0] : SecondaryColor[1]};
   &:hover {

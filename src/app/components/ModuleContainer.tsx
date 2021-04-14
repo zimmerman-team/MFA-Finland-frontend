@@ -27,11 +27,12 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
 
   const styles = {
     container: css`
+      width: 100%;
       display: flex;
       //background-color: white;
     `,
     gridContainer: css`
-      width: initial;
+      width: 100%;
       padding: 0 64px;
       position: relative;
       z-index: 1;
@@ -58,11 +59,11 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
   };
 
   return (
-    <div css={styles.container}>
+    <main id="main" css={styles.container}>
       <Grid container spacing={2} css={styles.gridContainer}>
         {props.children}
       </Grid>
       {isLandingOrDetail && !mobile && <PageFloatingButtons />}
-    </div>
+    </main>
   );
 };

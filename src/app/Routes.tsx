@@ -1,7 +1,6 @@
 //cc:application base#;application routes
 
 import React, { Suspense } from "react";
-import { useStoreRehydrated } from "easy-peasy";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { PageLoader } from "app/modules/common/page-loader";
 import { NoMatchPage } from "app/modules/common/no-match-page";
@@ -34,11 +33,6 @@ export function ModuleRoutes() {
   useUrlFilters();
   useInitialLoad();
   // useScrollToTop();
-
-  const isRehydrated = useStoreRehydrated();
-  if (!isRehydrated) {
-    return <PageLoader />;
-  }
 
   return (
     <Suspense fallback={<PageLoader />}>

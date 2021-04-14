@@ -2,11 +2,11 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Hint, Sunburst, SunburstPoint } from "react-vis";
 import { getTotal } from "app/components/Charts/sunburst/common/tooltip/utils";
+import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
 import {
   SunburstTooltip,
   SunburstTooltipContent,
 } from "app/components/Charts/sunburst/common/tooltip";
-import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
 
 export function SunburstViz(props: any) {
   const history = useHistory();

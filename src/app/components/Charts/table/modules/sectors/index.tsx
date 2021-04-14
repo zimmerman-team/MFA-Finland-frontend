@@ -11,6 +11,9 @@ import {
   SectorsDataTableOptions,
 } from "app/components/Charts/table/data";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
+import { MoreActions } from "app/components/Charts/table/common/toolbar/MoreButton";
+import { MoreButton } from "app/components/Charts/bar/data";
+import { useRouteMatch } from "react-router-dom";
 // import { downloadActivitiesCSV } from "app/utils/downloadActivitiesCSV";
 // import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 
@@ -65,6 +68,7 @@ export function SectorsFragmentTable(props: DataTableProps) {
   }
 
   React.useEffect(() => setShownData(props.data), [props.data]);
+  const { params } = useRouteMatch();
 
   return (
     <DataTable
@@ -73,6 +77,7 @@ export function SectorsFragmentTable(props: DataTableProps) {
       options={{
         ...SectorsDataTableOptions,
         count: shownData.length,
+        customToolbar: () => <MoreButton params={params} />,
         // onDownload: () => {
         //   let filters = getAPIFormattedFilters(selectedFilters);
         //   if (
@@ -98,14 +103,14 @@ export function SectorsFragmentTable(props: DataTableProps) {
           dataIndex: number,
           expandedRows?: MUIDataTableIsRowCheck
         ) => {
-          //@ts-ignore
+          // @ts-ignore
           return shownData[dataIndex].children;
         },
         renderExpandableRow: (
           rowData: string[],
           rowMeta: { dataIndex: number; rowIndex: number }
         ) => {
-          //@ts-ignore
+          // @ts-ignore
           const childData = shownData[rowMeta.rowIndex].children;
           if (childData) {
             return (

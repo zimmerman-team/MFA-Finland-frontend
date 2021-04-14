@@ -1,5 +1,6 @@
 import React from "react";
 import { Popover } from "@material-ui/core";
+import { css } from "styled-components/macro";
 
 export function LanguagePopover(
   id: string | undefined,
@@ -11,6 +12,34 @@ export function LanguagePopover(
     (arg0: string): void;
   }
 ) {
+  const removeButtonStyling = css`
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 8px 24px;
+    font: inherit;
+    cursor: pointer;
+
+    font-family: Finlandica;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.15px;
+    color: #2e4982;
+
+    :hover {
+      background-color: #ecf1fa;
+    }
+  `;
+
+  const popover = css`
+    .MuiPaper-root {
+      box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
+      border-radius: 10px;
+    }
+  `;
+
   return (
     <Popover
       id={id}
@@ -25,13 +54,15 @@ export function LanguagePopover(
         vertical: "top",
         horizontal: "center",
       }}
+      css={popover}
     >
       <div
         css={`
           display: flex;
           flex-direction: column;
           background-color: white;
-          padding: 16px;
+          //padding: 16px;
+          padding: 22px 0;
 
           div {
             user-select: none;
@@ -48,20 +79,27 @@ export function LanguagePopover(
           }
         `}
       >
-        <div
+        <button
+          type="button"
+          css={removeButtonStyling}
+          // tabIndex={0}
+          aria-label="Switch language to Finnish"
           onClick={() => {
             setLanguage("en");
           }}
         >
           English
-        </div>
-        <div
+        </button>
+        <button
+          type="button"
+          css={removeButtonStyling}
+          aria-label="Switch language to Finnish"
           onClick={() => {
             setLanguage("fi");
           }}
         >
           Finnish
-        </div>
+        </button>
         {/* <div
           onClick={() => {
             setLanguage("se");

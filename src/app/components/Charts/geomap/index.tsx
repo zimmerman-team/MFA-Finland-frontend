@@ -35,6 +35,7 @@ const GeomapContainerStyle = (isLocked: boolean) => {
 
     * > path:hover {
       fill: ${!isLocked && ProjectPalette.primary.main};
+      cursor: ${!isLocked && "pointer"};
     }
   `;
 };
@@ -120,6 +121,7 @@ export function Geomap({ geoData }) {
   return (
     <div css={GeomapContainerStyle(isLocked)}>
       <ResponsiveChoropleth
+        aria-label="Geographical map which displays the disbursed amount in euro's per country"
         data={geoData}
         features={geojson.features} // Providing a country only view is possible by changing the features, see this:
         margin={mobile ? marginMobile : mobile}

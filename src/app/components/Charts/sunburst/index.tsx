@@ -89,7 +89,7 @@ export function SunburstChart(props: SunburstChartProps) {
 
   React.useLayoutEffect(() => {
     if (width < 992) {
-      setVizSize(width * 0.5 - 24);
+      setVizSize(width * 0.7 - 24);
     }
   }, [width]);
 

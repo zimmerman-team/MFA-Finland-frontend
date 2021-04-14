@@ -6,7 +6,7 @@ import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
 import { useCMSData } from "app/hooks/useCMSData";
-import { useMeasure, useUnmount } from "react-use";
+import { useMeasure, useUnmount, useDebounce } from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { PrimaryColor } from "app/theme";
@@ -42,10 +42,14 @@ import {
 } from "app/state/recoil/atoms";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
+import { MoreButton } from "app/components/Charts/bar/data";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
+  const [searchKey, setSearchKey] = React.useState(
+    localStorage.getItem("searchValue") || ""
+  );
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   const [activeTab, setActiveTab] = React.useState("chart");
   const [expandedVizItem, setExpandedVizItem] = React.useState<
@@ -177,15 +181,18 @@ export default function VizModule() {
 
   function loadMoreProjects() {
     const filters = getAPIFormattedFilters(selectedFilters);
-    projectsAction({
-      addOnData: true,
-      values: {
-        filters,
-        page: projectListPage,
-        lang: currentLanguage,
-      },
-    });
-    setProjectListPage(projectListPage + 1);
+    if (projectsCountData > projectListPage * 10) {
+      projectsAction({
+        addOnData: true,
+        values: {
+          filters,
+          search: searchKey,
+          lang: currentLanguage,
+          page: projectListPage + 1,
+        },
+      });
+      setProjectListPage(projectListPage + 1);
+    }
   }
 
   function onSelectChange(e: {
@@ -266,11 +273,26 @@ export default function VizModule() {
     setPrevTab(get(params, "tab", ""));
   }
 
+  function getActiveVizData() {
+    const viz = get(params, "tab", "");
+    const data = {
+      oda: odaBarChartData,
+      "thematic-areas": thematicAreasChartData,
+      sectors: sectorsSunburstData,
+      "countries-regions": locationsTreemapData,
+      organisations: organisationsTreemapData,
+      "budget-lines": budgetLinesBarChartData,
+      projects: projectsData,
+    };
+    return get(data, viz, []);
+  }
+
   React.useEffect(() => {
     const root = document.getElementById("root");
     if (root) {
       root.style.background = "#fff";
     }
+    setTimeout(() => localStorage.removeItem("searchValue"), 500);
   }, []);
 
   React.useEffect(() => {
@@ -280,6 +302,7 @@ export default function VizModule() {
     setExpandedVizItem(null);
     onTabChange(prevTab);
     setActiveTab("chart");
+    setProjectListPage(0);
 
     const filters = getAPIFormattedFilters(selectedFilters);
     switch (get(params, "tab", "")) {
@@ -370,6 +393,9 @@ export default function VizModule() {
           projectsAction({
             values: {
               filters,
+              page: 0,
+              search: searchKey,
+              lang: currentLanguage,
             },
           });
         }
@@ -417,6 +443,23 @@ export default function VizModule() {
     setActiveTab(sectorDrillDown.length > 0 ? "table" : "chart");
   }, [sectorDrillDown]);
 
+  useDebounce(
+    () => {
+      const filters = getAPIFormattedFilters(selectedFilters);
+      setProjectListPage(0);
+      projectsAction({
+        values: {
+          filters,
+          page: 0,
+          search: searchKey,
+          lang: currentLanguage,
+        },
+      });
+    },
+    500,
+    [searchKey]
+  );
+
   React.useEffect(() => {
     if (activeTab === "chart") {
       setSectorDrillDown("");
@@ -457,7 +500,7 @@ export default function VizModule() {
       />
       <Grid
         item
-        sm={12}
+        xs={12}
         css={`
           z-index: 1;
         `}
@@ -468,11 +511,12 @@ export default function VizModule() {
         container
         id="image-container"
         css={`
-          padding: 0 68px;
           z-index: 1;
-
+          padding: 0 68px;
           height: calc(100% - 88px);
+
           @media (max-width: 992px) {
+            width: 100%;
             padding: 0 12px;
           }
         `}
@@ -482,12 +526,18 @@ export default function VizModule() {
           css={`
             background: #fff;
           `}
+          xs={12}
           sm={isProjects ? 12 : 9}
           md={isProjects ? 12 : 8}
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          {!isProjects && activeTab !== "table" && <FloatingButtons />}
+          {!isProjects && activeTab !== "table" && (
+            <FloatingButtons
+              data={getActiveVizData()}
+              viz={get(params, "tab", "")}
+            />
+          )}
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (
@@ -509,6 +559,7 @@ export default function VizModule() {
                   onArrowSelectChange={onZoomInLevelSelectorChange}
                   odaBudgetLinesChartData={odaBudgetLinesChartData}
                   odaBudgetLinesChartLoading={odaBudgetLinesChartLoading}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -530,6 +581,10 @@ export default function VizModule() {
                 <div
                   css={`
                     padding: 24px 24px 24px 0;
+
+                    @media (max-width: 600px) {
+                      max-height: 100%;
+                    }
                   `}
                 >
                   <DataTable
@@ -538,7 +593,12 @@ export default function VizModule() {
                         ? thematicAreasChartData.slice(0, 1)
                         : thematicAreasChartData
                     }
-                    options={thematicAreasDataTableOptions}
+                    options={{
+                      ...thematicAreasDataTableOptions,
+                      customToolbar: () => (
+                        <MoreButton data={getActiveVizData()} params={params} />
+                      ),
+                    }}
                     columns={getTranslatedCols(
                       thematicAreasDataTableColumns,
                       cmsData
@@ -568,6 +628,7 @@ export default function VizModule() {
                   activitiesCount={sectorsSunburstDataCount}
                   onSectorSelectChange={onSectorSelectChange}
                   clearSectorDrillDown={() => setSectorDrillDown("")}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -582,6 +643,7 @@ export default function VizModule() {
                   scrollableHeight={height - 56}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -596,6 +658,7 @@ export default function VizModule() {
                   data={organisationsTreemapData}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -613,14 +676,17 @@ export default function VizModule() {
                   onSelectChange={onSelectChange}
                   selectedVizItemId={expandedVizItem}
                   setSelectedVizItem={setExpandedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
             <Route path="/viz/projects">
               <ProjectsListModule
+                searchKey={searchKey}
                 projects={projectsData}
                 count={projectsCountData}
                 loadMore={loadMoreProjects}
+                setSearchKey={setSearchKey}
                 loading={vizDataLoading.projects}
               />
             </Route>
@@ -629,6 +695,7 @@ export default function VizModule() {
         {!isProjects && (
           <Grid
             item
+            xs={12}
             sm={3}
             md={4}
             lg={4}

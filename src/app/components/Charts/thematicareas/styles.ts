@@ -84,23 +84,23 @@ export const itemcirclecss = (
   `;
 };
 
-const itemlabellinecss = [
+const itemlabellinecardcss = [
   `
     display: inline-block;
-    left: 53%;
-    top: 45px;
+    left: 68%;
+    top: 55%;
     content: "";
-    height: 25px;
+    height: 155%;
     position: absolute;
-    transform: rotate(-32deg);
+    transform: rotate(-57deg);
     border-right: 1px solid #2E4982;
   `,
   `
     display: inline-block;
-    left: -23%;
+    left: 3%;
     content: "";
-    width: 60px;
-    bottom: -32px;
+    width: 30%;
+    bottom: -50%;
     position: absolute;
     transform: rotate(-70deg);
     border-bottom: 1px solid #2E4982;
@@ -109,51 +109,128 @@ const itemlabellinecss = [
     display: inline-block;
     left: 19%;
     content: "";
-    height: 25px;
+    height: 17px;
     bottom: 48px;
     position: absolute;
-    transform: rotate(-10deg);
+    transform: rotate(-36deg);
     border-right: 1px solid #2E4982;
   `,
   `
     display: inline-block;
-    top: -50%;
-    right: -15%;
+    top: -64%;
+    right: 27%;
     content: "";
-    width: 35px;
+    width: 62px;
     position: absolute;
-    transform: rotate(-65deg);
+    transform: rotate(-54deg);
     border-top: 1px solid #2E4982;
   `,
 ];
 
-const itemlabeltextcss = [
+const itemlabeltextcardcss = [
   `
-    left: 0;
-    top: -35%;
+    width: 150px;
+    left: -44%;
+    top: -27%;
   `,
   `
-    top: 0%;
-    right: -60%;
+    top: -13%;
+    right: -50%;
   `,
-  `    
-    right: 0%;
-    bottom: -40%;
+  ` 
+    width: 153px;   
+    right: -40%;
+    bottom: -25%;
   `,
   `
-    bottom: 0%;
-    left: -60%;
+    width: 144px;
+    bottom: -22%;
+    left: -44%;
   `,
 ];
 
-export const itemcirclelabelcss = (index: number) => css`
+const itemlabellinevizcss = [
+  `
+    display: inline-block;
+    left: 68%;
+    top: 95%;
+    content: "";
+    height: 265%;
+    position: absolute;
+    transform: rotate(-46deg);
+    border-right: 1px solid #2E4982;
+  `,
+  `
+    display: inline-block;
+    left: -1%;
+    content: "";
+    width: 36%;
+    bottom: -30px;
+    position: absolute;
+    transform: rotate(-70deg);
+    border-bottom: 1px solid #2E4982;
+  `,
+  `
+    display: inline-block;
+    left: 19%;
+    content: "";
+    height: 35px;
+    bottom: 25px;
+    position: absolute;
+    transform: rotate(-36deg);
+    border-right: 1px solid #2E4982;
+  `,
+  `
+    display: inline-block;
+    top: -122%;
+    right: 21%;
+    content: "";
+    width: 69px;
+    position: absolute;
+    transform: rotate(-60deg);
+    border-top: 1px solid #2E4982;
+  `,
+];
+
+const itemlabeltextvizcss = [
+  `
+    width: 150px;
+    left: -44%;
+    top: -27%;
+  `,
+  `
+    top: -13%;
+    right: -50%;
+  `,
+  ` 
+    width: 153px;   
+    right: -40%;
+    bottom: -25%;
+  `,
+  `
+    width: 144px;
+    bottom: -22%;
+    left: -44%;
+  `,
+];
+
+export const itemcirclelabelcss = (
+  index: number,
+  vizView?: boolean,
+  linkable?: boolean
+) => css`
   width: 105px;
-  font-size: 10px;
+  font-size: 11px;
   position: absolute;
-  ${itemlabeltextcss[index]}
+  ${vizView ? itemlabeltextvizcss[index] : itemlabeltextcardcss[index]}
 
   &:after {
-    ${itemlabellinecss[index]}
+    ${vizView ? itemlabellinevizcss[index] : itemlabellinecardcss[index]}
+  }
+
+  &:hover {
+    cursor: ${linkable ? "pointer" : ""};
+    text-decoration: ${linkable ? "underline" : ""};
   }
 `;
 

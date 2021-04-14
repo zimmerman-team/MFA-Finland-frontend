@@ -1,8 +1,9 @@
 import React from "react";
+import filter from "lodash/filter";
 import { css } from "styled-components/macro";
 import { Grid, Typography } from "@material-ui/core";
 import { Card } from "app/components/FilterPanel/Card";
-import { FilterProps } from "app/components/FilterPanel/data";
+import { FilterOption, FilterProps } from "app/components/FilterPanel/data";
 import { Header } from "app/components/FilterPanel/Card/Header";
 import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
 
@@ -29,15 +30,41 @@ export const createStyles = (props: FilterProps) => {
 
 export const Filter = (props: FilterProps) => {
   const styles = createStyles(props);
+  const [searchKey, setSearchKey] = React.useState("");
+  const [options, setOptions] = React.useState(props.data);
 
   function formatSelectedValues() {
     return props.selection.join(" ");
   }
 
+  React.useEffect(() => {
+    if (searchKey === "") {
+      setOptions(props.data);
+    } else {
+      const fvalue = searchKey.toLowerCase();
+      const updatedOptions: FilterOption[] = [];
+      (props.data || []).forEach((item: FilterOption) => {
+        const cat = item.name.toLowerCase().indexOf(fvalue) > -1;
+        if (cat) {
+          updatedOptions.push(item);
+        } else if (item.children) {
+          const children = filter(
+            item.children,
+            (child: any) => child.name.toLowerCase().indexOf(fvalue) > -1
+          );
+          if (children.length > 0) {
+            updatedOptions.push({ ...item, children });
+          }
+        }
+      });
+      setOptions(updatedOptions);
+    }
+  }, [searchKey]);
+
   return (
     <Grid container item direction="column" css={styles.container}>
-      <Header {...props} />
-      <Card {...props} />
+      <Header {...props} searchKey={searchKey} setSearchKey={setSearchKey} />
+      <Card {...props} data={options} />
       {!props.isPeriod && (
         <Typography variant="caption" css={styles.selected}>
           {formatSelectedValues()}

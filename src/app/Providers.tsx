@@ -1,15 +1,16 @@
 // cc:application base#;application providers
-import React, { ReactNode } from "react";
-import { ThemeProvider } from "@material-ui/core/styles";
+import React from "react";
 import theme from "app/theme";
-import { BrowserRouter as Router } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-import { StoreProvider } from "easy-peasy";
 import { store } from "app/state/store";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { BrowserRouter as Router } from "react-router-dom";
+import { PageLoader } from "app/modules/common/page-loader";
+import { StoreProvider, useStoreRehydrated } from "easy-peasy";
 import { Container, StylesProvider, CssBaseline } from "@material-ui/core";
 
 type ProviderProps = {
-  children?: ReactNode;
+  children?: React.ReactNode;
 };
 
 function Providers(props: ProviderProps) {
@@ -20,20 +21,21 @@ function Providers(props: ProviderProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <StoreProvider store={store}>
-            {/* react router */}
-            <Container
-              maxWidth="lg"
-              css={`
-                min-height: 100%;
-                padding: 0 32px;
+            <AppContainer>
+              <Container
+                maxWidth="lg"
+                css={`
+                  min-height: 100%;
+                  padding: 0 32px;
 
-                @media (max-width: 992px) {
-                  padding: 0;
-                }
-              `}
-            >
-              <Router>{props.children}</Router>
-            </Container>
+                  @media (max-width: 992px) {
+                    padding: 0;
+                  }
+                `}
+              >
+                <Router>{props.children}</Router>
+              </Container>
+            </AppContainer>
           </StoreProvider>
         </ThemeProvider>
       </StylesProvider>
@@ -42,3 +44,11 @@ function Providers(props: ProviderProps) {
 }
 
 export default Providers;
+
+function AppContainer(props: ProviderProps) {
+  const isRehydrated = useStoreRehydrated();
+  if (!isRehydrated) {
+    return <PageLoader />;
+  }
+  return <React.Fragment>{props.children}</React.Fragment>;
+}

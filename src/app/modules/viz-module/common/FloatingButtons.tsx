@@ -10,8 +10,15 @@ import JSPDF from "jspdf";
 // @ts-ignore
 import domtoimage from "dom-to-image";
 import { useLocation } from "react-router-dom";
+import { CSVLink } from "react-csv";
+import { vizDataToCSV } from "app/utils/vizDataToCSV";
 
-export const FloatingButtons = () => {
+interface FloatingButtonsProps {
+  data: any;
+  viz: string;
+}
+
+export const FloatingButtons = (props: FloatingButtonsProps) => {
   const [moreActive, setMoreActive] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -80,6 +87,7 @@ export const FloatingButtons = () => {
       <IconButton
         css={styles.moreIconButton}
         onClick={() => setMoreActive(!moreActive)}
+        aria-label="Toggle more options"
       >
         {moreActive ? (
           <Close css={styles.moreIcon} />
@@ -91,6 +99,7 @@ export const FloatingButtons = () => {
         <>
           <IconButton css={styles.shareIconButton}>
             <LightTooltip
+              aria-label="Share"
               arrow
               interactive
               placement="left"
@@ -103,12 +112,18 @@ export const FloatingButtons = () => {
             </LightTooltip>
           </IconButton>
           <IconButton
+            aria-label="Download"
             css={styles.downloadIconButton}
             onClick={(e) => handleDownloadClick(e)}
           >
             <CloudDownload css={styles.downloadIcon} />
           </IconButton>
-          <DownloadPopover anchorEl={anchorEl} handleClose={handleClose} />
+          <DownloadPopover
+            viz={props.viz}
+            data={props.data}
+            anchorEl={anchorEl}
+            handleClose={handleClose}
+          />
         </>
       )}
     </div>
@@ -116,6 +131,8 @@ export const FloatingButtons = () => {
 };
 
 interface DownloadPopoverProps {
+  data: any;
+  viz: string;
   anchorEl: HTMLButtonElement | null;
   // eslint-disable-next-line @typescript-eslint/ban-types
   handleClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void;
@@ -193,7 +210,9 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
     );
   }
 
-  function downloadCSV() {}
+  function downloadCSV() {
+    return vizDataToCSV(props.data, props.viz);
+  }
 
   function downloadPNG() {
     // viz-floating-buttons
@@ -282,7 +301,9 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
           Download
         </Typography>
         <Typography variant="body2" css={styles.listItem}>
-          Data (CSV)
+          <CSVLink target="_blank" id="download-csv" {...downloadCSV()}>
+            Data (CSV)
+          </CSVLink>
         </Typography>
         <Typography
           variant="body2"

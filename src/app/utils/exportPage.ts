@@ -4,9 +4,10 @@ import domtoimage from "dom-to-image";
 
 export function exportPage(type: string) {
   const node = document.getElementById("root");
+  const filter = (n: any) => n.id !== "page-ornament";
   if (type === "jpg") {
     domtoimage
-      .toJpeg(node, { bgcolor: "#f8f8f8" })
+      .toJpeg(node, { filter, bgcolor: "#f8f8f8" })
       .then((dataUrl: any) => {
         const link = document.createElement("a");
         link.download = "download.jpg";
@@ -30,7 +31,7 @@ export function exportPage(type: string) {
       });
   } else if (type === "pdf") {
     domtoimage
-      .toPng(node, { bgcolor: "#f8f8f8" })
+      .toPng(node, { filter, bgcolor: "#f8f8f8" })
       .then((dataUrl: any) => {
         const htmlImage = new Image();
         htmlImage.src = dataUrl;
@@ -45,7 +46,10 @@ export function exportPage(type: string) {
       });
   } else {
     domtoimage
-      .toPng(node, { bgcolor: "#f8f8f8" })
+      .toPng(node, {
+        filter,
+        bgcolor: "#f8f8f8",
+      })
       .then((dataUrl: any) => {
         const link = document.createElement("a");
         link.download = "download.png";

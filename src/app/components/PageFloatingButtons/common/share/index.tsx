@@ -35,15 +35,15 @@ export function ShareTooltip() {
     <div css={containercss}>
       <Typography variant="body2">Share the link via</Typography>
       <div css={iconscontainercss}>
-        <FacebookShareButton url={url} quote={title}>
+        <FacebookShareButton type="button" autoFocus url={url} quote={title}>
           <FacebookIcon size={38} round />
         </FacebookShareButton>
 
-        <LinkedinShareButton url={url} title={title}>
+        <LinkedinShareButton type="button" url={url} title={title}>
           <LinkedinIcon size={38} round />
         </LinkedinShareButton>
 
-        <TwitterShareButton url={url} title={title}>
+        <TwitterShareButton type="button" url={url} title={title}>
           <TwitterIcon size={38} round />
         </TwitterShareButton>
       </div>

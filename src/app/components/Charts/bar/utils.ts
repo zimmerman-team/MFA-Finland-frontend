@@ -6,9 +6,9 @@ import { budgetLineKeys } from "./data";
 
 /* eslint-disable no-plusplus */
 const ranges = [
-  { divider: 1e9, suffix: "Bn", abbr: "BLN" },
-  { divider: 1e6, suffix: "MM", abbr: "MLN" },
-  { divider: 1e3, suffix: "k", abbr: "K" },
+  { divider: 1e9, suffix: "Bn", abbr: "€ BLN" },
+  { divider: 1e6, suffix: "MM", abbr: "€ MLN" },
+  { divider: 1e3, suffix: "k", abbr: "€ K" },
 ];
 
 export function getRange(data: any, fields: string[]) {

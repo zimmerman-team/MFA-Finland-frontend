@@ -1,27 +1,42 @@
 import React from "react";
+import max from "lodash/max";
 import { PrimaryColor } from "app/theme";
 import { ResponsiveLine } from "@nivo/line";
+import { LineNodes } from "app/components/Charts/bar/common/line/node";
 import { LineProps } from "app/components/Charts/bar/common/line/data";
 
 export function Line(props: LineProps) {
+  const maxValue: number =
+    max(props.data[0].data.map((item: any) => item.y)) || 0;
+  const Points = (pprops: any) => {
+    return (
+      <LineNodes
+        {...pprops}
+        hovered={props.hovered}
+        selected={props.selected}
+      />
+    );
+  };
   return (
     <ResponsiveLine
       data={props.data}
-      margin={{ top: 5, right: 50, bottom: 50, left: 50 }}
+      margin={{ top: 10, right: 60, bottom: 60, left: 50 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
         min: 0,
-        max: "auto",
+        max: maxValue + maxValue * 0.1,
       }}
-      layers={["axes", "grid"]}
-      enableGridY
+      pointSize={6}
+      colors={["#D495A7"]}
+      layers={["axes", "lines", Points]}
+      enableGridY={false}
       enableGridX={false}
       axisLeft={null}
       axisBottom={null}
       axisRight={{
         tickSize: 0,
-        tickValues: 5,
+        tickValues: 6,
         tickPadding: 15,
         tickRotation: 0,
       }}

@@ -10,7 +10,7 @@ export function SDGviz(props: SDGvizProps) {
   );
 
   return (
-    <Grid container spacing={2}>
+    <Grid item container spacing={2}>
       {props.data.map((d: SDGvizItemProps) => (
         <Grid item key={d.number} xs={3} sm={2} md={2} lg={2} xl={2}>
           <SDGvizItem {...d} setHoveredNode={setHoveredNode} />

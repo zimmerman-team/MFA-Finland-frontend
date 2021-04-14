@@ -26,8 +26,10 @@ import {
 } from "app/components/Charts/thematicareas/styles";
 import { formatLocale } from "app/utils/formatLocale";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
+import { useHistory } from "react-router-dom";
 
 export function ThematicAreas(props: ThematicAreasProps) {
+  const history = useHistory();
   const maxValue = get(maxBy(props.data, "value"), "value", 0);
 
   if (props.showSingleCircle) {
@@ -114,7 +116,20 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
               <div />
             </div>
-            <div css={itemcirclelabelcss(index)}>
+            <div
+              css={itemcirclelabelcss(
+                index,
+                !props.showOnlyViz,
+                props.linkedLabels
+              )}
+              onClick={() => {
+                if (props.linkedLabels) {
+                  history.push(
+                    `/thematic-area/${item.ref}/${history.location.search}`
+                  );
+                }
+              }}
+            >
               {item.area}
               {props.showOnlyViz && (
                 <div css="margin-top: 5px;">

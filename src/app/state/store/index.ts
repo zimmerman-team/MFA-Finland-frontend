@@ -169,7 +169,7 @@ const storeContent: StoreModel = {
   // sync variables
   syncSearch: persist(syncSearch),
   filtersUpdated: persist(filtersUpdated),
-  projectListPage: persist(projectListPage),
+  projectListPage,
 };
 
 export const store = createStore(storeContent);
