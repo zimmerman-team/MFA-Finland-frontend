@@ -16,48 +16,70 @@ export function SDGvizItem(props: CompProps) {
     selectedFilterAtom
   );
 
+  function handleMouseEnter() {
+    if (!props.disabled) {
+      props.setHoveredNode({
+        name: props.name,
+        number: props.number,
+        icon: props.icon,
+        disabled: props.disabled,
+        disbursed: props.disbursed,
+        committed: props.committed,
+      });
+    }
+  }
+
   return (
-    <div
+    <button
+      aria-label={`SDG: ${props.number} - ${props.name}`}
       css={`
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
         width: 100%;
         height: 100%;
         opacity: ${props.disabled ? 0.1 : 1};
         cursor: ${props.disabled ? "default" : "pointer"};
+        :hover {
+          cursor: ${props.disabled ? "default" : "pointer"};
+        }
 
         > img {
           width: 100%;
           height: 100%;
         }
-      `}
-      onMouseEnter={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (!props.disabled) {
-          props.setHoveredNode({
-            name: props.name,
-            number: props.number,
-            icon: props.icon,
-            disabled: props.disabled,
-            disbursed: props.disbursed,
-            committed: props.committed,
-          });
+        :focus {
+          outline: 2px solid rgba(0, 0, 0, 0.1);
         }
+      `}
+      onMouseEnter={(
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      ) => {
+        handleMouseEnter();
       }}
-      onMouseLeave={(event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      onFocus={() => handleMouseEnter()}
+      onMouseLeave={(
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      ) => {
         if (!props.disabled) {
           props.setHoveredNode(null);
         }
       }}
       onClick={() => {
-        setSelectedFilters({
-          ...selectedFilters,
-          sdg: [...selectedFilters.sdg, props.number.toString()],
-        });
-        setTimeout(
-          () => history.push(`/viz/projects${history.location.search}`),
-          200
-        );
+        if (!props.disabled) {
+          setSelectedFilters({
+            ...selectedFilters,
+            sdg: [...selectedFilters.sdg, props.number.toString()],
+          });
+          setTimeout(
+            () => history.push(`/viz/projects${history.location.search}`),
+            200
+          );
+        }
       }}
     >
       <img src={props.icon} alt={`${props.number} - ${props.name}`} />
-    </div>
+    </button>
   );
 }

@@ -224,6 +224,10 @@ export function SearchComponent() {
   }
 
   function onClickAway(event: React.MouseEvent<Document>) {
+    close();
+  }
+
+  function close() {
     if (isFocused) {
       clearSearch();
       setIsFocused(false);
@@ -238,9 +242,9 @@ export function SearchComponent() {
   return (
     <SearchComponentLayout
       value={value}
+      close={close}
       cmsData={cmsData}
       loading={loading}
-      close={onClickAway}
       loadMore={loadMore}
       setValue={setValue}
       targetRef={targetRef}

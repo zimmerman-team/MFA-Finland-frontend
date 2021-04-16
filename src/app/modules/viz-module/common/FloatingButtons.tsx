@@ -87,6 +87,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
       <IconButton
         css={styles.moreIconButton}
         onClick={() => setMoreActive(!moreActive)}
+        aria-label="Toggle more options"
       >
         {moreActive ? (
           <Close css={styles.moreIcon} />
@@ -98,6 +99,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
         <>
           <IconButton css={styles.shareIconButton}>
             <LightTooltip
+              aria-label="Share"
               arrow
               interactive
               placement="left"
@@ -110,6 +112,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
             </LightTooltip>
           </IconButton>
           <IconButton
+            aria-label="Download"
             css={styles.downloadIconButton}
             onClick={(e) => handleDownloadClick(e)}
           >

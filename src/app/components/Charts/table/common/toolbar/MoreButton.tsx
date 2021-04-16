@@ -6,16 +6,19 @@ import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
 import { css } from "styled-components/macro";
 import { tooltipCreateStyles } from "app/components/PageFloatingButtons/styles";
 import { Typography, IconButton, Popover, makeStyles } from "@material-ui/core";
-import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
-import { downloadActivitiesCSV } from "app/utils/downloadActivitiesCSV";
-import { useRecoilState } from "recoil";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
+import JSPDF from "jspdf";
+// @ts-ignore
+import domtoimage from "dom-to-image";
+import { useLocation } from "react-router-dom";
+import { CSVLink } from "react-csv";
+import { vizDataToCSV } from "app/utils/vizDataToCSV";
 
 interface FloatingButtonsProps {
-  searchKey: string;
+  data: any;
+  viz: string;
 }
 
-export const FloatingButtons = (props: FloatingButtonsProps) => {
+export const MoreActions = (props: FloatingButtonsProps) => {
   const [moreActive, setMoreActive] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -31,14 +34,16 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
 
   const styles = {
     container: css`
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      position: relative;
+      display: inline-block;
+      //flex-direction: column;
+      //align-items: flex-end;
+      //position: relative;
     `,
     moreIconButton: css`
-      width: 38px;
-      height: 38px;
+      //margin-top: 24px;
+      //margin-right: 24px;
+      width: 32px;
+      height: 32px;
       background-color: white;
       filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12));
       z-index: 3;
@@ -48,12 +53,13 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
     `,
     shareIconButton: css`
       position: absolute;
-      width: 38px;
-      height: 38px;
-      top: 52px;
+      width: 32px;
+      height: 32px;
+      top: 72px;
+      right: 0px;
       background-color: white;
       filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12));
-      z-index: 3;
+      z-index: 6;
     `,
     shareIcon: css`
       fill: ${PrimaryColor[0]};
@@ -61,12 +67,13 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
     `,
     downloadIconButton: css`
       position: absolute;
-      width: 38px;
-      height: 38px;
-      top: 100px;
+      top: 120px;
+      width: 32px;
+      height: 32px;
+      right: 0px;
       background-color: ${PrimaryColor[0]};
       filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12));
-      z-index: 3;
+      z-index: 6;
     `,
     downloadIcon: css`
       fill: white;
@@ -76,9 +83,8 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
   const classes = tooltipCreateStyles();
 
   return (
-    <div id="viz-floating-buttons" css={styles.container}>
+    <div id="table-more-button" css={styles.container}>
       <IconButton
-        aria-label="Toggle more options"
         css={styles.moreIconButton}
         onClick={() => setMoreActive(!moreActive)}
       >
@@ -90,7 +96,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
       </IconButton>
       {moreActive && (
         <>
-          <IconButton css={styles.shareIconButton} aria-label="Share">
+          <IconButton css={styles.shareIconButton}>
             <LightTooltip
               arrow
               interactive
@@ -106,14 +112,16 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
           <IconButton
             css={styles.downloadIconButton}
             onClick={(e) => handleDownloadClick(e)}
-            aria-label="Download"
           >
             <CloudDownload css={styles.downloadIcon} />
           </IconButton>
           <DownloadPopover
+            // viz={props.viz}
+            // data={props.data}
+            viz={props.viz}
+            data={props.data}
             anchorEl={anchorEl}
             handleClose={handleClose}
-            searchKey={props.searchKey}
           />
         </>
       )}
@@ -122,14 +130,14 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
 };
 
 interface DownloadPopoverProps {
-  searchKey: string;
+  data: any;
+  viz: string;
   anchorEl: HTMLButtonElement | null;
   // eslint-disable-next-line @typescript-eslint/ban-types
   handleClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void;
 }
 
 const DownloadPopover = (props: DownloadPopoverProps) => {
-  const [selectedFilters] = useRecoilState(selectedFilterAtom);
   const open = Boolean(props.anchorEl);
   const styles = {
     container: css`
@@ -141,6 +149,7 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
     title: css`
       line-height: 17px;
       padding: 8px 15px;
+      font-family: "Finlandica";
     `,
     listItem: css`
       line-height: 17px;
@@ -152,6 +161,7 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
       }
     `,
   };
+
   const popoverStyles = makeStyles({
     paper: {
       boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
@@ -159,15 +169,16 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
       transform: "translateX(-9px)",
     },
   });
-  const classes = popoverStyles();
 
   function downloadCSV() {
-    const filters = getAPIFormattedFilters(selectedFilters);
-    downloadActivitiesCSV(filters, undefined, props.searchKey);
+    return vizDataToCSV(props.data, props.viz);
   }
+
+  const classes = popoverStyles();
 
   return (
     <Popover
+      // id={id}
       open={open}
       anchorEl={props.anchorEl}
       onClose={props.handleClose}
@@ -185,8 +196,10 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
         <Typography variant="subtitle2" css={styles.title}>
           Download
         </Typography>
-        <Typography variant="body2" css={styles.listItem} onClick={downloadCSV}>
-          Data (CSV)
+        <Typography variant="body2" css={styles.listItem}>
+          <CSVLink target="_blank" id="download-csv" {...downloadCSV()}>
+            Data (CSV)
+          </CSVLink>
         </Typography>
       </div>
     </Popover>

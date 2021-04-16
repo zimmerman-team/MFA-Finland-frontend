@@ -99,6 +99,9 @@ export function AppBar() {
               </IconButton>
             )}
           </Hidden>
+          <a css={appbarStyle.skipLink} href="#main" tabIndex={0}>
+            Skip to main
+          </a>
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
@@ -126,7 +129,7 @@ export function AppBar() {
             {/* ---------------------------------------------- */}
             {/* searchfield */}
             <Hidden xsDown>
-              <SearchComponent />
+              <SearchComponent tabIndex={2} />
             </Hidden>
 
             <Hidden smUp>
@@ -146,7 +149,10 @@ export function AppBar() {
 
             {/* ---------------------------------------------- */}
             {/* lang switch */}
-            <div
+            <button
+              role="button"
+              aria-label="Switch language"
+              aria-pressed="false"
               aria-describedby={id}
               onClick={handleClick}
               css={appbarStyle.langSwitchContainer}
@@ -163,7 +169,7 @@ export function AppBar() {
               <Hidden xsDown>
                 <div css={appbarStyle.selectedLanguages}>{currentLanguage}</div>
               </Hidden>
-            </div>
+            </button>
 
             {LanguagePopover(id, open, anchorEl, handleClose, setLanguage)}
 

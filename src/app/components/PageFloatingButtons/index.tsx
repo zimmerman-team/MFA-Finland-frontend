@@ -41,9 +41,15 @@ export function PageFloatingButtons() {
     <div css={containercss}>
       <div css={buttonscontainercss}>
         <LightTooltip placement="left" title="Go to map">
-          <div css={buttoncss} onClick={scrollToMap}>
+          <button
+            type="button"
+            tabIndex={0}
+            aria-label="Go to map"
+            css={buttoncss}
+            onClick={scrollToMap}
+          >
             <IconMap />
-          </div>
+          </button>
         </LightTooltip>
         <LightTooltip
           arrow
@@ -53,10 +59,16 @@ export function PageFloatingButtons() {
             tooltip: classes.tooltip,
           }}
           title={<ShareTooltip />}
+          aria-pressed="false"
         >
-          <div css={buttoncss}>
+          <button
+            tabIndex={0}
+            type="button"
+            aria-label="Share this view"
+            css={buttoncss}
+          >
             <IconShare />
-          </div>
+          </button>
         </LightTooltip>
         <LightTooltip
           arrow
@@ -67,9 +79,15 @@ export function PageFloatingButtons() {
           }}
           title={<ExportTooltip />}
         >
-          <div css={buttoncss}>
+          <button
+            tabIndex={0}
+            type="button"
+            aria-label="Go to map"
+            css={buttoncss}
+            aria-pressed="false"
+          >
             <IconDownload />
-          </div>
+          </button>
         </LightTooltip>
       </div>
     </div>

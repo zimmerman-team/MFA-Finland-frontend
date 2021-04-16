@@ -27,16 +27,26 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
 
   const styles = {
     container: css`
+      width: 100%;
       display: flex;
       //background-color: white;
     `,
     gridContainer: css`
-      width: initial;
+      width: 100%;
       padding: 0 64px;
       position: relative;
       z-index: 1;
       @media (max-width: 992px) {
         padding: 0 12px;
+      }
+
+      @media (max-width: 600px) {
+        margin: 0px;
+        padding: 0 4px;
+      }
+
+      .MuiGrid-spacing-xs-2 {
+        border: 1px solid red;
       }
     `,
     iconContainer: css`
@@ -58,11 +68,11 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
   };
 
   return (
-    <div css={styles.container}>
+    <main id="main" css={styles.container}>
       <Grid container spacing={2} css={styles.gridContainer}>
         {props.children}
       </Grid>
       {isLandingOrDetail && !mobile && <PageFloatingButtons />}
-    </div>
+    </main>
   );
 };

@@ -63,13 +63,45 @@ const style = {
       }
     }
   `,
-  widgetLabel: css`
+  widgetLabel: (linkable?: boolean) => css`
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
     color: ${ProjectPalette.primary.main};
-    //opacity: 0.9;
     line-height: 1;
+    cursor: ${linkable ? "pointer" : ""};
+
+    &:focus {
+      text-decoration: underline;
+    }
+  `,
+  widgetContainer: (
+    height: string | undefined,
+    isHovered: boolean,
+    label: string | undefined
+  ) => css`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border-radius: 32px;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 24px 32px 32px 32px;
+    height: ${height || "100%"};
+    // height: ${height || "375px"};
+    min-height: 375px;
+    //overflow: hidden;
+    box-shadow: ${isHovered
+      ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
+      : ""};
+    transition: box-shadow 0.3s ease-in-out;
+
+    @media (max-width: 960px) {
+      border-radius: 16px;
+      padding: 16px 16px 16px 16px;
+      width: initial;
+      height: 100%;
+    }
   `,
   widgeTooltip: css`
     margin-left: 12px;
@@ -83,46 +115,24 @@ const style = {
       fill: ${PrimaryColor[3]};
     }
   `,
-  widgetContainer: (height: string | undefined, isHovered: boolean) => css`
-    width: 100%;
-    //height: 100%;
-    display: flex;
-    border-radius: 32px;
-    flex-direction: column;
-    background-color: #ffffff;
-    padding: 24px 32px 32px 32px;
-    height: ${height || "375px"};
-    min-height: 375px;
-    overflow: hidden;
-    box-shadow: ${isHovered
-      ? "0 3px 6px rgba(46, 73, 130, 0.16), 0 3px 6px rgba(46, 73, 130, 0.23);"
-      : ""};
-    transition: box-shadow 0.3s ease-in-out;
-
-    @media (max-width: 960px) {
-      border-radius: 16px;
-      padding: 16px 16px 16px 16px;
-      width: initial;
-      height: initial;
-    }
-  `,
   link: css`
     font-size: 10px;
     line-height: 12px;
     color: ${PrimaryColor[0]};
   `,
   childrencontainer: (
-    interactive?: boolean,
+    itemLinkable?: boolean,
     childrencontainerStyle?: {
       paddingTop?: number;
       width?: number;
       height?: number;
       scale?: number;
+      placeContent?: string;
     }
   ) => css`
     display: flex;
     flex-direction: column;
-    cursor: ${interactive ? "" : "pointer"};
+    cursor: ${itemLinkable ? "pointer" : "default"};
     padding-top: ${childrencontainerStyle?.paddingTop
       ? `${childrencontainerStyle.paddingTop}px`
       : "initial"};
@@ -135,8 +145,14 @@ const style = {
     transform: ${childrencontainerStyle?.scale
       ? `scale(${childrencontainerStyle.scale})`
       : "initial"};
+    place-content: ${childrencontainerStyle?.placeContent
+      ? childrencontainerStyle.placeContent
+      : "ïnitial"};
     * {
-      pointer-events: ${interactive ? "all" : "none"};
+      pointer-events: ${itemLinkable ? "none" : "all"};
+    }
+    #viz-scroller {
+      pointer-events: auto;
     }
   `,
 };
@@ -153,6 +169,7 @@ interface GridWidgetProps {
     width?: number;
     height?: number;
     scale?: number;
+    placeContent?: string;
   };
   disbursementsStatComponent?: FunctionComponent;
   // responsiveOrder?: number;
@@ -201,23 +218,46 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     searchFilterString = `?${searchFilterString}`;
   }
 
+  function handleClick() {
+    if (props.link) {
+      history.push(`${props.link}${searchFilterString}`);
+    }
+  }
+
+  const itemLinkable =
+    props.link === "/viz/oda" || props.link === "/viz/budget-lines";
+
   return (
     <div
       css={style.widgetContainer(
         props.height,
-        isHovered && !props.interactive && props.link !== undefined
+        isHovered && !props.interactive && props.link !== undefined,
+        props.label
       )}
     >
       <header css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <div css={style.widgetLabel}>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => handleClick()}
+            aria-label={`Go to ${props.label} detail page`}
+            onKeyPress={(e) => {
+              if (e.code === "Enter") {
+                handleClick();
+              }
+            }}
+            css={style.widgetLabel(props.link !== undefined)}
+            onMouseEnter={() => !itemLinkable && setIsHovered(true)}
+            onMouseLeave={() => !itemLinkable && setIsHovered(false)}
+          >
             {!odaWidget
               ? props.label
               : get(cmsData, "general.overview", "Overview Disbursements")}
           </div>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
-              <Tooltip title={props.tooltip}>
+              <Tooltip title={props.tooltip} interactive tabIndex={0}>
                 <InfoOutlinedIcon css={style.widgetTooltipIcon} />
               </Tooltip>
             </div>
@@ -266,7 +306,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       </header>
       {odaWidget && (
         <div css="display: flex;align-items: center;">
-          <div css={style.widgetLabel}>ODA</div>
+          <div css={style.widgetLabel(false)}>ODA</div>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip}>
@@ -278,18 +318,13 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       )}
       <div
         key={props.label}
-        // style={props.childrencontainerStyle}
         css={style.childrencontainer(
-          props.interactive,
+          itemLinkable,
           props.childrencontainerStyle
         )}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={() => {
-          if (props.link) {
-            history.push(`${props.link}${searchFilterString}`);
-          }
-        }}
+        onClick={() => itemLinkable && handleClick()}
+        onMouseEnter={() => itemLinkable && setIsHovered(true)}
+        onMouseLeave={() => itemLinkable && setIsHovered(false)}
       >
         {props.children}
       </div>

@@ -4,7 +4,7 @@ export interface SearchComponentLayoutProps {
   cmsData: any;
   width: number;
   value: string;
-  close: Function;
+  close: () => void;
   loading: boolean;
   setValue: (value: string) => void;
   resultType: string;

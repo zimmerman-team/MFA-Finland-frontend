@@ -3,14 +3,13 @@ import get from "lodash/get";
 import { Link } from "react-router-dom";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
-import { MoreHoriz } from "@material-ui/icons";
 import { useCMSData } from "app/hooks/useCMSData";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { SearchField } from "app/components/AppBar/common/Search/common/SearchField";
-import { FloatingButtons } from "./common/FloatingButtons";
+import { FloatingButtons } from "app/components/Charts/modules/projects/common/FloatingButtons";
 
 interface ProjectsListModuleProps {
   count: number;
@@ -46,15 +45,12 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
       //height: max-content;
       //overflow: auto;
     `,
-    title: css`
-      margin-top: 34px;
-      //margin-bottom: 24px;
-    `,
+    title: css``,
     titleContainer: css`
       display: flex;
+      margin: 24px 0;
+      align-items: center;
       justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 24px;
     `,
     iconContainer: css`
       gap: 16px;
@@ -127,6 +123,12 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
     [props.loading]
   );
 
+  React.useEffect(() => {
+    if (props.searchKey.length > 0 && !isFocused) {
+      setIsFocused(true);
+    }
+  }, [props.searchKey]);
+
   return (
     <div css={styles.container}>
       <div css={styles.titleContainer}>
@@ -148,6 +150,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
             }
           />
           <IconButton
+            aria-label="Search"
             css={styles.iconButton}
             onClick={() => setIsFocused(true)}
           >
@@ -160,7 +163,12 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
         {props.projects.map((project: ProjectType, index: number) => {
           if (index === props.projects.length - 1) {
             return (
-              <span ref={bottomItemRef} key={project.code}>
+              <span
+                ref={bottomItemRef}
+                key={project.code}
+                role="button"
+                tabIndex={0}
+              >
                 <ListItem {...project} cmsData={cmsData} />
               </span>
             );
@@ -188,6 +196,13 @@ const ListItem = (project: ProjectType) => {
         transition: box-shadow 0.3s ease-in-out;
         cursor: pointer;
       }
+
+      &&:focus {
+        box-shadow: 0 3px 6px rgba(46, 73, 130, 0.16),
+          0 3px 6px rgba(46, 73, 130, 0.23);
+        //transition: box-shadow 0.3s ease-in-out;
+        cursor: pointer;
+      }
     `,
     name: css`
       margin-bottom: 12px;
@@ -212,7 +227,7 @@ const ListItem = (project: ProjectType) => {
         <Typography variant="body2" css={styles.description}>
           {project.description.split(".")[0]}
         </Typography>
-        <Grid container item xs={10}>
+        <Grid container item xs={12} sm={10}>
           <LabelValueGridItem
             label={get(project.cmsData, "viz.startdate", "Planned start date")}
             value={project.startDate}
@@ -287,7 +302,7 @@ const LabelValueGridItem = (props: {
   };
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={6} sm={3}>
       <Typography variant="subtitle2" css={styles.label}>
         {props.label}
       </Typography>

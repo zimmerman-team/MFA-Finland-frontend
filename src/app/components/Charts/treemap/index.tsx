@@ -66,7 +66,10 @@ export function Treemap(props: TreemapProps) {
   }
 
   function onNodeClick(node: any, e: any, doSmDrilldown?: boolean) {
-    if (showStandardTooltip || doSmDrilldown) {
+    if (
+      (!props.showSmTooltip || doSmDrilldown) &&
+      (showStandardTooltip || doSmDrilldown)
+    ) {
       const children = get(node.data, "orgs", []);
       if (children.length > 0) {
         setRenderedNodes({
@@ -81,6 +84,25 @@ export function Treemap(props: TreemapProps) {
     } else {
       setSmTooltip(node);
     }
+  }
+
+  function getTooltip() {
+    if (props.showSmTooltip) {
+      return (e: any) => (
+        <div
+          css={`
+            color: #2e4063;
+            font-size: 14px;
+          `}
+        >
+          <b>{e.node.data.name}</b>
+        </div>
+      );
+    }
+    if (!showStandardTooltip) {
+      return () => null;
+    }
+    return TreemapTooltip;
   }
 
   React.useEffect(() => {
@@ -111,7 +133,7 @@ export function Treemap(props: TreemapProps) {
           : ""
       }
     >
-      <Grid item sm={12} md={2} lg={1}>
+      <Grid item sm={12} md={2} lg={3}>
         {drilldownId && (
           <div css={backbuttoncss} onClick={goBack}>
             Back
@@ -129,7 +151,7 @@ export function Treemap(props: TreemapProps) {
             )}
             onClick={onNodeClick}
             // @ts-ignore
-            tooltip={!showStandardTooltip ? () => null : TreemapTooltip}
+            tooltip={getTooltip()}
             theme={{
               ...TreemapVizModel.theme,
               tooltip: {

@@ -57,47 +57,6 @@ export function VizTabs() {
     title: css`
       margin-right: 12px;
     `,
-    background: css`
-      //left: 0;
-      //top: 136px;
-      //width: 100vw;
-      //height: 88px;
-      //position: absolute;
-      //background: #dde4ef;
-      //
-      //@media (max-width: 992px) {
-      //  height: 120px;
-      //}
-    `,
-    // tabContainer: css`
-    //   //right: 0;
-    //   //bottom: 11px;
-    //   //position: absolute;
-    //   //position: relative;
-    //   //top: -21px;
-    //   //margin-left: auto;
-    //   //width: fit-content;
-    //   //height: 35px;
-    //
-    //   @media (max-width: 992px) {
-    //     margin-left: 36px;
-    //     overflow-x: scroll;
-    //     width: unset;
-    //     white-space: nowrap;
-    //   }
-    //   > a {
-    //     border-right: 1px solid #dde4ef;
-    //   }
-    //
-    //   > a:first-of-type {
-    //     border-radius: 15px 0px 0px 0px;
-    //   }
-    //
-    //   > a:last-of-type {
-    //     border-right-style: none;
-    //     border-radius: 0px 15px 0px 0px;
-    //   }
-    // `,
     tabGrid: css`
       display: flex;
       justify-content: flex-end;
@@ -168,23 +127,6 @@ export function VizTabs() {
           ))}
         </ul>
       </Grid>
-      {/* <Grid */}
-      {/*  item */}
-      {/*  sm={12} */}
-      {/*  md={12} */}
-      {/*  lg={8} */}
-      {/*  xl={8} */}
-      {/*  css={` */}
-      {/*    //position: relative; */}
-      {/*    z-index: 1; */}
-      {/*  `} */}
-      {/* > */}
-      {/*  <div css={styles.tabContainer}> */}
-      {/*    {vizTabs.map((tab: TabProps) => ( */}
-      {/*      <RouteTab key={tab.name} {...tab} /> */}
-      {/*    ))} */}
-      {/*  </div> */}
-      {/* </Grid> */}
     </Grid>
   );
 }

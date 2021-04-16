@@ -32,6 +32,9 @@ export function VizSidePanel(props: VizSidePanelProps) {
       @media (max-width: 992px) {
         top: 260px;
       }
+      @media (max-width: 767px) {
+        display: none;
+      }
     `,
   };
   const hasColor =
@@ -107,6 +110,10 @@ export function VizSidePanel(props: VizSidePanelProps) {
 
             ::-webkit-scrollbar-corner {
               background-color: transparent;
+            }
+
+            @media (max-width: 600px) {
+              max-height: 100%;
             }
           `}
         >

@@ -141,8 +141,12 @@ export const Drawer = () => {
                   edge="start"
                   color="inherit"
                   aria-label="menu"
-                  href="https://www.facebook.com"
                   target="_blank"
+                  href={get(
+                    cmsData,
+                    "menu.facebooklink",
+                    "https://www.facebook.com"
+                  )}
                 >
                   {/*<IconFacebook css={drawerStyle.GreyIcon} />*/}
                   <img
@@ -157,8 +161,12 @@ export const Drawer = () => {
                 <IconButton
                   color="inherit"
                   aria-label="menu"
-                  href="https://www.facebook.com"
                   target="_blank"
+                  href={get(
+                    cmsData,
+                    "menu.youtubelink",
+                    "https://www.youtube.com"
+                  )}
                 >
                   {/*<IconYoutube css={drawerStyle.GreyIcon} />*/}
                   <img
@@ -173,8 +181,12 @@ export const Drawer = () => {
                 <IconButton
                   color="inherit"
                   aria-label="menu"
-                  href="https://www.linkedin.com"
                   target="_blank"
+                  href={get(
+                    cmsData,
+                    "menu.linkedinlink",
+                    "https://www.linkedin.com"
+                  )}
                 >
                   {/*<IconLinkedin css={drawerStyle.GreyIcon} />*/}
                   <img
@@ -190,8 +202,12 @@ export const Drawer = () => {
                   edge="end"
                   color="inherit"
                   aria-label="menu"
-                  href="https://www.twitter.com"
                   target="_blank"
+                  href={get(
+                    cmsData,
+                    "menu.twitterlink",
+                    "https://www.twitter.com"
+                  )}
                 >
                   {/*<IconTwitter css={drawerStyle.GreyIcon} />*/}
                   <img

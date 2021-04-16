@@ -2,7 +2,7 @@ import { css } from "styled-components/macro";
 import { PrimaryColor, SecondaryColor } from "app/theme";
 
 export const tooltipcss = css`
-  z-index: 2;
+  z-index: 9999;
   width: 300px;
   padding: 15px;
   display: flex;

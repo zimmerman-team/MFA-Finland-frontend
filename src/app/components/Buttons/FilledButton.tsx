@@ -44,6 +44,10 @@ export const FilledButton = (props: GeneralButtonProps) => {
           background: ${PrimaryColor[3]};
           color: ${theme.palette.common.white};
         }
+
+        &:focus {
+          filter: brightness(85%);
+        }
       `}
     >
       {props.label}

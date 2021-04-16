@@ -10,6 +10,7 @@ import {
 } from "app/components/VizSidePanel/common/item/styles";
 import IconButton from "@material-ui/core/IconButton";
 import { ArrowDropDown } from "@material-ui/icons";
+import { useKeyPressEvent } from "react-use";
 
 interface VizSidePanelItemPropsProps extends VizSidePanelItemProps {
   vizType: string;
@@ -29,6 +30,26 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
     props.vizType !== "sectors" &&
     props.vizType !== "countries-regions" &&
     props.vizType !== "organisations";
+
+  function handleClick() {
+    if (isSectorOROrgORLocation) {
+      if (props.children && props.children.length > 0) {
+        props.setSelected(props.id);
+      }
+    } else if (!props.isChild) {
+      if (props.children) {
+        if (props.expanded) {
+          props.setExpanded(null);
+        } else {
+          props.setExpanded(props.id);
+        }
+      }
+      if (!props.children) {
+        props.setSelected(props.id);
+      }
+    }
+  }
+
   return (
     <Grid
       item
@@ -55,22 +76,12 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
             ? "cursor: pointer;"
             : ""}
         `}
-        onClick={() => {
-          if (isSectorOROrgORLocation) {
-            if (props.children && props.children.length > 0) {
-              props.setSelected(props.id);
-            }
-          } else if (!props.isChild) {
-            if (props.children) {
-              if (props.expanded) {
-                props.setExpanded(null);
-              } else {
-                props.setExpanded(props.id);
-              }
-            }
-            if (!props.children) {
-              props.setSelected(props.id);
-            }
+        role="button"
+        tabIndex={0}
+        onClick={() => handleClick()}
+        onKeyPress={(e) => {
+          if (e.code === "Enter") {
+            handleClick();
           }
         }}
       >
@@ -104,6 +115,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
           `}
         >
           <Typography
+            component="p"
             color="textPrimary"
             variant="subtitle2"
             css={`

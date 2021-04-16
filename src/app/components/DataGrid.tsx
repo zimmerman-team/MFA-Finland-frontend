@@ -22,6 +22,7 @@ import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "app/components/Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 import { useWindowSize } from "app/hooks/useWindowSize";
+import { ResponsiveChoropleth } from "@nivo/geo";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -51,8 +52,6 @@ export interface DataGridProps {
     geo: boolean;
   };
 }
-
-// todo: check if we actually need the "childrencontainerStyle" property
 
 export const DataGrid = (props: DataGridProps) => {
   const location = useLocation();
@@ -165,6 +164,7 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader loading={props.vizDataLoading.oda} />
           ) : (
             <BarChart
+              aria-label="Bar chart displaying the disbursed amount of euro's per year"
               height={250}
               vizCompData={[]}
               data={props.odaBarChartData}
@@ -199,10 +199,12 @@ export const DataGrid = (props: DataGridProps) => {
               {!showSingleAreaCircle && <div css="width: 100%;height: 70px;" />}
               <ThematicAreas
                 showOnlyViz
+                linkedLabels
                 selectedVizItemId={null}
                 setSelectedVizItem={() => null}
                 data={props.thematicAreasChartData}
                 showSingleCircle={showSingleAreaCircle}
+                aria-label="Visualisation displaying which thematic area has been worked on the most/has the most money funded to."
               />
             </>
           )}
@@ -221,23 +223,23 @@ export const DataGrid = (props: DataGridProps) => {
           childrencontainerStyle={{
             width: 100,
             height: 100,
+            placeContent: "center",
           }}
         >
           {props.vizDataLoading.sectors ||
           props.sectorsSunburstData.children.length === 0 ? (
             <VizLoader loading={props.vizDataLoading.sectors} />
           ) : (
-            <div>
-              <SunburstChartSimplified
-                sectorDrillDown=""
-                onZoomOut={() => null}
-                selectedVizItemId={null}
-                setSelectedVizItem={() => null}
-                data={props.sectorsSunburstData}
-                onSectorSelectChange={() => null}
-                activitiesCount={props.sectorsSunburstDataCount}
-              />
-            </div>
+            <SunburstChartSimplified
+              aria-label="Visualisation displaying which thematic area has been worked on the most/has the most money funded to."
+              sectorDrillDown=""
+              onZoomOut={() => null}
+              selectedVizItemId={null}
+              setSelectedVizItem={() => null}
+              data={props.sectorsSunburstData}
+              onSectorSelectChange={() => null}
+              activitiesCount={props.sectorsSunburstDataCount}
+            />
           )}
         </GridWidget>
       </Grid>
@@ -259,11 +261,13 @@ export const DataGrid = (props: DataGridProps) => {
               <VizLoader loading={props.vizDataLoading.locations} />
             ) : (
               <Treemap
-                label="locations"
                 height={230}
+                showSmTooltip
+                label="locations"
                 selectedVizItemId={null}
                 setSelectedVizItem={() => null}
                 data={props.locationsTreemapData}
+                aria-label="Treemap visualisation displaying which region has the most euro's disbursed to."
               />
             )}
           </GridWidget>
@@ -318,11 +322,13 @@ export const DataGrid = (props: DataGridProps) => {
             <VizLoader loading={props.vizDataLoading.organisations} />
           ) : (
             <Treemap
-              label="organisations"
               height={230}
+              showSmTooltip
+              label="organisations"
               selectedVizItemId={null}
               setSelectedVizItem={() => null}
               data={props.organisationsTreemapData}
+              aria-label="Treemap visualisation displaying which organisation type has the most euro's disbursed."
             />
           )}
         </GridWidget>
@@ -364,10 +370,13 @@ export const DataGrid = (props: DataGridProps) => {
         item
         xs={12}
         sm={6}
-        md={4}
+        md={6}
         lg={4}
         css={`
           @media (max-width: 960px) {
+            order: 1;
+          }
+          @media (max-width: 1440px) {
             order: 1;
           }
         `}
@@ -390,7 +399,7 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           // todo: create responsive solution for height
-          height="510px"
+          // height="510px"
           tooltip="lorem ipsum"
           childrencontainerStyle={{ paddingTop: 33 }}
           label={get(cmsData, "general.sdgs", "SDGs")}
@@ -406,10 +415,13 @@ export const DataGrid = (props: DataGridProps) => {
         item
         xs={12}
         sm={6}
-        md={4}
+        md={6}
         lg={4}
         css={`
           @media (max-width: 960px) {
+            order: 1;
+          }
+          @media (max-width: 1440px) {
             order: 1;
           }
         `}
@@ -437,6 +449,9 @@ export const DataGrid = (props: DataGridProps) => {
           lg={12}
           css={`
             @media (max-width: 960px) {
+              order: 2;
+            }
+            @media (max-width: 1440px) {
               order: 2;
             }
           `}
@@ -470,10 +485,6 @@ export const DataGrid = (props: DataGridProps) => {
             )}
           </GridWidget>
         </Grid>
-      </Hidden>
-
-      <Hidden smDown>
-        <div css="width: 100%; height: 100px;" />
       </Hidden>
     </React.Fragment>
   );

@@ -2,21 +2,24 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import get from "lodash/get";
+import { Link } from "react-router-dom";
 import { css } from "styled-components/macro";
+import { TriangleIcon } from "app/assets/TriangleIcon";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import { linearprogresscss } from "app/components/AppBar/common/Search/style";
+import { SearchResultItem } from "app/components/AppBar/common/Search/common/SearchResultItem";
+import { SearchResultNavigation } from "app/components/AppBar/common/Search/common/SearchResultNavigation";
 import {
   ResultModel,
   NavResultsModel,
 } from "app/components/AppBar/common/Search/data";
-import { linearprogresscss } from "app/components/AppBar/common/Search/style";
-import { TriangleIcon } from "app/assets/TriangleIcon";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import { SearchResultItem } from "app/components/AppBar/common/Search/common/SearchResultItem";
-import { SearchResultNavigation } from "app/components/AppBar/common/Search/common/SearchResultNavigation";
 
 interface SearchResultsProps {
   cmsData: any;
   width: number;
+  value: string;
   loading: boolean;
+  close: () => void;
   resultType: string;
   hasMoreOfType: boolean;
   handleResultClick: any;
@@ -40,6 +43,13 @@ const containercss = css`
   @media (max-width: 992px) {
     width: calc(100vw - 135px);
   }
+`;
+
+const projectslinkcss = css`
+  width: 100%;
+  display: flex;
+  padding: 0 24px;
+  justify-content: flex-end;
 `;
 
 const resultscss = css`
@@ -89,6 +99,19 @@ export const SearchResults = (props: SearchResultsProps) => {
       <div css={linearprogresscss(600, props.loading)}>
         <LinearProgress />
       </div>
+      {props.resultType === "Projects" && renderedResults.length > 0 && (
+        <div css={projectslinkcss}>
+          <Link
+            to="/viz/projects"
+            onClick={() => {
+              localStorage.setItem("searchValue", props.value);
+              props.close();
+            }}
+          >
+            Go to projects list
+          </Link>
+        </div>
+      )}
       <div css={resultscss}>
         {renderedResults.map((resultItem: ResultModel, index: number) => (
           <SearchResultItem

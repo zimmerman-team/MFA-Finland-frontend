@@ -31,6 +31,7 @@ export const SearchField = (props: Props) => {
   const unfocusedWidth = props.smallWidth ? props.smallWidth : "144px";
   return (
     <StyledInput
+      aria-label="Search in the whole application"
       css={`
         width: ${props.isFocused ? "600px" : unfocusedWidth};
         input {
@@ -45,6 +46,7 @@ export const SearchField = (props: Props) => {
           width: ${props.isFocused ? "calc(100vw - 165px)" : "144px"};
         }
       `}
+      inputProps={{ "aria-label": "Search in application" }}
       value={props.value}
       data-cy="search-field"
       onChange={(e) => props.setValue(e.target.value)}

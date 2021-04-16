@@ -1,12 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Sunburst, SunburstPoint } from "react-vis";
+import { Hint, Sunburst, SunburstPoint } from "react-vis";
 import { getTotal } from "app/components/Charts/sunburst/common/tooltip/utils";
+import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
 import {
   SunburstTooltip,
   SunburstTooltipContent,
 } from "app/components/Charts/sunburst/common/tooltip";
-import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
 
 export function SunburstViz(props: any) {
   const history = useHistory();
@@ -25,6 +25,7 @@ export function SunburstViz(props: any) {
         width={props.size}
         height={props.size}
         animation={{ damping: 20, stiffness: 300 }}
+        getLabel={(d) => d.name}
         style={{
           stroke: "#343249",
           strokeWidth: 0.5,

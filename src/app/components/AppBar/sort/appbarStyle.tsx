@@ -68,6 +68,12 @@ export const appbarStyle = {
     }
   `,
   langSwitchContainer: css`
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,6 +108,19 @@ export const appbarStyle = {
 
     @media (max-width: 600px) {
       font-size: 13px;
+    }
+  `,
+  skipLink: css`
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000000;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+
+    :focus {
+      top: 0;
     }
   `,
 };

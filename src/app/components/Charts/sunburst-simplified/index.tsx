@@ -11,10 +11,10 @@ import { getSelectedItemData } from "app/components/Charts/sunburst/utils";
 import { SunburstVizSimplified } from "app/components/Charts/sunburst-simplified/common/viz";
 import { InnerVizStatSimplified } from "app/components/Charts/sunburst-simplified/common/innervizstat";
 import { containercssSimplified } from "app/components/Charts/sunburst-simplified/styles";
+import Grid from "@material-ui/core/Grid";
+import { backbuttoncss } from "../sunburst/common/innervizstat/styles";
 
 export function SunburstChartSimplified(props: SunburstChartProps) {
-  // const { width } = useWindowSize();
-  // const [vizSize, setVizSize] = React.useState(600);
   const [selectedCount, setSelectedCount] = React.useState(0);
   const [localData, setLocalData] = React.useState(props.data);
   const [selected, setSelected] = React.useState({ name: "", code: " " });
@@ -86,12 +86,6 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
     }
   }, [props.selectedVizItemId]);
 
-  // React.useLayoutEffect(() => {
-  //   if (width < 600) {
-  //     setVizSize(width - 24);
-  //   }
-  // }, [width]);
-
   function normalizeData(data: any) {
     return {
       title: "activities",
@@ -134,17 +128,78 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
   }
 
   return (
-    <div css={containercssSimplified} id="sunburst-container">
-      <InnerVizStatSimplified
-        count={selected.name !== "" ? selectedCount : props.activitiesCount}
-      />
-      <SunburstVizSimplified
-        size={240}
-        setSelected={onArcClick}
-        data={normalizeData(localData)}
-        setSelectedCount={setSelectedCount}
-        onSectorSelectChange={props.onSectorSelectChange}
-      />
-    </div>
+    <Grid container>
+      <Grid id="sunburst-back" item xs={12} sm={3} md={3} lg={3}>
+        {prevSelections.length > 0 && (
+          <div css={backbuttoncss} onClick={goBack}>
+            Back
+          </div>
+        )}
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={12}
+        lg={12}
+        css={`
+          display: flex;
+          max-width: calc(100% + 19px);
+        `}
+      >
+        <div css={containercssSimplified} id="sunburst-container">
+          <InnerVizStatSimplified
+            count={selected.name !== "" ? selectedCount : props.activitiesCount}
+          />
+          <SunburstVizSimplified
+            size={220}
+            setSelected={onArcClick}
+            data={normalizeData(localData)}
+            setSelectedCount={setSelectedCount}
+            onSectorSelectChange={props.onSectorSelectChange}
+          />
+        </div>
+        <div
+          css={`
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+            margin-left: 6px;
+          `}
+        >
+          {localData.children.map((item: any) => {
+            return (
+              <div
+                css={`
+                  display: flex;
+                  margin-bottom: 6px;
+                `}
+              >
+                <span
+                  css={`
+                    ::before {
+                      content: "";
+                      display: inline-block;
+                      width: 8px;
+                      height: 8px;
+                      margin-right: 8px;
+                      border-radius: 30px;
+                      background: ${item.color};
+                      border: 0.5px solid #323232;
+                    }
+                    min-width: 0;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                  `}
+                >
+                  {item.title}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </Grid>
+    </Grid>
   );
 }

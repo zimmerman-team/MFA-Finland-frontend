@@ -43,11 +43,14 @@ import {
 } from "app/state/recoil/atoms";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
+import { MoreButton } from "app/components/Charts/bar/data";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
-  const [searchKey, setSearchKey] = React.useState("");
+  const [searchKey, setSearchKey] = React.useState(
+    localStorage.getItem("searchValue") || ""
+  );
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   const [activeTab, setActiveTab] = React.useState("chart");
   const [expandedVizItem, setExpandedVizItem] = React.useState<
@@ -155,7 +158,7 @@ export default function VizModule() {
     (actions) => actions.odaBudgetLinesChart.clear
   );
   const odaBudgetLinesChartData = useStoreState((state) =>
-    get(state.odaBudgetLinesChart, "datscroa.vizData", [])
+    get(state.odaBudgetLinesChart, "data.vizData", [])
   );
   const odaBudgetLinesChartLoading = useStoreState(
     (state) => state.odaBudgetLinesChart.loading
@@ -293,6 +296,7 @@ export default function VizModule() {
     if (root) {
       root.style.background = "#fff";
     }
+    setTimeout(() => localStorage.removeItem("searchValue"), 500);
   }, []);
 
   React.useEffect(() => {
@@ -492,25 +496,13 @@ export default function VizModule() {
         } ;
       `}
     >
-      {/* <div */}
-      {/*  css={` */}
-      {/*    left: 0; */}
-      {/*    top: 0px; */}
-      {/*    width: 100vw; */}
-      {/*    position: absolute; */}
-      {/*    background: #fff; */}
-      {/*    height: 100vh; */}
-      {/*    z-index: 0; */}
-      {/*  `} */}
-      {/* /> */}
       <VizTabs />
       <Grid
         container
         id="image-container"
         css={`
-          padding: 0 68px;
           z-index: 1;
-
+          padding: 0 68px;
           height: calc(100% - 88px);
           @media (max-width: 992px) {
             padding: 0 12px;
@@ -555,6 +547,7 @@ export default function VizModule() {
                   onArrowSelectChange={onZoomInLevelSelectorChange}
                   odaBudgetLinesChartData={odaBudgetLinesChartData}
                   odaBudgetLinesChartLoading={odaBudgetLinesChartLoading}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -576,6 +569,10 @@ export default function VizModule() {
                 <div
                   css={`
                     padding: 24px 24px 24px 0;
+
+                    @media (max-width: 600px) {
+                      max-height: 100%;
+                    }
                   `}
                 >
                   <DataTable
@@ -584,7 +581,12 @@ export default function VizModule() {
                         ? thematicAreasChartData.slice(0, 1)
                         : thematicAreasChartData
                     }
-                    options={thematicAreasDataTableOptions}
+                    options={{
+                      ...thematicAreasDataTableOptions,
+                      customToolbar: () => (
+                        <MoreButton data={getActiveVizData()} params={params} />
+                      ),
+                    }}
                     columns={getTranslatedCols(
                       thematicAreasDataTableColumns,
                       cmsData
@@ -614,6 +616,7 @@ export default function VizModule() {
                   activitiesCount={sectorsSunburstDataCount}
                   onSectorSelectChange={onSectorSelectChange}
                   clearSectorDrillDown={() => setSectorDrillDown("")}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -628,6 +631,7 @@ export default function VizModule() {
                   scrollableHeight={height - 56}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -642,6 +646,7 @@ export default function VizModule() {
                   data={organisationsTreemapData}
                   selectedVizItemId={selectedVizItem}
                   setSelectedVizItem={setSelectedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>
@@ -659,6 +664,7 @@ export default function VizModule() {
                   onSelectChange={onSelectChange}
                   selectedVizItemId={expandedVizItem}
                   setSelectedVizItem={setExpandedVizItem}
+                  getActiveTabData={getActiveVizData}
                 />
               )}
             </Route>

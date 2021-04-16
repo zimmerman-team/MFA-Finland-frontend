@@ -18,6 +18,7 @@ export const buttonscontainercss = css`
 `;
 
 export const buttoncss = css`
+  border: none;
   width: 32px;
   height: 32px;
   margin: 8px 0;

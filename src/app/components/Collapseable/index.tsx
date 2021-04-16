@@ -75,6 +75,7 @@ export function Collapsable(props: any) {
   return (
     <div css={styles.container}>
       <PillButton
+        aria-label="Collapse Geographically unallocable ODA visualisation"
         css={styles.button}
         startIcon={
           isCollapsed ? <PlayArrow /> : <PlayArrow css={styles.rotate} />
