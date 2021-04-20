@@ -256,7 +256,7 @@ export function useDataGridData(props: useDataGridDataProps) {
         },
       });
     }
-  }, [prevLocation]);
+  }, [prevLocation, props.detailPageFilter.value]);
 
   useUpdateEffect(() => {
     let filters = getAPIFormattedFilters(selectedFilters);
