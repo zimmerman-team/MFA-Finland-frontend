@@ -27,13 +27,13 @@ export const App = () => {
       <FilterPanel />
       <Drawer />
       <MdBottomMenu />
+      <PageOrnament />
       <ModuleRoutes />
       <CookieDialog
         data-testid="cookie-dialog"
         message="The website uses cookies for tracking statistics. Read Grand Bargains data privacy for more details."
         open
       />
-      <PageOrnament />
     </React.Fragment>
   );
 };

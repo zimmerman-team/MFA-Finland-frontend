@@ -22,7 +22,6 @@ import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "app/components/Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 import { useWindowSize } from "app/hooks/useWindowSize";
-import { ResponsiveChoropleth } from "@nivo/geo";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -470,6 +469,9 @@ export const DataGrid = (props: DataGridProps) => {
             )}
           </GridWidget>
         </Grid>
+      </Hidden>
+      <Hidden smDown>
+        <div css="width: 100%; height: 100px;" />
       </Hidden>
     </React.Fragment>
   );

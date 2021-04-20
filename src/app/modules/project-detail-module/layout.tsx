@@ -265,7 +265,7 @@ export const ProjectDetailModuleLayout = (
         ))}
       </Grid>
 
-      <Box width="100%" height="50vh" />
+      <Box width="100%" height="20vh" />
     </ModuleContainer>
   );
 };

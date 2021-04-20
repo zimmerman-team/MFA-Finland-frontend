@@ -25,6 +25,7 @@ import { ProjectDetailModule } from "app/modules/project-detail-module";
 import { OrganisationTypeDetailModule } from "app/modules/detail-modules/organisation-type-detail-module";
 import { Path } from "app/const/Path";
 import { ResultModule } from "app/modules/result-module";
+import { Footer } from "./components/Footer";
 
 export function ModuleRoutes() {
   useCMSData({
@@ -100,6 +101,7 @@ export function ModuleRoutes() {
           <NoMatchPage />
         </Route>
       </Switch>
+      <Footer />
     </Suspense>
   );
 }
