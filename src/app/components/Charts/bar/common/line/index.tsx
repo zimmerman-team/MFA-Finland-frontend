@@ -29,7 +29,7 @@ export function Line(props: LineProps) {
       }}
       pointSize={6}
       colors={["#D495A7"]}
-      layers={["axes", "lines", Points]}
+      layers={["axes", Points]}
       enableGridY={false}
       enableGridX={false}
       axisLeft={null}

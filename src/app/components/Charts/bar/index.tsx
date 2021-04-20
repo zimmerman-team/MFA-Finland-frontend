@@ -188,10 +188,10 @@ export function BarChart(props: BarChartProps) {
             </div>
           )}
         </div>
-        {showGni && <div>%</div>}
+        {!props.hideODAGNI && showGni && <div>%</div>}
       </div>
       <div css="width: 100%;height: 15px;" />
-      {showGni && (
+      {!props.hideODAGNI && showGni && (
         <div
           css={`
             left: 0;

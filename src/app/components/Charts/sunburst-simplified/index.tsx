@@ -170,6 +170,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
           {localData.children.map((item: any) => {
             return (
               <div
+                key={item.title}
                 css={`
                   display: flex;
                   margin-bottom: 6px;

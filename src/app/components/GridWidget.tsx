@@ -70,6 +70,7 @@ const style = {
     color: ${ProjectPalette.primary.main};
     line-height: 1;
     cursor: ${linkable ? "pointer" : ""};
+    text-decoration: ${linkable ? "underline" : "none"};
 
     &:focus {
       text-decoration: underline;
