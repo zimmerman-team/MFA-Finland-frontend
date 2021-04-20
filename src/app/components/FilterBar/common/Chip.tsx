@@ -1,4 +1,4 @@
-import { Chip as MUIChip, ChipProps } from "@material-ui/core";
+import { Chip as MUIChip, ChipProps, useMediaQuery } from "@material-ui/core";
 import { css } from "styled-components/macro";
 import { PrimaryColor, ProjectPalette } from "app/theme";
 import React from "react";
@@ -32,11 +32,11 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
     ${hasChildren &&
     `
     .MuiChip-label::after {
-      display: inline-block;
-      content: url(${svgoud});
-      margin-left: 8px;
-      transform: ${expanded ? "rotate(180deg)" : ""};
-    }
+          display: inline-block;
+          content: url(${svgoud});
+          margin-left: 8px;
+          transform: ${expanded ? "rotate(180deg)" : ""};
+      }
     `}
 
     cursor: ${hasChildren ? "pointer" : ""};
@@ -51,6 +51,9 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
     @media (max-width: 600px) {
       .MuiChip-label {
         white-space: nowrap;
+        ::after {
+          display: none;
+        }
       }
     }
   `;
@@ -59,12 +62,15 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
 export const Chip = (props: ChipModel) => {
   const [expanded, setExpanded] = React.useState(props.values.length <= 1);
   const [label, setLabel] = React.useState(props.label);
+  const mobile = useMediaQuery("(max-width: 600px)");
 
   React.useEffect(() => {
-    if (expanded) {
-      setLabel(props.values.map((value) => value.label).join("; "));
-    } else {
-      setLabel(props.label);
+    if (!mobile) {
+      if (expanded) {
+        setLabel(props.values.map((value) => value.label).join("; "));
+      } else {
+        setLabel(props.label);
+      }
     }
   }, [expanded]);
 

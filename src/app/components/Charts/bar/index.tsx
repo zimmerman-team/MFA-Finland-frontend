@@ -13,6 +13,7 @@ import {
   getRange,
   getMoneyValueWithMetricPrefix,
 } from "app/components/Charts/bar/utils";
+import { Hidden } from "@material-ui/core";
 
 export function BarChart(props: BarChartProps) {
   const { width } = useWindowSize();
@@ -94,6 +95,7 @@ export function BarChart(props: BarChartProps) {
           overflow-x: auto;
           overflow-y: hidden;
 
+          margin-top: 8px;
           &::-webkit-scrollbar {
             height: 4px;
             border-radius: 4px;
@@ -130,67 +132,12 @@ export function BarChart(props: BarChartProps) {
         `}
       >
         <div>{range.abbr}</div>
-        <div
-          css={`
-            display: flex;
-
-            > div {
-              padding: 0 10px 0 15px;
-              &:before {
-                left: 0;
-                top: 2px;
-                position: absolute;
-                width: 8px;
-                height: 8px;
-                content: "";
-                border-radius: 50%;
-              }
-            }
-
-            @media (max-width: 600px) {
-              padding-top: 25px;
-            }
-          `}
-        >
-          <div
-            css={`
-              position: relative;
-              &:before {
-                border: 0.5px solid #343249;
-                background: #acd1d1;
-              }
-            `}
-          >
-            {get(cmsData, "viz.exclusiveoda", "Exclusive ODA")}
-          </div>
-          <div
-            css={`
-              position: relative;
-              &:before {
-                border: 0.5px solid #343249;
-                background: #233c71;
-              }
-            `}
-          >
-            {get(cmsData, "viz.otheroda", "Other ODA")}
-          </div>
-          {!props.hideODAGNI && (
-            <div
-              css={`
-                position: relative;
-                &:before {
-                  border: 0.5px solid #343249;
-                  background: #d495a7;
-                }
-              `}
-            >
-              ODA/GNI
-            </div>
-          )}
-        </div>
+        <Legend {...props} {...cmsData} />
         {showGni && <div>%</div>}
       </div>
-      <div css="width: 100%;height: 15px;" />
+      <Hidden smDown>
+        <div css="width: 100%;height: 15px;" />
+      </Hidden>
       {showGni && (
         <div
           css={`
@@ -290,3 +237,66 @@ export function BarChart(props: BarChartProps) {
     </div>
   );
 }
+
+const Legend = (props: any, cmsData: any) => {
+  return (
+    <div
+      css={`
+        display: flex;
+
+        > div {
+          padding: 0 10px 0 15px;
+          &:before {
+            left: 0;
+            top: 2px;
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            content: "";
+            border-radius: 50%;
+          }
+        }
+
+        @media (max-width: 600px) {
+          //padding-top: 25px;
+        }
+      `}
+    >
+      <div
+        css={`
+          position: relative;
+          &:before {
+            border: 0.5px solid #343249;
+            background: #acd1d1;
+          }
+        `}
+      >
+        {get(cmsData, "viz.exclusiveoda", "Exclusive ODA")}
+      </div>
+      <div
+        css={`
+          position: relative;
+          &:before {
+            border: 0.5px solid #343249;
+            background: #233c71;
+          }
+        `}
+      >
+        {get(cmsData, "viz.otheroda", "Other ODA")}
+      </div>
+      {!props.hideODAGNI && (
+        <div
+          css={`
+            position: relative;
+            &:before {
+              border: 0.5px solid #343249;
+              background: #d495a7;
+            }
+          `}
+        >
+          ODA/GNI
+        </div>
+      )}
+    </div>
+  );
+};

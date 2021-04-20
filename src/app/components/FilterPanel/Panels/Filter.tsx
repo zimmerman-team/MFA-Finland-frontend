@@ -6,6 +6,7 @@ import { Card } from "app/components/FilterPanel/Card";
 import { FilterOption, FilterProps } from "app/components/FilterPanel/data";
 import { Header } from "app/components/FilterPanel/Card/Header";
 import { BottomActions } from "app/components/FilterPanel/Card/BottomActions";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 export const createStyles = (props: FilterProps) => {
   return {
@@ -19,11 +20,23 @@ export const createStyles = (props: FilterProps) => {
       font-weight: 400;
       margin-top: 8px;
       margin-bottom: 2px;
+
+      @media (max-width: 600px) {
+        display: none;
+      }
     `,
     bottomActionsContainer: css`
       display: flex;
       justify-content: flex-end;
       max-width: ${props.title === "Period" ? "712px" : "920px"};
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      }
     `,
   };
 };
@@ -32,9 +45,10 @@ export const Filter = (props: FilterProps) => {
   const styles = createStyles(props);
   const [searchKey, setSearchKey] = React.useState("");
   const [options, setOptions] = React.useState(props.data);
+  const mobile = useMediaQuery("(max-width: 600px)");
 
   function formatSelectedValues() {
-    return props.selection.join(" ");
+    return `${props.selection.join(" ")} are selected`;
   }
 
   React.useEffect(() => {
@@ -71,6 +85,19 @@ export const Filter = (props: FilterProps) => {
         </Typography>
       )}
       <div css={styles.bottomActionsContainer}>
+        {mobile && props.selection.length > 0 && (
+          <div
+            css={`
+              width: 100%;
+              background-color: #bcc6d6;
+              height: 24px;
+              padding: 6px 16px;
+            `}
+          >
+            {console.log(props.selection)}
+            {formatSelectedValues()}
+          </div>
+        )}
         <BottomActions
           onApply={props.onApplyFilters}
           onReset={props.onResetFilter}

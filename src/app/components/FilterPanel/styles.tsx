@@ -33,7 +33,8 @@ export const createStyles = (props: FilterPanelProps) => {
       color: white;
       margin-bottom: 37px;
       @media (max-width: 600px) {
-        margin-bottom: 24px;
+        margin-bottom: 36px;
+        margin-top: 8px;
       }
     `,
     closeIcon: css`
@@ -42,9 +43,18 @@ export const createStyles = (props: FilterPanelProps) => {
     closeContainer: css`
       margin-top: -12px;
       margin-right: -12px;
+      @media (max-width: 600px) {
+        //margin-bottom: 24px;
+        margin-top: -6px;
+      }
     `,
     actionContainer: css`
       margin-top: 32px;
+      @media (max-width: 600px) {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
     `,
     secondaryButton: css`
       text-transform: unset;

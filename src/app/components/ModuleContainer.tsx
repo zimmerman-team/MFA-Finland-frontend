@@ -38,15 +38,12 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
       z-index: 1;
       @media (max-width: 992px) {
         padding: 0 12px;
+        margin: 0;
       }
 
       @media (max-width: 600px) {
         margin: 0px;
         padding: 0 4px;
-      }
-
-      .MuiGrid-spacing-xs-2 {
-        border: 1px solid red;
       }
     `,
     iconContainer: css`

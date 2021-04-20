@@ -23,6 +23,9 @@ export const drawerStyle = {
     height: 100%;
     padding-left: 39px;
     padding-right: 39px;
+    @media (max-width: 600px) {
+      padding: 0 16px;
+    }
     //flex-direction: column;
   `,
   HeaderGrid: css`
@@ -43,6 +46,10 @@ export const drawerStyle = {
     @media (max-width: 960px) {
       padding-top: initial;
       border-right-style: none;
+    }
+
+    @media (max-width: 600px) {
+      border-left: 1px solid #fff;
     }
   `,
   SocialIconContainer: css`

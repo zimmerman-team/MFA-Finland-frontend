@@ -82,7 +82,12 @@ export const Drawer = () => {
             lg={2}
             css={`
               height: fit-content;
-              border-right: 1px solid #fff;
+              @media (min-width: 600px) {
+                border-right: 1px solid #fff;
+              }
+              @media (max-width: 600px) {
+                margin-bottom: 48px;
+              }
             `}
           >
             <NavList items={GlobalNavItems} />
@@ -148,7 +153,7 @@ export const Drawer = () => {
                     "https://www.facebook.com"
                   )}
                 >
-                  {/*<IconFacebook css={drawerStyle.GreyIcon} />*/}
+                  {/* <IconFacebook css={drawerStyle.GreyIcon} /> */}
                   <img
                     src={LogoFacebook}
                     css={`
@@ -168,7 +173,7 @@ export const Drawer = () => {
                     "https://www.youtube.com"
                   )}
                 >
-                  {/*<IconYoutube css={drawerStyle.GreyIcon} />*/}
+                  {/* <IconYoutube css={drawerStyle.GreyIcon} /> */}
                   <img
                     src={LogoYoutube}
                     css={`
@@ -188,7 +193,7 @@ export const Drawer = () => {
                     "https://www.linkedin.com"
                   )}
                 >
-                  {/*<IconLinkedin css={drawerStyle.GreyIcon} />*/}
+                  {/* <IconLinkedin css={drawerStyle.GreyIcon} /> */}
                   <img
                     src={LogoLinkedin}
                     css={`
@@ -209,7 +214,7 @@ export const Drawer = () => {
                     "https://www.twitter.com"
                   )}
                 >
-                  {/*<IconTwitter css={drawerStyle.GreyIcon} />*/}
+                  {/* <IconTwitter css={drawerStyle.GreyIcon} /> */}
                   <img
                     src={LogoTwitter}
                     css={`
@@ -225,6 +230,10 @@ export const Drawer = () => {
                 variant="body1"
                 css={`
                   color: white;
+                  @media (max-width: 960px) {
+                    max-width: 60%;
+                    margin-bottom: 48px;
+                  }
                 `}
               >
                 {get(cmsData, "menu.social", "")}
@@ -235,4 +244,10 @@ export const Drawer = () => {
       </Grid>
     </MUIDrawer>
   );
+};
+
+const MobileLayout = () => {
+  // return (
+  //
+  // )
 };

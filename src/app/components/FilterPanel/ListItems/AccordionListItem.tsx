@@ -71,14 +71,19 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
         @media (max-width: 600px) {
           font-size: 14px;
           padding: ${props.nodeStyle === "has2NodesStyle"
-            ? "16px 0px 16px 40px"
-            : "32px 16px 24px 40px"};
+            ? "16px 0px 16px 32px"
+            : "32px 16px 24px 32px"};
         }
       `,
       label: css`
         color: white;
         @media (max-width: 600px) {
           font-size: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2; /* number of lines to show */
+          -webkit-box-orient: vertical;
           //padding: initial;
         }
       `,

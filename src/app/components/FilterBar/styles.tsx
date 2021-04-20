@@ -65,7 +65,7 @@ export const createStyles = (props: FilterBarProps) => {
       }
 
       @media (max-width: 600px) {
-        margin-right: 18px;
+        display: none;
       }
     `,
     label: css`
@@ -74,6 +74,8 @@ export const createStyles = (props: FilterBarProps) => {
 
       @media (max-width: 600px) {
         margin: initial;
+        height: 36px;
+        line-height: 36px;
       }
     `,
     chipContainer: css`
