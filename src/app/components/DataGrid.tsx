@@ -169,7 +169,7 @@ export const DataGrid = (props: DataGridProps) => {
           )}
         </GridWidget>
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={12} sm={6} md={6} lg={4}>
         <GridWidget
           tooltip="lorem ipsum"
           link="/viz/thematic-areas"
@@ -198,7 +198,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 2 */}
       {/* ----------------------------- */}
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={12} sm={6} md={6} lg={4}>
         <GridWidget
           link="/viz/sectors"
           tooltip="lorem ipsum"
@@ -227,7 +227,7 @@ export const DataGrid = (props: DataGridProps) => {
           )}
         </GridWidget>
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={12} sm={6} md={6} lg={4}>
         {!props.countryData ? (
           <GridWidget
             tooltip="lorem ipsum"
@@ -289,7 +289,7 @@ export const DataGrid = (props: DataGridProps) => {
           </GridWidget>
         )}
       </Grid>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
+      <Grid item xs={12} sm={6} md={6} lg={4}>
         <GridWidget
           tooltip="lorem ipsum"
           link="/viz/organisations"
@@ -321,7 +321,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 3 */}
       {/* ----------------------------- */}
-      <Grid item xs={12} sm={12} md={8} lg={8}>
+      <Grid item xs={12} sm={12} md={12} lg={8}>
         <GridWidget
           height="510px"
           tooltip="lorem ipsum"
@@ -469,8 +469,6 @@ export const DataGrid = (props: DataGridProps) => {
             )}
           </GridWidget>
         </Grid>
-      </Hidden>
-      <Hidden smDown>
         <div css="width: 100%; height: 100px;" />
       </Hidden>
     </React.Fragment>

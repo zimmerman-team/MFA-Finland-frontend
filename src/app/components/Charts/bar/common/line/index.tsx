@@ -17,6 +17,7 @@ export function Line(props: LineProps) {
       />
     );
   };
+
   return (
     <ResponsiveLine
       data={props.data}
@@ -37,7 +38,7 @@ export function Line(props: LineProps) {
       axisRight={{
         tickSize: 0,
         tickValues: 6,
-        tickPadding: 15,
+        tickPadding: 5,
         tickRotation: 0,
       }}
       theme={{

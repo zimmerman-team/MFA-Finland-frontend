@@ -82,6 +82,12 @@ export function BarChart(props: BarChartProps) {
     }
   }, [props.selectedVizItemId]);
 
+  const lineWidth = get(
+    document.getElementById("linechart-in-bar"),
+    "clientWidth",
+    null
+  );
+
   return (
     <div
       id="viz-scroller"
@@ -193,12 +199,13 @@ export function BarChart(props: BarChartProps) {
       <div css="width: 100%;height: 15px;" />
       {!props.hideODAGNI && showGni && (
         <div
+          id="linechart-in-bar"
           css={`
             left: 0;
             top: 30px;
             position: absolute;
-            padding-left: 17px;
-            width: calc(100% - 17px);
+            padding-left: 25px;
+            width: calc(100% - 25px);
             height: ${props.height || 450}px;
 
             @media (max-width: 600px) {
@@ -207,6 +214,20 @@ export function BarChart(props: BarChartProps) {
 
             circle {
               r: 6px;
+            }
+
+            > div {
+              > div {
+                > svg {
+                  > g {
+                    > g:first-of-type {
+                      ${lineWidth
+                        ? `transform: translate(${lineWidth - 17 - 100}px, 0);`
+                        : ""}
+                    }
+                  }
+                }
+              }
             }
           `}
         >
