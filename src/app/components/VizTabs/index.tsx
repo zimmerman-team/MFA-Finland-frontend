@@ -11,12 +11,14 @@ import { css } from "styled-components/macro";
 import { Tooltip } from "@material-ui/core";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { PrimaryColor, SecondaryColor } from "app/theme";
+import { PillButton } from "app/components/Buttons/PillButton";
+
+const crumbs: BreadcrumbLinkModel[] = [
+  { label: "Homepage", path: Path.home },
+  { label: "Disbursements" },
+];
 
 export function VizTabs() {
-  const crumbs: BreadcrumbLinkModel[] = [
-    { label: "Homepage", path: Path.home },
-    { label: "Disbursements" },
-  ];
   const styles = {
     container: css`
       padding: 0 68px;
@@ -130,3 +132,30 @@ export function VizTabs() {
     </Grid>
   );
 }
+
+const VizTabsMobile = () => {
+  const crumbs: BreadcrumbLinkModel[] = [
+    { label: "Homepage", path: Path.home },
+    { label: "Disbursements" },
+  ];
+
+  const styles = {
+    container: css``,
+    selections: css`
+      display: flex;
+      justify-content: space-between;
+    `,
+    button: css``,
+  };
+  return (
+    <div>
+      <Breadcrumbs route={crumbs} />
+      <div css={styles.selections}>
+        <div css={styles.button}>
+          <PillButton id="select-chart" />
+          <PillButton id="select-table" />
+        </div>
+      </div>
+    </div>
+  );
+};

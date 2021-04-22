@@ -246,6 +246,11 @@ export default createMuiTheme({
         boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.1)",
       },
     },
+    MuiRadio: {
+      root: {
+        color: "white !important",
+      },
+    },
     MuiAccordion: {
       root: {
         backgroundColor: "#f7f7f7",

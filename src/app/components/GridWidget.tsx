@@ -255,7 +255,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
               ? props.label
               : get(cmsData, "general.overview", "Overview Disbursements")}
           </div>
-          {props.tooltip && (
+          {props.tooltip && !odaWidget && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip} interactive tabIndex={0}>
                 <InfoOutlinedIcon css={style.widgetTooltipIcon} />

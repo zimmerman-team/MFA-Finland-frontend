@@ -27,4 +27,8 @@ export const GlobalNavItems: GlobalNavItemProps[] = [
     label: "Statements",
     path: Path.general.statements,
   },
+  {
+    label: "Language",
+    path: "",
+  },
 ];

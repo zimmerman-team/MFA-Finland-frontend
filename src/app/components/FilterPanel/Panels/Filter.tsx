@@ -94,7 +94,6 @@ export const Filter = (props: FilterProps) => {
               padding: 6px 16px;
             `}
           >
-            {console.log(props.selection)}
             {formatSelectedValues()}
           </div>
         )}

@@ -128,6 +128,9 @@ export function BarChart(props: BarChartProps) {
           display: flex;
           flex-direction: row;
           width: calc(100% - 25px);
+          @media (max-width: 600px) {
+            width: calc(100%);
+          }
           justify-content: space-between;
         `}
       >
@@ -291,6 +294,9 @@ const Legend = (props: any, cmsData: any) => {
             &:before {
               border: 0.5px solid #343249;
               background: #d495a7;
+            }
+            @media (max-width: 600px) {
+              padding-right: 0 !important;
             }
           `}
         >

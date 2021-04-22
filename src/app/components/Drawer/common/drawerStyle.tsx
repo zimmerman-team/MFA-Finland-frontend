@@ -11,6 +11,13 @@ export const drawerStyle = {
     letter-spacing: 0.02em;
     color: ${PrimaryColor[2]};
     margin-left: 16px;
+    @media (max-width: 600px) {
+      margin: 0;
+      width: 100%;
+      text-align: center;
+      place-content: center;
+      //margin-left: 88px;
+    }
   `,
   GreyIcon: css`
     /*filter: grayscale(1);
@@ -33,10 +40,18 @@ export const drawerStyle = {
     justify-content: space-between;
     align-items: center;
     height: 68px;
+
+    @media (max-width: 600px) {
+      height: 56px;
+      margin-bottom: 32px;
+    }
   `,
   NavLink: css`
     display: flex;
     text-decoration: none;
+    @media (max-width: 600px) {
+      width: 100%;
+    }
   `,
   AddressContainer: css`
     padding-top: 12px;

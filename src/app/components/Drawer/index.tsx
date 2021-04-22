@@ -4,7 +4,7 @@ import MUIDrawer from "@material-ui/core/Drawer";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import { useCMSData } from "app/hooks/useCMSData";
-import { Grid } from "@material-ui/core";
+import { Grid, Hidden, useMediaQuery } from "@material-ui/core";
 import { GlobalNavItems } from "app/components/Drawer/common/data";
 import { useRecoilState } from "recoil";
 import { drawerAtom } from "app/state/recoil/atoms";
@@ -19,11 +19,12 @@ import LogoFacebook from "app/assets/icons/logo_fb.png";
 import LogoYoutube from "app/assets/icons/logo_yt.png";
 import LogoLinkedin from "app/assets/icons/logo_linkedin.png";
 import LogoTwitter from "app/assets/icons/logo_twitter.png";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 export const Drawer = () => {
   const cmsData = useCMSData({ returnData: true });
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
-
+  const mobile = useMediaQuery("(max-width: 600px)");
   // todo: simplify this logic
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -53,20 +54,26 @@ export const Drawer = () => {
         {/* header */}
         <Grid item xs={12} sm={12} lg={12} css={drawerStyle.HeaderGrid}>
           <NavLink to="/" css={drawerStyle.NavLink}>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <MfaLogo />
-            </IconButton>
+            <Hidden smDown>
+              <IconButton edge="start" color="inherit" aria-label="menu">
+                <MfaLogo />
+              </IconButton>
+            </Hidden>
             <div css={drawerStyle.LogoText}>
               {get(cmsData, "general.pagetitle", "")}
             </div>
           </NavLink>
+
           <IconButton
             onClick={toggleDrawer(false)}
             css={`
               color: ${PrimaryColor[2]};
+              @media (max-width: 600px) {
+                transform: translateX();
+              }
             `}
           >
-            <CloseIcon />
+            {mobile ? <CancelIcon /> : <CloseIcon />}
           </IconButton>
         </Grid>
 

@@ -57,7 +57,6 @@ export const FilterBar = (props: FilterBarProps) => {
     if (height !== filterbarHeight) {
       setFilterbarHeight(height);
     }
-    console.log(`Current clientHeight : ${entries[0].target.clientHeight}`);
   });
   const styles = createStyles(props);
 
