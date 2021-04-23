@@ -9,11 +9,12 @@ export interface VizSidePanelItemProps {
 export interface VizSidePanelProps {
   vizType: string;
   activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
   scrollableHeight: number;
   items: VizSidePanelItemProps[];
   selectedVizItem: string | number | null;
   expandedVizItem: string | number | null;
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+
   setSelected: React.Dispatch<React.SetStateAction<string | number | null>>;
   setExpanded: React.Dispatch<React.SetStateAction<string | number | null>>;
 }

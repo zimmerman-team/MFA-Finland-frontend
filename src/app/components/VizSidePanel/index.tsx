@@ -15,6 +15,7 @@ import {
   buttonscontainercss,
 } from "app/components/VizSidePanel/styles";
 import { css } from "styled-components/macro";
+import { Hidden } from "@material-ui/core";
 
 export function VizSidePanel(props: VizSidePanelProps) {
   const cmsData = useCMSData({ returnData: true });
@@ -45,46 +46,46 @@ export function VizSidePanel(props: VizSidePanelProps) {
 
   return (
     <Grid container css={containercss}>
-      {/* <div id="viz-sidepanel-background" css={styles.background} /> */}
-      <Grid item xs={12} css={buttonscontainercss}>
-        <FilledButton
-          label={get(cmsData, "general.chart", "Chart")}
-          onClick={() => props.setActiveTab("chart")}
-          backgroundColor={
-            props.activeTab === "chart" ? PrimaryColor[0] : SecondaryColor[1]
-          }
-        />
-        <div
-          css={`
-            width: 16px;
-          `}
-        />
-        <FilledButton
-          label={get(cmsData, "general.table", "Table")}
-          onClick={() => props.setActiveTab("table")}
-          backgroundColor={
-            props.activeTab === "table" ? PrimaryColor[0] : SecondaryColor[1]
-          }
-          color={props.activeTab === "table" ? "#fff" : PrimaryColor[0]}
-        />
-      </Grid>
+      <Hidden smDown>
+        <Grid item xs={12} css={buttonscontainercss}>
+          <FilledButton
+            label={get(cmsData, "general.chart", "Chart")}
+            onClick={() => props.setActiveTab("chart")}
+            backgroundColor={
+              props.activeTab === "chart" ? PrimaryColor[0] : SecondaryColor[1]
+            }
+          />
+          <div
+            css={`
+              width: 16px;
+            `}
+          />
+          <FilledButton
+            label={get(cmsData, "general.table", "Table")}
+            onClick={() => props.setActiveTab("table")}
+            backgroundColor={
+              props.activeTab === "table" ? PrimaryColor[0] : SecondaryColor[1]
+            }
+            color={props.activeTab === "table" ? "#fff" : PrimaryColor[0]}
+          />
+        </Grid>
+      </Hidden>
       <div css={dividercss} />
       {props.activeTab === "chart" && (
         <div
           id="legend-items"
           css={`
             width: 100%;
-            //overflow-y: auto;
             overflow-y: overlay;
             max-height: ${props.scrollableHeight}px;
             height: 100%;
             min-height: 100%;
-            //max-height: ${props.scrollableHeight - 125}px;
-            //max-height: 100%;
             ${props.vizType === "thematic-areas" ? "pointer-events: none;" : ""}
             ${hasColor ? "padding-top: 24px;" : ""}
-
-            padding-right: 12px;
+            
+            @media (max-width: 600px) {
+              padding-right: 12px;
+            }
 
             &::-webkit-scrollbar {
               width: 4px;

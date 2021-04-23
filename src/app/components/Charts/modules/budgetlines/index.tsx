@@ -10,8 +10,8 @@ import {
   ODAbudgetLinesDataTableColumns,
 } from "app/components/Charts/bar/data";
 import { useCMSData } from "app/hooks/useCMSData";
-import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 import { useRouteMatch } from "react-router-dom";
+import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface BudgetLinesModuleModel extends BarChartProps {
   activeTab: string;
@@ -68,6 +68,7 @@ export function BudgetLinesModule(props: BudgetLinesModuleModel) {
 
         @media (max-width: 600px) {
           max-height: 100%;
+          padding: 0;
         }
       `}
     >

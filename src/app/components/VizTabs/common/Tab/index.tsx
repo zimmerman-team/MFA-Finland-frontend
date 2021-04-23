@@ -4,7 +4,13 @@ import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
 import { TabProps } from "app/components/VizTabs/data";
 import { PrimaryColor, SecondaryColor } from "app/theme";
-import { NavLink, useRouteMatch, useLocation } from "react-router-dom";
+import {
+  NavLink,
+  useRouteMatch,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
+import { MenuItem, useMediaQuery } from "@material-ui/core";
 
 const tabcss = (active: boolean) => css`
   height: 35px;

@@ -129,6 +129,10 @@ export function Treemap(props: TreemapProps) {
         @media (max-width: 992px) {
           padding: 32px 12px 0 0;
         }
+        @media (max-width: 600px) {
+          padding: 0;
+          padding-top: 32px;
+        }
       `
           : ""
       }

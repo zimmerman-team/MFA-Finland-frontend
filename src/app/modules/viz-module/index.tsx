@@ -44,8 +44,10 @@ import {
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 import { MoreButton } from "app/components/Charts/bar/data";
+import { useMediaQuery } from "@material-ui/core";
 
 export default function VizModule() {
+  const mobile = useMediaQuery("(max-width: 600px)");
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
   const [searchKey, setSearchKey] = React.useState(
@@ -496,7 +498,7 @@ export default function VizModule() {
         } ;
       `}
     >
-      <VizTabs />
+      <VizTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <Grid
         container
         id="image-container"
@@ -506,6 +508,10 @@ export default function VizModule() {
           height: calc(100% - 88px);
           @media (max-width: 992px) {
             padding: 0 12px;
+          }
+
+          @media (max-width: 600px) {
+            //padding: 0;
           }
         `}
       >
@@ -520,7 +526,7 @@ export default function VizModule() {
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          {!isProjects && activeTab !== "table" && (
+          {!isProjects && activeTab !== "table" && !mobile && (
             <FloatingButtons
               data={getActiveVizData()}
               viz={get(params, "tab", "")}
@@ -572,6 +578,7 @@ export default function VizModule() {
 
                     @media (max-width: 600px) {
                       max-height: 100%;
+                      padding: 0;
                     }
                   `}
                 >
@@ -690,11 +697,13 @@ export default function VizModule() {
             xl={4}
             css={`
               z-index: 1;
-              box-shadow: 200px 0px 0px 0px #f8f8f8, 400px 0px 0px 0px #f8f8f8,
-                600px 0px 0px 0px #f8f8f8, 800px 0px 0px 0px #f8f8f8,
-                1000px 0px 0px 0px #f8f8f8, 1200px 0px 0px 0px #f8f8f8,
-                1400px 0px 0px 0px #f8f8f8, 1600px 0px 0px 0px #f8f8f8,
-                1800px 0px 0px 0px #f8f8f8;
+              @media (min-width: 600px) {
+                box-shadow: 200px 0px 0px 0px #f8f8f8, 400px 0px 0px 0px #f8f8f8,
+                  600px 0px 0px 0px #f8f8f8, 800px 0px 0px 0px #f8f8f8,
+                  1000px 0px 0px 0px #f8f8f8, 1200px 0px 0px 0px #f8f8f8,
+                  1400px 0px 0px 0px #f8f8f8, 1600px 0px 0px 0px #f8f8f8,
+                  1800px 0px 0px 0px #f8f8f8;
+              }
             `}
           >
             <div
@@ -738,8 +747,8 @@ export default function VizModule() {
                   thematicAreaChartSingle
                 )}
                 activeTab={activeTab}
-                scrollableHeight={height}
                 setActiveTab={setActiveTab}
+                scrollableHeight={height}
                 vizType={get(params, "tab", "")}
                 setSelected={setSelectedVizItem}
                 setExpanded={setExpandedVizItem}
