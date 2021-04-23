@@ -519,6 +519,7 @@ export default function VizModule() {
           item
           css={`
             background: #fff;
+            height: fit-content;
           `}
           xs={12}
           sm={12}

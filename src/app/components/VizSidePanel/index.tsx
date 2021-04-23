@@ -38,6 +38,14 @@ export function VizSidePanel(props: VizSidePanelProps) {
       }
     `,
   };
+  const [height, setHeight] = React.useState(400);
+
+  React.useEffect(() => {
+    setHeight(
+      get(document.getElementById("image-container"), "offsetHeight", 400)
+    );
+  }, []);
+
   const hasColor =
     props.vizType === "organisations" ||
     props.vizType === "countries-regions" ||
@@ -77,7 +85,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
           css={`
             width: 100%;
             overflow-y: overlay;
-            max-height: ${props.scrollableHeight}px;
+            max-height: calc(${height}px - 101px);
             height: 100%;
             min-height: 100%;
             ${props.vizType === "thematic-areas" ? "pointer-events: none;" : ""}
