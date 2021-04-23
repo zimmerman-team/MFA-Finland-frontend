@@ -4,6 +4,7 @@ export interface TabProps {
   url: string;
   name: string;
   cmsKey?: string;
+  index?: number;
 }
 
 export const vizTabs: TabProps[] = [

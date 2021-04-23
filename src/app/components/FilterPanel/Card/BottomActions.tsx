@@ -5,6 +5,7 @@ import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
 import { PillButton } from "app/components/Buttons/PillButton";
 import filters from "app/state/api/actions-reducers/cms/filters";
+import { useMediaQuery } from "@material-ui/core";
 
 interface BottomActions {
   onApply?: () => void;
@@ -13,7 +14,14 @@ interface BottomActions {
 
 export const BottomActions = (props: BottomActions) => {
   const cmsData = useCMSData({ returnData: true });
+  const mobile = useMediaQuery("(max-width: 600px)");
+
   const styles = {
+    container: css`
+      @media (max-width: 600px) {
+        width: 100%;
+      }
+    `,
     secondaryButton: css`
       text-transform: unset;
       color: white;
@@ -21,6 +29,15 @@ export const BottomActions = (props: BottomActions) => {
 
       :hover {
         color: #bcc6d6;
+      }
+
+      @media (max-width: 600px) {
+        width: ${props.onApply ? "50%" : "100%"};
+        background-color: #ecf1fa;
+        border-radius: 0;
+        color: ${ProjectPalette.primary.main};
+        height: 56px;
+        margin: 0;
       }
     `,
     primaryButton: css`
@@ -34,11 +51,20 @@ export const BottomActions = (props: BottomActions) => {
       :hover {
         background: #ecf1fa;
       }
+
+      @media (max-width: 600px) {
+        width: 50%;
+        background-color: #ecf1fa;
+        border-radius: 0;
+        color: ${ProjectPalette.primary.main};
+        height: 56px;
+        margin: 0;
+      }
     `,
   };
 
   return (
-    <>
+    <div css={styles.container}>
       <PillButton
         variant="text"
         css={styles.secondaryButton}
@@ -53,6 +79,6 @@ export const BottomActions = (props: BottomActions) => {
           {get(cmsData, "filters.apply", "Apply")}
         </PillButton>
       )}
-    </>
+    </div>
   );
 };

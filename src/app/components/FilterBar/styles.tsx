@@ -5,27 +5,39 @@ import { FilterBarProps } from "app/components/FilterBar/index";
 export const createStyles = (props: FilterBarProps) => {
   return {
     container: css`
+      max-width: 1376px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 64px;
+      padding-right: 64px;
+
       display: flex;
       align-items: flex-start;
       position: sticky;
       top: 68px;
-      margin-bottom: 16px;
-      margin-left: 68px;
-      margin-right: 68px;
+      //margin-bottom: 16px;
+      //margin-left: 68px;
+      //margin-right: 68px;
       min-height: 68px;
       background-color: #ecf1fa;
       z-index: 6;
       padding-top: 16px;
       padding-bottom: 16px;
 
-      @media (max-width: 600px) {
-        top: 56px;
-        margin-left: 12px;
-        margin-right: 0px;
+      @media (max-width: 1440px) {
+        padding-left: 98px;
+        box-shadow: -669px 0px 0px 0px #ecf1fa, 669px 0px 0px 0px #ecf1fa;
       }
 
-      @media (max-width: 1440px) {
-        box-shadow: -669px 0px 0px 0px #ecf1fa, 669px 0px 0px 0px #ecf1fa;
+      @media (max-width: 960px) {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      @media (max-width: 600px) {
+        top: 56px;
+        //margin-left: 12px;
+        margin-right: 0px;
       }
 
       @media (max-width: 800px) {
@@ -53,7 +65,7 @@ export const createStyles = (props: FilterBarProps) => {
       }
 
       @media (max-width: 600px) {
-        margin-right: 18px;
+        display: none;
       }
     `,
     label: css`
@@ -62,6 +74,8 @@ export const createStyles = (props: FilterBarProps) => {
 
       @media (max-width: 600px) {
         margin: initial;
+        height: 36px;
+        line-height: 36px;
       }
     `,
     chipContainer: css`

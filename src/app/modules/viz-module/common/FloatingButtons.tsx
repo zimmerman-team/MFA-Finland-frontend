@@ -40,8 +40,10 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
       position: relative;
     `,
     moreIconButton: css`
-      margin-top: 24px;
-      margin-right: 24px;
+      @media (min-width: 600px) {
+        margin-top: 24px;
+        margin-right: 24px;
+      }
       width: 32px;
       height: 32px;
       background-color: white;

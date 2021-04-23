@@ -136,6 +136,7 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
 
         @media (max-width: 600px) {
           max-height: 100%;
+          padding: 0;
         }
       `}
     >

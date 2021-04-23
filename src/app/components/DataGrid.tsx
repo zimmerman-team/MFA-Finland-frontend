@@ -134,10 +134,25 @@ export const DataGrid = (props: DataGridProps) => {
 
   return (
     <React.Fragment>
+      <div
+        css={`
+          height: 16px;
+          width: 100%;
+        `}
+      />
       {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}
-      <Grid item xs={12} sm={12} md={12} lg={8}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={12}
+        lg={8}
+        // css={`
+        //   margin-top: 16px;
+        // `}
+      >
         <GridWidget
           link="/viz/oda"
           tooltip="lorem ipsum"

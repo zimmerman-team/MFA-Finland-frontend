@@ -39,12 +39,15 @@ import {
   ProjectsLatestFiltersAtom,
   prevLocationAtom,
   languageAtom,
+  filterbarHeightAtom,
 } from "app/state/recoil/atoms";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 import { MoreButton } from "app/components/Charts/bar/data";
+import { useMediaQuery } from "@material-ui/core";
 
 export default function VizModule() {
+  const mobile = useMediaQuery("(max-width: 600px)");
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
   const [searchKey, setSearchKey] = React.useState(
@@ -67,6 +70,9 @@ export default function VizModule() {
   const [prevTab, setPrevTab] = React.useState(get(params, "tab", ""));
   const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
+  const [filterbarHeight, setFilterbarHeight] = useRecoilState(
+    filterbarHeightAtom
+  );
   const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
     ODAlatestFiltersAtom
   );
@@ -482,31 +488,17 @@ export default function VizModule() {
   return (
     <Grid
       container
+      item
       css={`
-        margin-top: -16px;
-        height: calc(100vh - 136px);
+        //margin-top: -16px;
+        //100vh - filterbar + appbar
+        height: calc(100vh - (${filterbarHeight}px + 68px));
+        @media (max-width: 600px) {
+          height: calc(100vh - (${filterbarHeight}px + 56px));
+        } ;
       `}
     >
-      <div
-        css={`
-          left: 0;
-          top: 0px;
-          width: 100vw;
-          position: absolute;
-          background: #fff;
-          height: 100vh;
-          z-index: 0;
-        `}
-      />
-      <Grid
-        item
-        xs={12}
-        css={`
-          z-index: 1;
-        `}
-      >
-        <VizTabs />
-      </Grid>
+      <VizTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <Grid
         container
         id="image-container"
@@ -514,10 +506,12 @@ export default function VizModule() {
           z-index: 1;
           padding: 0 68px;
           height: calc(100% - 88px);
-
           @media (max-width: 992px) {
-            width: 100%;
             padding: 0 12px;
+          }
+
+          @media (max-width: 600px) {
+            //padding: 0;
           }
         `}
       >
@@ -525,14 +519,15 @@ export default function VizModule() {
           item
           css={`
             background: #fff;
+            height: fit-content;
           `}
           xs={12}
-          sm={isProjects ? 12 : 9}
+          sm={12}
           md={isProjects ? 12 : 8}
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
         >
-          {!isProjects && activeTab !== "table" && (
+          {!isProjects && activeTab !== "table" && !mobile && (
             <FloatingButtons
               data={getActiveVizData()}
               viz={get(params, "tab", "")}
@@ -584,6 +579,7 @@ export default function VizModule() {
 
                     @media (max-width: 600px) {
                       max-height: 100%;
+                      padding: 0;
                     }
                   `}
                 >
@@ -696,12 +692,19 @@ export default function VizModule() {
           <Grid
             item
             xs={12}
-            sm={3}
+            sm={12}
             md={4}
             lg={4}
             xl={4}
             css={`
               z-index: 1;
+              @media (min-width: 600px) {
+                box-shadow: 200px 0px 0px 0px #f8f8f8, 400px 0px 0px 0px #f8f8f8,
+                  600px 0px 0px 0px #f8f8f8, 800px 0px 0px 0px #f8f8f8,
+                  1000px 0px 0px 0px #f8f8f8, 1200px 0px 0px 0px #f8f8f8,
+                  1400px 0px 0px 0px #f8f8f8, 1600px 0px 0px 0px #f8f8f8,
+                  1800px 0px 0px 0px #f8f8f8;
+              }
             `}
           >
             <div
@@ -713,13 +716,13 @@ export default function VizModule() {
                 background: ${PrimaryColor[1]};
 
                 ${vizLevel > 0
-                  ? `
-                  #legend-items {
-                    * {
-                      opacity: 1;
-                      pointer-events: none;
-                    }
-                  }
+                  ? ` 
+                  #legend-items { 
+                    * { 
+                      opacity: 1; 
+                      pointer-events: none; 
+                    } 
+                  } 
                 `
                   : ""}
               `}
@@ -745,8 +748,8 @@ export default function VizModule() {
                   thematicAreaChartSingle
                 )}
                 activeTab={activeTab}
-                scrollableHeight={height}
                 setActiveTab={setActiveTab}
+                scrollableHeight={height}
                 vizType={get(params, "tab", "")}
                 setSelected={setSelectedVizItem}
                 setExpanded={setExpandedVizItem}

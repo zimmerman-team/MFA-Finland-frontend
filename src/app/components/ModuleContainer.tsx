@@ -39,6 +39,12 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
 
       @media (max-width: 992px) {
         padding: 0 12px;
+        margin: 0;
+      }
+
+      @media (max-width: 600px) {
+        margin: 0px;
+        padding: 0 4px;
       }
     `,
     iconContainer: css`

@@ -3,6 +3,12 @@ import { css } from "styled-components/macro";
 
 export const appbarStyle = {
   appBar: css`
+    margin-left: auto;
+    margin-right: auto;
+    //max-width: calc(1440px - 64px);
+    max-width: 1440px;
+    padding: 0 32px;
+
     box-shadow: initial;
     position: sticky;
     top: 0;
@@ -14,6 +20,10 @@ export const appbarStyle = {
     @media (max-width: 600px) {
       justify-content: space-between;
       height: 56px;
+    }
+
+    @media (max-width: 960px) {
+      padding: 0;
     }
   `,
   toolBar: (searchOpen: boolean) => css`
@@ -28,6 +38,24 @@ export const appbarStyle = {
     @media (max-width: 992px) {
       justify-content: ${searchOpen ? "flex-end" : "space-between"};
     }
+
+    @media (max-width: 1440px) {
+      box-shadow: -669px 0px 0px 0px ${PrimaryColor[0]},
+        669px 0px 0px 0px ${PrimaryColor[0]};
+    }
+
+    @media (max-width: 800px) {
+      box-shadow: -300px 0px 0px 0px ${PrimaryColor[0]},
+        300px 0px 0px 0px ${PrimaryColor[0]};
+    }
+
+    @media (max-width: 600px) {
+      box-shadow: -100px 0px 0px 0px ${PrimaryColor[0]},
+        100px 0px 0px 0px ${PrimaryColor[0]};
+    }
+
+    box-shadow: -1240px 0px 0px 0px ${PrimaryColor[0]},
+      1240px 0px 0px 0px ${PrimaryColor[0]};
   `,
   logoLink: (show: boolean) => css`
     display: flex;

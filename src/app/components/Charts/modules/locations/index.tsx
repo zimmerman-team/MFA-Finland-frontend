@@ -41,6 +41,7 @@ export function CountriesRegionsModule(props: CountriesRegionsModuleModel) {
 
         @media (max-width: 600px) {
           max-height: 100%;
+          padding: 0;
         }
       `}
     >

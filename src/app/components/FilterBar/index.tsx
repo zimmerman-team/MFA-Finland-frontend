@@ -17,6 +17,7 @@ import {
 } from "app/components/FilterBar/utils";
 import {
   currentFilterOpenAtom,
+  filterbarHeightAtom,
   selectedFilterAtom,
 } from "app/state/recoil/atoms";
 
@@ -32,6 +33,9 @@ export const FilterBar = (props: FilterBarProps) => {
   const [chips, setChips] = React.useState<ChipModel[]>([]);
   const render: boolean = shouldRender(location);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
+  const [filterbarHeight, setFilterbarHeight] = useRecoilState(
+    filterbarHeightAtom
+  );
   const [selectedFilters, setSelectedFilters] = useRecoilState(
     selectedFilterAtom
   );
@@ -48,6 +52,12 @@ export const FilterBar = (props: FilterBarProps) => {
       state.filterOptions.aidtypes.loading ||
       state.filterOptions.budgetlines.loading
   );
+  const heightObserver = new ResizeObserver(function (entries) {
+    const height = entries[0].target.clientHeight;
+    if (height !== filterbarHeight) {
+      setFilterbarHeight(height);
+    }
+  });
   const styles = createStyles(props);
 
   React.useEffect(() => {
@@ -56,6 +66,12 @@ export const FilterBar = (props: FilterBarProps) => {
     }
   }, [selectedFilters, filterOptionsData]);
 
+  React.useEffect(() => {
+    const filterbarElement = document.querySelector("#filterbar-container");
+    if (filterbarElement) {
+      heightObserver.observe(filterbarElement);
+    }
+  }, []);
   function removeChip(chip: ChipModel) {
     const updatedSelectedFilters = { ...selectedFilters };
     switch (chip.type) {
@@ -239,8 +255,10 @@ export const FilterBar = (props: FilterBarProps) => {
         <Hidden smUp>
           <div
             css={`
-              width: 40px;
-              height: 40px;
+              width: 50px;
+              height: 50px;
+              box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.14),
+                0px 1px 8px rgba(0, 0, 0, 0.12);
               background-color: #2e4982;
               position: fixed;
               bottom: 5vh;

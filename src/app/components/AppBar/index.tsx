@@ -79,7 +79,6 @@ export function AppBar() {
   const id = open ? "simple-popover" : undefined;
 
   const location = useLocation();
-
   return (
     <React.Fragment>
       <MUIAppBar position="relative" color="inherit" css={appbarStyle.appBar}>
@@ -106,7 +105,7 @@ export function AppBar() {
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
-            to={`/${location.search}`}
+            to={`/${window.location.search}`}
             css={appbarStyle.logoLink(!isFocused)}
             onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
           >
@@ -139,6 +138,11 @@ export function AppBar() {
                 aria-label="menu"
                 // onClick={toggleDrawer(true)}
                 data-cy="burger-menu-button"
+                css={`
+                  @media (max-width: 600px) {
+                    padding-right: 4px;
+                  }
+                `}
               >
                 <SearchIcon
                   css={`
@@ -150,27 +154,31 @@ export function AppBar() {
 
             {/* ---------------------------------------------- */}
             {/* lang switch */}
-            <button
-              role="button"
-              aria-label="Switch language"
-              aria-pressed="false"
-              aria-describedby={id}
-              onClick={handleClick}
-              css={appbarStyle.langSwitchContainer}
-            >
-              <LanguageIcon
-                css={`
-                  fill: ${PrimaryColor[2]};
-                  margin-bottom: 3px;
-                  @media (max-width: 600px) {
-                    margin-bottom: initial;
-                  }
-                `}
-              />
-              <Hidden xsDown>
-                <div css={appbarStyle.selectedLanguages}>{currentLanguage}</div>
-              </Hidden>
-            </button>
+            <Hidden smDown>
+              <button
+                role="button"
+                aria-label="Switch language"
+                aria-pressed="false"
+                aria-describedby={id}
+                onClick={handleClick}
+                css={appbarStyle.langSwitchContainer}
+              >
+                <LanguageIcon
+                  css={`
+                    fill: ${PrimaryColor[2]};
+                    margin-bottom: 3px;
+                    @media (max-width: 600px) {
+                      margin-bottom: initial;
+                    }
+                  `}
+                />
+                <Hidden xsDown>
+                  <div css={appbarStyle.selectedLanguages}>
+                    {currentLanguage}
+                  </div>
+                </Hidden>
+              </button>
+            </Hidden>
 
             {LanguagePopover(id, open, anchorEl, handleClose, setLanguage)}
 
@@ -206,7 +214,7 @@ export function AppBar() {
           </div>
         </Toolbar>
       </MUIAppBar>
-      <BackDrop />
+      {/* <BackDrop /> */}
     </React.Fragment>
   );
 }

@@ -11,6 +11,13 @@ export const drawerStyle = {
     letter-spacing: 0.02em;
     color: ${PrimaryColor[2]};
     margin-left: 16px;
+    @media (max-width: 600px) {
+      margin: 0;
+      width: 100%;
+      text-align: center;
+      place-content: center;
+      //margin-left: 88px;
+    }
   `,
   GreyIcon: css`
     /*filter: grayscale(1);
@@ -23,6 +30,9 @@ export const drawerStyle = {
     height: 100%;
     padding-left: 39px;
     padding-right: 39px;
+    @media (max-width: 600px) {
+      padding: 0 16px;
+    }
     //flex-direction: column;
   `,
   HeaderGrid: css`
@@ -30,10 +40,18 @@ export const drawerStyle = {
     justify-content: space-between;
     align-items: center;
     height: 68px;
+
+    @media (max-width: 600px) {
+      height: 56px;
+      margin-bottom: 32px;
+    }
   `,
   NavLink: css`
     display: flex;
     text-decoration: none;
+    @media (max-width: 600px) {
+      width: 100%;
+    }
   `,
   AddressContainer: css`
     border-right: 1px solid #4f6797;
@@ -41,6 +59,10 @@ export const drawerStyle = {
     @media (max-width: 960px) {
       padding-top: initial;
       border-right-style: none;
+    }
+
+    @media (max-width: 600px) {
+      border-left: 1px solid #fff;
     }
   `,
   SocialIconContainer: css`

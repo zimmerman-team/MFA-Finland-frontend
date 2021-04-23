@@ -20,6 +20,14 @@ export const Card = (props: FilterProps) => {
       margin-left: 104px;
       max-width: 816px;
       height: 534px;
+
+      @media (max-width: 600px) {
+        border: none;
+        padding: 0;
+        margin-left: 0;
+        //max-width: 816px;
+        //height: 534px;
+      }
     `,
   };
 
@@ -47,6 +55,10 @@ const CardHeader = (props: FilterProps) => {
       align-items: center;
       margin-left: 12px;
       margin-bottom: 22px;
+
+      @media (max-width: 600px) {
+        margin-left: 0px;
+      }
     `,
     checkbox: css`
       color: white;
@@ -55,6 +67,10 @@ const CardHeader = (props: FilterProps) => {
       color: white;
       text-transform: unset;
       margin-right: 24px;
+
+      @media (max-width: 600px) {
+        margin: 0px;
+      }
     `,
   };
 
@@ -124,6 +140,14 @@ const CardContent = (props: FilterProps) => {
 
       ::-webkit-scrollbar-corner {
         background-color: transparent;
+      }
+
+      @media (max-width: 600px) {
+        height: 100%;
+        padding: 0;
+        ::-webkit-scrollbar {
+          display: none;
+        }
       }
     `,
   };
@@ -220,7 +244,6 @@ const CardContent = (props: FilterProps) => {
         </>
       );
     }
-    // return <LinearProgress />;
     return <></>;
   }
 

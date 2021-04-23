@@ -45,6 +45,9 @@ export const SearchField = (props: Props) => {
         @media (max-width: 992px) {
           width: ${props.isFocused ? "calc(100vw - 165px)" : "144px"};
         }
+        @media (max-width: 600px) {
+          width: 100%;
+        }
       `}
       inputProps={{ "aria-label": "Search in application" }}
       value={props.value}

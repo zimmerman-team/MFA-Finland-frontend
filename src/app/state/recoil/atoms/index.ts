@@ -91,6 +91,16 @@ export const defaultfilters = {
   years: [] as string[],
 };
 
+export const filterbarHeightAtom: RecoilState<number> = atom({
+  key: "filterbarHeightAtom",
+  default: 0,
+});
+
+export const appbarHeightAtom: RecoilState<number> = atom({
+  key: "appbarHeightAtom",
+  default: 0,
+});
+
 export const selectedFilterAtom: RecoilState<SelectedFilterAtomModel> = atom({
   key: "selectedFilterAtom",
   default: defaultfilters,

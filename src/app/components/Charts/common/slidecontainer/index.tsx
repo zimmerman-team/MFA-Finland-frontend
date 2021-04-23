@@ -57,6 +57,11 @@ export function SlideContainer(props: SlideContainerProps) {
             border-radius: 5px;
             border-style: none;
             background: #ffffff;
+
+            @media (max-width: 600px) {
+              right: 15px;
+              left: unset;
+            }
           `}
           type="button"
           onClick={props.close}

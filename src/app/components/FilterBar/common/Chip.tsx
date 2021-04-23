@@ -1,7 +1,15 @@
-import { Chip as MUIChip, ChipProps } from "@material-ui/core";
+import {
+  Chip as MUIChip,
+  ChipProps,
+  Typography,
+  useMediaQuery,
+  IconButton,
+} from "@material-ui/core";
 import { css } from "styled-components/macro";
 import { PrimaryColor, ProjectPalette } from "app/theme";
 import React from "react";
+import CloseIcon from "@material-ui/icons/Close";
+import CancelIcon from "@material-ui/icons/Cancel";
 import svgoud from "./arrowRight.svg";
 
 type SimpleSpread<L, R> = R & Pick<L, Exclude<keyof L, keyof R>>;
@@ -32,11 +40,11 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
     ${hasChildren &&
     `
     .MuiChip-label::after {
-      display: inline-block;
-      content: url(${svgoud});
-      margin-left: 8px;
-      transform: ${expanded ? "rotate(180deg)" : ""};
-    }
+          display: inline-block;
+          content: url(${svgoud});
+          margin-left: 8px;
+          transform: ${expanded ? "" : "rotate(180deg)"};
+      }
     `}
 
     cursor: ${hasChildren ? "pointer" : ""};
@@ -51,6 +59,9 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
     @media (max-width: 600px) {
       .MuiChip-label {
         white-space: nowrap;
+        ::after {
+          display: none;
+        }
       }
     }
   `;
@@ -59,21 +70,88 @@ const chip = (expanded: boolean, hasChildren: boolean) => {
 export const Chip = (props: ChipModel) => {
   const [expanded, setExpanded] = React.useState(props.values.length <= 1);
   const [label, setLabel] = React.useState(props.label);
+  const mobile = useMediaQuery("(max-width: 600px)");
 
-  React.useEffect(() => {
-    if (expanded) {
-      setLabel(props.values.map((value) => value.label).join("; "));
-    } else {
-      setLabel(props.label);
+  function handleClick() {
+    if (!mobile) {
+      if (expanded) {
+        setLabel(props.label);
+      } else {
+        setLabel(props.values.map((value) => value.label).join("; "));
+      }
     }
-  }, [expanded]);
+    setExpanded(!expanded);
+  }
 
   return (
-    <MUIChip
-      onClick={() => setExpanded(!expanded)}
-      css={chip(expanded, props.values.length > 1)}
-      {...props}
-      label={label}
-    />
+    <>
+      <MUIChip
+        onClick={() => handleClick()}
+        css={chip(expanded, props.values.length > 1)}
+        {...props}
+        label={label}
+      />
+      {expanded && mobile && (
+        <MobileTooltip {...props} handleClose={() => handleClick()} />
+      )}
+    </>
+  );
+};
+
+interface MobileChipModel extends ChipModel {
+  handleClose: () => void;
+}
+
+const MobileTooltip = (props: MobileChipModel) => {
+  const mobileCSS = {
+    container: css`
+      background-color: ${PrimaryColor[0]};
+      border-radius: 12px;
+      padding: 16px;
+      position: absolute;
+      width: calc(100% - 32px);
+      left: 16px;
+      z-index: 9999;
+      ul {
+        columns: 2;
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        color: white;
+        margin-bottom: 12px;
+      }
+    `,
+    header: css`
+      display: flex;
+      justify-content: space-between;
+
+      h6 {
+        color: white;
+      }
+    `,
+    button: css`
+      transform: translate(16px, -18px);
+    `,
+    icon: css`
+      color: white;
+    `,
+  };
+
+  return (
+    <div css={mobileCSS.container}>
+      <div css={mobileCSS.header}>
+        <Typography variant="subtitle2">{props.label}</Typography>
+        <IconButton onClick={() => props.handleClose()} css={mobileCSS.icon}>
+          <CancelIcon css={mobileCSS.icon} />
+        </IconButton>
+      </div>
+      <ul>
+        {props.values.map((val: any) => (
+          <li key={val}>{val.label}</li>
+        ))}
+      </ul>
+    </div>
   );
 };

@@ -9,6 +9,11 @@ export const containercss = css`
   @media (max-width: 992px) {
     padding: 16px 12px;
   }
+
+  @media (max-width: 600px) {
+    background-color: white;
+    padding: 0;
+  }
 `;
 
 export const buttonscontainercss = css`

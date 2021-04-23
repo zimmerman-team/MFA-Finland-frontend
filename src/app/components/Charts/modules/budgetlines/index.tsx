@@ -68,6 +68,7 @@ export function BudgetLinesModule(props: BudgetLinesModuleModel) {
 
         @media (max-width: 600px) {
           max-height: 100%;
+          padding: 0;
         }
       `}
     >
