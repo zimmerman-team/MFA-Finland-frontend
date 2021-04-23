@@ -520,8 +520,8 @@ export default function VizModule() {
           css={`
             background: #fff;
           `}
-          xs={isProjects ? 12 : 12}
-          sm={isProjects ? 12 : 12}
+          xs={12}
+          sm={12}
           md={isProjects ? 12 : 8}
           lg={isProjects ? 12 : 8}
           xl={isProjects ? 12 : 8}
