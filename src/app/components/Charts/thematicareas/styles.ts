@@ -97,10 +97,10 @@ const itemlabellinecardcss = [
   `,
   `
     display: inline-block;
-    left: 3%;
+    left: -8%;
     content: "";
-    width: 30%;
-    bottom: -50%;
+    width: 35%;
+    bottom: -70%;
     position: absolute;
     transform: rotate(-70deg);
     border-bottom: 1px solid #2E4982;
@@ -162,10 +162,10 @@ const itemlabellinevizcss = [
   `,
   `
     display: inline-block;
-    left: -1%;
+    left: -8%;
     content: "";
-    width: 36%;
-    bottom: -30px;
+    width: 65%;
+    bottom: -55px;
     position: absolute;
     transform: rotate(-70deg);
     border-bottom: 1px solid #2E4982;
