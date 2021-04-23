@@ -63,31 +63,54 @@ export function getODALegendItems(
   data: any,
   cmsData: any
 ): VizSidePanelItemProps[] {
-  return orderBy(data, "year", "desc").map((d: any) => ({
-    id: d.year,
-    name: `${d.year} Total ODA`,
-    value: formatLocale(get(d, "exclusive", 0) + get(d, "other", 0)),
-    children: [
-      {
-        id: "Exclusive ODA",
-        name: get(cmsData, "viz.exclusiveoda", "Exclusive ODA"),
-        value: formatLocale(get(d, "exclusive", 0)),
-        color: get(d, "exclusiveColor", ""),
-      },
-      {
-        id: "Other ODA",
-        name: get(cmsData, "viz.otheroda", "Other ODA"),
-        value: formatLocale(get(d, "other", 0)),
-        color: get(d, "otherColor", ""),
-      },
-      {
-        id: "ODA/GNI",
-        name: "ODA/GNI",
-        value: `${get(d, "gni", 0)}%`,
-        color: get(d, "gniColor", ""),
-      },
-    ],
-  }));
+  return orderBy(data, "year", "desc").map((d: any) => {
+    if (d.year < 2020) {
+      return {
+        id: d.year,
+        name: `${d.year} Total ODA`,
+        value: formatLocale(get(d, "exclusive", 0) + get(d, "other", 0)),
+        children: [
+          {
+            id: "Exclusive ODA",
+            name: get(cmsData, "viz.exclusiveoda", "Exclusive ODA"),
+            value: formatLocale(get(d, "exclusive", 0)),
+            color: get(d, "exclusiveColor", ""),
+          },
+          {
+            id: "Other ODA",
+            name: get(cmsData, "viz.otheroda", "Other ODA"),
+            value: formatLocale(get(d, "other", 0)),
+            color: get(d, "otherColor", ""),
+          },
+          {
+            id: "ODA/GNI",
+            name: "ODA/GNI",
+            value: `${get(d, "gni", 0)}%`,
+            color: get(d, "gniColor", ""),
+          },
+        ],
+      };
+    }
+    return {
+      id: d.year,
+      name: `${d.year} Total ODA`,
+      value: formatLocale(get(d, "exclusive", 0) + get(d, "other", 0)),
+      children: [
+        {
+          id: "Exclusive ODA",
+          name: get(cmsData, "viz.exclusiveoda", "Exclusive ODA"),
+          value: formatLocale(get(d, "exclusive", 0)),
+          color: get(d, "exclusiveColor", ""),
+        },
+        {
+          id: "Other ODA",
+          name: get(cmsData, "viz.otheroda", "Other ODA"),
+          value: formatLocale(get(d, "other", 0)),
+          color: get(d, "otherColor", ""),
+        },
+      ],
+    };
+  });
 }
 
 export function getSimpleBarLegendItems(data: any): VizSidePanelItemProps[] {

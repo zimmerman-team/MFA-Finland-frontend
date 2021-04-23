@@ -13,15 +13,14 @@ interface ModuleContainerProps {
 export const ModuleContainer = (props: ModuleContainerProps) => {
   const location = useLocation();
 
-  const isLandingOrDetail = [
-    "/",
-    "/regions",
-    "/countries",
-    "/sectors",
-    "/organisations",
-    "/organisation-types",
-    "/thematic-area",
-  ].includes(location.pathname);
+  const isLandingOrDetail =
+    location.pathname === "/" ||
+    location.pathname.indexOf("/regions") > -1 ||
+    location.pathname.indexOf("/countries") > -1 ||
+    location.pathname.indexOf("/sectors") > -1 ||
+    location.pathname.indexOf("/organisations") > -1 ||
+    location.pathname.indexOf("/organisation-types") > -1 ||
+    location.pathname.indexOf("/thematic-area") > -1;
 
   const mobile = useMediaQuery("(max-width:960px)");
 
@@ -29,13 +28,15 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
     container: css`
       width: 100%;
       display: flex;
-      //background-color: white;
+      min-height: calc(100vh - 68px - 366px);
     `,
     gridContainer: css`
+      z-index: 1;
       width: 100%;
       padding: 0 64px;
       position: relative;
-      z-index: 1;
+      height: fit-content;
+
       @media (max-width: 992px) {
         padding: 0 12px;
         margin: 0;

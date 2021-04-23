@@ -58,6 +58,7 @@ export function PageFloatingButtons() {
           classes={{
             tooltip: classes.tooltip,
           }}
+          enterTouchDelay={0}
           title={<ShareTooltip />}
           aria-pressed="false"
         >
@@ -74,6 +75,7 @@ export function PageFloatingButtons() {
           arrow
           interactive
           placement="left"
+          enterTouchDelay={0}
           classes={{
             tooltip: classes.tooltip,
           }}

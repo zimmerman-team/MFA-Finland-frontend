@@ -4,14 +4,13 @@ import MUIDrawer from "@material-ui/core/Drawer";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import { useCMSData } from "app/hooks/useCMSData";
-import { Grid, Hidden, useMediaQuery } from "@material-ui/core";
+import { Grid, Hidden, useMediaQuery, Typography } from "@material-ui/core";
 import { GlobalNavItems } from "app/components/Drawer/common/data";
 import { useRecoilState } from "recoil";
 import { drawerAtom } from "app/state/recoil/atoms";
 import { MfaLogo } from "app/assets/mfa_logo";
 import { NavLink } from "react-router-dom";
 import { PrimaryColor } from "app/theme";
-import Typography from "@material-ui/core/Typography";
 import { drawerStyle } from "app/components/Drawer/common/drawerStyle";
 import { NavList } from "app/components/Drawer/common/NavList";
 
@@ -95,6 +94,7 @@ export const Drawer = () => {
               @media (max-width: 600px) {
                 margin-bottom: 48px;
               }
+              border-right: 1px solid rgba(255, 255, 255, 0.7);
             `}
           >
             <NavList items={GlobalNavItems} />
@@ -251,10 +251,4 @@ export const Drawer = () => {
       </Grid>
     </MUIDrawer>
   );
-};
-
-const MobileLayout = () => {
-  // return (
-  //
-  // )
 };

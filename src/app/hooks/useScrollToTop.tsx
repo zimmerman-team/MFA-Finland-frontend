@@ -3,15 +3,18 @@ import { useHistory } from "react-router-dom";
 
 export function useScrollToTop() {
   const history = useHistory();
+
   React.useEffect(() => {
     return history.listen(() => {
-      setTimeout(() => {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth",
-        });
-      }, 5);
+      if (history.location.pathname.indexOf("/project") === -1) {
+        setTimeout(() => {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
+        }, 5);
+      }
     });
   }, [history]);
 

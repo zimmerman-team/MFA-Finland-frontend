@@ -276,6 +276,12 @@ export default createMuiTheme({
         height: "100vh",
       },
     },
+    MuiListItem: {
+      root: {
+        paddingTop: 12,
+        paddingBottom: 12,
+      },
+    },
   },
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],

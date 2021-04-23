@@ -54,9 +54,7 @@ export const drawerStyle = {
     }
   `,
   AddressContainer: css`
-    padding-top: 12px;
-    padding-left: 32px;
-    border-right: 1px solid #fff;
+    border-right: 1px solid #4f6797;
 
     @media (max-width: 960px) {
       padding-top: initial;

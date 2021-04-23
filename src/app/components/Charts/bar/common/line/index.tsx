@@ -17,6 +17,7 @@ export function Line(props: LineProps) {
       />
     );
   };
+
   return (
     <ResponsiveLine
       data={props.data}
@@ -29,7 +30,7 @@ export function Line(props: LineProps) {
       }}
       pointSize={6}
       colors={["#D495A7"]}
-      layers={["axes", "lines", Points]}
+      layers={["axes", Points]}
       enableGridY={false}
       enableGridX={false}
       axisLeft={null}
@@ -37,7 +38,7 @@ export function Line(props: LineProps) {
       axisRight={{
         tickSize: 0,
         tickValues: 6,
-        tickPadding: 15,
+        tickPadding: 5,
         tickRotation: 0,
       }}
       theme={{
