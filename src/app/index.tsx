@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
 import { PageOrnament } from "app/assets/PageOrnament";
+import ScrollToTop from "app/utils/scrollToTop";
 import { FilterBar } from "./components/FilterBar";
 import { FilterPanel } from "./components/FilterPanel";
 import { MdBottomMenu } from "./components/MdBottomMenu";
@@ -22,6 +23,7 @@ export const App = () => {
 
   return (
     <React.Fragment>
+      <ScrollToTop />
       <FilterPanel />
       <Drawer />
       <MdBottomMenu />
