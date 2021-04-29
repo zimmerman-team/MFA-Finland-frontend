@@ -125,7 +125,9 @@ export function ThematicAreas(props: ThematicAreasProps) {
               onClick={() => {
                 if (props.linkedLabels) {
                   history.push(
-                    `/thematic-area/${item.ref}/${history.location.search}`
+                    `/thematic-area/${item.ref}${
+                      history.location.search.length > 0 ? "/" : ""
+                    }${history.location.search}`
                   );
                 }
               }}

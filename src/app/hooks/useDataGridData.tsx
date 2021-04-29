@@ -21,7 +21,7 @@ import {
 interface useDataGridDataProps {
   detailPageFilter: {
     key: string;
-    value: string | string[];
+    value: string;
   };
 }
 
@@ -149,9 +149,12 @@ export function useDataGridData(props: useDataGridDataProps) {
       filters = {
         ...filters,
         [props.detailPageFilter.key]:
-          typeof props.detailPageFilter.value === "string"
-            ? [props.detailPageFilter.value]
-            : props.detailPageFilter.value,
+          props.detailPageFilter.key === "tag_narrative"
+            ? [
+                props.detailPageFilter.value,
+                props.detailPageFilter.value.replace("primary", "secondary"),
+              ]
+            : [props.detailPageFilter.value],
       };
       detailPageNameAction({
         values: {
@@ -265,9 +268,12 @@ export function useDataGridData(props: useDataGridDataProps) {
       filters = {
         ...filters,
         [props.detailPageFilter.key]:
-          typeof props.detailPageFilter.value === "string"
-            ? [props.detailPageFilter.value]
-            : props.detailPageFilter.value,
+          props.detailPageFilter.key === "tag_narrative"
+            ? [
+                props.detailPageFilter.value,
+                props.detailPageFilter.value.replace("primary", "secondary"),
+              ]
+            : [props.detailPageFilter.value],
       };
       detailPageNameAction({
         values: {
