@@ -484,7 +484,6 @@ export const DataGrid = (props: DataGridProps) => {
             )}
           </GridWidget>
         </Grid>
-        <div css="width: 100%; height: 100px;" />
       </Hidden>
     </React.Fragment>
   );

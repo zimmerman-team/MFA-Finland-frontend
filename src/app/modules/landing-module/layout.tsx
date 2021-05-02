@@ -10,6 +10,12 @@ export const LandingLayout = (props: DataGridProps) => {
       <ModuleContainer>
         <DataGrid {...props} />
       </ModuleContainer>
+      <div
+        css={`
+          height: 16px;
+          width: 100%;
+        `}
+      />
     </>
   );
 };
