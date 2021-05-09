@@ -3,7 +3,7 @@ import get from "lodash/get";
 import maxBy from "lodash/maxBy";
 import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
-import { Grid, Hidden } from "@material-ui/core";
+import { Grid, Hidden, Typography } from "@material-ui/core";
 import { useCMSData } from "app/hooks/useCMSData";
 import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components/Charts/bar";
@@ -22,6 +22,8 @@ import { VizLoader } from "app/modules/common/viz-loader";
 import { Collapsable } from "app/components/Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 import { useWindowSize } from "app/hooks/useWindowSize";
+import { ContactInformation } from "app/modules/detail-modules/country-detail-module/ContactInformation";
+import { RssFeed } from "app/modules/detail-modules/country-detail-module/RssFeed";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -387,7 +389,7 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip={resultContent.label}
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          {resultContent.text}
+          {isCountryDetail ? <ContactInformation /> : resultContent.text}
         </GridWidget>
       </Grid>
 
@@ -429,10 +431,18 @@ export const DataGrid = (props: DataGridProps) => {
           interactive
           height="510px"
           tooltip={aboutContent.label}
-          childrencontainerStyle={{ paddingTop: 33 }}
-          label={get(cmsData, "general.about", "About")}
+          childrencontainerStyle={
+            isCountryDetail
+              ? { paddingTop: 33, overflow: "auto" }
+              : { paddingTop: 33 }
+          }
+          label={
+            isCountryDetail
+              ? "RSS Feed"
+              : get(cmsData, "general.about", "About")
+          }
         >
-          {aboutContent.text}
+          {isCountryDetail ? <RssFeed /> : aboutContent.text}
         </GridWidget>
       </Grid>
 

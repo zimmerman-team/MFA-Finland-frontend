@@ -129,6 +129,7 @@ const style = {
       height?: number;
       scale?: number;
       placeContent?: string;
+      overflow?: string;
     }
   ) => css`
     display: flex;
@@ -149,6 +150,10 @@ const style = {
     place-content: ${childrencontainerStyle?.placeContent
       ? childrencontainerStyle.placeContent
       : "ïnitial"};
+    overflow: ${childrencontainerStyle?.overflow
+      ? childrencontainerStyle.overflow
+      : "ïnitial"};
+
     * {
       pointer-events: ${itemLinkable ? "none" : "all"};
     }
@@ -171,6 +176,7 @@ interface GridWidgetProps {
     height?: number;
     scale?: number;
     placeContent?: string;
+    overflow?: string;
   };
   disbursementsStatComponent?: FunctionComponent;
   // responsiveOrder?: number;
