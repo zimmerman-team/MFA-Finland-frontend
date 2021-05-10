@@ -54,6 +54,7 @@ export const drawerStyle = {
     }
   `,
   AddressContainer: css`
+    padding-left: 32px;
     border-right: 1px solid #4f6797;
 
     @media (max-width: 960px) {
@@ -62,7 +63,7 @@ export const drawerStyle = {
     }
 
     @media (max-width: 600px) {
-      border-left: 1px solid #fff;
+      border-left: 1px solid #4f6797;
     }
   `,
   SocialIconContainer: css`

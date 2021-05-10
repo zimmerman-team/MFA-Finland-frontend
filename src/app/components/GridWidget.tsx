@@ -218,7 +218,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
           typeof props.detailPageFilter.value === "string"
             ? props.detailPageFilter.value
             : props.detailPageFilter.value.join(",")
-        }`
+        }&`
       : ""
   }${history.location.search.replace("?", "")}`;
   if (searchFilterString !== "") {

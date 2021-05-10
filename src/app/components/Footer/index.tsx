@@ -4,7 +4,13 @@ import { css } from "styled-components/macro";
 import { useLocation } from "react-router-dom";
 import { useCMSData } from "app/hooks/useCMSData";
 import { drawerStyle } from "app/components/Drawer/common/drawerStyle";
-import { Grid, Container, Typography, IconButton } from "@material-ui/core";
+import {
+  Grid,
+  Hidden,
+  Container,
+  Typography,
+  IconButton,
+} from "@material-ui/core";
 
 import { MfaLogo } from "app/assets/mfa_logo";
 import { IconBackToTop } from "app/assets/icons/IconBackToTop";
@@ -38,6 +44,10 @@ const styles = {
     flex-direction: row;
     justify-content: flex-end;
     border-top: 1px solid #4f6797;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
   `,
 };
 
@@ -58,6 +68,7 @@ export function Footer() {
           css={`
             min-height: 100%;
             padding: 0 32px;
+            background: #2e4982;
 
             @media (max-width: 992px) {
               padding: 0;
@@ -72,8 +83,8 @@ export function Footer() {
           >
             <Grid
               item
-              xs={2}
-              sm={2}
+              xs={3}
+              sm={3}
               md={2}
               lg={1}
               css={`
@@ -90,8 +101,8 @@ export function Footer() {
             </Grid>
             <Grid
               item
-              xs={10}
-              sm={10}
+              xs={9}
+              sm={9}
               md={3}
               lg={3}
               css={drawerStyle.AddressContainer}
@@ -120,11 +131,14 @@ export function Footer() {
                 kirjaamo.um@formin.fi
               </Typography>
             </Grid>
+            <Hidden smUp>
+              <Grid item xs={3} sm={3} />
+            </Hidden>
             <Grid
               item
               container
-              xs={12}
-              sm={6}
+              xs={9}
+              sm={9}
               md={3}
               lg={3}
               css={`
@@ -132,7 +146,7 @@ export function Footer() {
 
                 @media (max-width: 960px) {
                   margin-top: 64px;
-                  border-left: 1px solid #fff;
+                  border-left: 1px solid #4f6797;
                 }
               `}
             >
