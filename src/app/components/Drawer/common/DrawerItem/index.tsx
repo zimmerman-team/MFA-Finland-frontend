@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from "react";
 import get from "lodash/get";
 import { NavLink } from "react-router-dom";
@@ -17,34 +16,11 @@ interface DrawerItemProps {
   path: string;
 }
 
-const ItemActiveStyle = css`
-  span {
-    color: ${ProjectPalette.primary.main};
-    font-weight: 500;
-  }
-`;
 const ItemInActiveStyle = css`
   span {
     color: ${PrimaryColor[2]};
     font-weight: bold;
     font-size: 18px;
-  }
-`;
-
-const ItemIconActiveStyle = css`
-  svg {
-    color: ${ProjectPalette.primary.main};
-    min-width: initial;
-    margin-right: 16px;
-    font-size: 25px;
-  }
-`;
-const ItemIconInActiveStyle = css`
-  svg {
-    color: ${ProjectPalette.text.primary};
-    min-width: initial;
-    margin-right: 16px;
-    font-size: 25px;
   }
 `;
 
@@ -54,9 +30,7 @@ export const DrawerItem = (props: DrawerItemProps) => {
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
   const mobile = useMediaQuery("(max-width: 600px");
 
-  function handleLanguageClick() {}
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log((event.target as HTMLInputElement).value);
     setLanguage((event.target as HTMLInputElement).value);
   };
 
@@ -85,7 +59,6 @@ export const DrawerItem = (props: DrawerItemProps) => {
       `}
     >
       <MUIListItemText
-        // eslint-disable-next-line sonarjs/no-all-duplicated-branches
         css={ItemInActiveStyle}
         primary={get(cmsData, `menu.${props.label.toLowerCase()}`, props.label)}
       />
@@ -108,9 +81,10 @@ export const DrawerItem = (props: DrawerItemProps) => {
       isActive={(match) => {
         if (!match) {
           setNavLinkState(false);
-        } else {
-          setNavLinkState(true);
+          return false;
         }
+        setNavLinkState(true);
+        return true;
       }}
     >
       <MUIListItem
@@ -127,7 +101,6 @@ export const DrawerItem = (props: DrawerItemProps) => {
         `}
       >
         <MUIListItemText
-          // eslint-disable-next-line sonarjs/no-all-duplicated-branches
           css={ItemInActiveStyle}
           primary={get(
             cmsData,

@@ -106,5 +106,6 @@ export function useCMSData(props: useCMSDataProps) {
   if (props.returnData) {
     return cmsData;
   }
+
   return null;
 }

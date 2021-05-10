@@ -4,8 +4,6 @@ import { ProjectPalette } from "app/theme";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
 import { PillButton } from "app/components/Buttons/PillButton";
-import filters from "app/state/api/actions-reducers/cms/filters";
-import { useMediaQuery } from "@material-ui/core";
 
 interface BottomActions {
   onApply?: () => void;
@@ -14,7 +12,6 @@ interface BottomActions {
 
 export const BottomActions = (props: BottomActions) => {
   const cmsData = useCMSData({ returnData: true });
-  const mobile = useMediaQuery("(max-width: 600px)");
 
   const styles = {
     container: css`
