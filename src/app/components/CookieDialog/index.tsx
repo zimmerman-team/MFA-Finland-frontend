@@ -4,8 +4,8 @@ import SnackbarContent from "@material-ui/core/SnackbarContent";
 import styled from "styled-components";
 
 import useCookie from "@devhammed/use-cookie";
-import { Message } from "./common/message";
 import { Hidden } from "@material-ui/core";
+import { Message } from "./common/message";
 
 type SnackBarProps = {
   message?: string;
@@ -67,7 +67,7 @@ export const CookieDialog = (props: SnackBarProps) => {
     visible &&
     cookie && (
       <>
-        <Hidden smUp>{/* <MobileDialog /> */}</Hidden>
+        {/* <Hidden smUp>/!* <MobileDialog /> *!/</Hidden> */}
         <BaseSnackbar
           anchorOrigin={{
             vertical: "bottom",
