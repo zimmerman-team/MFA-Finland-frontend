@@ -10,6 +10,7 @@ import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { SearchField } from "app/components/AppBar/common/Search/common/SearchField";
 import { FloatingButtons } from "app/components/Charts/modules/projects/common/FloatingButtons";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 interface ProjectsListModuleProps {
   count: number;
@@ -36,6 +37,8 @@ export type ProjectType = {
 
 export const ProjectsListModule = (props: ProjectsListModuleProps) => {
   const [isFocused, setIsFocused] = React.useState(false);
+  const mobile = useMediaQuery("(max-width: 600px)");
+
   const cmsData = useCMSData({ returnData: true });
   const styles = {
     container: css`
@@ -56,8 +59,14 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
       gap: 16px;
       display: flex;
       padding-right: 50px;
-      > div {
-        margin-right: -50px;
+      @media (min-width: 600px) {
+        > div {
+          margin-right: -50px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        padding: 0;
       }
     `,
     iconButton: css`
@@ -149,13 +158,15 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
                 : undefined
             }
           />
-          <IconButton
-            aria-label="Search"
-            css={styles.iconButton}
-            onClick={() => setIsFocused(true)}
-          >
-            <SearchIcon css={styles.icon} />
-          </IconButton>
+          {!mobile && (
+            <IconButton
+              aria-label="Search"
+              css={styles.iconButton}
+              onClick={() => setIsFocused(true)}
+            >
+              <SearchIcon css={styles.icon} />
+            </IconButton>
+          )}
           <FloatingButtons searchKey={props.searchKey} />
         </div>
       </div>

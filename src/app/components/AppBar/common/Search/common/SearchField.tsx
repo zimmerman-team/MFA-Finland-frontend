@@ -36,7 +36,7 @@ export const SearchField = (props: Props) => {
         width: ${props.isFocused ? "600px" : unfocusedWidth};
         input {
           padding: ${unfocusedWidth === "0px" && !props.isFocused
-            ? "10px 0px"
+            ? "10px 0px 10px 5px"
             : "10px"};
         }
         @media (min-width: 992px) {
