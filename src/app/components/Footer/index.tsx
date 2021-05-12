@@ -1,7 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import { css } from "styled-components/macro";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useCMSData } from "app/hooks/useCMSData";
 import { drawerStyle } from "app/components/Drawer/common/drawerStyle";
 import {
@@ -47,6 +47,16 @@ const styles = {
 
     @media (max-width: 768px) {
       justify-content: center;
+    }
+  `,
+  link: css`
+    color: white;
+    font-size: 16px;
+    line-height: 19px;
+
+    :hover {
+      color: white;
+      text-decoration: underline;
     }
   `,
 };
@@ -107,29 +117,18 @@ export function Footer() {
               lg={3}
               css={drawerStyle.AddressContainer}
             >
-              <Typography
-                variant="body1"
-                css={`
-                  color: white;
-                `}
-              >
-                Ministry for Foreign Affairs
-                <br />
-                PO Box 176
-                <br /> FI-00023 Government
-                <br /> Finland
-              </Typography>
-              <br /> <br />
-              <Typography
-                variant="body1"
-                css={`
-                  color: white;
-                `}
-              >
-                {get(cmsData, "menu.telephone", "Switchboard +358 295 16001")}
-                <br />
-                kirjaamo.um@formin.fi
-              </Typography>
+              <NavLink to="/feedback" css={styles.link}>
+                {get(cmsData, `menu.feedback`, "Feedback")}
+              </NavLink>
+              <NavLink to="/about" css={styles.link}>
+                {get(cmsData, `menu.about`, "About")}
+              </NavLink>
+              <NavLink to="/result" css={styles.link}>
+                {get(cmsData, `menu.result`, "Result")}
+              </NavLink>
+              <NavLink to="/statements" css={styles.link}>
+                {get(cmsData, `menu.Statements`, "Statements")}
+              </NavLink>
             </Grid>
             <Hidden smUp>
               <Grid item xs={3} sm={3} />
@@ -239,6 +238,19 @@ export function Footer() {
                   `}
                 >
                   {get(cmsData, "menu.social", "")}
+                  <br />
+                  <a
+                    href="www.um.fi"
+                    css={`
+                      color: white;
+                      :hover {
+                        color: white;
+                        text-decoration: underline;
+                      }
+                    `}
+                  >
+                    www.um.fi
+                  </a>
                 </Typography>
               </Grid>
             </Grid>

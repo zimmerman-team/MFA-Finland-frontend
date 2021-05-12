@@ -54,6 +54,9 @@ export const drawerStyle = {
     }
   `,
   AddressContainer: css`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     padding-left: 32px;
     border-right: 1px solid #4f6797;
 
