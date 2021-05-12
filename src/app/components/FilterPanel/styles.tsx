@@ -28,6 +28,10 @@ export const createStyles = (props: FilterPanelProps) => {
       @media (max-width: 960px) {
         padding: 16px;
       }
+
+      @media (max-width: 600px) {
+        height: calc(100vh - 320px);
+      }
     `,
     heading: css`
       color: white;
