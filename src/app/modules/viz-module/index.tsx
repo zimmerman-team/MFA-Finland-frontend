@@ -47,9 +47,9 @@ import { MoreButton } from "app/components/Charts/bar/data";
 import { useMediaQuery } from "@material-ui/core";
 
 export default function VizModule() {
-  const mobile = useMediaQuery("(max-width: 600px)");
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
+  const mobile = useMediaQuery("(max-width: 600px)");
   const [searchKey, setSearchKey] = React.useState(
     localStorage.getItem("searchValue") || ""
   );
@@ -298,7 +298,6 @@ export default function VizModule() {
     if (root) {
       root.style.background = "#fff";
     }
-    setTimeout(() => localStorage.removeItem("searchValue"), 500);
   }, []);
 
   React.useEffect(() => {
@@ -452,6 +451,7 @@ export default function VizModule() {
   useDebounce(
     () => {
       const filters = getAPIFormattedFilters(selectedFilters);
+      localStorage.setItem("searchValue", searchKey);
       setProjectListPage(0);
       projectsAction({
         values: {

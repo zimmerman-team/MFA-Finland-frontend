@@ -54,9 +54,11 @@ export function SunburstVizSimplified(props: any) {
       </Sunburst>
       {clickedNode && (
         <SmTooltipContainer
-          showDrilldownBtn
           detailBtnLabel="Sector Detail"
           close={() => setClickedNode(null)}
+          showDrilldownBtn={
+            clickedNode !== undefined && clickedNode._children !== undefined
+          }
           gotoDetail={() =>
             history.push(
               `/sectors/${clickedNode.code}${history.location.search}`
