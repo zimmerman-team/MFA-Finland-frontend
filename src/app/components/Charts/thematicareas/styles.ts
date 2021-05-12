@@ -242,6 +242,11 @@ export const rightsideinfopanel = css`
   @media (max-width: 1280px) {
     padding-right: 50px;
   }
+
+  @media (max-width: 960px) {
+    padding: 0;
+    box-shadow: -100px 0px 0px 0px white, 100px 0px 0px 0px white;
+  }
 `;
 
 export const rightsideinfopaneltitle = css`

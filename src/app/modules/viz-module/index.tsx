@@ -62,6 +62,8 @@ export default function VizModule() {
     string | number | null
   >(null);
   const isProjects = get(params, "tab", "") === "projects";
+  const isThematic = get(params, "tab", "") === "thematic-areas";
+
   const [vizLevel, setVizLevel] = React.useState(0);
   const [vizScale, setVizScale] = React.useState(1);
   const [vizCompData, setVizCompData] = React.useState<BarItemProps[]>([]);
@@ -485,6 +487,83 @@ export default function VizModule() {
     }
   }
 
+  function renderSideList() {
+    if ((mobile && isThematic) || isProjects) {
+      return <></>;
+    }
+    return (
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={4}
+        lg={4}
+        xl={4}
+        css={`
+          z-index: 1;
+          @media (min-width: 600px) {
+            box-shadow: 200px 0px 0px 0px #f8f8f8, 400px 0px 0px 0px #f8f8f8,
+              600px 0px 0px 0px #f8f8f8, 800px 0px 0px 0px #f8f8f8,
+              1000px 0px 0px 0px #f8f8f8, 1200px 0px 0px 0px #f8f8f8,
+              1400px 0px 0px 0px #f8f8f8, 1600px 0px 0px 0px #f8f8f8,
+              1800px 0px 0px 0px #f8f8f8;
+          }
+        `}
+      >
+        <div
+          ref={ref}
+          css={`
+            width: 100%;
+            height: 100%;
+            display: flex;
+            background: ${PrimaryColor[1]};
+
+            ${vizLevel > 0
+              ? ` 
+                  #legend-items { 
+                    * { 
+                      opacity: 1; 
+                      pointer-events: none; 
+                    } 
+                  } 
+                `
+              : ""}
+          `}
+        >
+          <VizSidePanel
+            items={getSidebarLegendItems(
+              expandedVizItem &&
+                get(params, "tab", "") === "oda" &&
+                vizLevel > 0
+                ? "oda-drilldown"
+                : get(params, "tab", ""),
+              {
+                oda: odaBarChartData,
+                "oda-drilldown": odaBudgetLinesChartData,
+                "thematic-areas": thematicAreasChartData,
+                sectors: sectorsSunburstData,
+                "countries-regions": locationsTreemapData,
+                organisations: organisationsTreemapData,
+                "budget-lines": budgetLinesBarChartData,
+              },
+              selectedVizItem,
+              cmsData,
+              thematicAreaChartSingle
+            )}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            scrollableHeight={height}
+            vizType={get(params, "tab", "")}
+            setSelected={setSelectedVizItem}
+            setExpanded={setExpandedVizItem}
+            selectedVizItem={selectedVizItem}
+            expandedVizItem={expandedVizItem}
+          />
+        </div>
+      </Grid>
+    );
+  }
+
   return (
     <Grid
       container
@@ -688,77 +767,7 @@ export default function VizModule() {
             </Route>
           </Switch>
         </Grid>
-        {!isProjects && (
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={4}
-            lg={4}
-            xl={4}
-            css={`
-              z-index: 1;
-              @media (min-width: 600px) {
-                box-shadow: 200px 0px 0px 0px #f8f8f8, 400px 0px 0px 0px #f8f8f8,
-                  600px 0px 0px 0px #f8f8f8, 800px 0px 0px 0px #f8f8f8,
-                  1000px 0px 0px 0px #f8f8f8, 1200px 0px 0px 0px #f8f8f8,
-                  1400px 0px 0px 0px #f8f8f8, 1600px 0px 0px 0px #f8f8f8,
-                  1800px 0px 0px 0px #f8f8f8;
-              }
-            `}
-          >
-            <div
-              ref={ref}
-              css={`
-                width: 100%;
-                height: 100%;
-                display: flex;
-                background: ${PrimaryColor[1]};
-
-                ${vizLevel > 0
-                  ? ` 
-                  #legend-items { 
-                    * { 
-                      opacity: 1; 
-                      pointer-events: none; 
-                    } 
-                  } 
-                `
-                  : ""}
-              `}
-            >
-              <VizSidePanel
-                items={getSidebarLegendItems(
-                  expandedVizItem &&
-                    get(params, "tab", "") === "oda" &&
-                    vizLevel > 0
-                    ? "oda-drilldown"
-                    : get(params, "tab", ""),
-                  {
-                    oda: odaBarChartData,
-                    "oda-drilldown": odaBudgetLinesChartData,
-                    "thematic-areas": thematicAreasChartData,
-                    sectors: sectorsSunburstData,
-                    "countries-regions": locationsTreemapData,
-                    organisations: organisationsTreemapData,
-                    "budget-lines": budgetLinesBarChartData,
-                  },
-                  selectedVizItem,
-                  cmsData,
-                  thematicAreaChartSingle
-                )}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                scrollableHeight={height}
-                vizType={get(params, "tab", "")}
-                setSelected={setSelectedVizItem}
-                setExpanded={setExpandedVizItem}
-                selectedVizItem={selectedVizItem}
-                expandedVizItem={expandedVizItem}
-              />
-            </div>
-          </Grid>
-        )}
+        {renderSideList()}
       </Grid>
     </Grid>
   );
