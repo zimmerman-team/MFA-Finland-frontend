@@ -1,5 +1,5 @@
 import { css } from "styled-components/macro";
-import { SecondaryColor } from "app/theme";
+import { PrimaryColor, SecondaryColor } from "app/theme";
 
 export const containercss = css`
   padding: 16px;
@@ -13,6 +13,9 @@ export const containercss = css`
   @media (max-width: 600px) {
     background-color: white;
     padding: 0;
+
+    box-shadow: -100px 0px 0px 0px white,
+      100px 0px 0px 0px white};
   }
 `;
 
