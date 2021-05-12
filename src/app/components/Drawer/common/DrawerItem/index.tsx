@@ -28,7 +28,7 @@ export const DrawerItem = (props: DrawerItemProps) => {
   const cmsData = useCMSData({ returnData: true });
   const [activeState, setNavLinkState] = useState(false);
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
-  const mobile = useMediaQuery("(max-width: 600px");
+  const mobile = useMediaQuery("(max-width: 600px)");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLanguage((event.target as HTMLInputElement).value);
@@ -41,6 +41,7 @@ export const DrawerItem = (props: DrawerItemProps) => {
       color: white;
     }
   `;
+
   return mobile && props.label === "Language" ? (
     <MUIListItem
       // button
