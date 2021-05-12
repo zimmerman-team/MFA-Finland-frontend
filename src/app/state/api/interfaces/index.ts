@@ -171,6 +171,7 @@ export interface StoreModel {
     viz: ApiCallModel;
     filters: ApiCallModel;
     menu: ApiCallModel;
+    pages: ApiCallModel;
   };
   // sync variables
   syncSearch: SyncSearchModel;

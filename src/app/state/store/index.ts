@@ -78,6 +78,7 @@ import feedback from "app/state/api/actions-reducers/feedback";
 import viz from "../api/actions-reducers/cms/viz";
 import filters from "../api/actions-reducers/cms/filters";
 import menu from "../api/actions-reducers/cms/menu";
+import pages from "../api/actions-reducers/cms/pages";
 
 const storeContent: StoreModel = {
   // filtering
@@ -116,6 +117,7 @@ const storeContent: StoreModel = {
     viz: persist(viz),
     filters: persist(filters),
     menu: persist(menu),
+    pages: persist(pages),
   },
   // global search
   searchDonors,

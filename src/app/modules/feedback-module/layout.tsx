@@ -22,6 +22,7 @@ import { FormField } from "app/modules/feedback-module/common/FormField";
 import { useStoreActions, useStoreState } from "app/state/store/hooks";
 import get from "lodash/get";
 import { initActivityDetailData } from "app/components/ActivityAccordion/model";
+import { useCMSData } from "app/hooks/useCMSData";
 
 const crumbs: BreadcrumbLinkModel[] = [
   { label: "Homepage", path: Path.home },
@@ -40,6 +41,8 @@ const navList: InpageNavItemModel[] = [
 ];
 
 export const FeedbackLayout = () => {
+  const cmsData = useCMSData({ returnData: true });
+
   const [active, setActive] = React.useState(0);
   const [feedback, setFeedback] = React.useState("");
   const [feedbackError, setFeedbackError] = React.useState(false);
@@ -229,78 +232,95 @@ export const FeedbackLayout = () => {
         <Grid item xl={9} lg={9} md={12} css={styles.gridContainer}>
           <Anchor id="feedback" />
           <div css={styles.container}>
-            {loading && (
-              <div css={styles.loading}>
-                <CircularProgress />
-              </div>
-            )}
+            <Typography variant="h5">Feedback</Typography>
+            <Box width="100%" height="24px" />
+            <Typography variant="body1" css={styles.paragraph}>
+              {get(
+                cmsData,
+                "pages.feedback",
+                "We appreciate any feedback for this site or about the data that is presented on this site on"
+              )}
+              <a
+                href="mailto:tilastot.um@formin.fi"
+                css={`
+                  text-decoration: underline;
+                `}
+              >
+                tilastot.um@formin.fi
+              </a>
+            </Typography>
+            {/* {loading && ( */}
+            {/*  <div css={styles.loading}> */}
+            {/*    <CircularProgress /> */}
+            {/*  </div> */}
+            {/* )} */}
 
-            {!loading && !displaySucces && (
-              <>
-                <Typography variant="h5">Feedback</Typography>
-                <Box width="100%" height="24px" />
-                <Typography variant="body2">* Required</Typography>
-                <Box width="100%" height="24px" />
+            {/* {!loading && !displaySucces && ( */}
+            {/*  <> */}
+            {/*    <Typography variant="h5">Feedback</Typography> */}
+            {/*    <Box width="100%" height="24px" /> */}
+            {/*    <Typography variant="body2">* Required</Typography> */}
+            {/*    <Box width="100%" height="24px" /> */}
 
-                <FormField
-                  value={feedback}
-                  label="Feedback*"
-                  handleChange={handleFeedbackChange}
-                  error={feedbackError}
-                  errorMessage="This field is required"
-                  isMultiline
-                />
+            {/*    <FormField */}
+            {/*      value={feedback} */}
+            {/*      label="Feedback*" */}
+            {/*      handleChange={handleFeedbackChange} */}
+            {/*      error={feedbackError} */}
+            {/*      errorMessage="This field is required" */}
+            {/*      isMultiline */}
+            {/*    /> */}
 
-                <FormField
-                  value={name}
-                  label="Name*"
-                  handleChange={handleNameChange}
-                  error={nameError}
-                  errorMessage="This field is required"
-                />
+            {/*    <FormField */}
+            {/*      value={name} */}
+            {/*      label="Name*" */}
+            {/*      handleChange={handleNameChange} */}
+            {/*      error={nameError} */}
+            {/*      errorMessage="This field is required" */}
+            {/*    /> */}
 
-                <FormField
-                  value={email}
-                  label="Email*"
-                  handleChange={handleEmailChange}
-                  error={emailError}
-                  errorMessage={emailErrorMsg}
-                />
+            {/*    <FormField */}
+            {/*      value={email} */}
+            {/*      label="Email*" */}
+            {/*      handleChange={handleEmailChange} */}
+            {/*      error={emailError} */}
+            {/*      errorMessage={emailErrorMsg} */}
+            {/*    /> */}
 
-                <FormField
-                  value={other}
-                  label="or other contact information"
-                  handleChange={handleOtherChange}
-                  error={false}
-                />
+            {/*    <FormField */}
+            {/*      value={other} */}
+            {/*      label="or other contact information" */}
+            {/*      handleChange={handleOtherChange} */}
+            {/*      error={false} */}
+            {/*    /> */}
 
-                <FormField
-                  value={organisation}
-                  label="Organisation"
-                  handleChange={handleOrganisationChange}
-                  error={false}
-                />
+            {/*    <FormField */}
+            {/*      value={organisation} */}
+            {/*      label="Organisation" */}
+            {/*      handleChange={handleOrganisationChange} */}
+            {/*      error={false} */}
+            {/*    /> */}
 
-                <PillButton css={styles.button} onClick={() => handleSend()}>
-                  Send
-                </PillButton>
-              </>
-            )}
+            {/*    <PillButton css={styles.button} onClick={() => handleSend()}> */}
+            {/*      Send */}
+            {/*    </PillButton> */}
+            {/*  </> */}
+            {/* )} */}
 
-            {displaySucces && (
-              <>
-                <Typography variant="h5">
-                  Thank you for your feedback
-                </Typography>
-                <Box width="100%" height="24px" />
-                <Typography variant="body1" css={styles.paragraph}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Dolore, dolores maxime neque odio optio pariatur perspiciatis
-                  quam voluptatem. Assumenda dolor error eum facilis ipsa
-                  nostrum quod. Ab aliquid sed voluptatem.
-                </Typography>
-              </>
-            )}
+            {/* {displaySucces && ( */}
+            {/*  <> */}
+            {/*    <Typography variant="h5"> */}
+            {/*      Thank you for your feedback */}
+            {/*    </Typography> */}
+            {/*    <Box width="100%" height="24px" /> */}
+            {/*    <Typography variant="body1" css={styles.paragraph}> */}
+            {/*      Lorem ipsum dolor sit amet, consectetur adipisicing elit. */}
+            {/*      Dolore, dolores maxime neque odio optio pariatur perspiciatis */}
+            {/*      quam voluptatem. Assumenda dolor error eum facilis ipsa */}
+            {/*      nostrum quod. Ab aliquid sed voluptatem. */}
+            {/*    </Typography> */}
+            {/*  </> */}
+            {/* )} */}
           </div>
         </Grid>
       </ModuleContainer>

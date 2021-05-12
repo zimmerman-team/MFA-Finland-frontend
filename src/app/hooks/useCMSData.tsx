@@ -27,6 +27,9 @@ export function useCMSData(props: useCMSDataProps) {
   const menuCMSAction = useStoreActions((actions) => actions.cms.menu.fetch);
   const menuCMSData = useStoreState((state) => state.cms.menu.data);
 
+  const pagesCMSAction = useStoreActions((actions) => actions.cms.pages.fetch);
+  const pagesCMSData = useStoreState((state) => state.cms.pages.data);
+
   function formatCMSData() {
     let newData = {};
     const items = [
@@ -45,6 +48,10 @@ export function useCMSData(props: useCMSDataProps) {
       {
         key: "menu",
         data: menuCMSData || {},
+      },
+      {
+        key: "pages",
+        data: pagesCMSData || {},
       },
     ];
     items.forEach((item) => {
@@ -88,6 +95,9 @@ export function useCMSData(props: useCMSDataProps) {
       menuCMSAction({
         isCMSfetch: true,
       });
+      pagesCMSAction({
+        isCMSfetch: true,
+      });
     }
   }, []);
 
@@ -101,6 +111,7 @@ export function useCMSData(props: useCMSDataProps) {
     filtersCMSData,
     menuCMSData,
     currentLanguage,
+    pagesCMSAction,
   ]);
 
   if (props.returnData) {

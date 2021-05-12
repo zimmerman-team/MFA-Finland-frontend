@@ -13,6 +13,10 @@ export const styles = {
     .MuiGrid-root {
       flex-grow: 1;
     }
+
+    :last-of-type {
+      margin-bottom: 32px;
+    }
   `,
   paragraphHeader: css`
     margin-bottom: 16px;
