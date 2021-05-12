@@ -40,6 +40,7 @@ import { Transactions } from "./common/Transactions";
 
 const crumbs: BreadcrumbLinkModel[] = [
   { label: "Homepage", path: Path.home },
+  { label: "Projects", path: "/viz/projects" },
   { label: "Activity Detail" },
 ];
 
