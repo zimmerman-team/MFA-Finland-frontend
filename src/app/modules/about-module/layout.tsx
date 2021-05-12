@@ -41,6 +41,14 @@ const navList: InpageNavItemModel[] = [
     label: "About",
     path: "about-mfa-portal",
   },
+  {
+    label: "Privacy Policy",
+    path: "privacy",
+  },
+  {
+    label: "Cookie Policy",
+    path: "cookie",
+  },
 ];
 
 export const AboutModuleLayout = () => {
@@ -79,6 +87,34 @@ export const AboutModuleLayout = () => {
           <Anchor id="about" />
           <div css={styles.container}>
             <Typography variant="h5">About</Typography>
+            <Box width="100%" height="24px" />
+            <Typography variant="body1" css={styles.paragraph}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially
+            </Typography>
+          </div>
+
+          <Anchor id="privacy" />
+          <div css={styles.container}>
+            <Typography variant="h5">Privacy Policy</Typography>
+            <Box width="100%" height="24px" />
+            <Typography variant="body1" css={styles.paragraph}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially
+            </Typography>
+          </div>
+
+          <Anchor id="cookie" />
+          <div css={styles.container}>
+            <Typography variant="h5">Cookie Policy</Typography>
             <Box width="100%" height="24px" />
             <Typography variant="body1" css={styles.paragraph}>
               Lorem Ipsum is simply dummy text of the printing and typesetting

@@ -20,10 +20,6 @@ export const GlobalNavItems: GlobalNavItemProps[] = [
     path: Path.general.result,
   },
   {
-    label: "Privacy",
-    path: Path.general.privacy,
-  },
-  {
     label: "Statements",
     path: Path.general.statements,
   },

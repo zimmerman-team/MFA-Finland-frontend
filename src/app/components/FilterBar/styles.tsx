@@ -24,7 +24,7 @@ export const createStyles = (props: FilterBarProps) => {
       padding-top: 16px;
       padding-bottom: 16px;
 
-      @media (max-width: 1440px) {
+      @media (max-width: 1439px) {
         padding-left: 98px;
         box-shadow: -669px 0px 0px 0px #ecf1fa, 669px 0px 0px 0px #ecf1fa;
       }
