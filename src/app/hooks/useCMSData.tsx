@@ -35,6 +35,11 @@ export function useCMSData(props: useCMSDataProps) {
   );
   const tooltipsCMSData = useStoreState((state) => state.cms.tooltips.data);
 
+  const regionsCMSAction = useStoreActions(
+    (actions) => actions.cms.regions.fetch
+  );
+  const regionsCMSData = useStoreState((state) => state.cms.regions.data);
+
   function formatCMSData() {
     let newData = {};
     const items = [
@@ -61,6 +66,10 @@ export function useCMSData(props: useCMSDataProps) {
       {
         key: "tooltips",
         data: tooltipsCMSData || {},
+      },
+      {
+        key: "regions",
+        data: regionsCMSData || {},
       },
     ];
     items.forEach((item) => {
@@ -110,6 +119,9 @@ export function useCMSData(props: useCMSDataProps) {
       tooltipsCMSAction({
         isCMSfetch: true,
       });
+      regionsCMSAction({
+        isCMSfetch: true,
+      });
     }
   }, []);
 
@@ -118,13 +130,14 @@ export function useCMSData(props: useCMSDataProps) {
       formatCMSData();
     }
   }, [
+    currentLanguage,
     generalCMSData,
     vizCMSData,
     filtersCMSData,
     menuCMSData,
     pagesCMSData,
     tooltipsCMSData,
-    currentLanguage,
+    regionsCMSData,
   ]);
 
   if (props.returnData) {

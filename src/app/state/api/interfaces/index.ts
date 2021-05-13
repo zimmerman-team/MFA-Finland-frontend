@@ -173,6 +173,7 @@ export interface StoreModel {
     menu: ApiCallModel;
     pages: ApiCallModel;
     tooltips: ApiCallModel;
+    regions: ApiCallModel;
   };
   // sync variables
   syncSearch: SyncSearchModel;

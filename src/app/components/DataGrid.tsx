@@ -101,15 +101,63 @@ export const DataGrid = (props: DataGridProps) => {
     if (isRegionDetail) {
       return {
         label: "Finland and the region in development cooperation?",
-        text: "",
+        text: getRegionContent(),
       };
     }
     return {
-      label: "Result",
+      label: get(cmsData, "general.result", "Result"),
       text:
         "See more thoroughly about recent results of development cooperation of Finland",
     };
   }
+
+  function getRegionContent(): string {
+    const region = props.detailPageFilter;
+
+    if (region) {
+      if (region.value === "89") {
+        return get(cmsData, "regions.europe");
+      }
+      if (region.value === "189") {
+        return get(cmsData, "regions.northofsahara");
+      }
+      if (region.value === "289") {
+        return get(cmsData, "regions.southofsahara");
+      }
+      if (region.value === "398") {
+        return get(cmsData, "regions.northandcentralamerica");
+      }
+      if (region.value === "498") {
+        return get(cmsData, "regions.america");
+      }
+      if (region.value === "489") {
+        return get(cmsData, "regions.southamerika");
+      }
+      if (region.value === "589") {
+        return get(cmsData, "regions.middleeast");
+      }
+      if (region.value === "619") {
+        return get(cmsData, "regions.centralasia");
+      }
+      if (region.value === "679") {
+        return get(cmsData, "regions.southasia");
+      }
+      if (region.value === "689") {
+        return get(cmsData, "regions.southandcentralasia");
+      }
+      if (region.value === "798") {
+        return get(cmsData, "regions.asia");
+      }
+      if (region.value === "789") {
+        return get(cmsData, "regions.fareastasia");
+      }
+      if (region.value === "998") {
+        return get(cmsData, "regions.unspecified");
+      }
+    }
+    return "";
+  }
+
   function getAboutBlockContent() {
     if (isOrgTypeDetail || isOrgDetail || isSectorDetail || isRegionDetail) {
       return {
