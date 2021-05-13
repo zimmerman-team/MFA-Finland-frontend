@@ -75,6 +75,7 @@ import filtersUpdated from "app/state/api/actions-reducers/sync/filtersUpdated";
 // cms
 import general from "app/state/api/actions-reducers/cms/general";
 import feedback from "app/state/api/actions-reducers/feedback";
+import tooltips from "app/state/api/actions-reducers/cms/tooltips";
 import viz from "../api/actions-reducers/cms/viz";
 import filters from "../api/actions-reducers/cms/filters";
 import menu from "../api/actions-reducers/cms/menu";
@@ -118,6 +119,7 @@ const storeContent: StoreModel = {
     filters: persist(filters),
     menu: persist(menu),
     pages: persist(pages),
+    tooltips: persist(tooltips),
   },
   // global search
   searchDonors,

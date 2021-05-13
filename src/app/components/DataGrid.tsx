@@ -110,7 +110,6 @@ export const DataGrid = (props: DataGridProps) => {
         "See more thoroughly about recent results of development cooperation of Finland",
     };
   }
-
   function getAboutBlockContent() {
     if (isOrgTypeDetail || isOrgDetail || isSectorDetail || isRegionDetail) {
       return {
@@ -158,7 +157,7 @@ export const DataGrid = (props: DataGridProps) => {
       >
         <GridWidget
           link="/viz/oda"
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.overview_disbursements", "")}
           label="Overview Disbursements"
           detailPageFilter={props.detailPageFilter}
         >
@@ -189,7 +188,7 @@ export const DataGrid = (props: DataGridProps) => {
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={4}>
         <GridWidget
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.thematic_areas", "")}
           link="/viz/thematic-areas"
           detailPageFilter={props.detailPageFilter}
           label={get(cmsData, "general.thematicareas", "Thematic areas")}
@@ -219,7 +218,7 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
         <GridWidget
           link="/viz/sectors"
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.sectors", "")}
           detailPageFilter={props.detailPageFilter}
           label={get(cmsData, "general.sectors", "Sectors")}
           childrencontainerStyle={{
@@ -248,7 +247,7 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
         {!props.countryData ? (
           <GridWidget
-            tooltip="lorem ipsum"
+            tooltip={get(cmsData, "tooltips.regions", "")}
             link="/viz/countries-regions"
             label={get(cmsData, "general.locations", "Regions")}
             childrencontainerStyle={{
@@ -277,7 +276,7 @@ export const DataGrid = (props: DataGridProps) => {
           <GridWidget
             interactive
             label="Human Development Index"
-            tooltip="Human Development Index"
+            tooltip={get(cmsData, "tooltips.human_development_index", "")}
             childrencontainerStyle={{
               width: 100,
               height: 100,
@@ -309,7 +308,7 @@ export const DataGrid = (props: DataGridProps) => {
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
         <GridWidget
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.organisations", "")}
           link="/viz/organisations"
           label={get(cmsData, "general.organisations", "Organisations")}
           childrencontainerStyle={{
@@ -342,7 +341,7 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={12} md={12} lg={8}>
         <GridWidget
           height="510px"
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.budget_lines", "")}
           link="/viz/budget-lines"
           label={get(cmsData, "general.budgetlines", "Budget lines")}
           childrencontainerStyle={{
@@ -388,7 +387,11 @@ export const DataGrid = (props: DataGridProps) => {
           interactive
           height="510px"
           label={resultContent.label}
-          tooltip={resultContent.label}
+          tooltip={
+            isCountryDetail
+              ? get(cmsData, "tooltips.contact_department", "")
+              : get(cmsData, "tooltips.result", "")
+          }
           childrencontainerStyle={{ paddingTop: 33 }}
         >
           {isCountryDetail ? <ContactInformation /> : resultContent.text}
@@ -403,7 +406,7 @@ export const DataGrid = (props: DataGridProps) => {
           interactive
           // todo: create responsive solution for height
           // height="510px"
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.sdg", "")}
           childrencontainerStyle={{ paddingTop: 33 }}
           label={get(cmsData, "general.sdgs", "SDGs")}
         >
@@ -433,7 +436,11 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           height="510px"
-          tooltip={aboutContent.label}
+          tooltip={
+            isCountryDetail
+              ? get(cmsData, "tooltips.rssfeed", "")
+              : get(cmsData, "tooltips.about", "")
+          }
           childrencontainerStyle={
             isCountryDetail
               ? { paddingTop: 33, overflow: "auto" }
@@ -472,6 +479,7 @@ export const DataGrid = (props: DataGridProps) => {
           <GridWidget
             height="680px"
             interactive
+            tooltip={get(cmsData, "tooltips.map", "")}
             label={get(cmsData, "general.map", "Map")}
             childrencontainerStyle={{ paddingTop: width >= 960 ? 88 : 16 }}
           >

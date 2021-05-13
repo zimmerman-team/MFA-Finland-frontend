@@ -30,6 +30,11 @@ export function useCMSData(props: useCMSDataProps) {
   const pagesCMSAction = useStoreActions((actions) => actions.cms.pages.fetch);
   const pagesCMSData = useStoreState((state) => state.cms.pages.data);
 
+  const tooltipsCMSAction = useStoreActions(
+    (actions) => actions.cms.tooltips.fetch
+  );
+  const tooltipsCMSData = useStoreState((state) => state.cms.tooltips.data);
+
   function formatCMSData() {
     let newData = {};
     const items = [
@@ -52,6 +57,10 @@ export function useCMSData(props: useCMSDataProps) {
       {
         key: "pages",
         data: pagesCMSData || {},
+      },
+      {
+        key: "tooltips",
+        data: tooltipsCMSData || {},
       },
     ];
     items.forEach((item) => {
@@ -98,6 +107,9 @@ export function useCMSData(props: useCMSDataProps) {
       pagesCMSAction({
         isCMSfetch: true,
       });
+      tooltipsCMSAction({
+        isCMSfetch: true,
+      });
     }
   }, []);
 
@@ -110,8 +122,9 @@ export function useCMSData(props: useCMSDataProps) {
     vizCMSData,
     filtersCMSData,
     menuCMSData,
+    pagesCMSData,
+    tooltipsCMSData,
     currentLanguage,
-    pagesCMSAction,
   ]);
 
   if (props.returnData) {
