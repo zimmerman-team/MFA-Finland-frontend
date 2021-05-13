@@ -7,6 +7,9 @@ import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { Path } from "app/const/Path";
 import { Anchor, InPageNavigation } from "app/components/InPageNavigation";
 import { InpageNavItemModel } from "app/components/InPageNavigation/model";
+import { useCMSData } from "app/hooks/useCMSData";
+import get from "lodash/get";
+import { urlify } from "app/utils/urlify";
 
 export const styles = {
   container: css`
@@ -28,6 +31,9 @@ export const styles = {
   `,
   paragraph: css`
     margin-bottom: 24px;
+    a {
+      text-decoration: underline;
+    }
   `,
 };
 
@@ -45,6 +51,17 @@ const navList: InpageNavItemModel[] = [
 
 export const ResultModuleLayout = () => {
   const [active, setActive] = React.useState(0);
+  const cmsData = useCMSData({ returnData: true });
+  const content = urlify(
+    get(
+      cmsData,
+      "pages.resultspage",
+      "sitive results build societies and contribute to global stability and wellbeing. They advance Finland’s foreign policy goals and meeting global commitments. With development cooperation Finland contributes to solving of the major problems that are facing humankind.\n" +
+        "\n" +
+        "More about the latest results: https://kehityspolitiikka2018.um.fi/en/\n" +
+        "Download the policy results report: https://kehityspolitiikka2018.um.fi/wp-content/uploads/sites/21/2019/01/UM-KPR-2018-ENG-WEB.pdf"
+    )
+  );
 
   function handleClick(id: any) {
     setActive(parseInt(id, 10));
@@ -80,14 +97,11 @@ export const ResultModuleLayout = () => {
           <div css={styles.container}>
             <Typography variant="h5">Result</Typography>
             <Box width="100%" height="24px" />
-            <Typography variant="body1" css={styles.paragraph}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially
-            </Typography>
+            <Typography
+              variant="body1"
+              css={styles.paragraph}
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
           </div>
         </Grid>
       </ModuleContainer>
