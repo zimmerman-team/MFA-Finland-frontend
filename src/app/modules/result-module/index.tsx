@@ -1,13 +1,16 @@
 import React from "react";
 import useTitle from "react-use/lib/useTitle";
-import { LandingLayout } from "app/modules/landing-module/layout";
-import { AppName } from "app/const/Path";
 import { ResultModuleLayout } from "app/modules/result-module/layout";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
+import { getAppName } from "app/const/Path";
 
-const moduleName: string = "Result";
+const moduleName = "Result";
 
 export function ResultModule() {
-  useTitle(`${AppName} - ${moduleName}`);
+  const [currentLanguage] = useRecoilState(languageAtom);
+
+  useTitle(`${moduleName} | ${getAppName(currentLanguage)}`);
 
   return <ResultModuleLayout />;
 }

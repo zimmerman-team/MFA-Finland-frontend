@@ -1,13 +1,17 @@
 import React from "react";
-import { AppName } from "app/const/Path";
+import { getAppName } from "app/const/Path";
 import useTitle from "react-use/lib/useTitle";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { LandingLayout } from "app/modules/landing-module/layout";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 const moduleName = "Home";
 
 export function LandingModule() {
-  useTitle(`${AppName} - ${moduleName}`);
+  const [currentLanguage] = useRecoilState(languageAtom);
+  useTitle(`${moduleName} | ${getAppName(currentLanguage)}`);
+
   const {
     vizDataLoading,
     odaBarChartData,

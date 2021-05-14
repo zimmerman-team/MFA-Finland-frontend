@@ -1,14 +1,17 @@
 import React from "react";
 import get from "lodash/get";
 import useTitle from "react-use/lib/useTitle";
-import { Path, AppName } from "app/const/Path";
+import { Path, getAppName } from "app/const/Path";
 import { useRouteMatch } from "react-router-dom";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export function SectorDetailModule() {
   const { params } = useRouteMatch();
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   const {
     vizDataLoading,
@@ -35,7 +38,12 @@ export function SectorDetailModule() {
     { label: "Homepage", path: Path.home },
     { label: detailPageNameData || get(params, "sector", "") },
   ];
-  useTitle(`${AppName} - ${detailPageNameData || get(params, "sector", "")}`);
+
+  useTitle(
+    `${detailPageNameData || get(params, "sector", "")} | ${getAppName(
+      currentLanguage
+    )}`
+  );
 
   return (
     <DetailModuleLayout

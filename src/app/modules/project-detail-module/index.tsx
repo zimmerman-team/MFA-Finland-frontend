@@ -2,7 +2,7 @@ import React from "react";
 import get from "lodash/get";
 import filter from "lodash/filter";
 import { useRecoilState } from "recoil";
-import { AppName } from "app/const/Path";
+import { getAppName } from "app/const/Path";
 import useTitle from "react-use/lib/useTitle";
 import { useRouteMatch } from "react-router-dom";
 import { languageAtom } from "app/state/recoil/atoms";
@@ -14,11 +14,10 @@ import { PageLoader } from "../common/page-loader";
 const moduleName = "Project Detail";
 
 export function ProjectDetailModule() {
-  useTitle(`${AppName} - ${moduleName}`);
-
+  const [currentLanguage] = useRecoilState(languageAtom);
+  useTitle(`${moduleName} | ${getAppName(currentLanguage)}`);
   const { params } = useRouteMatch();
   const activityId = get(params, "param", "");
-  const [currentLanguage] = useRecoilState(languageAtom);
 
   const activityDetailData = useStoreState((state) => {
     if (get(state.activityDetail, "data.data.metadata", null)) {
