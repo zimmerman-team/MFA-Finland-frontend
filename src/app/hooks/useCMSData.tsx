@@ -30,6 +30,16 @@ export function useCMSData(props: useCMSDataProps) {
   const pagesCMSAction = useStoreActions((actions) => actions.cms.pages.fetch);
   const pagesCMSData = useStoreState((state) => state.cms.pages.data);
 
+  const tooltipsCMSAction = useStoreActions(
+    (actions) => actions.cms.tooltips.fetch
+  );
+  const tooltipsCMSData = useStoreState((state) => state.cms.tooltips.data);
+
+  const regionsCMSAction = useStoreActions(
+    (actions) => actions.cms.regions.fetch
+  );
+  const regionsCMSData = useStoreState((state) => state.cms.regions.data);
+
   function formatCMSData() {
     let newData = {};
     const items = [
@@ -53,6 +63,14 @@ export function useCMSData(props: useCMSDataProps) {
         key: "pages",
         data: pagesCMSData || {},
       },
+      {
+        key: "tooltips",
+        data: tooltipsCMSData || {},
+      },
+      {
+        key: "regions",
+        data: regionsCMSData || {},
+      },
     ];
     items.forEach((item) => {
       let filteredData = {};
@@ -70,6 +88,11 @@ export function useCMSData(props: useCMSDataProps) {
               `${key}`,
               ""
             ),
+          };
+        } else {
+          filteredData = {
+            ...filteredData,
+            [key]: get(item.data, `${key}`, ""),
           };
         }
       });
@@ -98,6 +121,12 @@ export function useCMSData(props: useCMSDataProps) {
       pagesCMSAction({
         isCMSfetch: true,
       });
+      tooltipsCMSAction({
+        isCMSfetch: true,
+      });
+      regionsCMSAction({
+        isCMSfetch: true,
+      });
     }
   }, []);
 
@@ -106,12 +135,14 @@ export function useCMSData(props: useCMSDataProps) {
       formatCMSData();
     }
   }, [
+    currentLanguage,
     generalCMSData,
     vizCMSData,
     filtersCMSData,
     menuCMSData,
-    currentLanguage,
-    pagesCMSAction,
+    pagesCMSData,
+    tooltipsCMSData,
+    regionsCMSData,
   ]);
 
   if (props.returnData) {

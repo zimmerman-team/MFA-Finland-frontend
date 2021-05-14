@@ -1,4 +1,4 @@
-//cc:application base#;application routes
+// cc:application base#;application routes
 
 import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -18,7 +18,6 @@ import { ThematicDetailModule } from "app/modules/detail-modules/thematic-detail
 import { OrganisationDetailModule } from "app/modules/detail-modules/organisation-detail-module";
 import { SectorDetailModule } from "app/modules/detail-modules/sector-detail-module";
 import { AboutModule } from "app/modules/about-module";
-import { PrivacyModule } from "app/modules/privacy-module";
 import { StatementModule } from "app/modules/statement-module";
 import { FeedbackModule } from "app/modules/feedback-module";
 import { ProjectDetailModule } from "app/modules/project-detail-module";
@@ -72,10 +71,6 @@ export function ModuleRoutes() {
 
         <Route exact path={Path.general.about}>
           <AboutModule />
-        </Route>
-
-        <Route exact path={Path.general.privacy}>
-          <PrivacyModule />
         </Route>
 
         <Route exact path={Path.general.statements}>

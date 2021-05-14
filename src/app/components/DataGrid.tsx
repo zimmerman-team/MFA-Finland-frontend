@@ -86,6 +86,16 @@ export const DataGrid = (props: DataGridProps) => {
         text: "",
       };
     }
+    if (isAreaDetail) {
+      return {
+        label: get(
+          cmsData,
+          "general.thematicareas_detail_title",
+          "Thematic area info"
+        ),
+        text: getThematicAreaResultBlock(),
+      };
+    }
     if (isSectorDetail) {
       return {
         label: "Sector info",
@@ -101,14 +111,93 @@ export const DataGrid = (props: DataGridProps) => {
     if (isRegionDetail) {
       return {
         label: "Finland and the region in development cooperation?",
-        text: "",
+        text: getRegionContent(),
       };
     }
     return {
-      label: "Result",
+      label: get(cmsData, "general.result", "Result"),
       text:
         "See more thoroughly about recent results of development cooperation of Finland",
     };
+  }
+
+  function getThematicAreaResultBlock(): string {
+    const area = props.detailPageFilter;
+
+    if (area) {
+      if (area.value[0] === "Priority area 1| primary") {
+        return get(
+          cmsData,
+          "general.thematicareas_detail_strengthening_of_rights",
+          ""
+        );
+      }
+      if (area.value[0] === "Priority area 2| primary") {
+        return get(cmsData, "general.thematicareas_detail_generating_jobs", "");
+      }
+      if (area.value[0] === "Priority area 3| primary") {
+        return get(
+          cmsData,
+          "general.thematicareas_detail_improving_democracy  ",
+          ""
+        );
+      }
+      if (area.value[0] === "Priority area 4| primary") {
+        return get(
+          cmsData,
+          "general.thematicareas_detail_improving_food_security",
+          ""
+        );
+      }
+    }
+
+    return "";
+  }
+  function getRegionContent(): string {
+    const region = props.detailPageFilter;
+
+    if (region) {
+      if (region.value === "89") {
+        return get(cmsData, "regions.europe", "");
+      }
+      if (region.value === "189") {
+        return get(cmsData, "regions.northofsahara", "");
+      }
+      if (region.value === "289") {
+        return get(cmsData, "regions.southofsahara", "");
+      }
+      if (region.value === "398") {
+        return get(cmsData, "regions.northandcentralamerica", "");
+      }
+      if (region.value === "498") {
+        return get(cmsData, "regions.america", "");
+      }
+      if (region.value === "489") {
+        return get(cmsData, "regions.southamerika", "");
+      }
+      if (region.value === "589") {
+        return get(cmsData, "regions.middleeast", "");
+      }
+      if (region.value === "619") {
+        return get(cmsData, "regions.centralasia", "");
+      }
+      if (region.value === "679") {
+        return get(cmsData, "regions.southasia", "");
+      }
+      if (region.value === "689") {
+        return get(cmsData, "regions.southandcentralasia", "");
+      }
+      if (region.value === "798") {
+        return get(cmsData, "regions.asia", "");
+      }
+      if (region.value === "789") {
+        return get(cmsData, "regions.fareastasia", "");
+      }
+      if (region.value === "998") {
+        return get(cmsData, "regions.unspecified", "");
+      }
+    }
+    return "";
   }
 
   function getAboutBlockContent() {
@@ -158,7 +247,7 @@ export const DataGrid = (props: DataGridProps) => {
       >
         <GridWidget
           link="/viz/oda"
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.overview_disbursements", "")}
           label="Overview Disbursements"
           detailPageFilter={props.detailPageFilter}
         >
@@ -189,7 +278,7 @@ export const DataGrid = (props: DataGridProps) => {
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={4}>
         <GridWidget
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.thematic_areas", "")}
           link="/viz/thematic-areas"
           detailPageFilter={props.detailPageFilter}
           label={get(cmsData, "general.thematicareas", "Thematic areas")}
@@ -219,7 +308,7 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
         <GridWidget
           link="/viz/sectors"
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.sectors", "")}
           detailPageFilter={props.detailPageFilter}
           label={get(cmsData, "general.sectors", "Sectors")}
           childrencontainerStyle={{
@@ -248,7 +337,7 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
         {!props.countryData ? (
           <GridWidget
-            tooltip="lorem ipsum"
+            tooltip={get(cmsData, "tooltips.regions", "")}
             link="/viz/countries-regions"
             label={get(cmsData, "general.locations", "Regions")}
             childrencontainerStyle={{
@@ -277,7 +366,7 @@ export const DataGrid = (props: DataGridProps) => {
           <GridWidget
             interactive
             label="Human Development Index"
-            tooltip="Human Development Index"
+            tooltip={get(cmsData, "tooltips.human_development_index", "")}
             childrencontainerStyle={{
               width: 100,
               height: 100,
@@ -309,7 +398,7 @@ export const DataGrid = (props: DataGridProps) => {
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
         <GridWidget
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.organisations", "")}
           link="/viz/organisations"
           label={get(cmsData, "general.organisations", "Organisations")}
           childrencontainerStyle={{
@@ -342,7 +431,7 @@ export const DataGrid = (props: DataGridProps) => {
       <Grid item xs={12} sm={12} md={12} lg={8}>
         <GridWidget
           height="510px"
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.budget_lines", "")}
           link="/viz/budget-lines"
           label={get(cmsData, "general.budgetlines", "Budget lines")}
           childrencontainerStyle={{
@@ -388,7 +477,11 @@ export const DataGrid = (props: DataGridProps) => {
           interactive
           height="510px"
           label={resultContent.label}
-          tooltip={resultContent.label}
+          tooltip={
+            isCountryDetail
+              ? get(cmsData, "tooltips.contact_department", "")
+              : get(cmsData, "tooltips.result", "")
+          }
           childrencontainerStyle={{ paddingTop: 33 }}
         >
           {isCountryDetail ? <ContactInformation /> : resultContent.text}
@@ -403,7 +496,7 @@ export const DataGrid = (props: DataGridProps) => {
           interactive
           // todo: create responsive solution for height
           // height="510px"
-          tooltip="lorem ipsum"
+          tooltip={get(cmsData, "tooltips.sdg", "")}
           childrencontainerStyle={{ paddingTop: 33 }}
           label={get(cmsData, "general.sdgs", "SDGs")}
         >
@@ -433,7 +526,11 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           height="510px"
-          tooltip={aboutContent.label}
+          tooltip={
+            isCountryDetail
+              ? get(cmsData, "tooltips.rssfeed", "")
+              : get(cmsData, "tooltips.about", "")
+          }
           childrencontainerStyle={
             isCountryDetail
               ? { paddingTop: 33, overflow: "auto" }
@@ -472,6 +569,7 @@ export const DataGrid = (props: DataGridProps) => {
           <GridWidget
             height="680px"
             interactive
+            tooltip={get(cmsData, "tooltips.map", "")}
             label={get(cmsData, "general.map", "Map")}
             childrencontainerStyle={{ paddingTop: width >= 960 ? 88 : 16 }}
           >
