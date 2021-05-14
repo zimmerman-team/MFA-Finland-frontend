@@ -89,6 +89,11 @@ export function useCMSData(props: useCMSDataProps) {
               ""
             ),
           };
+        } else {
+          filteredData = {
+            ...filteredData,
+            [key]: get(item.data, `${key}`, ""),
+          };
         }
       });
       newData = {

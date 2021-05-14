@@ -86,6 +86,16 @@ export const DataGrid = (props: DataGridProps) => {
         text: "",
       };
     }
+    if (isAreaDetail) {
+      return {
+        label: get(
+          cmsData,
+          "general.thematicareas_detail_title",
+          "Thematic area info"
+        ),
+        text: getThematicAreaResultBlock(),
+      };
+    }
     if (isSectorDetail) {
       return {
         label: "Sector info",
@@ -111,48 +121,80 @@ export const DataGrid = (props: DataGridProps) => {
     };
   }
 
+  function getThematicAreaResultBlock(): string {
+    const area = props.detailPageFilter;
+
+    if (area) {
+      if (area.value[0] === "Priority area 1| primary") {
+        return get(
+          cmsData,
+          "general.thematicareas_detail_strengthening_of_rights",
+          ""
+        );
+      }
+      if (area.value[0] === "Priority area 2| primary") {
+        return get(cmsData, "general.thematicareas_detail_generating_jobs", "");
+      }
+      if (area.value[0] === "Priority area 3| primary") {
+        return get(
+          cmsData,
+          "general.thematicareas_detail_improving_democracy  ",
+          ""
+        );
+      }
+      if (area.value[0] === "Priority area 4| primary") {
+        return get(
+          cmsData,
+          "general.thematicareas_detail_improving_food_security",
+          ""
+        );
+      }
+    }
+
+    return "";
+  }
   function getRegionContent(): string {
     const region = props.detailPageFilter;
 
     if (region) {
       if (region.value === "89") {
-        return get(cmsData, "regions.europe");
+        return get(cmsData, "regions.europe", "");
       }
       if (region.value === "189") {
-        return get(cmsData, "regions.northofsahara");
+        return get(cmsData, "regions.northofsahara", "");
       }
       if (region.value === "289") {
-        return get(cmsData, "regions.southofsahara");
+        return get(cmsData, "regions.southofsahara", "");
       }
       if (region.value === "398") {
-        return get(cmsData, "regions.northandcentralamerica");
+        return get(cmsData, "regions.northandcentralamerica", "");
       }
       if (region.value === "498") {
-        return get(cmsData, "regions.america");
+        return get(cmsData, "regions.america", "");
       }
       if (region.value === "489") {
-        return get(cmsData, "regions.southamerika");
+        return get(cmsData, "regions.southamerika", "");
       }
       if (region.value === "589") {
-        return get(cmsData, "regions.middleeast");
+        return get(cmsData, "regions.middleeast", "");
       }
       if (region.value === "619") {
-        return get(cmsData, "regions.centralasia");
+        return get(cmsData, "regions.centralasia", "");
       }
       if (region.value === "679") {
-        return get(cmsData, "regions.southasia");
+        return get(cmsData, "regions.southasia", "");
       }
       if (region.value === "689") {
-        return get(cmsData, "regions.southandcentralasia");
+        return get(cmsData, "regions.southandcentralasia", "");
       }
       if (region.value === "798") {
-        return get(cmsData, "regions.asia");
+        return get(cmsData, "regions.asia", "");
       }
       if (region.value === "789") {
-        return get(cmsData, "regions.fareastasia");
+        return get(cmsData, "regions.fareastasia", "");
       }
       if (region.value === "998") {
-        return get(cmsData, "regions.unspecified");
+        return get(cmsData, "regions.unspecified", "");
       }
     }
     return "";
