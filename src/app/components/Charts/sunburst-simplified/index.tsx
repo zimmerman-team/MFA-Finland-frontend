@@ -12,6 +12,8 @@ import { SunburstVizSimplified } from "app/components/Charts/sunburst-simplified
 import { InnerVizStatSimplified } from "app/components/Charts/sunburst-simplified/common/innervizstat";
 import { containercssSimplified } from "app/components/Charts/sunburst-simplified/styles";
 import Grid from "@material-ui/core/Grid";
+import { formatLocale } from "app/utils/formatLocale";
+import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { backbuttoncss } from "../sunburst/common/innervizstat/styles";
 
 export function SunburstChartSimplified(props: SunburstChartProps) {
@@ -127,6 +129,20 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
     };
   }
 
+  function getTotal() {
+    let total = 0;
+    localData.children.map((item: any) => {
+      total += item.size;
+    });
+    return total;
+  }
+
+  function getPercentage(item: any) {
+    const total = getTotal();
+    const percentage = (item.size / total) * 100;
+    return Math.round(percentage);
+  }
+
   return (
     <Grid container>
       <Grid id="sunburst-back" item xs={12} sm={3} md={3} lg={3}>
@@ -159,6 +175,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
             onSectorSelectChange={props.onSectorSelectChange}
           />
         </div>
+        {/* LEGEND */}
         <div
           css={`
             display: flex;
@@ -167,38 +184,53 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
             margin-left: 6px;
           `}
         >
-          {localData.children.map((item: any) => {
-            return (
-              <div
-                key={item.title}
-                css={`
-                  display: flex;
-                  margin-bottom: 6px;
-                `}
-              >
-                <span
+          {localData.children
+            .map((item: any) => {
+              return (
+                <div
+                  key={item.title}
                   css={`
-                    ::before {
-                      content: "";
-                      display: inline-block;
-                      width: 8px;
-                      height: 8px;
-                      margin-right: 8px;
-                      border-radius: 30px;
-                      background: ${item.color};
-                      border: 0.5px solid #323232;
-                    }
-                    min-width: 0;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 6px;
                   `}
                 >
-                  {item.title}
-                </span>
-              </div>
-            );
-          })}
+                  {/* TODO: sort on size */}
+                  <span
+                    css={`
+                      ::before {
+                        content: "";
+                        display: inline-block;
+                        width: 8px;
+                        height: 8px;
+                        margin-right: 8px;
+                        border-radius: 30px;
+                        background: ${item.color};
+                        border: 0.5px solid #323232;
+                      }
+                      min-width: 0;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      font-size: 12px;
+                    `}
+                  >
+                    {item.title} <br />
+                  </span>
+                  <span
+                    css={`
+                      margin-left: 16px;
+                      margin-top: 3px;
+                      font-size: 12px;
+                    `}
+                  >
+                    {formatMoneyWithPrefix(item.size)}
+                    {` | ${getPercentage(item)}%`}
+                  </span>
+                </div>
+              );
+            })
+            .sort()}
         </div>
       </Grid>
     </Grid>

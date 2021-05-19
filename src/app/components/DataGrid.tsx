@@ -116,8 +116,11 @@ export const DataGrid = (props: DataGridProps) => {
     }
     return {
       label: get(cmsData, "general.result", "Result"),
-      text:
-        "See more thoroughly about recent results of development cooperation of Finland",
+      text: get(
+        cmsData,
+        "pages.homepageresult",
+        "Positive results build societies and contribute to global stability and wellbeing. They advance Finland’s foreign policy goals and meeting global commitments. With development cooperation Finland contributes to solving of the major problems that are facing humankind."
+      ),
     };
   }
 
@@ -213,10 +216,14 @@ export const DataGrid = (props: DataGridProps) => {
         text: "",
       };
     }
+
     return {
       label: "About",
-      text:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially",
+      text: get(
+        cmsData,
+        "pages.homepageabout",
+        "Openaid.fi is databank on Finland’s development cooperation. The site presents where, to whom, and when Finland has contributed the official development assistance through development cooperation and what kind of results has been accomplished. The objective of Openaid.fi is to enhance the openness of development cooperation by providing a single service for providing the information on development cooperation of Finland."
+      ),
     };
   }
 
