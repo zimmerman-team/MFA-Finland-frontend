@@ -142,7 +142,7 @@ export function BarChart(props: BarChartProps) {
       >
         <div>{range.abbr}</div>
         <Legend {...props} {...cmsData} />
-        {showGni && <div>%</div>}
+        {!props.hideODAGNI && showGni && <div>%</div>}
       </div>
       <Hidden smDown>
         <div css="width: 100%;height: 15px;" />
