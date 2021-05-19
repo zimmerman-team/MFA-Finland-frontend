@@ -15,6 +15,8 @@ import {
   searchFocusAtom,
   currentFilterOpenAtom,
   bottomDrawerAtom,
+  selectedFilterAtom,
+  defaultfilters,
 } from "app/state/recoil/atoms";
 import { MfaLogo } from "app/assets/mfa_logo";
 import LanguageIcon from "@material-ui/icons/Language";
@@ -33,6 +35,9 @@ export function AppBar() {
   const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
+  const [selectedFilters, setSelectedFilters] = useRecoilState(
+    selectedFilterAtom
+  );
   const [bottomMenuState, setBottomMenuState] = useRecoilState(
     bottomDrawerAtom
   );
@@ -107,7 +112,10 @@ export function AppBar() {
           <NavLink
             to={`/${window.location.search}`}
             css={appbarStyle.logoLink(!isFocused)}
-            onClick={() => setCurrentFilterOpen(FILTER_TYPES.NONE)}
+            onClick={() => {
+              setSelectedFilters(defaultfilters);
+              setCurrentFilterOpen(FILTER_TYPES.NONE);
+            }}
           >
             <Hidden xsDown>
               <IconButton edge="start" color="inherit" aria-label="menu">
