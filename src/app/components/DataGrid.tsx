@@ -372,34 +372,16 @@ export const DataGrid = (props: DataGridProps) => {
         ) : (
           <GridWidget
             interactive
-            label="Human Development Index"
-            tooltip={get(cmsData, "tooltips.human_development_index", "")}
-            childrencontainerStyle={{
-              width: 100,
-              height: 100,
-              paddingTop: 20,
-            }}
+            height="510px"
+            label={resultContent.label}
+            tooltip={
+              isCountryDetail
+                ? get(cmsData, "tooltips.contact_department", "")
+                : get(cmsData, "tooltips.result", "")
+            }
+            childrencontainerStyle={{ paddingTop: 33 }}
           >
-            {props.countryData.countryIndicators.map((indicator: string) => {
-              const values = indicator.split(":");
-              if (values.length === 2) {
-                return (
-                  <div
-                    key={indicator}
-                    css={`
-                      margin: 8px 0;
-                      font-size: 14px;
-                    `}
-                  >
-                    {values[0]}:{" "}
-                    <span css="font-size: 16px;font-weight: bold;">
-                      {values[1]}
-                    </span>
-                  </div>
-                );
-              }
-              return "";
-            })}
+            {isCountryDetail ? <ContactInformation /> : resultContent.text}
           </GridWidget>
         )}
       </Grid>
@@ -483,15 +465,38 @@ export const DataGrid = (props: DataGridProps) => {
         <GridWidget
           interactive
           height="510px"
-          label={resultContent.label}
+          label={
+            isCountryDetail ? "Human Development Index" : resultContent.label
+          }
           tooltip={
             isCountryDetail
-              ? get(cmsData, "tooltips.contact_department", "")
+              ? get(cmsData, "tooltips.human_development_index", "")
               : get(cmsData, "tooltips.result", "")
           }
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          {isCountryDetail ? <ContactInformation /> : resultContent.text}
+          {isCountryDetail
+            ? props.countryData.countryIndicators.map((indicator: string) => {
+                const values = indicator.split(":");
+                if (values.length === 2) {
+                  return (
+                    <div
+                      key={indicator}
+                      css={`
+                        margin: 8px 0;
+                        font-size: 14px;
+                      `}
+                    >
+                      {values[0]}:{" "}
+                      <span css="font-size: 16px;font-weight: bold;">
+                        {values[1]}
+                      </span>
+                    </div>
+                  );
+                }
+                return "";
+              })
+            : resultContent.text}
         </GridWidget>
       </Grid>
 
