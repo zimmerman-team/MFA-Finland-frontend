@@ -17,12 +17,12 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
   const cmsData = useCMSData({ returnData: true });
 
   function isPartneredCountry(): boolean {
-    const countries = get(cmsData, "regions.partnered_countries", {});
+    const countries = get(cmsData, "regions.partnered_countries", []);
     const country = countries.find((item: any) => {
       return item.code === props.flagCode;
     });
 
-    return country.isPartner;
+    return get(country, "isPartner", false);
   }
 
   return (
