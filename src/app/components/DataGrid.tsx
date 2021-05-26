@@ -454,10 +454,7 @@ export const DataGrid = (props: DataGridProps) => {
         lg={4}
         xl={4}
         css={`
-          @media (max-width: 960px) {
-            order: 1;
-          }
-          @media (max-width: 1440px) {
+          @media (max-width: 1439px) {
             order: 1;
           }
         `}
