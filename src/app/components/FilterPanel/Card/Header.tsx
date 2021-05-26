@@ -4,7 +4,6 @@ import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
 import { ArrowBackIos } from "@material-ui/icons";
 import { IconButton, Typography } from "@material-ui/core";
-import { SearchPlaceholder } from "app/components/AppBar/sort/SearchPlaceholder";
 import { SearchField } from "app/components/AppBar/common/Search/common/SearchField";
 
 interface HeaderProps {

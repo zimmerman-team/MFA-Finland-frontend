@@ -146,6 +146,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
         </Typography>
         <div css={styles.iconContainer}>
           <SearchField
+            useOpacity
             smallWidth="0px"
             cmsData={cmsData}
             isFocused={isFocused}

@@ -11,6 +11,7 @@ type Props = {
   isFocused: boolean;
   smallWidth?: string;
   onBlur?: () => void;
+  useOpacity?: boolean;
   setValue: (value: string) => void;
   setIsFocused: (isFocused: boolean) => void;
 };
@@ -34,13 +35,16 @@ export const SearchField = (props: Props) => {
       aria-label="Search in the whole application"
       css={`
         width: ${props.isFocused ? "600px" : unfocusedWidth};
+        ${props.useOpacity ? `opacity: ${props.isFocused ? 1 : 0};` : ""}
+
         input {
           padding: ${unfocusedWidth === "0px" && !props.isFocused
             ? "10px 0px 10px 5px"
             : "10px"};
         }
         @media (min-width: 992px) {
-          transition: width 0.5s ease-in-out;
+          transition: width 0.5s ease-in-out
+            ${props.useOpacity ? ",opacity 0.5s ease-in-out" : ""};
         }
         @media (max-width: 992px) {
           width: ${props.isFocused ? "calc(100vw - 165px)" : "144px"};
