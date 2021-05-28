@@ -240,7 +240,7 @@ export function Footer() {
                   {get(cmsData, "menu.social", "")}
                   <br />
                   <a
-                    href="www.um.fi"
+                    href="https://www.um.fi"
                     css={`
                       color: white;
                       :hover {
