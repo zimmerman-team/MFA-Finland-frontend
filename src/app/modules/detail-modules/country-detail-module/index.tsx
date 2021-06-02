@@ -1,17 +1,21 @@
 import React from "react";
 import get from "lodash/get";
 import useTitle from "react-use/lib/useTitle";
-import { Path, AppName } from "app/const/Path";
+import { Path, getAppName } from "app/const/Path";
 import { useRouteMatch } from "react-router-dom";
 import { getCountryName } from "app/utils/getCountryCode";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export function CountryDetailModule() {
   const { params } = useRouteMatch();
   const countryName = getCountryName(get(params, "country", ""));
-  useTitle(`${AppName} - ${countryName}`);
+  const [currentLanguage] = useRecoilState(languageAtom);
+  useTitle(`${countryName} | ${getAppName(currentLanguage)}`);
+
   const crumbs: BreadcrumbLinkModel[] = [
     { label: "Homepage", path: Path.home },
     { label: countryName },

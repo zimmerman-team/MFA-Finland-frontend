@@ -1,4 +1,15 @@
-export const AppName = "MFA";
+export const AppNameENG =
+  "OpenAid.fi | Databank on Finland's development cooperation";
+export const AppNameFIN =
+  "OpenAid.fi | Kehitysyhteistyön tietopankki ja tilastot";
+export const AppNameSWE = "OpenAid.fi";
+
+export function getAppName(currentLanguage: string) {
+  if (currentLanguage === "se") return AppNameSWE;
+  if (currentLanguage === "en") return AppNameENG;
+  return AppNameFIN;
+}
+
 const basePath = "/";
 
 type PathItemType = {

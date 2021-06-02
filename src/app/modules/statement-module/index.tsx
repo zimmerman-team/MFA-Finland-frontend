@@ -1,13 +1,16 @@
 import React from "react";
 import useTitle from "react-use/lib/useTitle";
 
-import { AppName } from "app/const/Path";
+import { getAppName } from "app/const/Path";
 import { StatementModuleLayout } from "app/modules/statement-module/layout";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
-const moduleName: string = "Statement";
+const moduleName = "Statement";
 
 export function StatementModule() {
-  useTitle(`${AppName} - ${moduleName}`);
+  const [currentLanguage] = useRecoilState(languageAtom);
+  useTitle(`${moduleName} | ${getAppName(currentLanguage)}`);
 
   return <StatementModuleLayout />;
 }

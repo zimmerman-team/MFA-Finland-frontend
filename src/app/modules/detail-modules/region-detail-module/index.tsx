@@ -1,11 +1,13 @@
 import React from "react";
 import get from "lodash/get";
 import useTitle from "react-use/lib/useTitle";
-import { Path, AppName } from "app/const/Path";
+import { Path, getAppName } from "app/const/Path";
 import { useRouteMatch } from "react-router-dom";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 const moduleName = "Region Detail Module";
 
@@ -15,7 +17,8 @@ export const crumbs: BreadcrumbLinkModel[] = [
 ];
 
 export function RegionDetailModule() {
-  useTitle(`${AppName} - ${moduleName}`);
+  const [currentLanguage] = useRecoilState(languageAtom);
+  useTitle(`${moduleName} | ${getAppName(currentLanguage)}`);
   const { params } = useRouteMatch();
 
   const {
