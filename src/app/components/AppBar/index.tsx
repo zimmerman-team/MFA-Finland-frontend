@@ -206,18 +206,24 @@ export function AppBar() {
             {/* ---------------------------------------------- */}
             {/* burger menu */}
             <Hidden xsDown>
-              <IconButton
-                color="inherit"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-                data-cy="burger-menu-button"
-              >
-                <MenuIcon
-                  css={`
-                    fill: ${PrimaryColor[2]};
-                  `}
-                />
-              </IconButton>
+              {/* <IconButton */}
+              {/*  color="inherit" */}
+              {/*  aria-label="menu" */}
+              {/*  onClick={toggleDrawer(true)} */}
+              {/*  data-cy="burger-menu-button" */}
+              {/* > */}
+              {/*  <MenuIcon */}
+              {/*    css={` */}
+              {/*      fill: ${PrimaryColor[2]}; */}
+              {/*    `} */}
+              {/*  /> */}
+              {/* </IconButton> */}
+              <div
+                css={`
+                  min-width: 48px;
+                  height: 48px;
+                `}
+              />
             </Hidden>
           </div>
         </Toolbar>
