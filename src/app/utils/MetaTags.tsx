@@ -12,7 +12,7 @@ export function MetaTags() {
   return (
     <Tags>
       <meta name="description" content={getSeoDescription(currentLanguage)} />
-      {/* <meta name="author" content="Open Data Company B.V."> */}
+      <meta name="author" content="Zimmerman B.V." />
 
       {/* Google / Search Engine Tags */}
       <meta itemProp="name" content={getAppName(currentLanguage)} />
@@ -28,7 +28,7 @@ export function MetaTags() {
       />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={getAppName(currentLanguage)} />
-      {/*    <meta property="og:author" content="Open Data Company B.V." /> */}
+      <meta property="og:author" content="Zimmerman B.V." />
 
       <meta
         property="og:description"
@@ -46,7 +46,7 @@ export function MetaTags() {
         name="twitter:description"
         content={getSeoDescription(currentLanguage)}
       />
-      {/* <meta name="twitter:author" content="Open Data Company B.V." /> */}
+      <meta name="twitter:author" content="Zimmerman B.V." />
 
       <meta
         name="twitter:image"
