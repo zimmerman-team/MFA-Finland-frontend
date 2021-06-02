@@ -7,6 +7,10 @@ import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { Path } from "app/const/Path";
 import { Anchor, InPageNavigation } from "app/components/InPageNavigation";
 import { InpageNavItemModel } from "app/components/InPageNavigation/model";
+import { urlify } from "app/utils/urlify";
+import get from "lodash/get";
+import { useCMSData } from "app/hooks/useCMSData";
+import { getCMSContent } from "app/utils/getCMSContent";
 
 export const styles = {
   container: css`
@@ -45,6 +49,8 @@ const navList: InpageNavItemModel[] = [
 
 export const StatementModuleLayout = () => {
   const [active, setActive] = React.useState(0);
+  const cmsData = useCMSData({ returnData: true });
+  const statementContent = getCMSContent(cmsData, "pages.statement");
 
   function handleClick(id: any) {
     setActive(parseInt(id, 10));
@@ -75,19 +81,16 @@ export const StatementModuleLayout = () => {
             </div>
           </Grid>
         </Hidden>
-        <Grid item lg={9}>
+        <Grid item lg={9} css="width: 100%;">
           <Anchor id="statement" />
           <div css={styles.container}>
             <Typography variant="h5">Statement</Typography>
             <Box width="100%" height="24px" />
-            <Typography variant="body1" css={styles.paragraph}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially
-            </Typography>
+            <Typography
+              variant="body1"
+              css={styles.paragraph}
+              dangerouslySetInnerHTML={{ __html: statementContent || "" }}
+            />
           </div>
         </Grid>
       </ModuleContainer>

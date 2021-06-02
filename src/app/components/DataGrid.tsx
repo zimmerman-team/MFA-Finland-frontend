@@ -24,6 +24,7 @@ import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplifi
 import { useWindowSize } from "app/hooks/useWindowSize";
 import { ContactInformation } from "app/modules/detail-modules/country-detail-module/ContactInformation";
 import { RssFeed } from "app/modules/detail-modules/country-detail-module/RssFeed";
+import { getCMSContent } from "app/utils/getCMSContent";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -78,8 +79,15 @@ export const DataGrid = (props: DataGridProps) => {
       showSingleAreaCircle = splits[0][0] === splits[1][0];
     }
   }
+  const aboutContent = getAboutBlockContent();
+  const thematicResultContent = getThematicAreaResultBlock();
+  const regionContent = getRegionContent();
+  const resultContent = getResultBlockContent();
 
-  function getResultBlockContent() {
+  function getResultBlockContent(): {
+    label: string;
+    text: string | undefined;
+  } {
     if (isOrgTypeDetail || isOrgDetail) {
       return {
         label: "",
@@ -93,7 +101,7 @@ export const DataGrid = (props: DataGridProps) => {
           "general.thematicareas_detail_title",
           "Thematic area info"
         ),
-        text: getThematicAreaResultBlock(),
+        text: thematicResultContent,
       };
     }
     if (isSectorDetail) {
@@ -111,16 +119,12 @@ export const DataGrid = (props: DataGridProps) => {
     if (isRegionDetail) {
       return {
         label: "Finland and the region in development cooperation?",
-        text: getRegionContent(),
+        text: regionContent,
       };
     }
     return {
       label: get(cmsData, "general.result", "Result"),
-      text: get(
-        cmsData,
-        "pages.homepageresult",
-        "Positive results build societies and contribute to global stability and wellbeing. They advance Finland’s foreign policy goals and meeting global commitments. With development cooperation Finland contributes to solving of the major problems that are facing humankind."
-      ),
+      text: getCMSContent(cmsData, "pages.homepageresult"),
     };
   }
 
@@ -156,48 +160,49 @@ export const DataGrid = (props: DataGridProps) => {
 
     return "";
   }
+
   function getRegionContent(): string {
     const region = props.detailPageFilter;
 
     if (region) {
       if (region.value === "89") {
-        return get(cmsData, "regions.europe", "");
+        return getCMSContent(cmsData, "regions.europe", "");
       }
       if (region.value === "189") {
-        return get(cmsData, "regions.northofsahara", "");
+        return getCMSContent(cmsData, "regions.northofsahara", "");
       }
       if (region.value === "289") {
-        return get(cmsData, "regions.southofsahara", "");
+        return getCMSContent(cmsData, "regions.southofsahara", "");
       }
       if (region.value === "398") {
-        return get(cmsData, "regions.northandcentralamerica", "");
+        return getCMSContent(cmsData, "regions.northandcentralamerica", "");
       }
       if (region.value === "498") {
-        return get(cmsData, "regions.america", "");
+        return getCMSContent(cmsData, "regions.america", "");
       }
       if (region.value === "489") {
-        return get(cmsData, "regions.southamerika", "");
+        return getCMSContent(cmsData, "regions.southamerika", "");
       }
       if (region.value === "589") {
-        return get(cmsData, "regions.middleeast", "");
+        return getCMSContent(cmsData, "regions.middleeast", "");
       }
       if (region.value === "619") {
-        return get(cmsData, "regions.centralasia", "");
+        return getCMSContent(cmsData, "regions.centralasia", "");
       }
       if (region.value === "679") {
-        return get(cmsData, "regions.southasia", "");
+        return getCMSContent(cmsData, "regions.southasia", "");
       }
       if (region.value === "689") {
-        return get(cmsData, "regions.southandcentralasia", "");
+        return getCMSContent(cmsData, "regions.southandcentralasia", "");
       }
       if (region.value === "798") {
-        return get(cmsData, "regions.asia", "");
+        return getCMSContent(cmsData, "regions.asia", "");
       }
       if (region.value === "789") {
-        return get(cmsData, "regions.fareastasia", "");
+        return getCMSContent(cmsData, "regions.fareastasia", "");
       }
       if (region.value === "998") {
-        return get(cmsData, "regions.unspecified", "");
+        return getCMSContent(cmsData, "regions.unspecified", "");
       }
     }
     return "";
@@ -226,9 +231,6 @@ export const DataGrid = (props: DataGridProps) => {
       ),
     };
   }
-
-  const resultContent = getResultBlockContent();
-  const aboutContent = getAboutBlockContent();
 
   return (
     <React.Fragment>
@@ -381,7 +383,20 @@ export const DataGrid = (props: DataGridProps) => {
             }
             childrencontainerStyle={{ paddingTop: 33 }}
           >
-            {isCountryDetail ? <ContactInformation /> : resultContent.text}
+            {isCountryDetail ? (
+              <ContactInformation />
+            ) : (
+              <>
+                <p
+                  css={`
+                    a {
+                      text-decoration: underline;
+                    }
+                  `}
+                  dangerouslySetInnerHTML={{ __html: resultContent.text || "" }}
+                />
+              </>
+            )}
           </GridWidget>
         )}
       </Grid>
@@ -472,28 +487,40 @@ export const DataGrid = (props: DataGridProps) => {
           }
           childrencontainerStyle={{ paddingTop: 33 }}
         >
-          {isCountryDetail
-            ? props.countryData.countryIndicators.map((indicator: string) => {
-                const values = indicator.split(":");
-                if (values.length === 2) {
-                  return (
-                    <div
-                      key={indicator}
-                      css={`
-                        margin: 8px 0;
-                        font-size: 14px;
-                      `}
-                    >
-                      {values[0]}:{" "}
-                      <span css="font-size: 16px;font-weight: bold;">
-                        {values[1]}
-                      </span>
-                    </div>
-                  );
+          {isCountryDetail ? (
+            props.countryData.countryIndicators.map((indicator: string) => {
+              const values = indicator.split(":");
+              if (values.length === 2) {
+                return (
+                  <div
+                    key={indicator}
+                    css={`
+                      margin: 8px 0;
+                      font-size: 14px;
+                    `}
+                  >
+                    {values[0]}:{" "}
+                    <span css="font-size: 16px;font-weight: bold;">
+                      {values[1]}
+                    </span>
+                  </div>
+                );
+              }
+              return "";
+            })
+          ) : (
+            <div
+              css={`
+                a {
+                  text-decoration: underline;
                 }
-                return "";
-              })
-            : resultContent.text}
+              `}
+            >
+              <p
+                dangerouslySetInnerHTML={{ __html: resultContent.text || "" }}
+              />
+            </div>
+          )}
         </GridWidget>
       </Grid>
 
@@ -551,7 +578,11 @@ export const DataGrid = (props: DataGridProps) => {
               : get(cmsData, "general.about", "About")
           }
         >
-          {isCountryDetail ? <RssFeed /> : aboutContent.text}
+          {isCountryDetail ? (
+            <RssFeed />
+          ) : (
+            <p dangerouslySetInnerHTML={{ __html: aboutContent.text || "" }} />
+          )}
         </GridWidget>
       </Grid>
 

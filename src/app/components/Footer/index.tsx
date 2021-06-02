@@ -127,7 +127,7 @@ export function Footer() {
                 {get(cmsData, `menu.result`, "Result")}
               </NavLink>
               <NavLink to="/statements" css={styles.link}>
-                {get(cmsData, `menu.Statements`, "Statements")}
+                {get(cmsData, `menu.statements`, "Statements")}
               </NavLink>
             </Grid>
             <Hidden smUp>

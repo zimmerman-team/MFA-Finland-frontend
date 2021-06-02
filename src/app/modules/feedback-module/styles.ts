@@ -23,6 +23,9 @@ export const styles = {
   `,
   paragraph: css`
     margin-bottom: 24px;
+    a {
+      text-decoration: underline;
+    }
   `,
   button: css`
     display: flex;

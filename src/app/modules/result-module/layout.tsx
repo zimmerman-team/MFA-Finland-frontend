@@ -10,6 +10,7 @@ import { InpageNavItemModel } from "app/components/InPageNavigation/model";
 import { useCMSData } from "app/hooks/useCMSData";
 import get from "lodash/get";
 import { urlify } from "app/utils/urlify";
+import { getCMSContent } from "app/utils/getCMSContent";
 
 export const styles = {
   container: css`
@@ -52,15 +53,13 @@ const navList: InpageNavItemModel[] = [
 export const ResultModuleLayout = () => {
   const [active, setActive] = React.useState(0);
   const cmsData = useCMSData({ returnData: true });
-  const content = urlify(
-    get(
-      cmsData,
-      "pages.resultspage",
-      "sitive results build societies and contribute to global stability and wellbeing. They advance Finland’s foreign policy goals and meeting global commitments. With development cooperation Finland contributes to solving of the major problems that are facing humankind.\n" +
-        "\n" +
-        "More about the latest results: https://kehityspolitiikka2018.um.fi/en/\n" +
-        "Download the policy results report: https://kehityspolitiikka2018.um.fi/wp-content/uploads/sites/21/2019/01/UM-KPR-2018-ENG-WEB.pdf"
-    )
+  const content = getCMSContent(
+    cmsData,
+    "pages.resultspage",
+    "Positive results build societies and contribute to global stability and wellbeing. They advance Finland’s foreign policy goals and meeting global commitments. With development cooperation Finland contributes to solving of the major problems that are facing humankind.\n" +
+      "\n" +
+      "More about the latest results: https://kehityspolitiikka2018.um.fi/en/\n" +
+      "Download the policy results report: https://kehityspolitiikka2018.um.fi/wp-content/uploads/sites/21/2019/01/UM-KPR-2018-ENG-WEB.pdf"
   );
 
   function handleClick(id: any) {
@@ -100,7 +99,7 @@ export const ResultModuleLayout = () => {
             <Typography
               variant="body1"
               css={styles.paragraph}
-              dangerouslySetInnerHTML={{ __html: content }}
+              dangerouslySetInnerHTML={{ __html: content || "" }}
             />
           </div>
         </Grid>

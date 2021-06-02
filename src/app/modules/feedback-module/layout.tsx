@@ -165,21 +165,7 @@ export const FeedbackLayout = () => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  const faqMockItem = {
-    title: "1. What is the .....?",
-    paragraph:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting\n" +
-      "industry. Lorem Ipsum has been the industry's standard dummy text\n" +
-      "ever since the 1500s, when an unknown printer took a galley of\n" +
-      "type and scrambled it to make a type specimen book. It has\n" +
-      "survived not only five centuries, but also the leap into\n" +
-      "electronic typesetting, remaining essentially",
-  };
-
-  const faqMockList = [];
-  for (let i = 0; i < 6; i++) {
-    faqMockList.push(faqMockItem);
-  }
+  const faqItems = get(cmsData, "pages.faq.items", []);
 
   return (
     <>
@@ -212,15 +198,17 @@ export const FeedbackLayout = () => {
             <Typography variant="h5">FAQs</Typography>
             <Box width="100%" height="24px" />
 
-            {faqMockList.map((item: any) => {
+            {faqItems.map((item: any) => {
               return (
                 <>
                   <Typography variant="subtitle1" css={styles.paragraphHeader}>
                     {item.title}
                   </Typography>
-                  <Typography variant="body1" css={styles.paragraph}>
-                    {item.paragraph}
-                  </Typography>
+                  <Typography
+                    variant="body1"
+                    css={styles.paragraph}
+                    dangerouslySetInnerHTML={{ __html: item.paragraph || "" }}
+                  />
                 </>
               );
             })}
