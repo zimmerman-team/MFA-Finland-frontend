@@ -67,7 +67,9 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
       <div
         css={`
           position: relative;
-          ${((props.vizType === "oda" || props.vizType === "thematic-areas") &&
+          ${((props.vizType === "oda" ||
+            props.vizType === "thematic-areas" ||
+            props.vizType === "budget-lines") &&
             !props.isChild) ||
           (isSectorOROrgORLocation &&
             props.children &&

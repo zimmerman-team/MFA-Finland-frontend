@@ -63,6 +63,7 @@ export default function VizModule() {
   >(null);
   const isProjects = get(params, "tab", "") === "projects";
   const isThematic = get(params, "tab", "") === "thematic-areas";
+  const isBudgetLines = get(params, "tab", "") === "budget-lines";
 
   const [vizLevel, setVizLevel] = React.useState(0);
   const [vizScale, setVizScale] = React.useState(1);
@@ -518,13 +519,13 @@ export default function VizModule() {
             display: flex;
             background: ${PrimaryColor[1]};
 
-            ${vizLevel > 0
+            ${vizLevel > 0 && !isBudgetLines
               ? ` 
                   #legend-items { 
                     * { 
                       opacity: 1; 
                       pointer-events: none; 
-                    } 
+                    }   
                   } 
                 `
               : ""}
