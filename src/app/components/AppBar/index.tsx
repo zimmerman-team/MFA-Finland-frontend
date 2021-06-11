@@ -90,23 +90,19 @@ export function AppBar() {
         <Toolbar disableGutters css={appbarStyle.toolBar(isFocused)}>
           <Hidden smUp>
             {!isFocused && (
-              <IconButton
-                color="inherit"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-                data-cy="burger-menu-button"
-              >
-                <MenuIcon
-                  css={`
-                    fill: ${PrimaryColor[2]};
-                  `}
-                />
-              </IconButton>
+              <LanguageSwitch
+                id={id}
+                currentLanguage={currentLanguage}
+                handleClick={handleClick}
+              />
             )}
           </Hidden>
+
+          {/* Accessibillity anchor */}
           <a css={appbarStyle.skipLink} href="#main" tabIndex={0}>
             Skip to main
           </a>
+
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
@@ -136,88 +132,29 @@ export function AppBar() {
           >
             {/* ---------------------------------------------- */}
             {/* searchfield */}
-            <Hidden xsDown>
-              <SearchComponent tabIndex={2} />
-            </Hidden>
-
-            <Hidden smUp>
-              <IconButton
-                color="inherit"
-                aria-label="menu"
-                // onClick={toggleDrawer(true)}
-                data-cy="burger-menu-button"
-                css={`
-                  @media (max-width: 600px) {
-                    padding-right: 4px;
-                  }
-                `}
-              >
-                <SearchIcon
-                  css={`
-                    fill: ${PrimaryColor[2]};
-                  `}
-                />
-              </IconButton>
-            </Hidden>
+            <Search />
 
             {/* ---------------------------------------------- */}
             {/* lang switch */}
             <Hidden smDown>
-              <button
-                role="button"
-                aria-label="Switch language"
-                aria-pressed="false"
-                aria-describedby={id}
-                onClick={handleClick}
-                css={appbarStyle.langSwitchContainer}
-              >
-                <LanguageIcon
-                  css={`
-                    fill: ${PrimaryColor[2]};
-                    margin-bottom: 3px;
-                    @media (max-width: 600px) {
-                      margin-bottom: initial;
-                    }
-                  `}
-                />
-                <Hidden xsDown>
-                  <div css={appbarStyle.selectedLanguages}>
-                    {currentLanguage}
-                  </div>
-                </Hidden>
-              </button>
+              <LanguageSwitch
+                id={id}
+                currentLanguage={currentLanguage}
+                handleClick={handleClick}
+              />
             </Hidden>
 
             {LanguagePopover(id, open, anchorEl, handleClose, setLanguage)}
 
             {/* ---------------------------------------------- */}
-            {/* burger menu */}
+            {/* three dots */}
             <Hidden mdUp>
-              <IconButton
-                color="inherit"
-                aria-label="bottom-menu"
-                data-cy="three-dots-button"
-                onClick={toggleBottomMenu(true)}
-              >
-                <IconDots />
-              </IconButton>
+              <ThreeDots toggleBottomMenu={toggleBottomMenu} />
             </Hidden>
 
             {/* ---------------------------------------------- */}
-            {/* burger menu */}
+            {/* old placement of burger menu, currently acts as spacer */}
             <Hidden xsDown>
-              {/* <IconButton */}
-              {/*  color="inherit" */}
-              {/*  aria-label="menu" */}
-              {/*  onClick={toggleDrawer(true)} */}
-              {/*  data-cy="burger-menu-button" */}
-              {/* > */}
-              {/*  <MenuIcon */}
-              {/*    css={` */}
-              {/*      fill: ${PrimaryColor[2]}; */}
-              {/*    `} */}
-              {/*  /> */}
-              {/* </IconButton> */}
               <div
                 css={`
                   min-width: 48px;
@@ -228,7 +165,79 @@ export function AppBar() {
           </div>
         </Toolbar>
       </MUIAppBar>
-      {/* <BackDrop /> */}
     </React.Fragment>
   );
 }
+
+const Search = () => {
+  return (
+    <>
+      <Hidden xsDown>
+        {/* eslint-disable-next-line jsx-a11y/tabindex-no-positive */}
+        <SearchComponent tabIndex={2} />
+      </Hidden>
+      <Hidden smUp>
+        <IconButton
+          color="inherit"
+          aria-label="menu"
+          data-cy="burger-menu-button"
+          css={`
+            @media (max-width: 600px) {
+              padding-right: 4px;
+            }
+          `}
+        >
+          {/* TODO: Search panel implementation see: MF-456 */}
+          <SearchIcon
+            css={`
+              fill: ${PrimaryColor[2]};
+            `}
+          />
+        </IconButton>
+      </Hidden>
+    </>
+  );
+};
+
+const ThreeDots = ({ toggleBottomMenu }: { toggleBottomMenu: any }) => {
+  return (
+    <IconButton
+      color="inherit"
+      aria-label="bottom-menu"
+      data-cy="three-dots-button"
+      onClick={toggleBottomMenu(true)}
+      css="margin-right: 6px;"
+    >
+      <IconDots />
+    </IconButton>
+  );
+};
+
+const LanguageSwitch = ({
+  id,
+  handleClick,
+  currentLanguage,
+}: {
+  id: string | undefined;
+  handleClick: any;
+  currentLanguage: string;
+}) => {
+  return (
+    <button
+      role="button"
+      aria-label="Switch language"
+      aria-pressed="false"
+      aria-describedby={id}
+      onClick={handleClick}
+      css={appbarStyle.langSwitchContainer}
+    >
+      <LanguageIcon
+        css={`
+          fill: ${PrimaryColor[2]};
+          margin-bottom: 3px;
+        `}
+      />
+      <div css={appbarStyle.selectedLanguages}>{currentLanguage}</div>
+    </button>
+  );
+};

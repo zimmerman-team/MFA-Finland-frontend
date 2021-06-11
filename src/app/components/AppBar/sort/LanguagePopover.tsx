@@ -86,6 +86,7 @@ export function LanguagePopover(
           aria-label="Switch language to Finnish"
           onClick={() => {
             setLanguage("en");
+            handleClose();
           }}
         >
           English
@@ -96,6 +97,7 @@ export function LanguagePopover(
           aria-label="Switch language to Finnish"
           onClick={() => {
             setLanguage("fi");
+            handleClose();
           }}
         >
           Finnish

@@ -66,6 +66,11 @@ export const appbarStyle = {
     @media (max-width: 960px) {
       margin-left: 12px;
     }
+
+    @media (max-width: 600px) {
+      margin-right: auto;
+      margin-left: 0;
+    }
   `,
   langSwitchContainer: css`
     background: none;
@@ -83,7 +88,7 @@ export const appbarStyle = {
     user-select: none;
     cursor: pointer;
     @media (max-width: 600px) {
-      margin-left: 0;
+      margin-left: 12px;
       margin-right: 12px;
     }
   `,
@@ -107,6 +112,7 @@ export const appbarStyle = {
     margin-left: 16px;
 
     @media (max-width: 600px) {
+      margin-left: 2px;
       font-size: 13px;
     }
   `,
