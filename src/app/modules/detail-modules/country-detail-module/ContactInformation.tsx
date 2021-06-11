@@ -42,17 +42,20 @@ export const ContactInformation = () => {
   const department = getDepartment();
 
   function getEmbassy() {
+    // TODO: fetch data from api
     return contactInformation.contactInfos.find((item) => {
-      return (
-        item.title.toLowerCase() === "suomen suurlähetystö" ||
-        item.title.toLowerCase() === "embassy of finland"
-      );
+      return item.categories["organization-types"].find((org: string) => {
+        return org === "UE";
+      });
     });
   }
 
   function getDepartment() {
+    // TODO: fetch data from api
     return contactInformation.contactInfos.find((item) => {
-      return item.type === "YKSIKKO";
+      return item.categories["organization-types"].find((org: string) => {
+        return org === "UM";
+      });
     });
   }
 
@@ -60,15 +63,24 @@ export const ContactInformation = () => {
     <ul css={styles}>
       <li>
         <span>Embassy:</span>
-        <span>
-          {embassy?.title}, {embassy?.reportName}
-        </span>
-        <a href={embassy?.link}>Contact information</a>
+        {embassy ? (
+          <a href={embassy.link}>
+            {embassy.reportName ? embassy.reportName : embassy.title}
+          </a>
+        ) : (
+          <span>Information not available</span>
+        )}
       </li>
 
       <li>
-        <span>MFA department:</span> <span>{department?.title}</span>
-        <a href={department?.link}>Contact information</a>
+        <span>MFA department:</span>{" "}
+        {department ? (
+          <a href={department.link}>
+            {department.reportName ? department.reportName : department.title}
+          </a>
+        ) : (
+          <span>Information not available</span>
+        )}
       </li>
     </ul>
   );
