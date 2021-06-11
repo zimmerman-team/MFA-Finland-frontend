@@ -110,6 +110,7 @@ export const appbarStyle = {
     letter-spacing: 0.02em;
     color: ${color};
     margin-left: 16px;
+    line-height: 14px;
 
     @media (max-width: 600px) {
       margin-left: 2px;

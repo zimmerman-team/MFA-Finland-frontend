@@ -150,86 +150,7 @@ export function Footer() {
               `}
             >
               <Grid item lg={12}>
-                <div css={drawerStyle.SocialIconContainer}>
-                  <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    target="_blank"
-                    href={get(
-                      cmsData,
-                      "menu.facebooklink",
-                      "https://www.facebook.com"
-                    )}
-                  >
-                    <img
-                      src={LogoFacebook}
-                      css={`
-                        width: 32px;
-                        height: 32px;
-                      `}
-                      alt="facebook"
-                    />
-                  </IconButton>
-                  <IconButton
-                    color="inherit"
-                    aria-label="menu"
-                    target="_blank"
-                    href={get(
-                      cmsData,
-                      "menu.youtubelink",
-                      "https://www.youtube.com"
-                    )}
-                  >
-                    <img
-                      src={LogoYoutube}
-                      css={`
-                        width: 32px;
-                        height: 32px;
-                      `}
-                      alt="facebook"
-                    />
-                  </IconButton>
-                  <IconButton
-                    color="inherit"
-                    aria-label="menu"
-                    target="_blank"
-                    href={get(
-                      cmsData,
-                      "menu.linkedinlink",
-                      "https://www.linkedin.com"
-                    )}
-                  >
-                    <img
-                      src={LogoLinkedin}
-                      css={`
-                        width: 32px;
-                        height: 32px;
-                      `}
-                      alt="linkedin"
-                    />
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    color="inherit"
-                    aria-label="menu"
-                    target="_blank"
-                    href={get(
-                      cmsData,
-                      "menu.twitterlink",
-                      "https://www.twitter.com"
-                    )}
-                  >
-                    <img
-                      src={LogoTwitter}
-                      css={`
-                        width: 32px;
-                        height: 32px;
-                      `}
-                      alt="twitter"
-                    />
-                  </IconButton>
-                </div>
+                <LogoButtons cmsData={cmsData} />
                 <br />
                 <Typography
                   variant="body1"
@@ -240,19 +161,55 @@ export function Footer() {
                   {get(cmsData, "menu.social", "")}
                   <br />
                   <a
-                    href="https://www.um.fi"
-                    css={`
-                      color: white;
-                      :hover {
-                        color: white;
-                        text-decoration: underline;
-                      }
-                    `}
+                    href={get(cmsData, "menu.website", "www.um.fi")}
+                    css={styles.link}
                   >
-                    www.um.fi
+                    {get(cmsData, "menu.website", "www.um.fi")}
                   </a>
                 </Typography>
               </Grid>
+            </Grid>
+
+            <Hidden smUp>
+              <Grid item xs={3} sm={3} />
+            </Hidden>
+
+            <Grid
+              item
+              container
+              xs={9}
+              sm={9}
+              md={3}
+              lg={3}
+              css={`
+                padding-left: 32px;
+                border-left: 1px solid #4f6797;
+
+                @media (max-width: 960px) {
+                  margin-top: 64px;
+                }
+              `}
+            >
+              <Hidden smUp>
+                <Grid item lg={12}>
+                  <Typography variant="body1" css="color: white;">
+                    {get(cmsData, "menu.name", "")}
+                    <br />
+                    {get(cmsData, "menu.adress", "")}
+                    <br />
+                    {get(cmsData, "menu.code", "")}
+                    <br />
+                    {get(cmsData, "menu.country", "")}
+                    <br />
+                    <br />
+                    {get(cmsData, "menu.telephone", "")}
+                    <br />
+                    <a href={get(cmsData, "menu.email", "")} css={styles.link}>
+                      {get(cmsData, "menu.email", "")}
+                    </a>
+                  </Typography>
+                </Grid>
+              </Hidden>
             </Grid>
           </Grid>
           <div css={styles.backToTop}>
@@ -273,3 +230,72 @@ export function Footer() {
     </footer>
   );
 }
+
+const LogoButtons = ({ cmsData }: { cmsData: any }) => {
+  return (
+    <div css={drawerStyle.SocialIconContainer}>
+      <IconButton
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        target="_blank"
+        href={get(cmsData, "menu.facebooklink", "https://www.facebook.com")}
+      >
+        <img
+          src={LogoFacebook}
+          css={`
+            width: 32px;
+            height: 32px;
+          `}
+          alt="facebook"
+        />
+      </IconButton>
+      <IconButton
+        color="inherit"
+        aria-label="menu"
+        target="_blank"
+        href={get(cmsData, "menu.youtubelink", "https://www.youtube.com")}
+      >
+        <img
+          src={LogoYoutube}
+          css={`
+            width: 32px;
+            height: 32px;
+          `}
+          alt="facebook"
+        />
+      </IconButton>
+      <IconButton
+        color="inherit"
+        aria-label="menu"
+        target="_blank"
+        href={get(cmsData, "menu.linkedinlink", "https://www.linkedin.com")}
+      >
+        <img
+          src={LogoLinkedin}
+          css={`
+            width: 32px;
+            height: 32px;
+          `}
+          alt="linkedin"
+        />
+      </IconButton>
+      <IconButton
+        edge="end"
+        color="inherit"
+        aria-label="menu"
+        target="_blank"
+        href={get(cmsData, "menu.twitterlink", "https://www.twitter.com")}
+      >
+        <img
+          src={LogoTwitter}
+          css={`
+            width: 32px;
+            height: 32px;
+          `}
+          alt="twitter"
+        />
+      </IconButton>
+    </div>
+  );
+};
