@@ -22,10 +22,7 @@ export function MetaTags() {
       />
 
       {/* Facebook Meta Tags */}
-      <meta
-        property="og:url"
-        content="https://app.mfa.test.nyuki.io/openaidfi.png"
-      />
+      <meta property="og:url" content="https://app.mfa.test.nyuki.io/" />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={getAppName(currentLanguage)} />
       <meta property="og:author" content="Zimmerman B.V." />
