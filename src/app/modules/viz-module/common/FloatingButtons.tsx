@@ -12,6 +12,7 @@ import domtoimage from "dom-to-image";
 import { useLocation } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import { vizDataToCSV } from "app/utils/vizDataToCSV";
+import background from "app/assets/background.png";
 
 interface FloatingButtonsProps {
   data: any;
@@ -267,12 +268,28 @@ const DownloadPopover = (props: DownloadPopoverProps) => {
     domtoimage
       .toPng(element, { bgcolor: "#f8f8f8" })
       .then((dataUrl: any) => {
-        const htmlImage = new Image();
-        htmlImage.src = dataUrl;
-        const pdf = new JSPDF("p", "mm", "a4");
-        const width = pdf.internal.pageSize.getWidth();
-        const height = pdf.internal.pageSize.getHeight();
-        pdf.addImage(htmlImage, 0, 0, width, height);
+        const pdf = new JSPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4",
+        });
+        const imgProps = pdf.getImageProperties(dataUrl);
+
+        const pdfWidth = pdf.internal.pageSize.width;
+        const pdfHeight = pdf.internal.pageSize.height;
+
+        const widthRatio = pdfWidth / imgProps.width;
+        const heightRatio = pdfHeight / imgProps.height;
+        const ratio = Math.min(widthRatio, heightRatio);
+
+        const w = imgProps.width * ratio;
+        const h = imgProps.height * ratio;
+
+        const x = (pdf.internal.pageSize.width - w) / 2;
+
+        pdf.addImage(background, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.addImage(dataUrl, "PNG", x, 0, w, h);
+
         pdf.save("download.pdf");
       })
       .catch((error: any) => {
