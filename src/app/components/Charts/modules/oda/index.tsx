@@ -15,24 +15,22 @@ import { SimpleBarChart } from "app/components/Charts/bar/simple";
 import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
-import { useRouteMatch } from "react-router-dom";
-import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
+import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
   vizLevel: number;
   activeTab: string;
+  activeTabData: any;
   scrollableHeight: number;
   odaBudgetLinesChartData: any;
   odaBudgetLinesChartLoading: boolean;
   onArrowSelectChange: (v: string) => void;
   vizTranslation: { x: number; y: number };
-  getActiveTabData: () => any;
 }
 
 export function ODAvizModule(props: ODAvizModuleProps) {
   const cmsData = useCMSData({ returnData: true });
-  const { params } = useRouteMatch();
 
   const tableConfig = props.selectedVizItemId
     ? {
@@ -51,7 +49,7 @@ export function ODAvizModule(props: ODAvizModuleProps) {
     : {
         data: props.data,
         // @ts-ignore
-        options: getODADataTableOptions(params, props.getActiveTabData),
+        options: getODADataTableOptions({ tab: "oda" }, props.activeTabData),
         columns: getTranslatedCols(ODADataTableColumns, cmsData),
         title: `${props.data.length} ${get(cmsData, "filters.years", "years")}`,
       };

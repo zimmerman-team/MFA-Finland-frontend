@@ -659,11 +659,13 @@ export const ODADataTableColumns: MUIDataTableColumnDef[] = [
   },
 ];
 
-export const MoreButton = (params: any, data: any) => (
-  <Tooltip disableFocusListener title="More Options">
-    <MoreActions data={data} viz={get(params, "tab", "")} />
-  </Tooltip>
-);
+export const MoreButton = (props: any) => {
+  return (
+    <Tooltip disableFocusListener title="More Options">
+      <MoreActions data={props.data} viz={get(props.params, "tab", "")} />
+    </Tooltip>
+  );
+};
 
 // @ts-ignore
 export const getODADataTableOptions: MUIDataTableOptions = (

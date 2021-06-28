@@ -6,10 +6,6 @@ import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
 import { css } from "styled-components/macro";
 import { tooltipCreateStyles } from "app/components/PageFloatingButtons/styles";
 import { Typography, IconButton, Popover, makeStyles } from "@material-ui/core";
-import JSPDF from "jspdf";
-// @ts-ignore
-import domtoimage from "dom-to-image";
-import { useLocation } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import { vizDataToCSV } from "app/utils/vizDataToCSV";
 

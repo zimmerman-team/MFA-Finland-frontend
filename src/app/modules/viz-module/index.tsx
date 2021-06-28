@@ -634,7 +634,7 @@ export default function VizModule() {
                   onArrowSelectChange={onZoomInLevelSelectorChange}
                   odaBudgetLinesChartData={odaBudgetLinesChartData}
                   odaBudgetLinesChartLoading={odaBudgetLinesChartLoading}
-                  getActiveTabData={getActiveVizData}
+                  activeTabData={getActiveVizData()}
                 />
               )}
             </Route>
