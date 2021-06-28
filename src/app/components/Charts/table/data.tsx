@@ -133,7 +133,7 @@ export const SimpleActivitiesDataTableColumns: MUIDataTableColumnDef[] = [
     options: {
       sort: false,
       customBodyRender: (value, tableMeta, updateValue) => {
-        const link = `/activity/${encodeURIComponent(value.code)}`;
+        const link = `/project/${encodeURIComponent(value.code)}`;
         return <LinkCell link={link} value={value.value} />;
       },
     },
@@ -206,7 +206,7 @@ export const ActivitiesDataTableColumns: MUIDataTableColumnDef[] = [
     name: "Activity title",
     options: {
       customBodyRender: (value, tableMeta, updateValue) => {
-        const link = `/activity/${encodeURIComponent(value[0])}`;
+        const link = `/project/${encodeURIComponent(value[0])}`;
         return <LinkCell link={link} value={value[1]} />;
       },
     },

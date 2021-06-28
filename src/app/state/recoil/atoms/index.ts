@@ -104,6 +104,7 @@ export const appbarHeightAtom: RecoilState<number> = atom({
 export const selectedFilterAtom: RecoilState<SelectedFilterAtomModel> = atom({
   key: "selectedFilterAtom",
   default: defaultfilters,
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const prevLocationAtom: RecoilState<string> = atom({

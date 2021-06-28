@@ -153,7 +153,7 @@ export const actualData = {
   planned_disbursements: [],
   document_links: [],
   related_activities: [
-    { ref: "FR-3-CBR109001", type: "2", url: "/activity/FR-3-CBR109001" },
+    { ref: "FR-3-CBR109001", type: "2", url: "/project/FR-3-CBR109001" },
   ],
   legacy_data: [],
   conditions: [],

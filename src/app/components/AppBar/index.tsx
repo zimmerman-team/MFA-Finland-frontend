@@ -5,24 +5,21 @@ import MUIAppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { useCMSData } from "app/hooks/useCMSData";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import { PrimaryColor } from "app/theme";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import {
-  drawerAtom,
   languageAtom,
   searchFocusAtom,
   currentFilterOpenAtom,
   bottomDrawerAtom,
-  selectedFilterAtom,
-  defaultfilters,
+  // selectedFilterAtom,
+  // defaultfilters,
 } from "app/state/recoil/atoms";
 import { MfaLogo } from "app/assets/mfa_logo";
 import LanguageIcon from "@material-ui/icons/Language";
 import { FILTER_TYPES } from "app/components/FilterPanel/data";
 import { LanguagePopover } from "app/components/AppBar/sort/LanguagePopover";
-import { BackDrop } from "app/components/AppBar/sort/BackDrop";
 import { appbarStyle } from "app/components/AppBar/sort/appbarStyle";
 import { Hidden } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
@@ -32,28 +29,14 @@ import { IconDots } from "app/assets/icons/IconDots";
 export function AppBar() {
   const cmsData = useCMSData({ returnData: true });
   const [isFocused] = useRecoilState(searchFocusAtom);
-  const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
-  const [selectedFilters, setSelectedFilters] = useRecoilState(
-    selectedFilterAtom
-  );
+  // const [selectedFilters, setSelectedFilters] = useRecoilState(
+  //   selectedFilterAtom
+  // );
   const [bottomMenuState, setBottomMenuState] = useRecoilState(
     bottomDrawerAtom
   );
-
-  const toggleDrawer = (open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
-    setDrawerState(open);
-  };
 
   const toggleBottomMenu = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -83,7 +66,6 @@ export function AppBar() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  const location = useLocation();
   return (
     <React.Fragment>
       <MUIAppBar position="relative" color="inherit" css={appbarStyle.appBar}>
@@ -109,7 +91,7 @@ export function AppBar() {
             to={`/${window.location.search}`}
             css={appbarStyle.logoLink(!isFocused)}
             onClick={() => {
-              setSelectedFilters(defaultfilters);
+              // setSelectedFilters(defaultfilters);
               setCurrentFilterOpen(FILTER_TYPES.NONE);
             }}
           >
