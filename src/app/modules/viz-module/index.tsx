@@ -429,9 +429,11 @@ export default function VizModule() {
       setVizTranslation({ x: 0, y: 0 });
     }
     if (expandedVizItem && get(params, "tab", "") === "oda" && vizLevel > 0) {
+      const filters = getAPIFormattedFilters(selectedFilters);
       odaBudgetLinesChartAction({
         values: {
           filters: {
+            ...filters,
             years: [`${expandedVizItem}`, `${expandedVizItem}`],
           },
           extra_param: "simple-budgetlines-bar",

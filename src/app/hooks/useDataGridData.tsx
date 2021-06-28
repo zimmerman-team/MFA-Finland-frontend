@@ -2,6 +2,7 @@ import React from "react";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
+import { useHistory } from "react-router-dom";
 import { useUpdateEffect, useUnmount } from "react-use";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
@@ -26,6 +27,7 @@ interface useDataGridDataProps {
 }
 
 export function useDataGridData(props: useDataGridDataProps) {
+  const history = useHistory();
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
   const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
     ODAlatestFiltersAtom
@@ -143,122 +145,138 @@ export function useDataGridData(props: useDataGridDataProps) {
   }));
 
   React.useEffect(() => {
-    let filters = getAPIFormattedFilters(selectedFilters);
-    const isDetailPage = props.detailPageFilter.value !== "";
-    if (isDetailPage) {
-      filters = {
-        ...filters,
-        [props.detailPageFilter.key]:
-          props.detailPageFilter.key === "tag_narrative"
-            ? [
-                props.detailPageFilter.value,
-                props.detailPageFilter.value.replace("primary", "secondary"),
-              ]
-            : [props.detailPageFilter.value],
-      };
-      detailPageNameAction({
-        values: {
-          filters,
-          detail_type: props.detailPageFilter.key,
-        },
-      });
-    }
-    if (
-      odaBarChartData.length === 0 ||
-      !isEqual(ODAlatestFilters, selectedFilters) ||
-      isDetailPage ||
-      (!isDetailPage && prevLocation !== "")
-    ) {
-      odaBarChartAction({
-        values: {
-          filters,
-        },
-      });
-    }
-    if (
-      thematicAreasChartData.length === 0 ||
-      !isEqual(ThematicAreasLatestFilters, selectedFilters) ||
-      isDetailPage ||
-      (!isDetailPage && prevLocation !== "")
-    ) {
-      thematicAreasChartAction({
-        values: {
-          filters,
-        },
-      });
-    }
-    if (
-      sectorsSunburstData.children.length === 0 ||
-      !isEqual(SectorsSunburstLatestFilters, selectedFilters) ||
-      isDetailPage ||
-      (!isDetailPage && prevLocation !== "")
-    ) {
-      sectorsSunburstAction({
-        values: {
-          filters,
-        },
-      });
-    }
-    if (
-      locationsTreemapData.children.length === 0 ||
-      !isEqual(LocationsTreemapLatestFilters, selectedFilters) ||
-      isDetailPage ||
-      (!isDetailPage && prevLocation !== "")
-    ) {
-      locationsTreemapAction({
-        values: {
-          filters,
-        },
-      });
-    }
-    if (
-      organisationsTreemapData.children.length === 0 ||
-      !isEqual(OrganisationsLatestFilters, selectedFilters) ||
-      isDetailPage ||
-      (!isDetailPage && prevLocation !== "")
-    ) {
-      organisationsTreemapAction({
-        values: {
-          filters,
-        },
-      });
-    }
-    if (
-      budgetLinesBarChartData.length === 0 ||
-      !isEqual(BudgetLinesLatestFilters, selectedFilters) ||
-      isDetailPage ||
-      (!isDetailPage && prevLocation !== "")
-    ) {
-      budgetLinesBarChartAction({
-        values: {
-          filters,
-        },
-      });
-    }
-    if (
-      sdgVizData.length === 0 ||
-      !isEqual(SDGlatestFilters, selectedFilters) ||
-      isDetailPage ||
-      (!isDetailPage && prevLocation !== "")
-    ) {
-      sdgVizAction({
-        values: {
-          filters,
-        },
-      });
-    }
-    if (
-      geoMapData.length === 0 ||
-      !isEqual(GeoLatestFilters, selectedFilters) ||
-      isDetailPage ||
-      (!isDetailPage && prevLocation !== "")
-    ) {
-      geoMapAction({
-        values: {
-          filters,
-        },
-      });
-    }
+    setTimeout(
+      () => {
+        let filters = getAPIFormattedFilters(selectedFilters);
+        const isDetailPage = props.detailPageFilter.value !== "";
+        if (isDetailPage) {
+          filters = {
+            ...filters,
+            [props.detailPageFilter.key]:
+              props.detailPageFilter.key === "tag_narrative"
+                ? [
+                    props.detailPageFilter.value,
+                    props.detailPageFilter.value.replace(
+                      "primary",
+                      "secondary"
+                    ),
+                  ]
+                : [props.detailPageFilter.value],
+          };
+          detailPageNameAction({
+            values: {
+              filters,
+              detail_type: props.detailPageFilter.key,
+            },
+          });
+        }
+        if (
+          (odaBarChartData.length === 0 ||
+            !isEqual(ODAlatestFilters, selectedFilters) ||
+            isDetailPage ||
+            (!isDetailPage && prevLocation !== "")) &&
+          vizDataLoading.oda
+        ) {
+          odaBarChartAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        if (
+          (thematicAreasChartData.length === 0 ||
+            !isEqual(ThematicAreasLatestFilters, selectedFilters) ||
+            isDetailPage ||
+            (!isDetailPage && prevLocation !== "")) &&
+          vizDataLoading.thematic
+        ) {
+          thematicAreasChartAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        if (
+          (sectorsSunburstData.children.length === 0 ||
+            !isEqual(SectorsSunburstLatestFilters, selectedFilters) ||
+            isDetailPage ||
+            (!isDetailPage && prevLocation !== "")) &&
+          vizDataLoading.sectors
+        ) {
+          sectorsSunburstAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        if (
+          (locationsTreemapData.children.length === 0 ||
+            !isEqual(LocationsTreemapLatestFilters, selectedFilters) ||
+            isDetailPage ||
+            (!isDetailPage && prevLocation !== "")) &&
+          vizDataLoading.locations
+        ) {
+          locationsTreemapAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        if (
+          (organisationsTreemapData.children.length === 0 ||
+            !isEqual(OrganisationsLatestFilters, selectedFilters) ||
+            isDetailPage ||
+            (!isDetailPage && prevLocation !== "")) &&
+          vizDataLoading.organisations
+        ) {
+          organisationsTreemapAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        if (
+          (budgetLinesBarChartData.length === 0 ||
+            !isEqual(BudgetLinesLatestFilters, selectedFilters) ||
+            isDetailPage ||
+            (!isDetailPage && prevLocation !== "")) &&
+          vizDataLoading.budgetLines
+        ) {
+          budgetLinesBarChartAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        if (
+          (sdgVizData.length === 0 ||
+            !isEqual(SDGlatestFilters, selectedFilters) ||
+            isDetailPage ||
+            (!isDetailPage && prevLocation !== "")) &&
+          vizDataLoading.sdg
+        ) {
+          sdgVizAction({
+            values: {
+              filters,
+            },
+          });
+        }
+        if (
+          (geoMapData.length === 0 ||
+            !isEqual(GeoLatestFilters, selectedFilters) ||
+            isDetailPage ||
+            (!isDetailPage && prevLocation !== "")) &&
+          vizDataLoading.geo
+        ) {
+          geoMapAction({
+            values: {
+              filters,
+            },
+          });
+        }
+      },
+      history.length === 2 ? 100 : 0
+    );
   }, [prevLocation, props.detailPageFilter.value]);
 
   useUpdateEffect(() => {
