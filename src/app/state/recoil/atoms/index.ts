@@ -26,6 +26,11 @@ export const cmsDataAtom = atom({
     general: {},
     viz: {},
     filters: {},
+    menu: {},
+    pages: {},
+    tooltips: {},
+    regions: {},
+    priorityAreas: {},
   },
   effects_UNSTABLE: [persistAtom],
 });

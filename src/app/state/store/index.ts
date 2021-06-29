@@ -77,10 +77,11 @@ import general from "app/state/api/actions-reducers/cms/general";
 import feedback from "app/state/api/actions-reducers/feedback";
 import tooltips from "app/state/api/actions-reducers/cms/tooltips";
 import regions from "app/state/api/actions-reducers/cms/regions";
-import viz from "../api/actions-reducers/cms/viz";
-import filters from "../api/actions-reducers/cms/filters";
-import menu from "../api/actions-reducers/cms/menu";
-import pages from "../api/actions-reducers/cms/pages";
+import viz from "app/state/api/actions-reducers/cms/viz";
+import filters from "app/state/api/actions-reducers/cms/filters";
+import menu from "app/state/api/actions-reducers/cms/menu";
+import pages from "app/state/api/actions-reducers/cms/pages";
+import priorityAreas from "app/state/api/actions-reducers/cms/priorityareas";
 
 const storeContent: StoreModel = {
   // filtering
@@ -122,6 +123,7 @@ const storeContent: StoreModel = {
     pages: persist(pages),
     tooltips: persist(tooltips),
     regions: persist(regions),
+    priorityAreas: persist(priorityAreas),
   },
   // global search
   searchDonors,

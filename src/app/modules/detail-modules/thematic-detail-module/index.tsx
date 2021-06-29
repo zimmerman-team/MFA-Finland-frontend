@@ -1,13 +1,14 @@
 import React from "react";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
 import useTitle from "react-use/lib/useTitle";
-import { Path, getAppName } from "app/const/Path";
 import { useRouteMatch } from "react-router-dom";
+import { useCMSData } from "app/hooks/useCMSData";
+import { Path, getAppName } from "app/const/Path";
+import { languageAtom } from "app/state/recoil/atoms";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
-import { useRecoilState } from "recoil";
-import { languageAtom } from "app/state/recoil/atoms";
 
 const moduleName = "Thematic Detail Module";
 
@@ -22,6 +23,7 @@ export function ThematicDetailModule() {
   useTitle(`${moduleName} | ${getAppName(currentLanguage)}`);
 
   const { params } = useRouteMatch();
+  const cmsData = useCMSData({ returnData: true });
 
   const {
     vizDataLoading,
@@ -45,7 +47,11 @@ export function ThematicDetailModule() {
 
   return (
     <DetailModuleLayout
-      label={detailPageNameData || get(params, "theme", "")}
+      label={get(
+        cmsData.priorityAreas,
+        `${detailPageNameData.split("|")[0].replace(/ /g, "")}`,
+        get(params, "theme", "")
+      )}
       crumbs={crumbs}
       vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}

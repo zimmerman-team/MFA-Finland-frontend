@@ -18,6 +18,12 @@ export function useCMSData(props: useCMSDataProps) {
     (actions) => actions.cms.general.fetch
   );
   const generalCMSData = useStoreState((state) => state.cms.general.data);
+  const priorityAreasCMSAction = useStoreActions(
+    (actions) => actions.cms.priorityAreas.fetch
+  );
+  const priorityAreasCMSData = useStoreState(
+    (state) => state.cms.priorityAreas.data
+  );
   const vizCMSAction = useStoreActions((actions) => actions.cms.viz.fetch);
   const vizCMSData = useStoreState((state) => state.cms.viz.data);
   const filtersCMSAction = useStoreActions(
@@ -70,6 +76,10 @@ export function useCMSData(props: useCMSDataProps) {
       {
         key: "regions",
         data: regionsCMSData || {},
+      },
+      {
+        key: "priorityAreas",
+        data: priorityAreasCMSData || {},
       },
     ];
     items.forEach((item) => {
@@ -127,6 +137,9 @@ export function useCMSData(props: useCMSDataProps) {
       regionsCMSAction({
         isCMSfetch: true,
       });
+      priorityAreasCMSAction({
+        isCMSfetch: true,
+      });
     }
   }, []);
 
@@ -143,6 +156,7 @@ export function useCMSData(props: useCMSDataProps) {
     pagesCMSData,
     tooltipsCMSData,
     regionsCMSData,
+    priorityAreasCMSData,
   ]);
 
   if (props.returnData) {

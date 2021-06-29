@@ -9,12 +9,14 @@ import { useCMSData } from "app/hooks/useCMSData";
 import { useStoreState } from "app/state/store/hooks";
 import { createStyles } from "app/components/FilterPanel/styles";
 import { Filter } from "app/components/FilterPanel/Panels/Filter";
+import { ChooseAFilterPanel } from "app/components/FilterPanel/Panels/ChooseAFilterPanel";
 import {
-  currentFilterOpenAtom,
   defaultfilters,
   selectedFilterAtom,
+  currentFilterOpenAtom,
 } from "app/state/recoil/atoms";
 import {
+  FilterOption,
   FILTER_TYPES,
   FilterPanelProps,
   humanrightfilteroptions,
@@ -24,7 +26,6 @@ import {
   getAdvancedFilterPanelData,
   getMainFilterPanelData,
 } from "app/components/FilterPanel/utils";
-import { ChooseAFilterPanel } from "app/components/FilterPanel/Panels/ChooseAFilterPanel";
 
 export const FilterPanel = (props: FilterPanelProps) => {
   const styles = createStyles(props);
@@ -614,7 +615,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
     setCurrentFilterOpen(FILTER_TYPES.ADVANCED_FILTERS);
   }
 
-  function renderPanel() {
+  function renderPanel(translatedPriorityAreas: { [key: string]: string }) {
     switch (currentFilterOpen) {
       case FILTER_TYPES.MAIN:
         return (
@@ -629,7 +630,22 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title={get(cmsData, "general.thematicareas", "Thematic Areas")}
-            data={get(filterOptionsData.thematicareas, "data.data", [])}
+            data={get(filterOptionsData.thematicareas, "data.data", []).map(
+              (option: FilterOption) => {
+                const firstChild = get(option.children, "[0]", null);
+                if (firstChild) {
+                  const translatedOptionName = get(
+                    translatedPriorityAreas,
+                    `${firstChild.code.split("|")[0].replace(/ /g, "")}`
+                  );
+                  return {
+                    ...option,
+                    name: translatedOptionName,
+                  };
+                }
+                return option;
+              }
+            )}
             renderSearch
             selection={mainPanelData[0].selection}
             onFilterCheckboxChange={(value: string | string[]) =>
@@ -886,7 +902,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       {currentFilterOpen !== FILTER_TYPES.NONE && (
         <div css={styles.container}>
           <Container maxWidth="lg" css={styles.muiContainer}>
-            {renderPanel()}
+            {renderPanel(cmsData.priorityAreas)}
           </Container>
         </div>
       )}

@@ -666,11 +666,17 @@ export default function VizModule() {
                   `}
                 >
                   <DataTable
-                    data={
-                      thematicAreaChartSingle
-                        ? thematicAreasChartData.slice(0, 1)
-                        : thematicAreasChartData
-                    }
+                    data={(thematicAreaChartSingle
+                      ? thematicAreasChartData.slice(0, 1)
+                      : thematicAreasChartData
+                    ).map((item: any) => ({
+                      ...item,
+                      area: get(
+                        cmsData.priorityAreas,
+                        `${item.ref.split("|")[0].replace(/ /g, "")}`,
+                        item.area
+                      ),
+                    }))}
                     options={{
                       ...thematicAreasDataTableOptions,
                       customToolbar: () => (

@@ -174,6 +174,7 @@ export interface StoreModel {
     pages: ApiCallModel;
     tooltips: ApiCallModel;
     regions: ApiCallModel;
+    priorityAreas: ApiCallModel;
   };
   // sync variables
   syncSearch: SyncSearchModel;

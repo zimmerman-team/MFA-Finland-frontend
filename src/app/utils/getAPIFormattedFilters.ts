@@ -1,99 +1,112 @@
-export function getAPIFormattedFilters(filters: any, yearPeriod?: string) {
+import isEqual from "lodash/isEqual";
+import { SelectedFilterAtomModel } from "app/state/recoil/atoms";
+
+export function getAPIFormattedFilters(
+  filters: SelectedFilterAtomModel,
+  initialCheckURLSearchParams?: () => SelectedFilterAtomModel
+) {
+  let filtersToUse = filters;
+  if (initialCheckURLSearchParams) {
+    const updatedFilters = initialCheckURLSearchParams();
+    if (!isEqual(filtersToUse, updatedFilters)) {
+      filtersToUse = updatedFilters;
+    }
+  }
   let result: any = {};
-  if (filters.countries.length > 0) {
+  if (filtersToUse.countries.length > 0) {
     result = {
       ...result,
-      recipient_country_code: filters.countries,
+      recipient_country_code: filtersToUse.countries,
     };
   }
-  if (filters.regions.length > 0) {
+  if (filtersToUse.regions.length > 0) {
     result = {
       ...result,
-      recipient_region_code: filters.regions,
+      recipient_region_code: filtersToUse.regions,
     };
   }
-  if (filters.sectors.length > 0) {
+  if (filtersToUse.sectors.length > 0) {
     result = {
       ...result,
-      sector_code: filters.sectors,
+      sector_code: filtersToUse.sectors,
     };
   }
-  if (filters.organisations.length > 0) {
+  if (filtersToUse.organisations.length > 0) {
     result = {
       ...result,
-      participating_org_ref: filters.organisations,
+      participating_org_ref: filtersToUse.organisations,
     };
   }
-  if (filters.activitystatus.length > 0) {
+  if (filtersToUse.activitystatus.length > 0) {
     result = {
       ...result,
-      activity_status_code: filters.activitystatus,
+      activity_status_code: filtersToUse.activitystatus,
     };
   }
-  if (filters.activityscope.length > 0) {
+  if (filtersToUse.activityscope.length > 0) {
     result = {
       ...result,
-      activity_scope_code: filters.activityscope,
+      activity_scope_code: filtersToUse.activityscope,
     };
   }
-  if (filters.tag.length > 0) {
+  if (filtersToUse.tag.length > 0) {
     result = {
       ...result,
-      tag_narrative: filters.tag,
+      tag_narrative: filtersToUse.tag,
     };
   }
-  if (filters.sdg.length > 0) {
+  if (filtersToUse.sdg.length > 0) {
     result = {
       ...result,
-      tag_code: filters.sdg,
+      tag_code: filtersToUse.sdg,
     };
   }
-  if (filters.defaultaidtype.length > 0) {
+  if (filtersToUse.defaultaidtype.length > 0) {
     result = {
       ...result,
-      default_aid_type_code: filters.defaultaidtype,
+      default_aid_type_code: filtersToUse.defaultaidtype,
     };
   }
-  if (filters.defaultflowtype.length > 0) {
+  if (filtersToUse.defaultflowtype.length > 0) {
     result = {
       ...result,
-      default_flow_type_code: filters.defaultflowtype,
+      default_flow_type_code: filtersToUse.defaultflowtype,
     };
   }
-  if (filters.defaulttiedstatus.length > 0) {
+  if (filtersToUse.defaulttiedstatus.length > 0) {
     result = {
       ...result,
-      default_tied_status_code: filters.defaulttiedstatus,
+      default_tied_status_code: filtersToUse.defaulttiedstatus,
     };
   }
-  if (filters.collaborationtype.length > 0) {
+  if (filtersToUse.collaborationtype.length > 0) {
     result = {
       ...result,
-      collaboration_type_code: filters.collaborationtype,
+      collaboration_type_code: filtersToUse.collaborationtype,
     };
   }
-  if (filters.policymarker.length > 0) {
+  if (filtersToUse.policymarker.length > 0) {
     result = {
       ...result,
-      policy_marker_code: filters.policymarker,
+      policy_marker_code: filtersToUse.policymarker,
     };
   }
-  if (filters.budgetlines.length > 0) {
+  if (filtersToUse.budgetlines.length > 0) {
     result = {
       ...result,
-      budget_line: filters.budgetlines,
+      budget_line: filtersToUse.budgetlines,
     };
   }
-  if (filters.humanrights.length > 0) {
+  if (filtersToUse.humanrights.length > 0) {
     result = {
       ...result,
-      human_rights_approach: filters.humanrights,
+      human_rights_approach: filtersToUse.humanrights,
     };
   }
-  if (filters.years.length > 0) {
+  if (filtersToUse.years.length > 0) {
     result = {
       ...result,
-      years: filters.years,
+      years: filtersToUse.years,
     };
   }
   return result;

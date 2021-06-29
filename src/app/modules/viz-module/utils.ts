@@ -21,7 +21,11 @@ export function getSidebarLegendItems(
     case "oda-drilldown":
       return getSimpleBarLegendItems(data[vizType]);
     case "thematic-areas":
-      return getThematicAreasLegends(data[vizType], thematicAreaChartSingle);
+      return getThematicAreasLegends(
+        data[vizType],
+        thematicAreaChartSingle,
+        cmsData.priorityAreas
+      );
     case "sectors":
       return getSectorsLegends(data[vizType], filter);
     case "countries-regions":

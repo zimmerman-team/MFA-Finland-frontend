@@ -73,7 +73,7 @@ export const Filter = (props: FilterProps) => {
       });
       setOptions(updatedOptions);
     }
-  }, [searchKey]);
+  }, [searchKey, props.data]);
 
   return (
     <Grid container item direction="column" css={styles.container}>

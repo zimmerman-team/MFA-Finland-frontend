@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
 import { useCMSData } from "app/hooks/useCMSData";
 import { PrimaryColor, SecondaryColor } from "app/theme";
 import { FilledButton } from "app/components/Buttons/FilledButton";
@@ -14,30 +15,10 @@ import {
   containercss,
   buttonscontainercss,
 } from "app/components/VizSidePanel/styles";
-import { css } from "styled-components/macro";
-import { Hidden } from "@material-ui/core";
 
 export function VizSidePanel(props: VizSidePanelProps) {
   const cmsData = useCMSData({ returnData: true });
 
-  const styles = {
-    background: css`
-      top: 224px;
-      width: 100vw;
-      position: absolute;
-      background: #f8f8f8;
-      height: calc(100% - 224px);
-      z-index: -1;
-      transform: translateX(-16px);
-
-      @media (max-width: 992px) {
-        top: 260px;
-      }
-      @media (max-width: 767px) {
-        display: none;
-      }
-    `,
-  };
   const [height, setHeight] = React.useState(400);
 
   React.useEffect(() => {

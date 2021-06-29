@@ -6,8 +6,12 @@ import maxBy from "lodash/maxBy";
 import { PrimaryColor } from "app/theme";
 import Grid from "@material-ui/core/Grid";
 import { ResponsivePie } from "@nivo/pie";
+import { useHistory } from "react-router-dom";
 import Hidden from "@material-ui/core/Hidden";
 import { hexToRGBA } from "app/utils/hexToRgba";
+import { useCMSData } from "app/hooks/useCMSData";
+import { formatLocale } from "app/utils/formatLocale";
+import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import {
   directions,
   DataProps,
@@ -24,12 +28,10 @@ import {
   rightsideinfopaneltitle,
   rightsideinfopanelvalues,
 } from "app/components/Charts/thematicareas/styles";
-import { formatLocale } from "app/utils/formatLocale";
-import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
-import { useHistory } from "react-router-dom";
 
 export function ThematicAreas(props: ThematicAreasProps) {
   const history = useHistory();
+  const cmsData = useCMSData({ returnData: true });
   const maxValue = get(maxBy(props.data, "value"), "value", 0);
 
   if (props.showSingleCircle) {
@@ -132,7 +134,11 @@ export function ThematicAreas(props: ThematicAreasProps) {
                 }
               }}
             >
-              {item.area}
+              {get(
+                cmsData.priorityAreas,
+                `${item.ref.split("|")[0].replace(/ /g, "")}`,
+                item.area
+              )}
               {props.showOnlyViz && (
                 <div css="margin-top: 5px;">
                   {formatMoneyWithPrefix(
@@ -154,7 +160,13 @@ export function ThematicAreas(props: ThematicAreasProps) {
           </div>
           {props.data.map((item: DataProps) => (
             <div css={rightsideinfopanelitem} key={item.name}>
-              <div>{item.area}</div>
+              <div>
+                {get(
+                  cmsData.priorityAreas,
+                  `${item.ref.split("|")[0].replace(/ /g, "")}`,
+                  item.area
+                )}
+              </div>
               <div
                 css={progresscontainercss(
                   item.color,
