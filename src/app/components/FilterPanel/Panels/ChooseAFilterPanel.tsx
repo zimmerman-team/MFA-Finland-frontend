@@ -57,10 +57,12 @@ export const ChooseAFilterPanel = (props: Model) => {
         </Hidden>
 
         <Grid item xs={12} lg={5}>
+          {/* index !== 5 removes activity status option from ui - it was the fastest way I could think of */}
           {props.data.map(
             (option: MailPanelInitDataItemModel, index: number) => {
               return (
-                index >= 4 && (
+                index >= 4 &&
+                index !== 5 && (
                   <ChooseAFilterListItem key={option.label} {...option} />
                 )
               );
