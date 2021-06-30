@@ -48,11 +48,6 @@ export const filterCardTabsAtom = atom({
       active: true,
       handleClick: () => {},
     },
-    {
-      name: "Recent",
-      active: false,
-      handleClick: () => {},
-    },
   ], // default value (aka initial value)
 });
 
