@@ -29,11 +29,7 @@ export const App = () => {
       <MdBottomMenu />
       <PageOrnament />
       <ModuleRoutes />
-      <CookieDialog
-        data-testid="cookie-dialog"
-        message="The website uses cookies for tracking statistics. Read Grand Bargains data privacy for more details."
-        open
-      />
+      <CookieDialog />
     </React.Fragment>
   );
 };
