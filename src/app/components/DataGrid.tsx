@@ -90,7 +90,7 @@ export const DataGrid = (props: DataGridProps) => {
   } {
     if (isOrgTypeDetail || isOrgDetail) {
       return {
-        label: "",
+        label: "Organisation Info",
         text: "",
       };
     }
@@ -122,9 +122,14 @@ export const DataGrid = (props: DataGridProps) => {
         text: regionContent,
       };
     }
+    // As per MF-439, result and about content are switched - don't get confused by the func name
     return {
-      label: get(cmsData, "general.result", "Result"),
-      text: getCMSContent(cmsData, "pages.homepageresult"),
+      label: get(cmsData, "general.about", "About"),
+      text: get(
+        cmsData,
+        "pages.homepageabout",
+        "Openaid.fi is databank on Finland’s development cooperation. The site presents where, to whom, and when Finland has contributed the official development assistance through development cooperation and what kind of results has been accomplished. The objective of Openaid.fi is to enhance the openness of development cooperation by providing a single service for providing the information on development cooperation of Finland."
+      ),
     };
   }
 
@@ -215,20 +220,17 @@ export const DataGrid = (props: DataGridProps) => {
         text: "",
       };
     }
+
     if (isCountryDetail) {
       return {
         label: "RSS Feed",
         text: "",
       };
     }
-
+    // As per MF-439, result and about content are switched - don't get confused by the func name
     return {
-      label: "About",
-      text: get(
-        cmsData,
-        "pages.homepageabout",
-        "Openaid.fi is databank on Finland’s development cooperation. The site presents where, to whom, and when Finland has contributed the official development assistance through development cooperation and what kind of results has been accomplished. The objective of Openaid.fi is to enhance the openness of development cooperation by providing a single service for providing the information on development cooperation of Finland."
-      ),
+      label: get(cmsData, "general.result", "Result"),
+      text: getCMSContent(cmsData, "pages.homepageresult"),
     };
   }
 
@@ -483,7 +485,7 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip={
             isCountryDetail
               ? get(cmsData, "tooltips.human_development_index", "")
-              : get(cmsData, "tooltips.result", "")
+              : get(cmsData, "tooltips.about", "")
           }
           childrencontainerStyle={{ paddingTop: 33 }}
         >
@@ -565,18 +567,14 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip={
             isCountryDetail
               ? get(cmsData, "tooltips.rssfeed", "")
-              : get(cmsData, "tooltips.about", "")
+              : get(cmsData, "tooltips.result", "")
           }
           childrencontainerStyle={
             isCountryDetail
               ? { paddingTop: 33, overflow: "auto" }
               : { paddingTop: 33 }
           }
-          label={
-            isCountryDetail
-              ? "RSS Feed"
-              : get(cmsData, "general.about", "About")
-          }
+          label={aboutContent.label}
         >
           {isCountryDetail ? (
             <RssFeed />
