@@ -900,11 +900,11 @@ export const FilterPanel = (props: FilterPanelProps) => {
   return (
     <>
       {currentFilterOpen !== FILTER_TYPES.NONE && (
-        <div css={styles.container}>
+        <aside css={styles.container}>
           <Container maxWidth="lg" css={styles.muiContainer}>
             {renderPanel(cmsData.priorityAreas)}
           </Container>
-        </div>
+        </aside>
       )}
     </>
   );

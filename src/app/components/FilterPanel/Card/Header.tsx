@@ -91,10 +91,10 @@ export const Header = (props: HeaderProps) => {
         </IconButton>
 
         <div>
-          <Typography variant="h6" css={styles.subtitle}>
+          <Typography variant="h6" component="h2" css={styles.subtitle}>
             {get(cmsData, "filters.addfilters", "Add Filters")}
           </Typography>
-          <Typography variant="h5" css={styles.title}>
+          <Typography variant="h5" component="h3" css={styles.title}>
             {props.title}
           </Typography>
         </div>

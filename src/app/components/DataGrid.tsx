@@ -245,17 +245,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={12}
-        lg={8}
-        xl={8}
-        // css={`
-        //   margin-top: 16px;
-        // `}
-      >
+      <Grid item xs={12} sm={12} md={12} lg={8} xl={8} component="section">
         <GridWidget
           link="/viz/oda"
           tooltip={get(cmsData, "tooltips.overview_disbursements", "")}
@@ -287,7 +277,7 @@ export const DataGrid = (props: DataGridProps) => {
           )}
         </GridWidget>
       </Grid>
-      <Grid item xs={12} sm={6} md={6} lg={4}>
+      <Grid item xs={12} sm={6} md={6} lg={4} component="section">
         <GridWidget
           tooltip={get(cmsData, "tooltips.thematic_areas", "")}
           link="/viz/thematic-areas"
@@ -316,7 +306,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 2 */}
       {/* ----------------------------- */}
-      <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
+      <Grid item xs={12} sm={6} md={6} lg={4} xl={4} component="section">
         <GridWidget
           link="/viz/sectors"
           tooltip={get(cmsData, "tooltips.sectors", "")}
@@ -345,7 +335,7 @@ export const DataGrid = (props: DataGridProps) => {
           )}
         </GridWidget>
       </Grid>
-      <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
+      <Grid item xs={12} sm={6} md={6} lg={4} xl={4} component="section">
         {!props.countryData ? (
           <GridWidget
             tooltip={get(cmsData, "tooltips.regions", "")}
@@ -402,7 +392,7 @@ export const DataGrid = (props: DataGridProps) => {
           </GridWidget>
         )}
       </Grid>
-      <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
+      <Grid item xs={12} sm={6} md={6} lg={4} xl={4} component="section">
         <GridWidget
           tooltip={get(cmsData, "tooltips.organisations", "")}
           link="/viz/organisations"
@@ -434,7 +424,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 3 */}
       {/* ----------------------------- */}
-      <Grid item xs={12} sm={12} md={12} lg={8}>
+      <Grid item xs={12} sm={12} md={12} lg={8} component="section">
         <GridWidget
           height="510px"
           tooltip={get(cmsData, "tooltips.budget_lines", "")}
@@ -470,6 +460,7 @@ export const DataGrid = (props: DataGridProps) => {
         md={6}
         lg={4}
         xl={4}
+        component="section"
         css={`
           @media (max-width: 1439px) {
             order: 1;
@@ -519,6 +510,7 @@ export const DataGrid = (props: DataGridProps) => {
               `}
             >
               <p
+                style={{ lineHeight: "18px", fontSize: "16px" }}
                 dangerouslySetInnerHTML={{ __html: resultContent.text || "" }}
               />
             </div>
@@ -529,7 +521,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 4 */}
       {/* ----------------------------- */}
-      <Grid item xs={12} sm={12} md={12} lg={8}>
+      <Grid item xs={12} sm={12} md={12} lg={8} component="section">
         <GridWidget
           interactive
           // todo: create responsive solution for height
@@ -552,6 +544,7 @@ export const DataGrid = (props: DataGridProps) => {
         md={6}
         lg={4}
         xl={4}
+        component="section"
         css={`
           @media (max-width: 960px) {
             order: 1;
@@ -579,7 +572,10 @@ export const DataGrid = (props: DataGridProps) => {
           {isCountryDetail ? (
             <RssFeed />
           ) : (
-            <p dangerouslySetInnerHTML={{ __html: aboutContent.text || "" }} />
+            <p
+              style={{ lineHeight: "18px", fontSize: "16px" }}
+              dangerouslySetInnerHTML={{ __html: aboutContent.text || "" }}
+            />
           )}
         </GridWidget>
       </Grid>
@@ -595,6 +591,7 @@ export const DataGrid = (props: DataGridProps) => {
           md={12}
           lg={12}
           xl={12}
+          component="section"
           css={`
             @media (max-width: 960px) {
               order: 2;

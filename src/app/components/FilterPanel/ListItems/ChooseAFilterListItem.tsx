@@ -77,7 +77,7 @@ export const ChooseAFilterListItem = (props: ChooseAFilterListItemProps) => {
 
   return (
     <div css={styles.container}>
-      <Typography variant="h6" css={styles.buttonHeading}>
+      <Typography variant="h6" component="h3" css={styles.buttonHeading}>
         {props.heading}
       </Typography>
       <PillButton

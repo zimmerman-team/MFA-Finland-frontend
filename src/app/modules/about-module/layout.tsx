@@ -101,7 +101,9 @@ export const AboutModuleLayout = () => {
         <Grid item lg={9}>
           <Anchor id="about" />
           <div css={styles.container}>
-            <Typography variant="h5">About</Typography>
+            <Typography variant="h5" component="h2">
+              About
+            </Typography>
             <Box width="100%" height="24px" />
             <Typography
               variant="body1"
@@ -112,7 +114,9 @@ export const AboutModuleLayout = () => {
 
           <Anchor id="privacy" />
           <div css={styles.container}>
-            <Typography variant="h5">Privacy Policy</Typography>
+            <Typography variant="h5" component="h2">
+              Privacy Policy
+            </Typography>
             <Box width="100%" height="24px" />
             <Typography
               variant="body1"
@@ -123,7 +127,9 @@ export const AboutModuleLayout = () => {
 
           <Anchor id="cookie" />
           <article css={styles.container}>
-            <Typography variant="h5">Cookie Policy</Typography>
+            <Typography variant="h5" component="h2">
+              Cookie Policy
+            </Typography>
             <Box width="100%" height="24px" />
             <Typography
               variant="body1"

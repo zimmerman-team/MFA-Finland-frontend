@@ -1,6 +1,6 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
-import { Typography } from "@material-ui/core";
+
 import { Breadcrumbs } from "app/components/Breadcrumb";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 
@@ -21,6 +21,7 @@ export const BasicModuleHeader = (props: ModuleHeaderProps) => {
       <Grid item lg={12}>
         <Typography
           variant="h5"
+          component="h2"
           css={`
             color: #2e4982;
           `}

@@ -100,9 +100,9 @@ export function AppBar() {
                 <MfaLogo />
               </IconButton>
             </Hidden>
-            <div css={appbarStyle.logoText(PrimaryColor[2])}>
+            <h1 css={appbarStyle.logoText(PrimaryColor[2])}>
               {get(cmsData, "general.pagetitle", "")}
-            </div>
+            </h1>
           </NavLink>
 
           <div

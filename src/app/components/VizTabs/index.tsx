@@ -135,7 +135,16 @@ export function VizTabs(props: VizTabsProps) {
           </Tooltip>
         </div>
       </Grid>
-      <Grid item xs={12} sm={12} md={9} lg={9} xl={9} css={styles.tabGrid}>
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={9}
+        lg={9}
+        xl={9}
+        css={styles.tabGrid}
+        component="nav"
+      >
         <ul css={styles.tabsList}>
           {vizTabs.map((tab: TabProps) => (
             <RouteTab key={tab.name} {...tab} />

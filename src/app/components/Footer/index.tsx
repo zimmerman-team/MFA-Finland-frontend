@@ -115,6 +115,7 @@ export function Footer() {
               sm={9}
               md={3}
               lg={3}
+              component="nav"
               css={drawerStyle.AddressContainer}
             >
               <NavLink to="/feedback" css={styles.link}>

@@ -31,7 +31,7 @@ export const ChooseAFilterPanel = (props: Model) => {
         justify="space-between"
         alignItems="flex-start"
       >
-        <Typography variant="h5" css={styles.heading}>
+        <Typography variant="h5" component="h2" css={styles.heading}>
           {get(cmsData, "filters.addfilters", "Add Filters")}
         </Typography>
         <IconButton css={styles.closeContainer} onClick={props.onCloseBtnClick}>

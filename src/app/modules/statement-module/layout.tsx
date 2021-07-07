@@ -84,7 +84,9 @@ export const StatementModuleLayout = () => {
         <Grid item lg={9} css="width: 100%;">
           <Anchor id="statement" />
           <div css={styles.container}>
-            <Typography variant="h5">Statement</Typography>
+            <Typography variant="h5" component="h2">
+              Statement
+            </Typography>
             <Box width="100%" height="24px" />
             <Typography
               variant="body1"

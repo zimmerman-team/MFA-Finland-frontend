@@ -94,7 +94,9 @@ export const ResultModuleLayout = () => {
         <Grid item lg={9}>
           <Anchor id="result" />
           <div css={styles.container}>
-            <Typography variant="h5">Result</Typography>
+            <Typography variant="h5" component="h2">
+              Result
+            </Typography>
             <Box width="100%" height="24px" />
             <Typography
               variant="body1"

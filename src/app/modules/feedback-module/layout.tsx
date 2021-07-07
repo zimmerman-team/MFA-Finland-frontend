@@ -195,7 +195,9 @@ export const FeedbackLayout = () => {
         <Grid item lg={9}>
           <Anchor id="faq" />
           <div css={styles.container}>
-            <Typography variant="h5">FAQs</Typography>
+            <Typography variant="h5" component="h2">
+              FAQs
+            </Typography>
             <Box width="100%" height="24px" />
 
             {faqItems.map((item: any) => {
@@ -220,7 +222,9 @@ export const FeedbackLayout = () => {
         <Grid item xl={9} lg={9} md={12} css={styles.gridContainer}>
           <Anchor id="feedback" />
           <div css={styles.container}>
-            <Typography variant="h5">Feedback</Typography>
+            <Typography variant="h5" component="h2">
+              Feedback
+            </Typography>
             <Box width="100%" height="24px" />
             <Typography variant="body1" css={styles.paragraph}>
               {get(

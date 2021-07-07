@@ -64,6 +64,7 @@ const style = {
     }
   `,
   widgetLabel: (linkable?: boolean) => css`
+    margin: 0;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
@@ -242,9 +243,9 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         props.label
       )}
     >
-      <header css={style.widgetHeader(odaWidget)}>
+      <div css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <div
+          <h3
             role="button"
             tabIndex={0}
             onClick={() => handleClick()}
@@ -261,7 +262,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
             {!odaWidget
               ? props.label
               : get(cmsData, "general.overview", "Overview Disbursements")}
-          </div>
+          </h3>
           {props.tooltip && !odaWidget && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip} interactive tabIndex={0}>
@@ -310,10 +311,10 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
             </div>
           </div>
         )}
-      </header>
+      </div>
       {odaWidget && (
         <div css="display: flex;align-items: center;">
-          <div css={style.widgetLabel(false)}>ODA</div>
+          <h4 css={style.widgetLabel(false)}>ODA</h4>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip}>

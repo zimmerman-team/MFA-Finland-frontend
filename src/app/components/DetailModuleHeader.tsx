@@ -40,6 +40,7 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
         >
           <Typography
             variant="h5"
+            component="h2"
             css={`
               color: #2e4982;
             `}
