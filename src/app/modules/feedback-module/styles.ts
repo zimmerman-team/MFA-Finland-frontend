@@ -8,6 +8,7 @@ export const styles = {
     background-color: white;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
     border-radius: 30px;
+    margin-bottom: 24px;
   `,
   gridContainer: css`
     .MuiGrid-root {
@@ -23,6 +24,11 @@ export const styles = {
   `,
   paragraph: css`
     margin-bottom: 24px;
+
+    section {
+      margin-bottom: 48px;
+    }
+
     a {
       text-decoration: underline;
     }

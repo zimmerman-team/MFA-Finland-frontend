@@ -46,6 +46,34 @@ export function useCMSData(props: useCMSDataProps) {
   );
   const regionsCMSData = useStoreState((state) => state.cms.regions.data);
 
+  // Collections state
+  const aboutPageCMSData = useStoreState(
+    (state) => state.cms.collections.aboutPage.data
+  );
+  const feedbackPageCMSData = useStoreState(
+    (state) => state.cms.collections.feedbackPage.data
+  );
+  const resultsPageCMSData = useStoreState(
+    (state) => state.cms.collections.resultsPage.data
+  );
+  const statementsPageCMSData = useStoreState(
+    (state) => state.cms.collections.statementsPage.data
+  );
+
+  // Collections actions
+  const aboutPageCMSAction = useStoreActions(
+    (actions) => actions.cms.collections.aboutPage.fetch
+  );
+  const feedbackPageCMSAction = useStoreActions(
+    (actions) => actions.cms.collections.feedbackPage.fetch
+  );
+  const resultsPageCMSAction = useStoreActions(
+    (actions) => actions.cms.collections.resultsPage.fetch
+  );
+  const statementsPageCMSAction = useStoreActions(
+    (actions) => actions.cms.collections.statementsPage.fetch
+  );
+
   function formatCMSData() {
     let newData = {};
     const items = [
@@ -80,6 +108,22 @@ export function useCMSData(props: useCMSDataProps) {
       {
         key: "priorityAreas",
         data: priorityAreasCMSData || {},
+      },
+      {
+        key: "aboutPage",
+        data: aboutPageCMSData || {},
+      },
+      {
+        key: "feedbackPage",
+        data: feedbackPageCMSData || {},
+      },
+      {
+        key: "resultsPage",
+        data: resultsPageCMSData || {},
+      },
+      {
+        key: "statementsPage",
+        data: statementsPageCMSData || {},
       },
     ];
     items.forEach((item) => {
@@ -140,6 +184,18 @@ export function useCMSData(props: useCMSDataProps) {
       priorityAreasCMSAction({
         isCMSfetch: true,
       });
+      aboutPageCMSAction({
+        isCMSfetch: true,
+      });
+      feedbackPageCMSAction({
+        isCMSfetch: true,
+      });
+      resultsPageCMSAction({
+        isCMSfetch: true,
+      });
+      statementsPageCMSAction({
+        isCMSfetch: true,
+      });
     }
   }, []);
 
@@ -157,6 +213,10 @@ export function useCMSData(props: useCMSDataProps) {
     tooltipsCMSData,
     regionsCMSData,
     priorityAreasCMSData,
+    aboutPageCMSData,
+    resultsPageCMSData,
+    feedbackPageCMSData,
+    statementsPageCMSData,
   ]);
 
   if (props.returnData) {

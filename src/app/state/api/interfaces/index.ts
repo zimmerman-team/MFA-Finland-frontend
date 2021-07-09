@@ -175,6 +175,12 @@ export interface StoreModel {
     tooltips: ApiCallModel;
     regions: ApiCallModel;
     priorityAreas: ApiCallModel;
+    collections: {
+      aboutPage: ApiCallModel;
+      feedbackPage: ApiCallModel;
+      resultsPage: ApiCallModel;
+      statementsPage: ApiCallModel;
+    };
   };
   // sync variables
   syncSearch: SyncSearchModel;

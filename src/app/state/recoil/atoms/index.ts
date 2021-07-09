@@ -35,6 +35,17 @@ export const cmsDataAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const cmsCollectionsAtom = atom({
+  key: "cmsCollectionsAtom",
+  default: {
+    aboutPage: {},
+    resultsPage: {},
+    feedbackPage: {},
+    statementsPage: {},
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const currentFilterOpenAtom = atom({
   key: "currentFilterOpen", // unique ID (with respect to other atoms/selectors)
   default: FILTER_TYPES.NONE, // default value (aka initial value)

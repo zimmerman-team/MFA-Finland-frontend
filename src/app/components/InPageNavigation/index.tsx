@@ -82,7 +82,7 @@ export function InPageNavigation(props: InPageNavModel) {
       let fItemIndex = findIndex(props.lists, { path: hash });
       fItemIndex = fItemIndex === -1 ? 0 : fItemIndex;
       // window.location.hash = props.lists[fItemIndex].path;
-      props.handleClick(fItemIndex);
+      // props.handleClick(fItemIndex);
     });
     return () => {
       window.location.hash = "";

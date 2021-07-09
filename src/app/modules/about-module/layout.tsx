@@ -7,8 +7,6 @@ import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { Path } from "app/const/Path";
 import { Anchor, InPageNavigation } from "app/components/InPageNavigation";
 import { InpageNavItemModel } from "app/components/InPageNavigation/model";
-import { useCMSData } from "app/hooks/useCMSData";
-import { getCMSContent } from "app/utils/getCMSContent";
 
 export const styles = {
   container: css`
@@ -46,30 +44,31 @@ const privacyCrumbs: BreadcrumbLinkModel[] = [
   { label: "About" },
 ];
 
-const navList: InpageNavItemModel[] = [
-  {
-    label: "About",
-    path: "about-mfa-portal",
-  },
-  {
-    label: "Privacy Policy",
-    path: "privacy",
-  },
-  {
-    label: "Cookie Policy",
-    path: "cookie",
-  },
-];
+interface Props {
+  data: { title: string; content: string }[];
+}
 
-export const AboutModuleLayout = () => {
+export const AboutModuleLayout = (props: Props) => {
   const [active, setActive] = React.useState(0);
-  const cmsData = useCMSData({ returnData: true });
-  const aboutContent = getCMSContent(cmsData, "pages.about");
-  const privacyContent = getCMSContent(cmsData, "pages.privacy");
-  const cookieContent = getCMSContent(cmsData, "pages.cookiepolicy");
+  const { data } = props;
+  const navList = getNavList();
+  console.log(navList);
 
   function handleClick(id: any) {
     setActive(parseInt(id, 10));
+  }
+
+  function getNavList(): InpageNavItemModel[] {
+    const list: any[] = [];
+
+    data.forEach((entry) => {
+      list.push({
+        label: entry.title,
+        path: entry.title.toLowerCase().replace(/\s/g, "-"),
+      });
+    });
+
+    return list;
   }
 
   // @ts-ignore
@@ -98,45 +97,24 @@ export const AboutModuleLayout = () => {
             </div>
           </Grid>
         </Hidden>
+
         <Grid item lg={9}>
-          <Anchor id="about" />
-          <div css={styles.container}>
-            <Typography variant="h5" component="h2">
-              About
-            </Typography>
-            <Box width="100%" height="24px" />
-            <Typography
-              variant="body1"
-              css={styles.paragraph}
-              dangerouslySetInnerHTML={{ __html: aboutContent || "" }}
-            />
-          </div>
-
-          <Anchor id="privacy" />
-          <div css={styles.container}>
-            <Typography variant="h5" component="h2">
-              Privacy Policy
-            </Typography>
-            <Box width="100%" height="24px" />
-            <Typography
-              variant="body1"
-              css={styles.paragraph}
-              dangerouslySetInnerHTML={{ __html: privacyContent || "" }}
-            />
-          </div>
-
-          <Anchor id="cookie" />
-          <article css={styles.container}>
-            <Typography variant="h5" component="h2">
-              Cookie Policy
-            </Typography>
-            <Box width="100%" height="24px" />
-            <Typography
-              variant="body1"
-              css={styles.paragraph}
-              dangerouslySetInnerHTML={{ __html: cookieContent || "" }}
-            />
-          </article>
+          {data.map((entry, index) => (
+            <>
+              <Anchor id={navList[index].path} />
+              <article css={styles.container}>
+                <Typography variant="h5" component="h2">
+                  {entry.title}
+                </Typography>
+                <Box width="100%" height="24px" />
+                <Typography
+                  variant="body1"
+                  css={styles.paragraph}
+                  dangerouslySetInnerHTML={{ __html: entry.content || "" }}
+                />
+              </article>
+            </>
+          ))}
         </Grid>
       </ModuleContainer>
     </>

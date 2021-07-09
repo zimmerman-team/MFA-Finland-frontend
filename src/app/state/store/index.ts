@@ -82,6 +82,12 @@ import filters from "app/state/api/actions-reducers/cms/filters";
 import menu from "app/state/api/actions-reducers/cms/menu";
 import pages from "app/state/api/actions-reducers/cms/pages";
 import priorityAreas from "app/state/api/actions-reducers/cms/priorityareas";
+import {
+  aboutPage,
+  feedbackPage,
+  resultsPage,
+  statementsPage,
+} from "app/state/api/actions-reducers/cms/collections";
 
 const storeContent: StoreModel = {
   // filtering
@@ -124,6 +130,12 @@ const storeContent: StoreModel = {
     tooltips: persist(tooltips),
     regions: persist(regions),
     priorityAreas: persist(priorityAreas),
+    collections: {
+      aboutPage: persist(aboutPage),
+      feedbackPage: persist(feedbackPage),
+      statementsPage: persist(statementsPage),
+      resultsPage: persist(resultsPage),
+    },
   },
   // global search
   searchDonors,

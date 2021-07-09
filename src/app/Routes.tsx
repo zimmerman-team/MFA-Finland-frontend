@@ -24,10 +24,14 @@ import { ProjectDetailModule } from "app/modules/project-detail-module";
 import { OrganisationTypeDetailModule } from "app/modules/detail-modules/organisation-type-detail-module";
 import { Path } from "app/const/Path";
 import { ResultModule } from "app/modules/result-module";
+import { useCMSCollections } from "app/hooks/useCMSCollections";
 import { Footer } from "./components/Footer";
 
 export function ModuleRoutes() {
   useCMSData({
+    loadData: true,
+  });
+  useCMSCollections({
     loadData: true,
   });
   useUrlFilters();
