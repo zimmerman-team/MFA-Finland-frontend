@@ -76,18 +76,21 @@ export function useCMSCollections(props: useCMSDataProps) {
             formattedData[item.key].push({
               title: entry.title,
               content: entry.content,
+              faqItems: entry.faq_items,
             });
             break;
           case "fi":
             formattedData[item.key].push({
               title: entry.title_fi,
               content: entry.content_fi,
+              faqItems: entry.faq_items_fi,
             });
             break;
           case "se":
             formattedData[item.key].push({
               title: entry.title_se,
               content: entry.content_se,
+              faqItems: entry.faq_items_se,
             });
             break;
           default:

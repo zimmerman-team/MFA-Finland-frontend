@@ -17,14 +17,12 @@ import { CountryDetailModule } from "app/modules/detail-modules/country-detail-m
 import { ThematicDetailModule } from "app/modules/detail-modules/thematic-detail-module";
 import { OrganisationDetailModule } from "app/modules/detail-modules/organisation-detail-module";
 import { SectorDetailModule } from "app/modules/detail-modules/sector-detail-module";
-import { AboutModule } from "app/modules/about-module";
-import { StatementModule } from "app/modules/statement-module";
-import { FeedbackModule } from "app/modules/feedback-module";
 import { ProjectDetailModule } from "app/modules/project-detail-module";
 import { OrganisationTypeDetailModule } from "app/modules/detail-modules/organisation-type-detail-module";
 import { Path } from "app/const/Path";
-import { ResultModule } from "app/modules/result-module";
 import { useCMSCollections } from "app/hooks/useCMSCollections";
+import { GenericPageLayout } from "app/modules/generic-page-module/layout";
+import { useGenericPageData } from "app/hooks/useGenericPageData";
 import { Footer } from "./components/Footer";
 
 export function ModuleRoutes() {
@@ -74,18 +72,20 @@ export function ModuleRoutes() {
         </Route>
 
         <Route exact path={Path.general.about}>
-          <AboutModule />
+          <GenericPageLayout {...useGenericPageData("about")} />
         </Route>
 
         <Route exact path={Path.general.statements}>
-          <StatementModule />
+          <GenericPageLayout {...useGenericPageData("statements")} />
         </Route>
+
         <Route exact path={Path.general.result}>
-          <ResultModule />
+          <GenericPageLayout {...useGenericPageData("results")} />
         </Route>
 
         <Route exact path={Path.general.feedback}>
-          <FeedbackModule />
+          <GenericPageLayout {...useGenericPageData("feedback")} />
+          {/* <FeedbackModule /> */}
         </Route>
 
         <Route exact path="/viz/:tab">
