@@ -12,6 +12,5 @@ export function AboutModule() {
   const [currentLanguage, _] = useRecoilState(languageAtom);
   const cmsCollectionsData = useCMSCollections({ returnData: true });
   useTitle(`${moduleName} | ${getAppName(currentLanguage)}`);
-
-  return <AboutModuleLayout data={cmsCollectionsData} />;
+  return <AboutModuleLayout data={cmsCollectionsData.about} />;
 }

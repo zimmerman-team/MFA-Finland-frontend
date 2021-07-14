@@ -45,42 +45,47 @@ export function useCMSCollections(props: useCMSDataProps) {
   function formatCMSData() {
     const items = [
       {
-        key: "aboutPage",
+        key: "about",
         data: aboutPageCMSData || {},
       },
       {
-        key: "feedbackPage",
+        key: "feedback",
         data: feedbackPageCMSData || {},
       },
       {
-        key: "resultsPage",
+        key: "results",
         data: resultsPageCMSData || {},
       },
       {
-        key: "statementsPage",
+        key: "statements",
         data: statementsPageCMSData || {},
       },
     ];
 
-    const formattedData: any = [];
+    const formattedData: any = {
+      about: [],
+      feedback: [],
+      results: [],
+      statements: [],
+    };
     items.forEach((item) => {
       // @ts-ignore
       item.data.entries?.forEach((entry: any) => {
         switch (currentLanguage) {
           case "en":
-            formattedData.push({
+            formattedData[item.key].push({
               title: entry.title,
               content: entry.content,
             });
             break;
           case "fi":
-            formattedData.push({
+            formattedData[item.key].push({
               title: entry.title_fi,
               content: entry.content_fi,
             });
             break;
           case "se":
-            formattedData.push({
+            formattedData[item.key].push({
               title: entry.title_se,
               content: entry.content_se,
             });
