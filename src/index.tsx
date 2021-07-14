@@ -10,7 +10,7 @@ import reportWebVitals from "reportWebVitals";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars,import/no-unresolved
 import * as _ from "styled-components/cssprop";
 import Providers from "app/Providers";
-import { App } from "app";
+import { App } from "app/App";
 
 ReactDOM.render(
   <Providers>

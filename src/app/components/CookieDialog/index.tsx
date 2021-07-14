@@ -1,17 +1,10 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { useState } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 import useCookie from "@devhammed/use-cookie";
-import { Hidden } from "@material-ui/core";
 import { Message } from "./common/message";
-
-type SnackBarProps = {
-  message?: string;
-  onClose?: () => void;
-  open?: boolean;
-};
 
 const BaseSnackbar = styled((props) => <Snackbar {...props} />)`
   && {
@@ -41,18 +34,23 @@ const BaseSnackbar = styled((props) => <Snackbar {...props} />)`
   }
 `;
 
-export const CookieDialog = (props: SnackBarProps) => {
-  /* this hook is for setting the cookie */
-  const [cookie, setCookie] = useCookie("cookieNotice", "true");
-  /* this hook is for visually hiding the component */
-  const [visible, setVisibility] = useState(cookie);
+export const CookieDialog = () => {
+  const [userConsent, setUserConsent, deleteUserConsent] = useCookie(
+    "userConsent",
+    false
+  );
+  const [visible, setVisibility] = useState(true);
 
-  const [open, setOpen] = React.useState(props.open);
-  const { message, onClose, ...other } = props;
+  // This useEffect makes sure the dialog is not displayed when a user revisits the site and has already accepted the cookie.
+  React.useEffect(() => {
+    if (userConsent === true) {
+      setVisibility(false);
+    }
+  }, [userConsent]);
 
-  function handleClose(event?: SyntheticEvent, reason?: string) {
-    setCookie("false", {
-      expires: 31536000 * 20,
+  const handleAccept = () => {
+    setUserConsent(true, {
+      expires: 31556926, // 12 months
       domain: "",
       path: "",
       secure: false,
@@ -60,30 +58,37 @@ export const CookieDialog = (props: SnackBarProps) => {
       maxAge: 0,
       sameSite: "",
     });
-    setVisibility(!visible);
-  }
+    setVisibility(false);
+  };
+
+  const handleReject = () => {
+    deleteUserConsent();
+    setVisibility(false);
+  };
 
   return (
-    visible &&
-    cookie && (
-      <>
-        {/* <Hidden smUp>/!* <MobileDialog /> *!/</Hidden> */}
+    <>
+      {visible && (
         <BaseSnackbar
+          data-testid="cookie-dialog"
           anchorOrigin={{
             vertical: "bottom",
             horizontal: "center",
           }}
-          open={open}
+          open={visible}
           autoHideDuration={null}
-          onClose={handleClose}
         >
           <SnackbarContent
             aria-describedby="client-snackbar"
-            message={<Message onClose={handleClose} />}
-            {...other}
+            message={
+              <Message
+                handleAccept={handleAccept}
+                handleReject={handleReject}
+              />
+            }
           />
         </BaseSnackbar>
-      </>
-    )
+      )}
+    </>
   );
 };

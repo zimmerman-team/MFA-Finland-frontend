@@ -4,6 +4,9 @@ import Typography from "@material-ui/core/Typography";
 import ContainedButton from "app/components/Buttons/ContainedButton";
 import { Link } from "react-router-dom";
 import React from "react";
+import { PillButton } from "app/components/Buttons/PillButton";
+import { css } from "styled-components/macro";
+import { PrimaryColor } from "app/theme";
 
 const MessageContainer = styled((props) => <Box {...props} />)`
   align-items: center;
@@ -14,38 +17,63 @@ const MessageContainer = styled((props) => <Box {...props} />)`
   }
 `;
 
-const Typo = styled((props) => <Typography {...props} />)`
+const Copy = styled((props) => <Typography {...props} />)`
   && {
     margin-right: 32px;
     align-self: center;
     @media (max-width: 960px) {
-      margin-bottom: 8px;
+      margin-bottom: 16px;
+      margin-right: 0;
+      text-align: center;
+      line-height: 22px;
     }
   }
 `;
 
-const Button = styled((props) => <ContainedButton {...props} />)`
-  && {
-    height: 48px;
-    min-width: 146px;
-    @media (max-width: 960px) {
-      margin-bottom: 8px;
-    }
+const Button = styled((props) => <PillButton {...props} />)`
+  border-radius: 20px;
+  text-transform: unset;
+  padding: 9px 16px;
+  line-height: 17px;
+  :hover {
+    background-color: ${PrimaryColor[3]};
   }
+  :first-of-type {
+    margin-right: 16px;
+  }
+
+  @media (max-width: 960px) {
+    max-width: 74px;
+  }
+`;
+
+const HyperLink = styled((props) => <Link {...props} />)`
+  text-decoration: underline;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  align-self: center;
 `;
 
 type MessageProps = {
-  onClose?: () => void;
+  handleAccept: () => void;
+  handleReject: () => void;
 };
 
 export const Message = (props: MessageProps) => {
   return (
     <MessageContainer display="flex">
-      <Typo variant="body1" color="common">
-        The website makes use of <Link to="/cookie">cookies</Link>. Review{" "}
-        <Link to="/privacy">data privacy</Link> for more details.
-      </Typo>
-      <Button text="Accept" onClick={props.onClose} />
+      <Copy variant="body1">
+        The website makes use of{" "}
+        <HyperLink to="/about#cookie">cookies</HyperLink>. Review{" "}
+        <HyperLink to="/about#privacy">data privacy</HyperLink> for more
+        details.
+      </Copy>
+      <Buttons>
+        <Button onClick={() => props.handleReject()}>Reject</Button>
+        <Button onClick={() => props.handleAccept()}>Accept</Button>
+      </Buttons>
     </MessageContainer>
   );
 };
