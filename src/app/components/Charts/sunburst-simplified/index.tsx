@@ -12,7 +12,6 @@ import { SunburstVizSimplified } from "app/components/Charts/sunburst-simplified
 import { InnerVizStatSimplified } from "app/components/Charts/sunburst-simplified/common/innervizstat";
 import { containercssSimplified } from "app/components/Charts/sunburst-simplified/styles";
 import Grid from "@material-ui/core/Grid";
-import { formatLocale } from "app/utils/formatLocale";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { backbuttoncss } from "../sunburst/common/innervizstat/styles";
 
@@ -25,9 +24,9 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
   >([]);
 
   React.useEffect(() => {
-    if (selected.code.length !== 3 || prevSelections.length === 1) {
-      setLocalData(getSelectedItemData(selected.name, props.data));
-    }
+    // if (selected.code.length !== 3 || prevSelections.length === 1) {
+    setLocalData(getSelectedItemData(selected.name, props.data));
+    // }
   }, [selected, props.data]);
 
   React.useEffect(() => {
