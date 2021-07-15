@@ -94,7 +94,12 @@ export function useCMSCollections(props: useCMSDataProps) {
             });
             break;
           default:
-            console.log(`Sorry, we are out of.`);
+            formattedData[item.key].push({
+              title: entry.title,
+              content: entry.content,
+              faqItems: entry.faq_items,
+            });
+            break;
         }
       });
     });

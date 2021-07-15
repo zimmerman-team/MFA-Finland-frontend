@@ -67,7 +67,6 @@ export const GenericPageLayout = (props: GenericPageModuleProps) => {
                 <Box width="100%" height="24px" />
                 {card.faqItems ? (
                   card.faqItems.items.map((item: any) => {
-                    console.log("itemz", item);
                     return (
                       <>
                         <Typography
