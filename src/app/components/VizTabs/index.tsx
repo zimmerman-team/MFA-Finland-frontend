@@ -35,6 +35,8 @@ interface VizTabsProps {
 }
 
 export function VizTabs(props: VizTabsProps) {
+  const cmsData = useCMSData({ returnData: true });
+  const tooltip = get(cmsData, "tooltips.disbursements_visualisations", "");
   const styles = {
     container: css`
       padding: 0 68px;
@@ -128,11 +130,13 @@ export function VizTabs(props: VizTabsProps) {
         <Breadcrumbs route={crumbs} />
         <div css={styles.titleContainer}>
           <Typography variant="h5" css={styles.title}>
-            Disbursements
+            {get(cmsData, "viz.disbursements", "Disbursements")}
           </Typography>
-          <Tooltip title="lorem ipsum">
-            <InfoOutlinedIcon css={styles.tooltip} />
-          </Tooltip>
+          {tooltip && (
+            <Tooltip title={tooltip}>
+              <InfoOutlinedIcon css={styles.tooltip} />
+            </Tooltip>
+          )}
         </div>
       </Grid>
       <Grid

@@ -141,7 +141,7 @@ export function BarChart(props: BarChartProps) {
         `}
       >
         <div>{range.abbr}</div>
-        <Legend {...props} {...cmsData} />
+        <Legend props={{ ...props, cmsData }} />
         {!props.hideODAGNI && showGni && <div>%</div>}
       </div>
       <Hidden smDown>
@@ -262,7 +262,8 @@ export function BarChart(props: BarChartProps) {
   );
 }
 
-const Legend = (props: any, cmsData: any) => {
+const Legend = (props: any) => {
+  const { cmsData, hideODAGNI } = props.props;
   return (
     <div
       css={`
@@ -308,7 +309,7 @@ const Legend = (props: any, cmsData: any) => {
       >
         {get(cmsData, "viz.otheroda", "Other ODA")}
       </div>
-      {!props.hideODAGNI && (
+      {!hideODAGNI && (
         <div
           css={`
             position: relative;

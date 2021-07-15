@@ -726,7 +726,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
       case FILTER_TYPES.SDGS:
         return (
           <Filter
-            title={get(cmsData, "general.sgds", "SDGs")}
+            title={get(cmsData, "general.sdgs", "SDGs")}
             data={get(filterOptionsData.sdgs, "data.data.goals", [])}
             renderSearch
             selection={mainPanelData[4].selection}

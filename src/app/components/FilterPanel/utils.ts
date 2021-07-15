@@ -44,7 +44,7 @@ export function getMainFilterPanelData(
     updatedData[3].heading
   }`;
   updatedData[4].selection = [];
-  updatedData[4].heading = get(cmsData, "general.sgds", "SDGs");
+  updatedData[4].heading = get(cmsData, "general.sdgs", "SDGs");
   updatedData[4].label = `${get(cmsData, "filters.all", "All")} ${
     updatedData[4].heading
   }`;

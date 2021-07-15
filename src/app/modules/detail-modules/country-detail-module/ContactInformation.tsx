@@ -1,6 +1,8 @@
 import { contactInformation } from "app/modules/detail-modules/country-detail-module/mock";
 import React from "react";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
+import get from "lodash/get";
 
 export const ContactInformation = () => {
   const styles = css`
@@ -37,7 +39,7 @@ export const ContactInformation = () => {
       }
     }
   `;
-
+  const cmsData = useCMSData({ returnData: true });
   const embassy = getEmbassy();
   const department = getDepartment();
 
@@ -62,7 +64,7 @@ export const ContactInformation = () => {
   return (
     <ul css={styles}>
       <li>
-        <span>Embassy:</span>
+        <span>{get(cmsData, "general.embassy", "Embassy")}:</span>
         {embassy ? (
           <a href={embassy.link}>
             {embassy.reportName ? embassy.reportName : embassy.title}
@@ -73,7 +75,7 @@ export const ContactInformation = () => {
       </li>
 
       <li>
-        <span>MFA department:</span>{" "}
+        <span>{get(cmsData, "general.department", "Department")}:</span>{" "}
         {department ? (
           <a href={department.link}>
             {department.reportName ? department.reportName : department.title}

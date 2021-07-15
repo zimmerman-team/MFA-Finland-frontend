@@ -9,6 +9,7 @@ import {
   TwitterIcon,
 } from "react-share";
 import { Typography } from "@material-ui/core";
+import get from "lodash/get";
 
 const containercss = css`
   padding: 8px;
@@ -27,13 +28,14 @@ const iconscontainercss = css`
   flex-direction: row;
 `;
 
-export function ShareTooltip() {
+export function ShareTooltip(cmsData: any) {
   const url = window.location.href;
-  //   const url = "https://data.mfa.fi";
   const title = "MFA IATI data portal";
   return (
     <div css={containercss}>
-      <Typography variant="body2">Share the link via</Typography>
+      <Typography variant="body2">
+        {get(cmsData.cmsData, "tooltips.share_button", "Share the link via")}
+      </Typography>
       <div css={iconscontainercss}>
         <FacebookShareButton type="button" autoFocus url={url} quote={title}>
           <FacebookIcon size={38} round />

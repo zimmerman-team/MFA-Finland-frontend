@@ -1,10 +1,13 @@
 import { formatLocale } from "app/utils/formatLocale";
 import React from "react";
 import { css } from "styled-components/macro";
+import get from "lodash/get";
+import { Typography } from "@material-ui/core";
 
 interface TotalDisbursementsProps {
   totalDisbursements: number;
   totalCommitments: number;
+  cmsData: any;
 }
 
 const style = {
@@ -118,7 +121,13 @@ export const TotalDisbursements = (props: TotalDisbursementsProps) => {
       {/* text container */}
       <div css={style.textContainer}>
         <div>
-          <div>Total Disbursements</div>
+          <div>
+            {get(
+              props.cmsData,
+              "viz.totaldisbursements",
+              "Total disbursements"
+            )}
+          </div>
           <div
             css={`
               font-weight: bold;
@@ -132,7 +141,9 @@ export const TotalDisbursements = (props: TotalDisbursementsProps) => {
         <div css={style.divider} />
 
         <div>
-          <div>Total Commitments</div>
+          <div>
+            {get(props.cmsData, "viz.totalcommitments", "Total commitments")}
+          </div>
           <div
             css={`
               font-weight: bold;

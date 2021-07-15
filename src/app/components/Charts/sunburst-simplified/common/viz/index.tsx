@@ -7,6 +7,8 @@ import {
   SunburstTooltip,
   SunburstTooltipContent,
 } from "app/components/Charts/sunburst/common/tooltip";
+import { useCMSData } from "app/hooks/useCMSData";
+import get from "lodash/get";
 
 export function SunburstVizSimplified(props: any) {
   const history = useHistory();
@@ -16,6 +18,7 @@ export function SunburstVizSimplified(props: any) {
   const [clickedNode, setClickedNode] = React.useState<SunburstPoint | null>(
     null
   );
+  const cmsData = useCMSData({ returnData: true });
 
   return (
     <React.Fragment>
@@ -54,7 +57,12 @@ export function SunburstVizSimplified(props: any) {
       </Sunburst>
       {clickedNode && (
         <SmTooltipContainer
-          detailBtnLabel="Sector Detail"
+          cmsData={cmsData}
+          detailBtnLabel={`${get(cmsData, "viz.sector", "Sector")} ${get(
+            cmsData,
+            "viz.detail",
+            "detail"
+          )}`}
           close={() => setClickedNode(null)}
           showDrilldownBtn={
             clickedNode !== undefined && clickedNode._children !== undefined

@@ -12,6 +12,8 @@ import {
   TreemapVizModel,
 } from "app/components/Charts/treemap/data";
 import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
+import { useCMSData } from "app/hooks/useCMSData";
+
 import { TreeemapNode } from "./common/node";
 import { SmTooltipContainer } from "../common/smTooltipContainer";
 
@@ -27,6 +29,7 @@ export function Treemap(props: TreemapProps) {
   const [renderedNodes, setRenderedNodes] = React.useState({ ...props.data });
   const [smTooltip, setSmTooltip] = React.useState(null);
   const history = useHistory();
+  const cmsData = useCMSData({ returnData: true });
 
   const showStandardTooltip = !("ontouchstart" in document.documentElement);
 
@@ -171,6 +174,7 @@ export function Treemap(props: TreemapProps) {
       </Grid>
       {smTooltip && (
         <SmTooltipContainer
+          cmsData={cmsData}
           detailBtnLabel={`${props.label} Detail`}
           showDrilldownBtn={get(smTooltip, "data.orgs", []).length > 0}
           close={() => setSmTooltip(null)}

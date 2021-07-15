@@ -89,7 +89,7 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
             <React.Fragment>
               <Grid item sm={12} md={2} lg={1}>
                 <div css={backbuttoncss} onClick={props.clearSectorDrillDown}>
-                  Back
+                  {get(cmsData, "general.back", "Back")}
                 </div>
               </Grid>
               <Grid item sm={12}>

@@ -64,7 +64,9 @@ export const Transactions = (props: TransactionsProps) => {
     <>
       {/* Header with tabs */}
       <div css={styles.container}>
-        <Typography css={DescriptionLabelStyle}>Transactions</Typography>
+        <Typography css={DescriptionLabelStyle}>
+          {get(props.cmsData, "viz.transactions", "Transactions")}
+        </Typography>
         <div css={styles.tabContainer}>
           <PillButton
             css={tab(activeTab === "chart")}

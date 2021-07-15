@@ -2,6 +2,7 @@ import React from "react";
 import { css } from "styled-components/macro";
 import IconClose from "@material-ui/icons/Close";
 import { Button, IconButton } from "@material-ui/core/";
+import get from "lodash/get";
 
 const containercss = css`
   top: 0;
@@ -59,6 +60,7 @@ interface SmTooltipContainerProps {
   detailBtnLabel?: string;
   children: React.ReactNode;
   showDrilldownBtn: boolean;
+  cmsData?: any;
 }
 
 export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
@@ -99,7 +101,7 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
                   props.drilldown && props.drilldown();
                 }}
               >
-                Drill Down
+                {get(props.cmsData, "viz.drilldown", "Drill Down")}
               </Button>
             )}
           </div>

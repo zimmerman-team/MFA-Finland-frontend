@@ -13,7 +13,8 @@ import { IconMap } from "app/assets/icons/IconMap";
 import { IconShare } from "app/assets/icons/IconShare";
 import { IconDownload } from "app/assets/icons/IconDownload";
 import { ShareTooltip } from "app/components/PageFloatingButtons/common/share";
-import { exportPage } from "app/utils/exportPage";
+import { useCMSData } from "app/hooks/useCMSData";
+import get from "lodash/get";
 import { ExportTooltip } from "./common/export";
 
 export const LightTooltip = withStyles((theme: Theme) => ({
@@ -36,11 +37,17 @@ export function PageFloatingButtons() {
   }
 
   const classes = tooltipCreateStyles();
+  const cmsData = useCMSData({
+    returnData: true,
+  });
 
   return (
     <div css={containercss}>
       <div css={buttonscontainercss}>
-        <LightTooltip placement="left" title="Go to map">
+        <LightTooltip
+          placement="left"
+          title={get(cmsData, "tooltips.map_button", "Go to map")}
+        >
           <button
             type="button"
             tabIndex={0}
@@ -59,7 +66,7 @@ export function PageFloatingButtons() {
             tooltip: classes.tooltip,
           }}
           enterTouchDelay={0}
-          title={<ShareTooltip />}
+          title={<ShareTooltip cmsData={cmsData} />}
           aria-pressed="false"
         >
           <button
@@ -79,7 +86,7 @@ export function PageFloatingButtons() {
           classes={{
             tooltip: classes.tooltip,
           }}
-          title={<ExportTooltip />}
+          title={<ExportTooltip cmsData={cmsData} />}
         >
           <button
             tabIndex={0}

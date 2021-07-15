@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { css } from "styled-components/macro";
 import { Typography } from "@material-ui/core";
 import { exportPage } from "app/utils/exportPage";
+import get from "lodash/get";
 
 const containercss = css`
   padding: 8px;
@@ -42,10 +43,12 @@ const downloadButton = css`
   }
 `;
 
-export function ExportTooltip() {
+export function ExportTooltip(cmsData: any) {
   return (
     <div css={containercss}>
-      <Typography variant="body2">Download</Typography>
+      <Typography variant="body2">
+        {get(cmsData.cmsData, "tooltips.download_button", "Download")}
+      </Typography>
       <Grid container css={iconscontainercss}>
         <Grid item xs={3}>
           <div css={downloadButton} onClick={() => exportPage("png")}>

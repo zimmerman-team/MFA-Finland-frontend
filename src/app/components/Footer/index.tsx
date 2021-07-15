@@ -162,8 +162,14 @@ export function Footer() {
                   {get(cmsData, "menu.social", "")}
                   <br />
                   <a
-                    href={get(cmsData, "menu.website", "www.um.fi")}
+                    href={`https://${get(
+                      cmsData,
+                      "menu.website",
+                      "www.um.fi"
+                    )}`}
                     css={styles.link}
+                    target="_blank"
+                    rel="noopener"
                   >
                     {get(cmsData, "menu.website", "www.um.fi")}
                   </a>

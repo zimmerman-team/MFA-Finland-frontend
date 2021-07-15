@@ -172,7 +172,9 @@ export const ProjectDetailModuleLayout = (
       {/* description */}
       <Grid item container xs={12} lg={12}>
         <Grid item lg={10}>
-          <Typography css={DescriptionLabelStyle}>Description</Typography>
+          <Typography css={DescriptionLabelStyle}>
+            {get(cmsData, "general.description", "Description")}
+          </Typography>
           <Box width="100%" height="16px" />
           <Typography css={DescriptionStyle}>
             {props.metadata.description}
@@ -184,10 +186,13 @@ export const ProjectDetailModuleLayout = (
       {/* ------------------------------------------------------------------ */}
       {/* total disbursements */}
       <Grid item xs={12} lg={12}>
-        <Typography css={DescriptionLabelStyle}>Total Disbursements</Typography>
+        <Typography css={DescriptionLabelStyle}>
+          {get(cmsData, "viz.totaldisbursements", "Total disbursements")}
+        </Typography>
         <TotalDisbursements
           totalCommitments={props.commitmentsTotal}
           totalDisbursements={props.disbursementsTotal}
+          cmsData={cmsData}
         />
       </Grid>
 

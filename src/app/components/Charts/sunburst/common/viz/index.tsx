@@ -7,6 +7,8 @@ import {
   SunburstTooltip,
   SunburstTooltipContent,
 } from "app/components/Charts/sunburst/common/tooltip";
+import { useCMSData } from "app/hooks/useCMSData";
+import get from "lodash/get";
 
 export function SunburstViz(props: any) {
   const history = useHistory();
@@ -14,6 +16,7 @@ export function SunburstViz(props: any) {
     null
   );
   const showSmTooltip = "ontouchstart" in document.documentElement;
+  const cmsData = useCMSData({ returnData: true });
 
   return (
     <React.Fragment>
@@ -57,8 +60,13 @@ export function SunburstViz(props: any) {
       </Sunburst>
       {hoveredNode && showSmTooltip && (
         <SmTooltipContainer
+          cmsData={cmsData}
           showDrilldownBtn
-          detailBtnLabel="Sector Detail"
+          detailBtnLabel={`${get(cmsData, "viz.sector", "Sector")} ${get(
+            cmsData,
+            "viz.detail",
+            "detail"
+          )}`}
           close={() => setHoveredNode(null)}
           gotoDetail={() =>
             history.push(

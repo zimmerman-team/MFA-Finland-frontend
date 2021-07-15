@@ -90,7 +90,11 @@ export const DataGrid = (props: DataGridProps) => {
   } {
     if (isOrgTypeDetail || isOrgDetail) {
       return {
-        label: "Organisation Info",
+        label: get(
+          cmsData,
+          "pages.organisation_information",
+          "Organisation information"
+        ),
         text: "",
       };
     }
@@ -112,7 +116,11 @@ export const DataGrid = (props: DataGridProps) => {
     }
     if (isCountryDetail) {
       return {
-        label: "Contact Department in MFA",
+        label: get(
+          cmsData,
+          "pages.country_contact_department",
+          "Contact Department in MFA"
+        ),
         text: "",
       };
     }
@@ -127,7 +135,7 @@ export const DataGrid = (props: DataGridProps) => {
       label: get(cmsData, "general.about", "About"),
       text: get(
         cmsData,
-        "pages.homepageabout",
+        "pages.home_about",
         "Openaid.fi is databank on Finland’s development cooperation. The site presents where, to whom, and when Finland has contributed the official development assistance through development cooperation and what kind of results has been accomplished. The objective of Openaid.fi is to enhance the openness of development cooperation by providing a single service for providing the information on development cooperation of Finland."
       ),
     };
@@ -223,14 +231,14 @@ export const DataGrid = (props: DataGridProps) => {
 
     if (isCountryDetail) {
       return {
-        label: "RSS Feed",
+        label: get(cmsData, "pages.country_rss_feed", "RSS feed"),
         text: "",
       };
     }
     // As per MF-439, result and about content are switched - don't get confused by the func name
     return {
       label: get(cmsData, "general.result", "Result"),
-      text: getCMSContent(cmsData, "pages.homepageresult"),
+      text: getCMSContent(cmsData, "pages.home_result"),
     };
   }
 
@@ -471,7 +479,13 @@ export const DataGrid = (props: DataGridProps) => {
           interactive
           height="510px"
           label={
-            isCountryDetail ? "Human Development Index" : resultContent.label
+            isCountryDetail
+              ? get(
+                  cmsData,
+                  "pages.country_human_development_index",
+                  "Human development index"
+                )
+              : resultContent.label
           }
           tooltip={
             isCountryDetail
