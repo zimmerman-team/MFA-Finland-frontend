@@ -77,14 +77,14 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
               }
             `}
           >
-            <div>
-              <span>Region: </span>
-              <b>{props.countryData.region}</b>
-            </div>
-            <div>
-              <span>Partner Country: </span>
-              <b>{isPartneredCountry() ? "Yes" : "No"}</b>
-            </div>
+            {/* <div> */}
+            {/*  <span>Region: </span> */}
+            {/*  <b>{props.countryData.region}</b> */}
+            {/* </div> */}
+            {/* <div> */}
+            {/*  <span>Partner Country: </span> */}
+            {/*  <b>{isPartneredCountry() ? "Yes" : "No"}</b> */}
+            {/* </div> */}
           </div>
         )}
       </Grid>
