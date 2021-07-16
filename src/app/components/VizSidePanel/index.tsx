@@ -43,6 +43,7 @@ export function VizSidePanel(props: VizSidePanelProps) {
             backgroundColor={
               props.activeTab === "chart" ? PrimaryColor[0] : SecondaryColor[1]
             }
+            color={props.activeTab === "chart" ? "#fff" : PrimaryColor[0]}
           />
           <div
             css={`
