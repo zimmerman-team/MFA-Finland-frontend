@@ -16,6 +16,7 @@ import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
+import { useLocation } from "react-use";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
@@ -31,7 +32,7 @@ interface ODAvizModuleProps extends BarChartProps {
 
 export function ODAvizModule(props: ODAvizModuleProps) {
   const cmsData = useCMSData({ returnData: true });
-
+  const location = useLocation();
   const tableConfig = props.selectedVizItemId
     ? {
         data: props.odaBudgetLinesChartData.map((item: any) => ({
@@ -53,6 +54,17 @@ export function ODAvizModule(props: ODAvizModuleProps) {
         columns: getTranslatedCols(ODADataTableColumns, cmsData),
         title: `${props.data.length} ${get(cmsData, "filters.years", "years")}`,
       };
+
+  const hideODAGNI = () => {
+    const currentURLParams = new URLSearchParams(location.search);
+    const countries = currentURLParams.get("recipient_country_code");
+    const regions = currentURLParams.get("recipient_region_code");
+    const sectors = currentURLParams.get("sector_code");
+    const organisations = currentURLParams.get("participating_org_ref");
+    const hasValue = countries || regions || sectors || organisations;
+
+    return hasValue !== null;
+  };
 
   if (props.activeTab === "chart" || props.selectedVizItemId) {
     return (
@@ -82,6 +94,7 @@ export function ODAvizModule(props: ODAvizModuleProps) {
             onSelectChange={props.onSelectChange}
             selectedVizItemId={props.selectedVizItemId}
             setSelectedVizItem={props.setSelectedVizItem}
+            hideODAGNI={hideODAGNI()}
           />
         </TransitionContainer>
         <SlideContainer
