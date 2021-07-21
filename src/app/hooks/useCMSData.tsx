@@ -45,7 +45,12 @@ export function useCMSData(props: useCMSDataProps) {
     (actions) => actions.cms.regions.fetch
   );
   const regionsCMSData = useStoreState((state) => state.cms.regions.data);
-
+  const breadcrumbsCMSData = useStoreState(
+    (state) => state.cms.breadcrumbs.data
+  );
+  const breadcrumbsCMSAction = useStoreActions(
+    (actions) => actions.cms.breadcrumbs.fetch
+  );
   // Collections state
   const aboutPageCMSData = useStoreState(
     (state) => state.cms.collections.aboutPage.data
@@ -125,6 +130,10 @@ export function useCMSData(props: useCMSDataProps) {
         key: "statementsPage",
         data: statementsPageCMSData || {},
       },
+      {
+        key: "breadcrumbs",
+        data: breadcrumbsCMSData || {},
+      },
     ];
     items.forEach((item) => {
       let filteredData = {};
@@ -196,6 +205,9 @@ export function useCMSData(props: useCMSDataProps) {
       statementsPageCMSAction({
         isCMSfetch: true,
       });
+      breadcrumbsCMSAction({
+        isCMSfetch: true,
+      });
     }
   }, []);
 
@@ -217,6 +229,7 @@ export function useCMSData(props: useCMSDataProps) {
     resultsPageCMSData,
     feedbackPageCMSData,
     statementsPageCMSData,
+    breadcrumbsCMSData,
   ]);
 
   if (props.returnData) {

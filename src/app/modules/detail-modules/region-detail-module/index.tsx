@@ -12,8 +12,8 @@ import { languageAtom } from "app/state/recoil/atoms";
 const moduleName = "Region Detail Module";
 
 export const crumbs: BreadcrumbLinkModel[] = [
-  { label: "Homepage", path: Path.home },
-  { label: moduleName },
+  { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+  { label: moduleName, cmsKey: "breadcrumbs.region" },
 ];
 
 export function RegionDetailModule() {

@@ -17,8 +17,8 @@ export function CountryDetailModule() {
   useTitle(`${countryName} | ${getAppName(currentLanguage)}`);
 
   const crumbs: BreadcrumbLinkModel[] = [
-    { label: "Homepage", path: Path.home },
-    { label: countryName },
+    { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+    { label: countryName, cmsKey: "" },
   ];
 
   const {

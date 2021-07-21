@@ -5,6 +5,8 @@ import {
   BreadcrumbProps,
   BreadcrumbLinkModel,
 } from "app/components/Breadcrumb/data";
+import { useCMSData } from "app/hooks/useCMSData";
+import get from "lodash/get";
 import {
   BreadcrumbContainerStyle,
   BreadcrumbItemStyle,
@@ -13,6 +15,14 @@ import {
 
 export const Breadcrumbs = (props: BreadcrumbProps) => {
   const location = useLocation();
+  const cmsData = useCMSData({ returnData: true });
+
+  function getLabel(crumb: BreadcrumbLinkModel) {
+    const cmsLabel = get(cmsData, crumb.cmsKey, null);
+    if (cmsLabel !== "" && cmsLabel !== null) return cmsLabel;
+    return crumb.label;
+  }
+
   return (
     <MUIBreadcrumbs css={BreadcrumbContainerStyle} aria-label="breadcrumb">
       {props.route.map((breadcrumb: BreadcrumbLinkModel, index: number) => {
@@ -26,12 +36,12 @@ export const Breadcrumbs = (props: BreadcrumbProps) => {
               css={BreadcrumbItemStyle}
               to={`${breadcrumb.path}${location.search}`}
             >
-              {breadcrumb.label}
+              {getLabel(breadcrumb)}
             </NavLink>
           ) : (
             // if not, return plain text
             <Typography key={breadcrumb.label} css={BreadcrumbItemStyle}>
-              {breadcrumb.label}
+              {getLabel(breadcrumb)}
             </Typography>
           );
         }
@@ -39,7 +49,7 @@ export const Breadcrumbs = (props: BreadcrumbProps) => {
         return (
           // return plain text
           <Typography key={breadcrumb.label} css={BreadcrumbActiveItemStyle}>
-            {breadcrumb.label}
+            {getLabel(breadcrumb)}
           </Typography>
         );
       })}

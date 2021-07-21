@@ -35,8 +35,8 @@ export function SectorDetailModule() {
   });
 
   const crumbs: BreadcrumbLinkModel[] = [
-    { label: "Homepage", path: Path.home },
-    { label: detailPageNameData || get(params, "sector", "") },
+    { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+    { label: detailPageNameData || get(params, "sector", ""), cmsKey: "" },
   ];
 
   useTitle(
