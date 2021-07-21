@@ -56,7 +56,7 @@ export const GenericPageLayout = (props: GenericPageModuleProps) => {
           </Grid>
         </Hidden>
 
-        <Grid item lg={9}>
+        <Grid item md={12} lg={9}>
           {cards?.map((card, index) => (
             <>
               <Anchor id={navList[index].path} />

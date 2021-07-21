@@ -1,6 +1,5 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
 import { RouteTab } from "app/components/VizTabs/common/Tab";
 import { vizTabs, TabProps } from "app/components/VizTabs/data";
@@ -22,11 +21,10 @@ import get from "lodash/get";
 import { useCMSData } from "app/hooks/useCMSData";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { useLocation } from "react-use";
-import { FilledButton } from "app/components/Buttons/FilledButton";
 
 const crumbs: BreadcrumbLinkModel[] = [
-  { label: "Homepage", path: Path.home },
-  { label: "Disbursements" },
+  { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+  { label: "Disbursements", cmsKey: "breadcrumbs.disbursements" },
 ];
 
 interface VizTabsProps {
@@ -174,8 +172,8 @@ const VizTabsMobile = (props: VizTabsProps) => {
     });
   }
   const crumbs: BreadcrumbLinkModel[] = [
-    { label: "Homepage", path: Path.home },
-    { label: "Disbursements" },
+    { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+    { label: "Disbursements", cmsKey: "breadcrumbs.disbursements" },
   ];
 
   const styles = {

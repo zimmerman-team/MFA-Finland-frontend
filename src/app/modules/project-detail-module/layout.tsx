@@ -39,9 +39,9 @@ import { TotalDisbursements } from "./common/Disbursements";
 import { Transactions } from "./common/Transactions";
 
 const crumbs: BreadcrumbLinkModel[] = [
-  { label: "Homepage", path: Path.home },
-  { label: "Projects", path: "/viz/projects" },
-  { label: "Activity Detail" },
+  { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+  { label: "Projects", path: "/viz/projects", cmsKey: "breadcrumbs.projects" },
+  { label: "Activity Detail", cmsKey: "breadcrumbs.activity_detail" },
 ];
 
 export const ProjectDetailModuleLayout = (

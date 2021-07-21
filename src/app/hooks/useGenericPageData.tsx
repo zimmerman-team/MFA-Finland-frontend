@@ -16,7 +16,10 @@ export function useGenericPageData(
   const cmsCollectionsData = useCMSCollections({ returnData: true });
 
   const createBreadcrumbs = () => {
-    return [{ label: "Homepage", path: Path.home }, { label: module }];
+    return [
+      { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+      { label: module, cmsKey: `breadcrumbs.${module}` },
+    ];
   };
 
   React.useEffect(() => {

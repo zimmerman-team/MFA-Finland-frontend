@@ -13,8 +13,8 @@ import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
 const moduleName = "Thematic Detail Module";
 
 export const crumbs: BreadcrumbLinkModel[] = [
-  { label: "Homepage", path: Path.home },
-  { label: moduleName },
+  { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+  { label: moduleName, cmsKey: "breadcrumbs.thematic" },
 ];
 
 export function ThematicDetailModule() {

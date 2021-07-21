@@ -88,6 +88,7 @@ import {
   resultsPage,
   statementsPage,
 } from "app/state/api/actions-reducers/cms/collections";
+import breadcrumbs from "app/state/api/actions-reducers/cms/breadcrumbs";
 
 const storeContent: StoreModel = {
   // filtering
@@ -136,6 +137,7 @@ const storeContent: StoreModel = {
       statementsPage: persist(statementsPage),
       resultsPage: persist(resultsPage),
     },
+    breadcrumbs: persist(breadcrumbs),
   },
   // global search
   searchDonors,
