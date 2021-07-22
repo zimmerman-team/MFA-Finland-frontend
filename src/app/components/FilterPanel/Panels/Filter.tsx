@@ -48,7 +48,8 @@ export const Filter = (props: FilterProps) => {
   const mobile = useMediaQuery("(max-width: 600px)");
 
   function formatSelectedValues() {
-    return `${props.selection.join(" ")} are selected`;
+    if (props.selection.length < 1) return "";
+    return `${props.selection.join(" ")} selected`;
   }
 
   React.useEffect(() => {
