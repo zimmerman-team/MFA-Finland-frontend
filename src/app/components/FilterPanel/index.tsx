@@ -14,6 +14,7 @@ import {
   defaultfilters,
   selectedFilterAtom,
   currentFilterOpenAtom,
+  languageAtom,
 } from "app/state/recoil/atoms";
 import {
   FilterOption,
@@ -26,6 +27,7 @@ import {
   getAdvancedFilterPanelData,
   getMainFilterPanelData,
 } from "app/components/FilterPanel/utils";
+import { getTranslatedSDGS } from "app/components/Charts/sdg/translations";
 
 export const FilterPanel = (props: FilterPanelProps) => {
   const styles = createStyles(props);
@@ -40,6 +42,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
   const [localSelectedFilters, setLocalSelectedFilters] = React.useState(
     selectedFilters
   );
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [mainPanelData, setMainPanelData] = React.useState<
     MailPanelInitDataItemModel[]
   >([]);
@@ -727,7 +730,18 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title={get(cmsData, "general.sdgs", "SDGs")}
-            data={get(filterOptionsData.sdgs, "data.data.goals", [])}
+            data={get(filterOptionsData.sdgs, "data.data.goals", []).map(
+              (option: FilterOption) => {
+                if (currentLanguage === "en") return option;
+                return {
+                  ...option,
+                  name: `${option.code}: ${getTranslatedSDGS(
+                    currentLanguage,
+                    parseInt(option.code, 10)
+                  )}`,
+                };
+              }
+            )}
             renderSearch
             selection={mainPanelData[4].selection}
             onFilterCheckboxChange={(value: string | string[]) =>

@@ -3,8 +3,9 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
+import { languageAtom, selectedFilterAtom } from "app/state/recoil/atoms";
 import { SDGvizItemProps } from "app/components/Charts/sdg/data";
+import { getName } from "app/components/Charts/sdg/index";
 
 interface CompProps extends SDGvizItemProps {
   setHoveredNode: React.Dispatch<React.SetStateAction<SDGvizItemProps | null>>;
@@ -15,13 +16,25 @@ export function SDGvizItem(props: CompProps) {
   const [selectedFilters, setSelectedFilters] = useRecoilState(
     selectedFilterAtom
   );
+  const [currentLanguage] = useRecoilState(languageAtom);
+
+  function getIcon() {
+    if (currentLanguage === "se") return "icon_se";
+    if (currentLanguage === "fi") return "icon_fi";
+    if (currentLanguage === "en") return "icon";
+    return "icon";
+  }
 
   function handleMouseEnter() {
     if (!props.disabled) {
       props.setHoveredNode({
         name: props.name,
+        name_fi: props.name_fi,
+        name_se: props.name_se,
         number: props.number,
         icon: props.icon,
+        icon_fi: props.icon_fi,
+        icon_se: props.icon_se,
         disabled: props.disabled,
         disbursed: props.disbursed,
         committed: props.committed,
@@ -79,7 +92,11 @@ export function SDGvizItem(props: CompProps) {
         }
       }}
     >
-      <img src={props.icon} alt={`${props.number} - ${props.name}`} />
+      <img
+        src={props[getIcon()]}
+        // @ts-ignore
+        alt={`${props.number} - ${props[getName(currentLanguage)]}`}
+      />
     </button>
   );
 }
