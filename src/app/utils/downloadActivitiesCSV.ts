@@ -104,9 +104,11 @@ export function getQuery(filters: any, search: string, searchFields: string[]) {
   }
 
   if (search.length > 0 && filterKeys.length <= 0) {
+    query += "(";
     query += searchFields
       .map((field: string) => `${field}:(${search})`)
       .join(" OR ");
+    query += ")";
   }
 
   if (filterKeys.indexOf("years") === -1) {
@@ -125,8 +127,16 @@ export function downloadActivitiesCSV(
 ): Promise<void> {
   const sortstring = get(sortKeys, `[${sort || "Start date desc"}]`, "");
   const query = getQuery(filters, search || "", [
-    "recipient_country_code",
+    "iati_identifier",
     "title_narrative_text",
+    "participating_org_ref",
+    "recipient_country_code",
+    "reporting_org_narrative",
+    "description_narrative_text",
+    "participating_org_narrative",
+    "transaction_provider_org_ref",
+    "transaction_provider_org_narrative",
+    "transaction_recipient_country_code",
   ]);
   const url = `https://iati.cloud/search/activity?q=${query}&sort=${sortstring}&rows=${
     count || 20000
