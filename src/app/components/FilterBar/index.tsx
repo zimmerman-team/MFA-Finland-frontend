@@ -239,10 +239,10 @@ export const FilterBar = (props: FilterBarProps) => {
             </Typography>
           </div>
           <div css={styles.chipContainer}>
-            {chips.map((chip: any, index) => {
+            {chips.map((chip: any) => {
               return (
                 <Chip
-                  key={index}
+                  key={chip.type}
                   type={chip.type}
                   values={chip.values}
                   label={chip.label}
