@@ -6,7 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { useCMSData } from "app/hooks/useCMSData";
 import IconButton from "@material-ui/core/IconButton";
 import { PrimaryColor } from "app/theme";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import {
   languageAtom,
@@ -27,6 +27,7 @@ import { SearchComponent } from "app/components/AppBar/common/Search";
 import { IconDots } from "app/assets/icons/IconDots";
 
 export function AppBar() {
+  const location = useLocation();
   const cmsData = useCMSData({ returnData: true });
   const [isFocused] = useRecoilState(searchFocusAtom);
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
@@ -88,7 +89,7 @@ export function AppBar() {
           {/* ---------------------------------------------- */}
           {/* logo */}
           <NavLink
-            to={`/${window.location.search}`}
+            to={`/${location.search}`}
             css={appbarStyle.logoLink(!isFocused)}
             onClick={() => {
               // setSelectedFilters(defaultfilters);
