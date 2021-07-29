@@ -210,7 +210,8 @@ export function useUrlFilters() {
     }
 
     const queryString = decodeURIComponent(currentUrlParams.toString());
-    history.push({
+    // @Juan replaced history.push with history.replace -> solves the issue of double entries in the history stack. Tested it out and seems to work - please revert when unexpected behaviour arises.
+    history.replace({
       pathname: history.location.pathname,
       search: queryString,
     });
