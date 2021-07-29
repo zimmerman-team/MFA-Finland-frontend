@@ -641,8 +641,33 @@ export const FilterPanel = (props: FilterPanelProps) => {
                     translatedPriorityAreas,
                     `${firstChild.code.split("|")[0].replace(/ /g, "")}`
                   );
+
+                  const children = option.children?.map((child) => {
+                    const name = () => {
+                      if (child.name === "Main priority")
+                        return get(
+                          cmsData,
+                          "priorityAreas.main",
+                          "Main priority"
+                        );
+                      if (child.name === "Secondary priority")
+                        return get(
+                          cmsData,
+                          "priorityAreas.secondary",
+                          "Secondary priority"
+                        );
+                      return child.name;
+                    };
+
+                    return {
+                      name: name(),
+                      code: child.code,
+                    };
+                  });
+
                   return {
                     ...option,
+                    children,
                     name: translatedOptionName,
                   };
                 }

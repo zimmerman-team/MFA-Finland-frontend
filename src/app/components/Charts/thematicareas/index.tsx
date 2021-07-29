@@ -55,13 +55,19 @@ export function ThematicAreas(props: ThematicAreasProps) {
           data={[
             {
               id: "Main priority",
-              label: "Main priority",
+              label: get(cmsData, "priorityAreas.main", "Main priority"),
+              // {get(cmsData, "viz.otheroda", "Other ODA")}
+
               value: selected.primary.value,
               color: selected.color,
             },
             {
               id: "Secondary priority",
-              label: "Secondary priority",
+              label: get(
+                cmsData,
+                "priorityAreas.secondary",
+                "Secondary priority"
+              ),
               value: selected.secondary.value,
               color: hexToRGBA(selected.color, 0.5),
             },
@@ -156,7 +162,8 @@ export function ThematicAreas(props: ThematicAreasProps) {
       {!props.showOnlyViz && (
         <Grid item xs={12} md={12} lg={6} xl={6} css={rightsideinfopanel}>
           <div css={rightsideinfopaneltitle}>
-            Main priority/Secondary priority
+            {get(cmsData, "priorityAreas.main", "Main priority")}/
+            {get(cmsData, "priorityAreas.secondary", "Secondary priority")}
           </div>
           {props.data.map((item: DataProps) => (
             <div css={rightsideinfopanelitem} key={item.name}>
