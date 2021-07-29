@@ -206,15 +206,24 @@ export const TransactionsBar = (props: TransactionsBarProps) => {
         // motionDamping={15}
         tooltip={(tProps: any) => {
           return (
-            <TreemapTooltip
-              node={{
-                data: {
-                  name: tProps.data.year,
-                  disbursed: tProps.data.disbursed,
-                  committed: tProps.data.commitment,
-                },
-              }}
-            />
+            <div
+              css={`
+                background-color: white;
+                padding: 18px;
+                border-radius: 24px;
+                box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+              `}
+            >
+              <TreemapTooltip
+                node={{
+                  data: {
+                    name: tProps.data.year,
+                    disbursed: tProps.data.disbursed,
+                    committed: tProps.data.commitment,
+                  },
+                }}
+              />
+            </div>
           );
         }}
       />
