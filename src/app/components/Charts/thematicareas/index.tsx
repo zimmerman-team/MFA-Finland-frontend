@@ -45,19 +45,20 @@ export function ThematicAreas(props: ThematicAreasProps) {
         css={`
           height: 300px;
           text {
-            font-size: 10px !important;
+            font-size: 12px !important;
             font-family: Finlandica !important;
+          }
+          circle {
+            stroke-width: 1px;
+            stroke: #2e4982;
           }
         `}
       >
         <ResponsivePie
-          margin={{ top: 40, right: 0, bottom: 30, left: 0 }}
           data={[
             {
               id: "Main priority",
               label: get(cmsData, "priorityAreas.main", "Main priority"),
-              // {get(cmsData, "viz.otheroda", "Other ODA")}
-
               value: selected.primary.value,
               color: selected.color,
             },
@@ -72,31 +73,39 @@ export function ThematicAreas(props: ThematicAreasProps) {
               color: hexToRGBA(selected.color, 0.5),
             },
           ]}
+          margin={{ top: 80, right: 0, bottom: 30, left: 0 }}
+          borderWidth={0.5}
+          borderColor="#2e4982"
+          arcLinkLabel={(e: any) => {
+            return `${formatMoneyWithPrefix(e.value)}`;
+          }}
+          colors={["#E7C3CD", "#AE4764"]}
+          arcLinkLabelsSkipAngle={6}
+          arcLinkLabelsTextOffset={6}
+          arcLinkLabelsTextColor="#2e4982"
+          arcLinkLabelsOffset={1}
+          arcLinkLabelsDiagonalLength={7}
+          arcLinkLabelsStraightLength={8}
+          arcLinkLabelsColor="#2e4982"
+          enableArcLabels={false}
+          isInteractive={false}
           legends={[
             {
               translateX: 0,
               justify: false,
-              translateY: 30,
+              translateY: 25,
               itemWidth: 100,
-              itemHeight: 18,
+              itemHeight: 10,
               itemOpacity: 1,
-              symbolSize: 12,
-              itemsSpacing: 0,
+              symbolSize: 8,
+              itemsSpacing: 16,
               direction: "row",
               anchor: "bottom",
-              symbolShape: "square",
+              symbolShape: "circle",
               itemDirection: "left-to-right",
               itemTextColor: PrimaryColor[0],
             },
           ]}
-          padAngle={0}
-          borderWidth={1}
-          innerRadius={0}
-          isInteractive={false}
-          enableRadialLabels={false}
-          sliceLabelsTextColor={PrimaryColor[0]}
-          colors={(tProps: any) => tProps.data.color}
-          sliceLabel={(tProps: any) => formatMoneyWithPrefix(tProps.value)}
         />
       </Grid>
     );

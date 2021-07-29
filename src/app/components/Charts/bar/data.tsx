@@ -1,5 +1,5 @@
 import { formatLocale } from "app/utils/formatLocale";
-import { BarExtendedDatum, BarItemProps } from "@nivo/bar";
+import { BarItemProps } from "@nivo/bar";
 import { MUIDataTableOptions, MUIDataTableColumnDef } from "mui-datatables";
 import { Tooltip } from "@material-ui/core";
 import { MoreActions } from "app/components/Charts/table/common/toolbar/MoreButton";
@@ -10,8 +10,8 @@ export interface BarChartProps {
   data: any;
   height?: number;
   onZoomOut: () => void;
-  vizCompData: BarItemProps[];
-  setVizCompData: React.Dispatch<React.SetStateAction<BarItemProps[]>>;
+  vizCompData: BarItemProps<any>[];
+  setVizCompData: React.Dispatch<React.SetStateAction<BarItemProps<any>[]>>;
   selectedVizItemId: string | number | null;
   setSelectedVizItem: (name: string | number | null) => void;
   onSelectChange: (e: {
@@ -25,11 +25,11 @@ export interface SimpleBarChartProps {
   data: any;
 }
 
-export interface BarNodeProps extends BarItemProps {
+export interface BarNodeProps extends BarItemProps<any> {
   hoveredXIndex: number | null;
   setHoveredXIndex: React.Dispatch<React.SetStateAction<number | null>>;
-  selected: BarExtendedDatum | null;
-  setSelected: (b: BarExtendedDatum | null) => void;
+  selected: any | null;
+  setSelected: (b: any | null) => void;
   onNodeClick: (e: {
     selection: string | number | null;
     translation: { x: number; y: number };

@@ -202,8 +202,8 @@ export const TransactionsBar = (props: TransactionsBarProps) => {
           },
         }}
         animate
-        motionStiffness={90}
-        motionDamping={15}
+        // motionStiffness={90}
+        // motionDamping={15}
         tooltip={(tProps: any) => {
           return (
             <TreemapTooltip

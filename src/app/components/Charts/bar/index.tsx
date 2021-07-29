@@ -8,7 +8,7 @@ import { useCMSData } from "app/hooks/useCMSData";
 import { Line } from "app/components/Charts/bar/common/line";
 import { BarChartProps } from "app/components/Charts/bar/data";
 import { BarNode } from "app/components/Charts/bar/common/node";
-import { ResponsiveBar, BarItemProps, BarExtendedDatum } from "@nivo/bar";
+import { ResponsiveBar, BarItemProps } from "@nivo/bar";
 import {
   getRange,
   getMoneyValueWithMetricPrefix,
@@ -22,7 +22,7 @@ export function BarChart(props: BarChartProps) {
   const maxValue: number =
     max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);
-  const [selected, setSelected] = React.useState<BarExtendedDatum | null>(
+  const [selected, setSelected] = React.useState<any | null>(
     !props.height && props.data.length > 0
       ? {
           id: "",
@@ -34,7 +34,7 @@ export function BarChart(props: BarChartProps) {
       : null
   );
 
-  const onSelect = (b: BarExtendedDatum | null) => {
+  const onSelect = (b: any | null) => {
     setSelected(b);
     props.setSelectedVizItem(get(b, "indexValue", ""));
   };
@@ -43,7 +43,7 @@ export function BarChart(props: BarChartProps) {
     if (props.vizCompData.length !== bprops.bars.length) {
       props.setVizCompData(bprops.bars);
     }
-    return bprops.bars.map((bar: BarItemProps) => (
+    return bprops.bars.map((bar: BarItemProps<any>) => (
       <BarNode
         {...bar}
         selected={selected}

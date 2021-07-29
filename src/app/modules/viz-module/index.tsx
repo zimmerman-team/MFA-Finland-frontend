@@ -67,7 +67,7 @@ export default function VizModule() {
 
   const [vizLevel, setVizLevel] = React.useState(0);
   const [vizScale, setVizScale] = React.useState(1);
-  const [vizCompData, setVizCompData] = React.useState<BarItemProps[]>([]);
+  const [vizCompData, setVizCompData] = React.useState<any[]>([]);
   const [vizTranslation, setVizTranslation] = React.useState({ x: 0, y: 0 });
   const [sectorDrillDown, setSectorDrillDown] = React.useState("");
   const [prevTab, setPrevTab] = React.useState(get(params, "tab", ""));
@@ -231,7 +231,7 @@ export default function VizModule() {
   function onZoomInLevelSelectorChange(item: string) {
     const fVizCompData = find(
       vizCompData,
-      (d: BarItemProps) => d.data.indexValue.toString() === item
+      (d: any) => d.data.indexValue.toString() === item
     );
     setVizScale(1);
     setVizTranslation({

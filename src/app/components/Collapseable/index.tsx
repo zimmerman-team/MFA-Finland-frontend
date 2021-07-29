@@ -157,8 +157,10 @@ const PieChart = (props: PieProps) => {
         colors={(bar: any) => colors[bar.id]}
         borderWidth={0.5}
         borderColor="#14141d"
-        enableRadialLabels={false}
-        enableSliceLabels={false}
+        enableArcLinkLabels={false}
+        enableArcLabels={false}
+        // enableRadialLabels={false}
+        // enableSliceLabels={false}
         isInteractive={false}
       />
     </div>

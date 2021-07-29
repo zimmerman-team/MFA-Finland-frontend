@@ -3,7 +3,7 @@ import get from "lodash/get";
 import max from "lodash/max";
 import { PrimaryColor } from "app/theme";
 import { BarNode } from "app/components/Charts/bar/common/node";
-import { ResponsiveBar, BarItemProps, BarExtendedDatum } from "@nivo/bar";
+import { ResponsiveBar, BarItemProps } from "@nivo/bar";
 import { BarChartProps, budgetLineKeys } from "app/components/Charts/bar/data";
 import {
   getRange,
@@ -23,7 +23,7 @@ export function BudgetLinesBarChart(props: BarChartProps) {
       })
     ) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);
-  const [selected, setSelected] = React.useState<BarExtendedDatum | null>(
+  const [selected, setSelected] = React.useState<any | null>(
     !props.height && props.data.length > 0
       ? {
           id: "",
@@ -35,7 +35,7 @@ export function BudgetLinesBarChart(props: BarChartProps) {
       : null
   );
 
-  const onSelect = (b: BarExtendedDatum | null) => {
+  const onSelect = (b: any | null) => {
     setSelected(b);
     props.setSelectedVizItem(get(b, "indexValue", ""));
   };
@@ -44,7 +44,7 @@ export function BudgetLinesBarChart(props: BarChartProps) {
     // if (props.vizCompData.length !== bprops.bars.length) {
     //   props.setVizCompData(bprops.bars);
     // }
-    return bprops.bars.map((bar: BarItemProps) => (
+    return bprops.bars.map((bar: any) => (
       <BarNode
         {...bar}
         selected={selected}
