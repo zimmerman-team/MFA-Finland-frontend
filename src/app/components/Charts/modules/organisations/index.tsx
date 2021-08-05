@@ -53,7 +53,7 @@ export function OrganisationsModule(props: OrganisationsModuleModel) {
             <MoreButton data={props.getActiveTabData()} params={params} />
           ),
         }}
-        title={`${props.data.children.length} organisation types`}
+        title={`${props.data.children.length} organisation categories`}
         columns={getTranslatedCols(OrganisationTypesDataTableColumns, cmsData)}
       />
     </div>

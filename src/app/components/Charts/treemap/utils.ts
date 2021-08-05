@@ -14,8 +14,28 @@ export function getTreemapLegends(
 ): VizSidePanelItemProps[] {
   let filteredData = data.children;
   if (nodefilter) {
-    filteredData =
-      find(filteredData, { ref: nodefilter as string })?.orgs || [];
+    filteredData = [];
+    data.children.forEach((org1: TreeemapNodeData) => {
+      if (org1.orgs) {
+        if (org1.ref === nodefilter) {
+          filteredData = org1.orgs;
+        } else {
+          org1.orgs.forEach((org2: TreeemapNodeData) => {
+            if (org2.orgs) {
+              if (org2.ref === nodefilter) {
+                filteredData = org2.orgs;
+              } else {
+                org2.orgs.forEach((org3: TreeemapNodeData) => {
+                  if (org3.ref === nodefilter && org3.orgs) {
+                    filteredData = org3.orgs;
+                  }
+                });
+              }
+            }
+          });
+        }
+      }
+    });
   }
   return orderBy(filteredData, "value", "desc").map((d: TreeemapNodeData) => ({
     id: d.ref,
@@ -28,7 +48,7 @@ export function getTreemapLegends(
         name: c.name,
         value: formatLocale(c.value),
         color: c.color,
-        children: orderBy(get(d, "orgs", []), "value", "desc").map(
+        children: orderBy(get(c, "orgs", []), "value", "desc").map(
           (cc: TreeemapNodeData) => ({
             id: cc.ref,
             name: cc.name,

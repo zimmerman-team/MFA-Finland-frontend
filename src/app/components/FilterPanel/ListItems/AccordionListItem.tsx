@@ -120,10 +120,15 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
                 get(props, "node.children", []).forEach((c: FilterOption) => {
                   params = [...params, c.code];
                   if (c.children) {
-                    params = [
-                      ...params,
-                      ...c.children.map((cc: FilterOption) => cc.code),
-                    ];
+                    c.children.forEach((cc: FilterOption) => {
+                      params = [...params, cc.code];
+                      if (cc.children) {
+                        params = [
+                          ...params,
+                          ...cc.children.map((ccc: FilterOption) => ccc.code),
+                        ];
+                      }
+                    });
                   }
                 });
                 props.onFilterCheckboxChange(params);

@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { ResponsiveTreeMapHtml } from "@nivo/treemap";
 import { TreemapTooltip } from "app/components/Charts/treemap/common/tooltip";
 import {
+  TreeemapNodeData,
   TreemapProps,
   TreemapVizModel,
 } from "app/components/Charts/treemap/data";
@@ -25,11 +26,17 @@ const containercss = (height?: number) => css`
 `;
 
 export function Treemap(props: TreemapProps) {
-  const [drilldownId, setDrilldownId] = React.useState(null);
-  const [renderedNodes, setRenderedNodes] = React.useState({ ...props.data });
-  const [smTooltip, setSmTooltip] = React.useState(null);
   const history = useHistory();
   const cmsData = useCMSData({ returnData: true });
+  const [smTooltip, setSmTooltip] = React.useState(null);
+  const [drilldownId, setDrilldownId] = React.useState<string | null>(null);
+  const [renderedNodes, setRenderedNodes] = React.useState({ ...props.data });
+  const [prevDrilldownIds, setPrevDrilldownIds] = React.useState<
+    (string | null)[]
+  >([]);
+  const [prevRenderedNodes, setPrevRenderedNodes] = React.useState<
+    TreeemapNodeData[][]
+  >([]);
 
   const showStandardTooltip = !("ontouchstart" in document.documentElement);
 
@@ -63,9 +70,17 @@ export function Treemap(props: TreemapProps) {
   }
 
   function goBack() {
-    setDrilldownId(null);
-    props.setSelectedVizItem(null);
-    setRenderedNodes({ ...props.data });
+    setDrilldownId(prevDrilldownIds[prevDrilldownIds.length - 1]);
+    setPrevDrilldownIds(prevDrilldownIds.slice(0, prevDrilldownIds.length - 1));
+    props.setSelectedVizItem(prevDrilldownIds[prevDrilldownIds.length - 1]);
+    setRenderedNodes({
+      name: "",
+      color: "",
+      children: prevRenderedNodes[prevRenderedNodes.length - 1],
+    });
+    setPrevRenderedNodes(
+      prevRenderedNodes.slice(0, prevRenderedNodes.length - 1)
+    );
   }
 
   function onNodeClick(node: any, e: any, doSmDrilldown?: boolean) {
@@ -75,10 +90,12 @@ export function Treemap(props: TreemapProps) {
     ) {
       const children = get(node.data, "orgs", []);
       if (children.length > 0) {
+        setPrevRenderedNodes([...prevRenderedNodes, renderedNodes.children]);
         setRenderedNodes({
           ...renderedNodes,
           children,
         });
+        setPrevDrilldownIds([...prevDrilldownIds, drilldownId]);
         setDrilldownId(node.data.ref);
         props.setSelectedVizItem(node.data.ref);
       } else {
@@ -119,7 +136,12 @@ export function Treemap(props: TreemapProps) {
     }
   }, [props.selectedVizItemId]);
 
-  React.useEffect(() => setRenderedNodes({ ...props.data }), [props.data]);
+  React.useEffect(() => {
+    setDrilldownId(null);
+    setRenderedNodes({ ...props.data });
+    setPrevDrilldownIds([]);
+    setPrevRenderedNodes([]);
+  }, [props.data]);
 
   return (
     <Grid

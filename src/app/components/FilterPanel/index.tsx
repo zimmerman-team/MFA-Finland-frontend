@@ -730,6 +730,10 @@ export const FilterPanel = (props: FilterPanelProps) => {
           />
         );
       case FILTER_TYPES.ORGANISATIONS:
+        console.log([
+          ...localSelectedFilters.organisations,
+          ...localSelectedFilters.organisationtypes,
+        ]);
         return (
           <Filter
             title={get(cmsData, "general.organisations", "Organisations")}

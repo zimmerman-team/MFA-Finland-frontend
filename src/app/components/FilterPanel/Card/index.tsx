@@ -158,9 +158,76 @@ const CardContent = (props: FilterProps) => {
         <>
           {data.map((node1) => {
             if (node1.children) {
+              let containsGrandChildren = false;
               const containsChildren = node1.children.some((node2) => {
+                if (node2.children) {
+                  containsGrandChildren = node2.children.some((node3) => {
+                    return node3.children !== undefined;
+                  });
+                }
                 return node2.children !== undefined;
               });
+              if (containsChildren && containsGrandChildren) {
+                // Component with 4 drilldown levels
+                return (
+                  <AccordionListItem
+                    key={node1.name}
+                    node={node1}
+                    nodeStyle="has2NodesStyle"
+                    onFilterCheckboxChange={props.onFilterCheckboxChange}
+                    selected={props.selectedItems.indexOf(node1.code) > -1}
+                    component={
+                      <>
+                        {node1.children.map((node2) => {
+                          return (
+                            <AccordionListItem
+                              key={node2.name}
+                              node={node2}
+                              component={
+                                <>
+                                  {node2.children?.map((node3) => {
+                                    return (
+                                      <AccordionListItem
+                                        key={node3.name}
+                                        node={node3}
+                                        component={
+                                          <CheckboxGridListItem
+                                            {...node3}
+                                            selectedItems={props.selectedItems}
+                                            onFilterCheckboxChange={
+                                              props.onFilterCheckboxChange
+                                            }
+                                          />
+                                        }
+                                        nodeStyle="has2NodesStyle"
+                                        selected={
+                                          props.selectedItems.indexOf(
+                                            node3.code
+                                          ) > -1
+                                        }
+                                        onFilterCheckboxChange={
+                                          props.onFilterCheckboxChange
+                                        }
+                                      />
+                                    );
+                                  })}
+                                </>
+                              }
+                              nodeStyle="has2NodesStyle"
+                              selected={
+                                props.selectedItems.indexOf(node2.code) > -1
+                              }
+                              onFilterCheckboxChange={
+                                props.onFilterCheckboxChange
+                              }
+                            />
+                          );
+                        })}
+                      </>
+                    }
+                  />
+                );
+              }
               if (containsChildren) {
                 // Component with 3 drilldown levels
                 return (
