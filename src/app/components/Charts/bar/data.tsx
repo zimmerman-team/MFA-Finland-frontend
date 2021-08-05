@@ -23,6 +23,7 @@ export interface BarChartProps {
 
 export interface SimpleBarChartProps {
   data: any;
+  selectedYear: string;
 }
 
 export interface BarNodeProps extends BarItemProps<any> {

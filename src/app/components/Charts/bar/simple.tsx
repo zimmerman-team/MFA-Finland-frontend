@@ -27,6 +27,18 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
         height: 650px;
         padding: 50px 0 0 20px;
         color: ${PrimaryColor[0]};
+
+        svg {
+          > g {
+            g:not(:nth-of-type(1)),
+            g:not(:nth-of-type(2)),
+            g:not(:nth-of-type(3)) {
+              rect {
+                cursor: pointer;
+              }
+            }
+          }
+        }
       `}
     >
       {range.abbr}
@@ -47,6 +59,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
         onClick={(node: any) => {
           setSelectedFilters({
             ...selectedFilters,
+            years: [props.selectedYear, props.selectedYear],
             budgetlines: [...selectedFilters.budgetlines, node.data.code],
           });
           setTimeout(

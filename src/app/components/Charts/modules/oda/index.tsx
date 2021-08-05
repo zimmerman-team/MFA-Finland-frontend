@@ -123,7 +123,14 @@ export function ODAvizModule(props: ODAvizModuleProps) {
                 />
               </div>
               {props.activeTab === "chart" ? (
-                <SimpleBarChart data={props.odaBudgetLinesChartData} />
+                <SimpleBarChart
+                  data={props.odaBudgetLinesChartData}
+                  selectedYear={
+                    props.selectedVizItemId
+                      ? props.selectedVizItemId.toString()
+                      : ""
+                  }
+                />
               ) : (
                 <div
                   css={`
