@@ -23,6 +23,9 @@ interface PathProps {
 }
 
 export const Path = {
+  home: basePath,
+  viz: `${basePath}viz`,
+  vizTab: `${basePath}viz/:tab`,
   general: {
     privacy: `${basePath}privacy`,
     contact: `${basePath}contact`,
@@ -34,23 +37,14 @@ export const Path = {
     result: `${basePath}result`,
     feedback: `${basePath}feedback`,
   },
-  home: basePath,
-  explore: `${basePath}explore`,
-  feedback: `${basePath}feedback`,
-  search: `${basePath}search-results`,
   detail: {
-    activity: `${basePath}activity/:param`,
-    publisher: `${basePath}publisher/:param`,
-    donor: `${basePath}donor/:param`,
-    country: `${basePath}country/:param`,
-    organisation: `${basePath}organisation/:param`,
-  },
-  userManagement: {
-    userSettingsRoute: `${basePath}user-settings/:id`,
-    userSetting: `${basePath}user-settings/`,
-    userOverview: `${basePath}users`,
-    teamDetail: `${basePath}team`,
-    teamOverview: `${basePath}teams`,
+    project: `${basePath}project/:param`,
+    region: `${basePath}regions/:region`,
+    country: `${basePath}countries/:country`,
+    sector: `${basePath}sectors/:sector`,
+    organisation: `${basePath}organisations/:organisation`,
+    orgType: `${basePath}organisation-types/:orgType`,
+    thematicArea: `${basePath}thematic-area/:theme`,
   },
   debug: {
     components: `${basePath}components`,

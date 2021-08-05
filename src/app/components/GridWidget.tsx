@@ -202,11 +202,17 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       color: "",
       children: [],
     });
-    orgData.children.forEach((child: any) => {
-      if (child.orgs) {
-        count += child.orgs.length;
-      }
-    });
+    function getOrgChildCount(orgs: any) {
+      orgs.forEach((child: any) => {
+        if (child.orgs) {
+          count += child.orgs.length;
+          child.orgs.forEach((orgChild: any) =>
+            getOrgChildCount(orgChild.orgs)
+          );
+        }
+      });
+    }
+    getOrgChildCount(orgData.children);
     return count;
   });
   const projCount = useStoreState((state) =>

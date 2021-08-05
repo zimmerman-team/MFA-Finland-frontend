@@ -5,25 +5,25 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { PageLoader } from "app/modules/common/page-loader";
 import { NoMatchPage } from "app/modules/common/no-match-page";
 
+import { Path } from "app/const/Path";
 import VizModule from "app/modules/viz-module";
+import { Footer } from "app/components/Footer";
 import { useCMSData } from "app/hooks/useCMSData";
 import { useUrlFilters } from "app/hooks/useUrlFilters";
 import { useScrollToTop } from "app/hooks/useScrollToTop";
 import { useInitialLoad } from "app/hooks/useInitialLoad";
+import { useCMSCollections } from "app/hooks/useCMSCollections";
 
 import { LandingModule } from "app/modules/landing-module";
+import { useGenericPageData } from "app/hooks/useGenericPageData";
+import { ProjectDetailModule } from "app/modules/project-detail-module";
+import { GenericPageLayout } from "app/modules/generic-page-module/layout";
+import { SectorDetailModule } from "app/modules/detail-modules/sector-detail-module";
 import { RegionDetailModule } from "app/modules/detail-modules/region-detail-module";
 import { CountryDetailModule } from "app/modules/detail-modules/country-detail-module";
 import { ThematicDetailModule } from "app/modules/detail-modules/thematic-detail-module";
 import { OrganisationDetailModule } from "app/modules/detail-modules/organisation-detail-module";
-import { SectorDetailModule } from "app/modules/detail-modules/sector-detail-module";
-import { ProjectDetailModule } from "app/modules/project-detail-module";
 import { OrganisationTypeDetailModule } from "app/modules/detail-modules/organisation-type-detail-module";
-import { Path } from "app/const/Path";
-import { useCMSCollections } from "app/hooks/useCMSCollections";
-import { GenericPageLayout } from "app/modules/generic-page-module/layout";
-import { useGenericPageData } from "app/hooks/useGenericPageData";
-import { Footer } from "./components/Footer";
 
 export function ModuleRoutes() {
   useCMSData({
@@ -39,35 +39,35 @@ export function ModuleRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={Path.home}>
           <LandingModule />
         </Route>
 
-        <Route exact path="/regions/:region">
+        <Route exact path={Path.detail.region}>
           <RegionDetailModule />
         </Route>
 
-        <Route exact path="/countries/:country">
+        <Route exact path={Path.detail.country}>
           <CountryDetailModule />
         </Route>
 
-        <Route exact path="/sectors/:sector">
+        <Route exact path={Path.detail.sector}>
           <SectorDetailModule />
         </Route>
 
-        <Route exact path="/organisations/:organisation">
+        <Route exact path={Path.detail.organisation}>
           <OrganisationDetailModule />
         </Route>
 
-        <Route exact path="/organisation-types/:orgType">
+        <Route exact path={Path.detail.orgType}>
           <OrganisationTypeDetailModule />
         </Route>
 
-        <Route exact path="/thematic-area/:theme">
+        <Route exact path={Path.detail.thematicArea}>
           <ThematicDetailModule />
         </Route>
 
-        <Route exact path="/project/:param">
+        <Route exact path={Path.detail.project}>
           <ProjectDetailModule />
         </Route>
 
@@ -88,11 +88,11 @@ export function ModuleRoutes() {
           {/* <FeedbackModule /> */}
         </Route>
 
-        <Route exact path="/viz/:tab">
+        <Route exact path={Path.vizTab}>
           <VizModule />
         </Route>
 
-        <Route exact path="/viz">
+        <Route exact path={Path.viz}>
           <Redirect to="/viz/oda" />
         </Route>
 
