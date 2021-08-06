@@ -82,7 +82,12 @@ export function AppBar() {
           </Hidden>
 
           {/* Accessibillity anchor */}
-          <a css={appbarStyle.skipLink} href="#main" tabIndex={0}>
+          <a
+            css={appbarStyle.skipLink}
+            href="#main"
+            tabIndex={0}
+            aria-label="Skip to main content"
+          >
             Skip to main
           </a>
 
@@ -97,7 +102,11 @@ export function AppBar() {
             }}
           >
             <Hidden xsDown>
-              <IconButton edge="start" color="inherit" aria-label="menu">
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="Go to homepage"
+              >
                 <MfaLogo />
               </IconButton>
             </Hidden>
@@ -162,8 +171,7 @@ const Search = () => {
       <Hidden smUp>
         <IconButton
           color="inherit"
-          aria-label="menu"
-          data-cy="burger-menu-button"
+          aria-label="Search"
           css={`
             @media (max-width: 600px) {
               padding-right: 4px;

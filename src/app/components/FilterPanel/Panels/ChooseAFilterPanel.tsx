@@ -34,7 +34,11 @@ export const ChooseAFilterPanel = (props: Model) => {
         <Typography variant="h5" component="h2" css={styles.heading}>
           {get(cmsData, "filters.addfilters", "Add Filters")}
         </Typography>
-        <IconButton css={styles.closeContainer} onClick={props.onCloseBtnClick}>
+        <IconButton
+          css={styles.closeContainer}
+          onClick={props.onCloseBtnClick}
+          aria-label="cancel"
+        >
           <Cancel css={styles.closeIcon} />
         </IconButton>
       </Grid>

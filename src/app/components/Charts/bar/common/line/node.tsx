@@ -32,7 +32,7 @@ export function LineNodes(props: any) {
             <g
               key={`${item.id}-node`}
               css="pointer-events: none;"
-              tabIndex={0}
+              tabIndex={-1}
               transform={`translate(${item.x}, ${item.y})`}
             >
               <circle

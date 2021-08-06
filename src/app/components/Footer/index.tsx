@@ -244,7 +244,7 @@ const LogoButtons = ({ cmsData }: { cmsData: any }) => {
       <IconButton
         edge="start"
         color="inherit"
-        aria-label="menu"
+        aria-label="Go to our facebook"
         target="_blank"
         href={get(cmsData, "menu.facebooklink", "https://www.facebook.com")}
       >
@@ -259,7 +259,7 @@ const LogoButtons = ({ cmsData }: { cmsData: any }) => {
       </IconButton>
       <IconButton
         color="inherit"
-        aria-label="menu"
+        aria-label="Go to our youtube"
         target="_blank"
         href={get(cmsData, "menu.youtubelink", "https://www.youtube.com")}
       >
@@ -274,7 +274,7 @@ const LogoButtons = ({ cmsData }: { cmsData: any }) => {
       </IconButton>
       <IconButton
         color="inherit"
-        aria-label="menu"
+        aria-label="Go to our LinkedIn"
         target="_blank"
         href={get(cmsData, "menu.linkedinlink", "https://www.linkedin.com")}
       >
@@ -290,7 +290,7 @@ const LogoButtons = ({ cmsData }: { cmsData: any }) => {
       <IconButton
         edge="end"
         color="inherit"
-        aria-label="menu"
+        aria-label="Go to our twitter"
         target="_blank"
         href={get(cmsData, "menu.twitterlink", "https://www.twitter.com")}
       >

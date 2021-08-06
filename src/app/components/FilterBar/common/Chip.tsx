@@ -143,7 +143,11 @@ const MobileTooltip = (props: MobileChipModel) => {
     <div css={mobileCSS.container}>
       <div css={mobileCSS.header}>
         <Typography variant="subtitle2">{props.label}</Typography>
-        <IconButton onClick={() => props.handleClose()} css={mobileCSS.icon}>
+        <IconButton
+          onClick={() => props.handleClose()}
+          css={mobileCSS.icon}
+          aria-label="cancel"
+        >
           <CancelIcon css={mobileCSS.icon} />
         </IconButton>
       </div>

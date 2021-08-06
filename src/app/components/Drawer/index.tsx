@@ -49,7 +49,11 @@ export const Drawer = () => {
         <Grid item xs={12} sm={12} lg={12} css={drawerStyle.HeaderGrid}>
           <NavLink to="/" css={drawerStyle.NavLink}>
             <Hidden smDown>
-              <IconButton edge="start" color="inherit" aria-label="menu">
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="Go to homepage"
+              >
                 <MfaLogo />
               </IconButton>
             </Hidden>
@@ -60,6 +64,7 @@ export const Drawer = () => {
 
           <IconButton
             onClick={toggleDrawer(false)}
+            aria-label="cancel"
             css={`
               color: ${PrimaryColor[2]};
               @media (max-width: 600px) {

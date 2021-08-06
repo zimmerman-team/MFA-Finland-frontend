@@ -83,6 +83,7 @@ export const MdBottomMenu = () => {
       <Grid container css={style.container}>
         <Grid item xs={12} md={12} lg={12} css={style.closeIcon}>
           <IconButton
+            aria-label="cancel"
             onClick={toggleDrawer(false)}
             css={`
               color: ${PrimaryColor[2]};

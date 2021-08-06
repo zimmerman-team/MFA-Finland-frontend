@@ -86,7 +86,11 @@ export const Header = (props: HeaderProps) => {
   return (
     <div css={styles.container}>
       <div css={styles.rightSideContainer}>
-        <IconButton css={styles.backButton} onClick={props.onBackBtnClick}>
+        <IconButton
+          css={styles.backButton}
+          onClick={props.onBackBtnClick}
+          aria-label="back"
+        >
           <ArrowBackIos style={{ color: "white" }} />
         </IconButton>
 
