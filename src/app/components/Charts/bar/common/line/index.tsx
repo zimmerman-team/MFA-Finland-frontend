@@ -12,6 +12,7 @@ export function Line(props: LineProps) {
     return (
       <LineNodes
         {...pprops}
+        tab-index={-1}
         hovered={props.hovered}
         selected={props.selected}
       />
@@ -20,6 +21,7 @@ export function Line(props: LineProps) {
 
   return (
     <ResponsiveLine
+      tab-index={-1}
       data={props.data}
       margin={{ top: 10, right: 60, bottom: 60, left: 50 }}
       xScale={{ type: "point" }}

@@ -15,6 +15,7 @@ export function LineNodes(props: any) {
           const y2 = get(nNode, "y", 0);
           return (
             <line
+              tabIndex={-1}
               y2={y2}
               x2={x2}
               y1={item.y}
@@ -36,6 +37,7 @@ export function LineNodes(props: any) {
               transform={`translate(${item.x}, ${item.y})`}
             >
               <circle
+                tabIndex={-1}
                 r="6"
                 css={`
                   pointer-events: none;
