@@ -29,10 +29,6 @@ const GeomapContainerStyle = (isLocked: boolean) => {
     margin: auto;
     margin-bottom: 19px;
 
-    @media (max-width: 960px) {
-      margin-left: -40px;
-    }
-
     * > path:hover {
       fill: ${!isLocked && ProjectPalette.primary.main};
       cursor: ${!isLocked && "pointer"};
@@ -124,7 +120,7 @@ export function Geomap({ geoData }) {
         aria-label="Geographical map which displays the disbursed amount in euro's per country"
         data={geoData}
         features={geojson.features} // Providing a country only view is possible by changing the features, see this:
-        margin={mobile ? marginMobile : mobile}
+        margin={mobile ? marginMobile : margin}
         colors={colorScheme}
         domain={[0, get(maxBy(geoData, "value"), "value", 0)]} // Scale of values.
         unknownColor="#E3E3E3" // This color is used when there is no available data for that country code.
