@@ -25,6 +25,8 @@ import { useWindowSize } from "app/hooks/useWindowSize";
 import { ContactInformation } from "app/modules/detail-modules/country-detail-module/ContactInformation";
 import { RssFeed } from "app/modules/detail-modules/country-detail-module/RssFeed";
 import { getCMSContent } from "app/utils/getCMSContent";
+import { MfaLogo } from "app/assets/mfa_logo";
+import { MFALogo2 } from "app/assets/MFALogo2";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -226,6 +228,7 @@ export const DataGrid = (props: DataGridProps) => {
       return {
         label: "",
         text: "",
+        icon: <MFALogo2 />,
       };
     }
 
@@ -240,6 +243,26 @@ export const DataGrid = (props: DataGridProps) => {
       label: get(cmsData, "general.result", "Result"),
       text: getCMSContent(cmsData, "pages.home_result"),
     };
+  }
+
+  function renderAboutContent(): JSX.Element {
+    if (isCountryDetail) {
+      return <></>;
+    }
+
+    if (aboutContent.icon) {
+      return (
+        <div css="width: 100%; height: 100%; display: flex;justify-content: center;align-items: center; transform: translateY(-25px);">
+          {aboutContent.icon}
+        </div>
+      );
+    }
+    return (
+      <p
+        style={{ lineHeight: "18px", fontSize: "16px" }}
+        dangerouslySetInnerHTML={{ __html: aboutContent.text || "" }}
+      />
+    );
   }
 
   return (
@@ -576,21 +599,14 @@ export const DataGrid = (props: DataGridProps) => {
               ? get(cmsData, "tooltips.rssfeed", "")
               : get(cmsData, "tooltips.result", "")
           }
+          label={aboutContent.label}
           childrencontainerStyle={
             isCountryDetail
               ? { paddingTop: 33, overflow: "auto" }
-              : { paddingTop: 33 }
+              : { paddingTop: 33, height: 100 }
           }
-          label={aboutContent.label}
         >
-          {isCountryDetail ? (
-            <RssFeed />
-          ) : (
-            <p
-              style={{ lineHeight: "18px", fontSize: "16px" }}
-              dangerouslySetInnerHTML={{ __html: aboutContent.text || "" }}
-            />
-          )}
+          {renderAboutContent()}
         </GridWidget>
       </Grid>
 
@@ -607,6 +623,7 @@ export const DataGrid = (props: DataGridProps) => {
           xl={12}
           component="section"
           css={`
+            overflow: hidden;
             @media (max-width: 960px) {
               order: 2;
             }
