@@ -12,7 +12,8 @@ const project: ProjectType = {
   endDate: "07-12-2020",
   country_region: ["Kenya"],
   budget: 10000000,
-  disbursementPercentage: 75,
+  disbursed: 0,
+  committed: 0,
   cmsData: {},
 };
 

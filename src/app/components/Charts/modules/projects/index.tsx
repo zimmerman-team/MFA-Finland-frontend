@@ -31,7 +31,8 @@ export type ProjectType = {
   sectors: string[];
   description: string;
   country_region: string[];
-  disbursementPercentage: number;
+  disbursed: number;
+  committed: number;
   cmsData: any;
 };
 
@@ -275,18 +276,18 @@ const ListItem = (project: ProjectType) => {
           <LabelValueGridItem
             label={get(
               project.cmsData,
-              "viz.estimatedbudget",
-              "Estimated budget"
+              "viz.totalcommitments",
+              "Total committed"
             )}
-            value={formatLargeAmountsWithPrefix(project.budget)}
+            value={formatLargeAmountsWithPrefix(project.committed)}
           />
           <LabelValueGridItem
             label={get(
               project.cmsData,
-              "viz.disbursementsamount",
-              "Disbursements amount"
+              "viz.totaldisbursements",
+              "Total disbursed"
             )}
-            value={project.disbursementPercentage}
+            value={formatLargeAmountsWithPrefix(project.disbursed)}
           />
         </Grid>
       </div>
