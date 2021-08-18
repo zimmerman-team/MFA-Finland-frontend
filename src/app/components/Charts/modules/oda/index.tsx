@@ -61,7 +61,35 @@ export function ODAvizModule(props: ODAvizModuleProps) {
     const regions = currentURLParams.get("recipient_region_code");
     const sectors = currentURLParams.get("sector_code");
     const organisations = currentURLParams.get("participating_org_ref");
-    const hasValue = countries || regions || sectors || organisations;
+    const activitystatus = currentURLParams.get("activity_status_code");
+    const activityscope = currentURLParams.get("activity_scope_code");
+    const tag = currentURLParams.get("tag_narrative");
+    const sdg = currentURLParams.get("tag_code");
+    const defaultaidtype = currentURLParams.get("default_aid_type_code");
+    const defaulttiedstatus = currentURLParams.get("default_tied_status_code");
+    const defaultflowtype = currentURLParams.get("default_flow_type_code");
+    const collaborationtype = currentURLParams.get("collaboration_type_code");
+    const policymarker = currentURLParams.get("policy_marker_code");
+    const budgetlines = currentURLParams.get("budget_line");
+    const humanrights = currentURLParams.get("human_rights_approach");
+    const years = currentURLParams.get("years");
+    const hasValue =
+      countries ||
+      regions ||
+      sectors ||
+      organisations ||
+      activitystatus ||
+      activityscope ||
+      tag ||
+      sdg ||
+      defaultaidtype ||
+      defaulttiedstatus ||
+      defaultflowtype ||
+      collaborationtype ||
+      policymarker ||
+      budgetlines ||
+      humanrights ||
+      years;
 
     return hasValue !== null;
   };
