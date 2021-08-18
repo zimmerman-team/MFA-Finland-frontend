@@ -1,14 +1,14 @@
 import React from "react";
+import get from "lodash/get";
 import { useHistory } from "react-router-dom";
-import { Hint, Sunburst, SunburstPoint } from "react-vis";
+import { useCMSData } from "app/hooks/useCMSData";
+import { Sunburst, SunburstPoint } from "react-vis";
 import { getTotal } from "app/components/Charts/sunburst/common/tooltip/utils";
 import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
 import {
   SunburstTooltip,
   SunburstTooltipContent,
 } from "app/components/Charts/sunburst/common/tooltip";
-import { useCMSData } from "app/hooks/useCMSData";
-import get from "lodash/get";
 
 export function SunburstViz(props: any) {
   const history = useHistory();
@@ -41,7 +41,8 @@ export function SunburstViz(props: any) {
             props.setSelected(node);
             props.setSelectedCount(node.size);
           } else {
-            props.onSectorSelectChange(node.code);
+            // props.onSectorSelectChange(node.code);
+            history.push(`/sectors/${node.code}`);
           }
         }}
         onValueMouseOver={(
