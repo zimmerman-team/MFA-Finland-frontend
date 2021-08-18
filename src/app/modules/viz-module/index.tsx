@@ -4,26 +4,29 @@ import get from "lodash/get";
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
-import Grid from "@material-ui/core/Grid";
-import { useCMSData } from "app/hooks/useCMSData";
-import { useMeasure, useUnmount, useDebounce } from "react-use";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
-import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { PrimaryColor } from "app/theme";
-import { BarItemProps } from "@nivo/bar";
+import Grid from "@material-ui/core/Grid";
 import { VizTabs } from "app/components/VizTabs";
+import { useMediaQuery } from "@material-ui/core";
+import { useCMSData } from "app/hooks/useCMSData";
 import { DataTable } from "app/components/Charts/table";
 import { VizLoader } from "app/modules/common/viz-loader";
 import { VizSidePanel } from "app/components/VizSidePanel";
+import { MoreButton } from "app/components/Charts/bar/data";
+import { useMeasure, useUnmount, useDebounce } from "react-use";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { ODAvizModule } from "app/components/Charts/modules/oda";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
+import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { SectorsVizModule } from "app/components/Charts/modules/sectors";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import { ProjectsListModule } from "app/components/Charts/modules/projects";
 import { BudgetLinesModule } from "app/components/Charts/modules/budgetlines";
+import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { CountriesRegionsModule } from "app/components/Charts/modules/locations";
 import { OrganisationsModule } from "app/components/Charts/modules/organisations";
+import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 import {
   thematicAreasDataTableOptions,
   thematicAreasDataTableColumns,
@@ -41,10 +44,6 @@ import {
   languageAtom,
   filterbarHeightAtom,
 } from "app/state/recoil/atoms";
-import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
-import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
-import { MoreButton } from "app/components/Charts/bar/data";
-import { useMediaQuery } from "@material-ui/core";
 
 export default function VizModule() {
   const { params } = useRouteMatch();
@@ -647,6 +646,7 @@ export default function VizModule() {
                 <>
                   <div css="width: 100%;height: 100px;" />
                   <ThematicAreas
+                    linkedLabels
                     showOnlyViz={false}
                     data={thematicAreasChartData}
                     selectedVizItemId={selectedVizItem}

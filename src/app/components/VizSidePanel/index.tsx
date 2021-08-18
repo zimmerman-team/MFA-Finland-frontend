@@ -70,9 +70,8 @@ export function VizSidePanel(props: VizSidePanelProps) {
             max-height: calc(${height}px - 101px);
             height: 100%;
             min-height: 100%;
-            ${props.vizType === "thematic-areas" ? "pointer-events: none;" : ""}
             ${hasColor ? "padding-top: 24px;" : ""}
-            
+
             @media (max-width: 600px) {
               padding-right: 12px;
             }

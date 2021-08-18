@@ -18,6 +18,7 @@ export function getThematicAreasLegends(
     ),
     color: d.color,
     value: formatLocale(d.value),
+    link: `/thematic-area/${d.ref}`,
   }));
   if (thematicAreaChartSingle) {
     return items.slice(0, 1);

@@ -259,16 +259,16 @@ export const rightsideinfopaneltitle = css`
 export const rightsideinfopanelitem = css`
   margin-bottom: 32px;
 
-  > div:nth-of-type(1) {
+  a {
     font-size: 14px;
     font-weight: 700;
-    margin-bottom: 9px;
     color: ${PrimaryColor[0]};
   }
 `;
 
 export const progresscontainercss = (color: string, percentage: number) => css`
   height: 8px;
+  margin-top: 9px;
   margin-bottom: 6px;
   border-radius: 13px;
   width: ${percentage}%;

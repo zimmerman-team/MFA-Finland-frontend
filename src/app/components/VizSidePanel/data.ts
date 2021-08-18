@@ -3,6 +3,7 @@ export interface VizSidePanelItemProps {
   name: string;
   value: string;
   color?: string;
+  link?: string;
   children?: VizSidePanelItemProps[];
 }
 

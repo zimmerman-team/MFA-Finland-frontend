@@ -6,10 +6,10 @@ import maxBy from "lodash/maxBy";
 import { PrimaryColor } from "app/theme";
 import Grid from "@material-ui/core/Grid";
 import { ResponsivePie } from "@nivo/pie";
-import { useHistory } from "react-router-dom";
 import Hidden from "@material-ui/core/Hidden";
 import { hexToRGBA } from "app/utils/hexToRgba";
 import { useCMSData } from "app/hooks/useCMSData";
+import { useHistory, Link } from "react-router-dom";
 import { formatLocale } from "app/utils/formatLocale";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import {
@@ -176,13 +176,13 @@ export function ThematicAreas(props: ThematicAreasProps) {
           </div>
           {props.data.map((item: DataProps) => (
             <div css={rightsideinfopanelitem} key={item.name}>
-              <div>
+              <Link to={`/thematic-area/${item.ref}`}>
                 {get(
                   cmsData.priorityAreas,
                   `${item.ref.split("|")[0].replace(/ /g, "")}`,
                   item.area
                 )}
-              </div>
+              </Link>
               <div
                 css={progresscontainercss(
                   item.color,

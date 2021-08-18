@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
+import { Link } from "react-router-dom";
+import { ArrowDropDown } from "@material-ui/icons";
 import { Grid, Typography } from "@material-ui/core";
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
 import {
@@ -8,9 +10,6 @@ import {
   containercss,
   expandiconcss,
 } from "app/components/VizSidePanel/common/item/styles";
-import IconButton from "@material-ui/core/IconButton";
-import { ArrowDropDown } from "@material-ui/icons";
-import { useKeyPressEvent } from "react-use";
 
 interface VizSidePanelItemPropsProps extends VizSidePanelItemProps {
   vizType: string;
@@ -67,14 +66,13 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
       <div
         css={`
           position: relative;
-          ${((props.vizType === "oda" ||
-            props.vizType === "thematic-areas" ||
-            props.vizType === "budget-lines") &&
+          ${((props.vizType === "oda" || props.vizType === "budget-lines") &&
             !props.isChild) ||
           (isSectorOROrgORLocation &&
             props.children &&
             props.children.length > 0 &&
-            !props.selected)
+            !props.selected) ||
+          props.link
             ? "cursor: pointer;"
             : ""}
         `}
@@ -102,7 +100,11 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
               width: calc(100% - 25px);
             `}
           >
-            {props.name}
+            {props.link ? (
+              <Link to={props.link}>{props.name}</Link>
+            ) : (
+              props.name
+            )}
           </Typography>
         </div>
         <div
