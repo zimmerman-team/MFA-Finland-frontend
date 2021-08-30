@@ -62,8 +62,8 @@ export const CardContent = (props: FilterProps) => {
                 return (
                   <AccordionListItem
                     node={node1}
-                    key={node1.name}
                     nodeStyle="has2NodesStyle"
+                    key={`${node1.code}-${node1.code}`}
                     onFilterCheckboxChange={props.onFilterCheckboxChange}
                     selected={props.selectedItems.indexOf(node1.code) > -1}
                     component={
@@ -71,7 +71,7 @@ export const CardContent = (props: FilterProps) => {
                         {node1.children.map((node2) => {
                           return (
                             <AccordionListItem
-                              key={node2.name}
+                              key={`${node2.code}-${node2.code}`}
                               node={node2}
                               component={
                                 <CheckboxGridListItem
@@ -112,7 +112,7 @@ export const CardContent = (props: FilterProps) => {
               }
               return (
                 <AccordionListItem
-                  key={node1.name}
+                  key={`${node1.code}-${node1.code}`}
                   node={node1}
                   selected={isChecked}
                   component={

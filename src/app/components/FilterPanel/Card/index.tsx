@@ -171,7 +171,7 @@ const CardContent = (props: FilterProps) => {
                 // Component with 4 drilldown levels
                 return (
                   <AccordionListItem
-                    key={node1.name}
+                    key={`${node1.code}-${node1.code}`}
                     node={node1}
                     nodeStyle="has2NodesStyle"
                     onFilterCheckboxChange={props.onFilterCheckboxChange}
@@ -181,14 +181,14 @@ const CardContent = (props: FilterProps) => {
                         {node1.children.map((node2) => {
                           return (
                             <AccordionListItem
-                              key={node2.name}
+                              key={`${node2.code}-${node2.code}`}
                               node={node2}
                               component={
                                 <>
                                   {node2.children?.map((node3) => {
                                     return (
                                       <AccordionListItem
-                                        key={node3.name}
+                                        key={`${node3.code}-${node3.code}`}
                                         node={node3}
                                         component={
                                           <CheckboxGridListItem
@@ -232,7 +232,7 @@ const CardContent = (props: FilterProps) => {
                 // Component with 3 drilldown levels
                 return (
                   <AccordionListItem
-                    key={node1.name}
+                    key={`${node1.code}-${node1.code}`}
                     node={node1}
                     nodeStyle="has2NodesStyle"
                     onFilterCheckboxChange={props.onFilterCheckboxChange}
@@ -242,7 +242,7 @@ const CardContent = (props: FilterProps) => {
                         {node1.children.map((node2) => {
                           return (
                             <AccordionListItem
-                              key={node2.name}
+                              key={`${node2.code}-${node2.code}`}
                               node={node2}
                               component={
                                 <CheckboxGridListItem
@@ -283,7 +283,7 @@ const CardContent = (props: FilterProps) => {
               }
               return (
                 <AccordionListItem
-                  key={node1.name}
+                  key={`${node1.code}-${node1.code}`}
                   node={node1}
                   selected={isChecked}
                   component={
