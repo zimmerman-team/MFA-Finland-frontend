@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
@@ -22,7 +23,7 @@ import {
 interface useDataGridDataProps {
   detailPageFilter: {
     key: string;
-    value: string;
+    value: string | string[];
   };
 }
 
@@ -217,6 +218,10 @@ export function useDataGridData(props: useDataGridDataProps) {
   }
 
   function reloadData() {
+    const pageDetailFilterUpdated =
+      typeof props.detailPageFilter.value === "object"
+        ? props.detailPageFilter.value.length > 0
+        : true;
     let filters = getAPIFormattedFilters(
       selectedFilters,
       initialCheckURLSearchParams
@@ -229,23 +234,31 @@ export function useDataGridData(props: useDataGridDataProps) {
           props.detailPageFilter.key === "tag_narrative"
             ? [
                 props.detailPageFilter.value,
-                props.detailPageFilter.value.replace("primary", "secondary"),
+                (props.detailPageFilter.value as string).replace(
+                  "primary",
+                  "secondary"
+                ),
               ]
-            : [props.detailPageFilter.value],
+            : typeof props.detailPageFilter.value === "string"
+            ? [props.detailPageFilter.value]
+            : props.detailPageFilter.value,
       };
-      detailPageNameAction({
-        values: {
-          filters,
-          detail_type: props.detailPageFilter.key,
-        },
-      });
+      if (pageDetailFilterUpdated) {
+        detailPageNameAction({
+          values: {
+            filters,
+            detail_type: props.detailPageFilter.key,
+          },
+        });
+      }
     }
     if (
       (odaBarChartData.length === 0 ||
         !isEqual(ODAlatestFilters, selectedFilters) ||
         isDetailPage ||
         (!isDetailPage && prevLocation !== "")) &&
-      !vizDataLoading.oda
+      !vizDataLoading.oda &&
+      pageDetailFilterUpdated
     ) {
       odaBarChartAction({
         values: {
@@ -258,7 +271,8 @@ export function useDataGridData(props: useDataGridDataProps) {
         !isEqual(ThematicAreasLatestFilters, selectedFilters) ||
         isDetailPage ||
         (!isDetailPage && prevLocation !== "")) &&
-      !vizDataLoading.thematic
+      !vizDataLoading.thematic &&
+      pageDetailFilterUpdated
     ) {
       thematicAreasChartAction({
         values: {
@@ -271,7 +285,8 @@ export function useDataGridData(props: useDataGridDataProps) {
         !isEqual(SectorsSunburstLatestFilters, selectedFilters) ||
         isDetailPage ||
         (!isDetailPage && prevLocation !== "")) &&
-      !vizDataLoading.sectors
+      !vizDataLoading.sectors &&
+      pageDetailFilterUpdated
     ) {
       sectorsSunburstAction({
         values: {
@@ -284,7 +299,8 @@ export function useDataGridData(props: useDataGridDataProps) {
         !isEqual(LocationsTreemapLatestFilters, selectedFilters) ||
         isDetailPage ||
         (!isDetailPage && prevLocation !== "")) &&
-      !vizDataLoading.locations
+      !vizDataLoading.locations &&
+      pageDetailFilterUpdated
     ) {
       locationsTreemapAction({
         values: {
@@ -297,7 +313,8 @@ export function useDataGridData(props: useDataGridDataProps) {
         !isEqual(OrganisationsLatestFilters, selectedFilters) ||
         isDetailPage ||
         (!isDetailPage && prevLocation !== "")) &&
-      !vizDataLoading.organisations
+      !vizDataLoading.organisations &&
+      pageDetailFilterUpdated
     ) {
       organisationsTreemapAction({
         values: {
@@ -310,7 +327,8 @@ export function useDataGridData(props: useDataGridDataProps) {
         !isEqual(BudgetLinesLatestFilters, selectedFilters) ||
         isDetailPage ||
         (!isDetailPage && prevLocation !== "")) &&
-      !vizDataLoading.budgetLines
+      !vizDataLoading.budgetLines &&
+      pageDetailFilterUpdated
     ) {
       budgetLinesBarChartAction({
         values: {
@@ -323,7 +341,8 @@ export function useDataGridData(props: useDataGridDataProps) {
         !isEqual(SDGlatestFilters, selectedFilters) ||
         isDetailPage ||
         (!isDetailPage && prevLocation !== "")) &&
-      !vizDataLoading.sdg
+      !vizDataLoading.sdg &&
+      pageDetailFilterUpdated
     ) {
       sdgVizAction({
         values: {
@@ -336,7 +355,8 @@ export function useDataGridData(props: useDataGridDataProps) {
         !isEqual(GeoLatestFilters, selectedFilters) ||
         isDetailPage ||
         (!isDetailPage && prevLocation !== "")) &&
-      !vizDataLoading.geo
+      !vizDataLoading.geo &&
+      pageDetailFilterUpdated
     ) {
       geoMapAction({
         values: {
@@ -360,9 +380,14 @@ export function useDataGridData(props: useDataGridDataProps) {
           props.detailPageFilter.key === "tag_narrative"
             ? [
                 props.detailPageFilter.value,
-                props.detailPageFilter.value.replace("primary", "secondary"),
+                (props.detailPageFilter.value as string).replace(
+                  "primary",
+                  "secondary"
+                ),
               ]
-            : [props.detailPageFilter.value],
+            : typeof props.detailPageFilter.value === "string"
+            ? [props.detailPageFilter.value]
+            : props.detailPageFilter.value,
       };
       detailPageNameAction({
         values: {

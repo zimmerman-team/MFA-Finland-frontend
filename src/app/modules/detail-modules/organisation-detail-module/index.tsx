@@ -1,13 +1,16 @@
 import React from "react";
 import get from "lodash/get";
+import find from "lodash/find";
+import isEqual from "lodash/isEqual";
+import { useRecoilState } from "recoil";
 import useTitle from "react-use/lib/useTitle";
-import { Path, getAppName } from "app/const/Path";
 import { useRouteMatch } from "react-router-dom";
+import { Path, getAppName } from "app/const/Path";
+import { useStoreState } from "app/state/store/hooks";
+import { languageAtom } from "app/state/recoil/atoms";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
-import { useRecoilState } from "recoil";
-import { languageAtom } from "app/state/recoil/atoms";
 
 const moduleName = "Organisation Detail Module";
 
@@ -16,10 +19,49 @@ export const crumbs: BreadcrumbLinkModel[] = [
   { label: moduleName, cmsKey: "breadcrumbs.organisation" },
 ];
 
+function getOrganisationValues(
+  orgFilterOptions: any,
+  orgRef: string
+): string[] {
+  const fLvl0Org = find(orgFilterOptions, { code: orgRef });
+  const filterArr = [];
+
+  if (!fLvl0Org) {
+    filterArr.push(orgRef);
+  } else {
+    filterArr.push(orgRef);
+    get(fLvl0Org, "children", []).forEach((child: any) => {
+      filterArr.push(child.code);
+      get(child, "children", []).forEach((gchild: any) => {
+        filterArr.push(gchild.code);
+        get(gchild, "children", []).forEach((ggchild: any) => {
+          filterArr.push(ggchild.code);
+        });
+      });
+    });
+  }
+
+  return filterArr;
+}
+
 export function OrganisationDetailModule() {
   const [currentLanguage] = useRecoilState(languageAtom);
   useTitle(`${moduleName} | ${getAppName(currentLanguage)}`);
   const { params } = useRouteMatch();
+  const filterOrgOptionsData = useStoreState((state) =>
+    get(state.filterOptions.organisations, "data.data", [])
+  );
+  const [orgValues, setOrgValues] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    const values = getOrganisationValues(
+      filterOrgOptionsData,
+      get(params, "organisation", "")
+    );
+    if (!isEqual(values, orgValues)) {
+      setOrgValues(values);
+    }
+  }, [params, filterOrgOptionsData]);
 
   const {
     vizDataLoading,
@@ -37,7 +79,7 @@ export function OrganisationDetailModule() {
   } = useDataGridData({
     detailPageFilter: {
       key: "participating_org_ref",
-      value: get(params, "organisation", ""),
+      value: orgValues,
     },
   });
 
