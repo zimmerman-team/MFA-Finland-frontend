@@ -1,5 +1,5 @@
 import { css } from "styled-components/macro";
-import theme, { PrimaryColor } from "app/theme";
+import { PrimaryColor } from "app/theme";
 
 export const BreadcrumbItemStyle = css`
   font-weight: 500;

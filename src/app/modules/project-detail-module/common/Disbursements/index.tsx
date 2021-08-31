@@ -2,7 +2,6 @@ import { formatLocale } from "app/utils/formatLocale";
 import React from "react";
 import { css } from "styled-components/macro";
 import get from "lodash/get";
-import { Typography } from "@material-ui/core";
 
 interface TotalDisbursementsProps {
   totalDisbursements: number;

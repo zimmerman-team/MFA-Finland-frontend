@@ -7,7 +7,7 @@ import { drawerAtom } from "app/state/recoil/atoms";
 import { DrawerItem } from "app/components/Drawer/common/DrawerItem";
 
 export const NavList = (props: NavListProps) => {
-  const [drawerState, setDrawerState] = useRecoilState(drawerAtom);
+  const [_, setDrawerState] = useRecoilState(drawerAtom);
   const mobile = useMediaQuery("(max-width: 600px)");
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent

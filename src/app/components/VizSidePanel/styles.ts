@@ -1,5 +1,5 @@
 import { css } from "styled-components/macro";
-import { PrimaryColor, SecondaryColor } from "app/theme";
+import { SecondaryColor } from "app/theme";
 
 export const containercss = css`
   padding: 16px;

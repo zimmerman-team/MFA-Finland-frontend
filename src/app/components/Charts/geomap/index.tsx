@@ -91,10 +91,6 @@ export function Geomap({ geoData }) {
         setProjectionScale(148);
         setProjectionTranslation([0.54, 0.59]);
         break;
-      case width >= 600:
-        setProjectionScale(148);
-        setProjectionTranslation([0.54, 0.59]);
-        break;
       default:
         setProjectionScale(188);
         setProjectionTranslation(0.45, 0.59);

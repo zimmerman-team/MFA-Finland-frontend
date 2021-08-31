@@ -5,8 +5,6 @@ export const containercss = css`
   display: flex;
   flex-direction: column;
   margin-top: 9px;
-
-  //margin-right: 25px;
 `;
 
 export const buttonscontainercss = css`

@@ -1,5 +1,4 @@
 import { Action, Thunk } from "easy-peasy";
-// import { UserMetaData } from "app/interfaces/User";
 import { SyncSearchModel } from "app/state/api/actions-reducers/sync/search";
 import { FiltersUpdatedModel } from "app/state/api/actions-reducers/sync/filtersUpdated";
 import { ProjectListPage } from "../actions-reducers/sync/generic";

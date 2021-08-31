@@ -7,21 +7,14 @@ import { DataTable } from "app/components/Charts/table";
 import { MUIDataTableIsRowCheck } from "mui-datatables";
 import {
   DataTableProps,
-  SectorsDataTableColumns,
   SectorsDataTableOptions,
 } from "app/components/Charts/table/data";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
-import { MoreActions } from "app/components/Charts/table/common/toolbar/MoreButton";
 import { MoreButton } from "app/components/Charts/bar/data";
 import { useRouteMatch } from "react-router-dom";
-// import { downloadActivitiesCSV } from "app/utils/downloadActivitiesCSV";
-// import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 
 export function SectorsFragmentTable(props: DataTableProps) {
   const cmsData = useCMSData({ returnData: true });
-  //   const [selectedFilters, setSelectedFilters] = useRecoilState(
-  //     selectedFilterAtom
-  //   );
   const [shownData, setShownData] = React.useState<
     Array<object | number[] | string[]>
   >([]);
@@ -78,26 +71,6 @@ export function SectorsFragmentTable(props: DataTableProps) {
         ...SectorsDataTableOptions,
         count: shownData.length,
         customToolbar: () => <MoreButton params={params} />,
-        // onDownload: () => {
-        //   let filters = getAPIFormattedFilters(selectedFilters);
-        //   if (
-        //     !find(Object.keys(filters), (key: string) => key === "sector_code")
-        //   ) {
-        //     filters = {
-        //       ...filters,
-        //       sector_code: ["*"],
-        //     };
-        //   }
-        //   downloadActivitiesCSV(
-        //     ...filters,
-        //     "",
-        //     "",
-        //     props.tableCount,
-        //     props.pageParam,
-        //     () => null
-        //   );
-        //   return false;
-        // },
         onSearchChange,
         isRowExpandable: (
           dataIndex: number,

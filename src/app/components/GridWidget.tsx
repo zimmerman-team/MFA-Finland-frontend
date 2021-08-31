@@ -10,7 +10,7 @@ import { useHistory, Link } from "react-router-dom";
 import { useStoreState } from "app/state/store/hooks";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
-import { formatLocale, formatLocaleN } from "app/utils/formatLocale";
+import { formatLocaleN } from "app/utils/formatLocale";
 
 const style = {
   widgetHeader: (odaWidget: boolean) => css`

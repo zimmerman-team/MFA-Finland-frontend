@@ -1,24 +1,17 @@
 import React from "react";
 import filter from "lodash/filter";
-// import { useRecoilState } from "recoil";
 import { DataTable } from "app/components/Charts/table";
 import { MUIDataTableIsRowCheck } from "mui-datatables";
-// import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { DataTableProps } from "app/components/Charts/table/data";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
 import { MoreButton } from "app/components/Charts/bar/data";
 import { useRouteMatch } from "react-router-dom";
-// import { downloadActivitiesCSV } from "app/utils/downloadActivitiesCSV";
-// import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 
 interface LocationsFragmentTableProps extends DataTableProps {
   type: string;
 }
 
 export function LocationsFragmentTable(props: LocationsFragmentTableProps) {
-  //   const [selectedFilters, setSelectedFilters] = useRecoilState(
-  //     selectedFilterAtom
-  //   );
   const [shownData, setShownData] = React.useState<
     Array<object | number[] | string[]>
   >([]);
@@ -59,27 +52,6 @@ export function LocationsFragmentTable(props: LocationsFragmentTableProps) {
         ...props.options,
         count: shownData.length,
         customToolbar: () => <MoreButton params={params} />,
-
-        // onDownload: () => {
-        //   let filters = getAPIFormattedFilters(selectedFilters);
-        //   if (
-        //     !find(Object.keys(filters), (key: string) => key === "sector_code")
-        //   ) {
-        //     filters = {
-        //       ...filters,
-        //       sector_code: ["*"],
-        //     };
-        //   }
-        //   downloadActivitiesCSV(
-        //     ...filters,
-        //     "",
-        //     "",
-        //     props.tableCount,
-        //     props.pageParam,
-        //     () => null
-        //   );
-        //   return false;
-        // },
         onSearchChange,
         isRowExpandable: (
           dataIndex: number,

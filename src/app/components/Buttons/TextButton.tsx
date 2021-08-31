@@ -27,7 +27,6 @@ const containercss = css`
   transition: color 150ms;
 
   &:hover {
-    //color: ${theme.palette.text.secondary};
     color: ${theme.palette.primary.main};
   }
 `;

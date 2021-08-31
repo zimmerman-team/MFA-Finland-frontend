@@ -5,7 +5,6 @@ export const appbarStyle = {
   appBar: css`
     margin-left: auto;
     margin-right: auto;
-    //max-width: calc(1440px - 64px);
     max-width: 1440px;
     padding: 0 32px;
 

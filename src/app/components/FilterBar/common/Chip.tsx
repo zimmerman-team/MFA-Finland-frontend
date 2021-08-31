@@ -6,9 +6,8 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { css } from "styled-components/macro";
-import { PrimaryColor, ProjectPalette } from "app/theme";
+import { PrimaryColor } from "app/theme";
 import React from "react";
-import CloseIcon from "@material-ui/icons/Close";
 import CancelIcon from "@material-ui/icons/Cancel";
 import svgoud from "./arrowRight.svg";
 

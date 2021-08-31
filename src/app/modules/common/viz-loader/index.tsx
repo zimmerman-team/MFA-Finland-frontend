@@ -5,6 +5,7 @@ interface Props {
 }
 
 export function VizLoader(props: Props) {
+  console.log("test");
   return (
     <div
       css={`

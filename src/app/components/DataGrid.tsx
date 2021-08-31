@@ -3,7 +3,7 @@ import get from "lodash/get";
 import maxBy from "lodash/maxBy";
 import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
-import { Grid, Hidden, Typography } from "@material-ui/core";
+import { Grid, Hidden } from "@material-ui/core";
 import { useCMSData } from "app/hooks/useCMSData";
 import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components/Charts/bar";
@@ -23,9 +23,7 @@ import { Collapsable } from "app/components/Collapseable";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
 import { useWindowSize } from "app/hooks/useWindowSize";
 import { ContactInformation } from "app/modules/detail-modules/country-detail-module/ContactInformation";
-import { RssFeed } from "app/modules/detail-modules/country-detail-module/RssFeed";
 import { getCMSContent } from "app/utils/getCMSContent";
-import { MfaLogo } from "app/assets/mfa_logo";
 import { MFALogo2 } from "app/assets/MFALogo2";
 
 export interface DataGridProps {

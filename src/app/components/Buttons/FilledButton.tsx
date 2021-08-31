@@ -39,8 +39,6 @@ export const FilledButton = (props: GeneralButtonProps) => {
         transition: background 150ms ease-in-out;
 
         &:hover {
-          // WCAG changes
-          // background: ${PrimaryColor[0]};
           background: ${PrimaryColor[3]};
           color: ${theme.palette.common.white};
         }

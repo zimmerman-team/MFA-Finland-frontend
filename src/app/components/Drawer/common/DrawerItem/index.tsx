@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useCMSData } from "app/hooks/useCMSData";
 import MUIListItem from "@material-ui/core/ListItem";
 import MUIListItemText from "@material-ui/core/ListItemText";
-import { PrimaryColor, ProjectPalette } from "app/theme";
+import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";

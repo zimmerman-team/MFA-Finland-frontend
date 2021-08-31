@@ -1,11 +1,9 @@
+import React from "react";
 import styled from "styled-components";
 import { Box } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import ContainedButton from "app/components/Buttons/ContainedButton";
 import { Link } from "react-router-dom";
-import React from "react";
 import { PillButton } from "app/components/Buttons/PillButton";
-import { css } from "styled-components/macro";
 import { PrimaryColor } from "app/theme";
 
 const MessageContainer = styled((props) => <Box {...props} />)`

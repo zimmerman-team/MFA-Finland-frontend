@@ -21,7 +21,6 @@ import { exportPage } from "app/utils/exportPage";
 
 const style = {
   container: css`
-    // height: 40vh;
     display: flex;
     padding: 12px;
     flex-direction: row;

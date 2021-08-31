@@ -7,10 +7,7 @@ import Box from "@material-ui/core/Box";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { InPageNavItem } from "app/components/InPageNavigation/InPageNavItem";
-import {
-  // activityList,
-  ActivityItemProps,
-} from "app/modules/activity-detail-module/common/Activity/model";
+import { ActivityItemProps } from "app/modules/activity-detail-module/common/Activity/model";
 
 import { useHistory } from "react-router-dom";
 import findIndex from "lodash/findIndex";
@@ -81,103 +78,28 @@ export function InPageNavigation(props: InPageNavModel) {
       const hash = location.hash.replace("#", "");
       let fItemIndex = findIndex(props.lists, { path: hash });
       fItemIndex = fItemIndex === -1 ? 0 : fItemIndex;
-      // window.location.hash = props.lists[fItemIndex].path;
-      // props.handleClick(fItemIndex);
     });
     return () => {
       window.location.hash = "";
     };
   }, []);
 
-  // TODO: Okay so this code got ugly, complicated and messy.
-  // TODO: This code should run without the activity-detail implementation, a re-design in state management is needed if we want to do this
   function handleClickUp() {
-    const {
-      active,
-      setActive,
-      // setActivityListState,
-      lists,
-      // actualData,
-    } = props;
+    const { active, setActive, lists } = props;
 
     if (active !== 0) {
       setActive(active - 1);
-      // === This part is specific to the activity detail page ===
-      // TODO: recheck this
-      // if (setActivityListState) {
-      //   setActivityListState((prevState) => {
-      //     let skipItems = 1;
-
-      //     for (let i = active; i < lists.length - 1; i--) {
-      //       if (isDisabled(lists[i - 1], actualData)) {
-      //         skipItems += 1;
-      //       } else {
-      //         break;
-      //       }
-      //     }
-      //     const next = active - skipItems;
-      //     const updateItem = {
-      //       ...lists[next],
-      //       expanded: true,
-      //     };
-      //     if (lists[next]) {
-      //       const newState = [...activityList];
-      //       newState[next] = updateItem;
-      //       setActive(next);
-
-      //       window.location.hash = lists[next].path;
-      //       return [...newState];
-      //     }
-      //     return prevState;
-      //   });
-      //   // === Till here ===
-      // } else {
       window.location.hash = lists[active - 1].path;
       setActive(active - 1);
-      // }
     }
   }
 
   function handleClickDown() {
-    const {
-      active,
-      setActive,
-      // setActivityListState,
-      lists,
-      // actualData,
-    } = props;
+    const { active, setActive, lists } = props;
 
     if (active + 1 < lists.length) {
-      // TODO: recheck this
-      // if (setActivityListState && active + 1) {
-      //   setActivityListState((prevState) => {
-      //     let skipItems = 1;
-      //     for (let i = active; i < lists.length - 1; i++) {
-      //       if (isDisabled(lists[i + 1], actualData)) {
-      //         skipItems += 1;
-      //       } else {
-      //         break;
-      //       }
-      //     }
-
-      //     const next = active + skipItems;
-      //     if (lists[next]) {
-      //       const updateItem = {
-      //         ...lists[next],
-      //         expanded: true,
-      //       };
-      //       const newState = [...activityList];
-      //       newState[next] = updateItem;
-      //       setActive(next);
-      //       window.location.hash = lists[next].path;
-      //       return [...newState];
-      //     }
-      //     return prevState;
-      //   });
-      // } else {
       window.location.hash = lists[active + 1].path;
       setActive(active + 1);
-      // }
     }
   }
 

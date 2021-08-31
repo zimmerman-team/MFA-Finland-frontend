@@ -4,7 +4,7 @@ import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
 import { Tabs } from "app/components/FilterPanel/Card/Tabs";
-import { Checkbox, LinearProgress, Typography } from "@material-ui/core";
+import { Checkbox, Typography } from "@material-ui/core";
 import { FilterProps, FilterOption } from "app/components/FilterPanel/data";
 import { CardContentPeriod } from "app/components/FilterPanel/Card/PeriodCardContent";
 import { CheckboxListItem } from "app/components/FilterPanel/ListItems/CheckboxListItem";
@@ -25,8 +25,6 @@ export const Card = (props: FilterProps) => {
         border: none;
         padding: 0;
         margin-left: 0;
-        //max-width: 816px;
-        //height: 534px;
       }
     `,
   };
@@ -152,6 +150,7 @@ const CardContent = (props: FilterProps) => {
     `,
   };
   // TODO: if anyone knows a way to improve the simplicity/readability of this render function please refactor
+  // recursive function...
   function renderContent(): JSX.Element | undefined {
     if (data && data.length >= 1) {
       return (

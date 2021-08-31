@@ -41,9 +41,6 @@ export function BudgetLinesBarChart(props: BarChartProps) {
   };
 
   const Bars = (bprops: any) => {
-    // if (props.vizCompData.length !== bprops.bars.length) {
-    //   props.setVizCompData(bprops.bars);
-    // }
     return bprops.bars.map((bar: any) => (
       <BarNode
         {...bar}

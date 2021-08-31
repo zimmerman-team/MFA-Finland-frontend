@@ -8,7 +8,7 @@ import { ProjectTypography } from "app/theme";
 import { Anchor } from "app/components/InPageNavigation";
 import { ActivityItemProps } from "app/components/ActivityAccordion/model";
 import { getAccordionContent } from "app/components/utils/getAccordionContent";
-import { AccordionStyle } from "app/components/Accordion/style";
+import { AccordionStyle } from "app/components/ActivityAccordion/style";
 
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 
@@ -18,13 +18,11 @@ export const ActivityAccordion = (props: ActivityItemProps) => {
       <Anchor id={props.id} positionRelativeToTop={64} />
 
       <div css={AccordionStyle(props.expanded)} id={`${props.id}-content`}>
-        {/* <Accordion> */}
         <MUIAccordionSummary
           onClick={() =>
             props.handleClick &&
             props.handleClick(props.expanded ? -1 : props.index)
           }
-          // expandIcon={<ExpandMoreIcon />}
           aria-controls={`${props.id}-content`}
           id={`${props.id}-header`}
           css={`
@@ -59,7 +57,6 @@ export const ActivityAccordion = (props: ActivityItemProps) => {
         >
           {getAccordionContent(props.data, props.dataType)}
         </MUIAccordionDetails>
-        {/* </Accordion> */}
       </div>
     </React.Fragment>
   );

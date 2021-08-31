@@ -82,7 +82,6 @@ export function LanguagePopover(
         <button
           type="button"
           css={removeButtonStyling}
-          // tabIndex={0}
           aria-label="Switch language to Finnish"
           onClick={() => {
             setLanguage("en");

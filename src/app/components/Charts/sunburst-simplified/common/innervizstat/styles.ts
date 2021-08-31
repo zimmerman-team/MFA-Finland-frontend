@@ -1,4 +1,3 @@
-import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 
 export const totalcssSimplified = css`

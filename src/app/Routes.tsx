@@ -1,5 +1,4 @@
 // cc:application base#;application routes
-
 import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { PageLoader } from "app/modules/common/page-loader";
@@ -85,7 +84,6 @@ export function ModuleRoutes() {
 
         <Route exact path={Path.general.feedback}>
           <GenericPageLayout {...useGenericPageData("feedback")} />
-          {/* <FeedbackModule /> */}
         </Route>
 
         <Route exact path={Path.vizTab}>

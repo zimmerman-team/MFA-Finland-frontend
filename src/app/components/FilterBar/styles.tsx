@@ -1,5 +1,5 @@
 import { css } from "styled-components/macro";
-import { PrimaryColor, SecondaryColor } from "app/theme";
+import { PrimaryColor } from "app/theme";
 import { FilterBarProps } from "app/components/FilterBar/index";
 
 export const createStyles = (props: FilterBarProps) => {
@@ -15,9 +15,6 @@ export const createStyles = (props: FilterBarProps) => {
       align-items: flex-start;
       position: sticky;
       top: 68px;
-      //margin-bottom: 16px;
-      //margin-left: 68px;
-      //margin-right: 68px;
       min-height: 68px;
       background-color: #ecf1fa;
       z-index: 6;
@@ -36,7 +33,6 @@ export const createStyles = (props: FilterBarProps) => {
 
       @media (max-width: 600px) {
         top: 56px;
-        //margin-left: 12px;
         margin-right: 0px;
       }
 

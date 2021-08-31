@@ -1,5 +1,4 @@
 import React from "react";
-import get from "lodash/get";
 import { useRecoilState } from "recoil";
 import { useUpdateEffect } from "react-use";
 import { cmsCollectionsAtom, languageAtom } from "app/state/recoil/atoms";

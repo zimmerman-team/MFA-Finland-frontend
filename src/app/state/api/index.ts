@@ -1,6 +1,4 @@
 /* eslint-disable no-param-reassign */
-import get from "lodash/get";
-// import cryptoJs from "crypto-js";
 import { action, thunk } from "easy-peasy";
 import axios, { AxiosResponse } from "axios";
 import {
@@ -77,7 +75,7 @@ export const APIModel = <QueryModel, ResponseModel>(
         );
     }
   }),
-  /*authPostFetch: thunk(async (actions, query: RequestValues<QueryModel>) => {
+  /* authPostFetch: thunk(async (actions, query: RequestValues<QueryModel>) => {
     actions.onRequest();
     const encodedValues = cryptoJs.AES.encrypt(
       JSON.stringify(query.values),
@@ -124,7 +122,7 @@ export const APIModel = <QueryModel, ResponseModel>(
           actions.onSuccess({ ...resp.data, addOnData: query.addOnData }),
         (error: any) => actions.onError(error.response)
       );
-  }),*/
+  }), */
   setData: action((state, payload: any) => {
     state.data = payload;
   }),

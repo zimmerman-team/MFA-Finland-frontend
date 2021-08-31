@@ -62,7 +62,6 @@ export function BarNode(props: BarNodeProps) {
   return (
     <g
       {...fprops}
-      // tabIndex={0}
       onClick={onItemClick}
       onKeyPress={(e) => {
         if (e.code === "Enter") {
