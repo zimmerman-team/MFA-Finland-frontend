@@ -1,6 +1,9 @@
 import { formatLocale } from "app/utils/formatLocale";
 
 export function formatMoneyWithPrefix(n: number): string {
+  if (n === 0) {
+    return `€0.00`;
+  }
   if (Math.abs(Number(n)) >= 1.0e9) {
     return `€${(Math.abs(Number(n)) / 1.0e9).toFixed(2)} bln`;
   }

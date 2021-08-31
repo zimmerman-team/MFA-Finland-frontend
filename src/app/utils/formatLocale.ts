@@ -11,6 +11,6 @@ export function formatLocale(value: number | bigint): string {
 }
 
 export function formatLocaleN(value: number | bigint): string {
-  if (!value) return "";
+  if (!value) return "0";
   return Number(value).toLocaleString(locale);
 }

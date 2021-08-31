@@ -166,7 +166,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
         ))}
       </Grid>
       <Hidden lgUp>
-        <div css="width: 100%;height: 100px;" />
+        {props.data.length > 0 && <div css="width: 100%;height: 100px;" />}
       </Hidden>
       {!props.showOnlyViz && (
         <Grid item xs={12} md={12} lg={6} xl={6} css={rightsideinfopanel}>

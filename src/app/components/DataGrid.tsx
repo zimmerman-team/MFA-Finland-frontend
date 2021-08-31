@@ -280,6 +280,9 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip={get(cmsData, "tooltips.overview_disbursements", "")}
           label="Overview Disbursements"
           detailPageFilter={props.detailPageFilter}
+          childrencontainerStyle={{
+            height: 100,
+          }}
         >
           {props.vizDataLoading.oda || props.odaBarChartData.length === 0 ? (
             <VizLoader loading={props.vizDataLoading.oda} />
@@ -311,6 +314,7 @@ export const DataGrid = (props: DataGridProps) => {
           tooltip={get(cmsData, "tooltips.thematic_areas", "")}
           link="/viz/thematic-areas"
           detailPageFilter={props.detailPageFilter}
+          childrencontainerStyle={{ height: 100 }}
           label={get(cmsData, "general.thematicareas", "Thematic areas")}
         >
           {props.vizDataLoading.thematic ? (
@@ -461,6 +465,7 @@ export const DataGrid = (props: DataGridProps) => {
           label={get(cmsData, "general.budgetlines", "Budget lines")}
           childrencontainerStyle={{
             width: 100,
+            height: 100,
             paddingTop: 20,
           }}
           detailPageFilter={props.detailPageFilter}
@@ -562,7 +567,7 @@ export const DataGrid = (props: DataGridProps) => {
           // todo: create responsive solution for height
           // height="510px"
           tooltip={get(cmsData, "tooltips.sdg", "")}
-          childrencontainerStyle={{ paddingTop: 33 }}
+          childrencontainerStyle={{ paddingTop: 33, height: 100 }}
           label={get(cmsData, "general.sdgs", "SDGs")}
         >
           {props.vizDataLoading.sdg ? (
@@ -635,7 +640,10 @@ export const DataGrid = (props: DataGridProps) => {
             interactive
             tooltip={get(cmsData, "tooltips.map", "")}
             label={get(cmsData, "general.map", "Map")}
-            childrencontainerStyle={{ paddingTop: width >= 960 ? 88 : 16 }}
+            childrencontainerStyle={{
+              paddingTop: width >= 960 ? 88 : 16,
+              height: 100,
+            }}
           >
             {props.vizDataLoading.geo ? (
               <VizLoader loading={props.vizDataLoading.geo} />
