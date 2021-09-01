@@ -67,6 +67,54 @@ export const DataGrid = (props: DataGridProps) => {
   const isCountryDetail = location.pathname.indexOf("countries") > -1;
   const isRegionDetail = location.pathname.indexOf("regions") > -1;
   const isAreaDetail = location.pathname.indexOf("thematic-area") > -1;
+
+  const hideODAGNI = () => {
+    const currentURLParams = new URLSearchParams(location.search);
+    const countries = currentURLParams.get("recipient_country_code");
+    const regions = currentURLParams.get("recipient_region_code");
+    const sectors = currentURLParams.get("sector_code");
+    const organisations = currentURLParams.get("participating_org_ref");
+    const activitystatus = currentURLParams.get("activity_status_code");
+    const activityscope = currentURLParams.get("activity_scope_code");
+    const tag = currentURLParams.get("tag_narrative");
+    const sdg = currentURLParams.get("tag_code");
+    const defaultaidtype = currentURLParams.get("default_aid_type_code");
+    const defaulttiedstatus = currentURLParams.get("default_tied_status_code");
+    const defaultflowtype = currentURLParams.get("default_flow_type_code");
+    const collaborationtype = currentURLParams.get("collaboration_type_code");
+    const policymarker = currentURLParams.get("policy_marker_code");
+    const budgetlines = currentURLParams.get("budget_line");
+    const humanrights = currentURLParams.get("human_rights_approach");
+    const years = currentURLParams.get("years");
+    const hasValue =
+      countries ||
+      regions ||
+      sectors ||
+      organisations ||
+      activitystatus ||
+      activityscope ||
+      tag ||
+      sdg ||
+      defaultaidtype ||
+      defaulttiedstatus ||
+      defaultflowtype ||
+      collaborationtype ||
+      policymarker ||
+      budgetlines ||
+      humanrights ||
+      years;
+
+    return (
+      hasValue !== null ||
+      isOrgTypeDetail ||
+      isOrgDetail ||
+      isSectorDetail ||
+      isCountryDetail ||
+      isRegionDetail ||
+      isAreaDetail
+    );
+  };
+
   let showSingleAreaCircle = isAreaDetail;
   if (selectedFilters.tag.length > 0) {
     if (selectedFilters.tag.length === 1) {
@@ -297,14 +345,7 @@ export const DataGrid = (props: DataGridProps) => {
               setVizCompData={() => null}
               onSelectChange={() => null}
               setSelectedVizItem={() => null}
-              hideODAGNI={
-                isOrgTypeDetail ||
-                isOrgDetail ||
-                isSectorDetail ||
-                isCountryDetail ||
-                isRegionDetail ||
-                isAreaDetail
-              }
+              hideODAGNI={hideODAGNI()}
             />
           )}
         </GridWidget>
