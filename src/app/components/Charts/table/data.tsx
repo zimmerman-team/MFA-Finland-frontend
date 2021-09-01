@@ -462,7 +462,10 @@ export const SectorsDataTableColumns: MUIDataTableColumnDef[] = [
   {
     name: "code",
     label: "Code",
-    options: { sort: false },
+    options: {
+      sort: false,
+      customBodyRender: (value, tableMeta, updateValue) => "",
+    },
   },
   {
     name: "title",
