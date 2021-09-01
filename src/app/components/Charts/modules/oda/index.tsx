@@ -7,7 +7,7 @@ import {
   ODADataTableColumns,
   ODAbudgetLinesDataTableColumns,
   getODADataTableOptions,
-  getODAbudgetLinesDataTableOptions,
+  ODAbudgetLinesDataTableOptions,
 } from "app/components/Charts/bar/data";
 import { DataTable } from "app/components/Charts/table";
 import { VizLoader } from "app/modules/common/viz-loader";
@@ -39,7 +39,7 @@ export function ODAvizModule(props: ODAvizModuleProps) {
           ...item,
           year: props.selectedVizItemId,
         })),
-        options: getODAbudgetLinesDataTableOptions,
+        options: ODAbudgetLinesDataTableOptions,
         columns: getTranslatedCols(ODAbudgetLinesDataTableColumns, cmsData),
         title: `${props.odaBudgetLinesChartData.length} ${get(
           cmsData,

@@ -711,20 +711,16 @@ export const ODAbudgetLinesDataTableColumns: MUIDataTableColumnDef[] = [
 ];
 
 // @ts-ignore
-export const getODAbudgetLinesDataTableOptions: MUIDataTableOptions = (
-  params: any
-) => {
-  return {
-    print: false,
-    elevation: 0,
-    search: true,
-    filter: false,
-    download: false,
-    rowHover: false,
-    pagination: false,
-    viewColumns: false,
-    responsive: "standard",
-    selectableRows: "none",
-    selectableRowsHeader: false,
-  };
+export const ODAbudgetLinesDataTableOptions: MUIDataTableOptions = {
+  print: false,
+  elevation: 0,
+  search: true,
+  filter: false,
+  download: false,
+  rowHover: false,
+  pagination: false,
+  viewColumns: false,
+  responsive: "standard",
+  selectableRows: "none",
+  selectableRowsHeader: false,
 };
