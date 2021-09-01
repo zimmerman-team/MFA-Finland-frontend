@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import filter from "lodash/filter";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
@@ -43,6 +44,7 @@ export const Card = (props: FilterProps) => {
 };
 
 const CardHeader = (props: FilterProps) => {
+  const [allDataCount, setAllDataCount] = React.useState(0);
   const cmsData = useCMSData({ returnData: true });
   const styles = {
     container: css`
@@ -71,15 +73,41 @@ const CardHeader = (props: FilterProps) => {
     `,
   };
 
-  let allDataCount = props.data ? props.data.length : 0;
-  if (props.data && props.data.length > 0 && props.data[0].children) {
-    props.data.forEach((item: any) => {
-      allDataCount += 1;
-      if (item.children) {
-        allDataCount += item.children.length;
-      }
-    });
-  }
+  React.useEffect(() => {
+    let tmpallDataCount = props.data ? props.data.length : 0;
+    if (props.data && props.data.length > 0 && props.data[0].children) {
+      tmpallDataCount = 0;
+      props.data.forEach((item: any) => {
+        if (item.code.length > 0) {
+          tmpallDataCount += 1;
+        }
+        if (item.children) {
+          tmpallDataCount += item.children.length;
+          item.children.forEach((child: any) => {
+            if (child.children) {
+              tmpallDataCount += child.children.length;
+              child.children.forEach((gchild: any) => {
+                if (gchild.children) {
+                  tmpallDataCount += gchild.children.length;
+                  gchild.children.forEach((ggchild: any) => {
+                    if (ggchild.children) {
+                      tmpallDataCount += ggchild.children.length;
+                      ggchild.children.forEach((gggchild: any) => {
+                        tmpallDataCount += gggchild.children.length;
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+    if (tmpallDataCount !== allDataCount) {
+      setAllDataCount(tmpallDataCount);
+    }
+  }, [props.data]);
 
   return (
     <div css={styles.container}>
@@ -92,7 +120,11 @@ const CardHeader = (props: FilterProps) => {
           onChange={props.onSelectAllCheckboxChange}
           checked={
             allDataCount > 0
-              ? allDataCount === props.selectedItems.length
+              ? allDataCount ===
+                filter(
+                  props.selectedItems,
+                  (item: string) => item.trim().length > 0
+                ).length
               : false
           }
         />
@@ -169,7 +201,7 @@ const CardContent = (props: FilterProps) => {
                 // Component with 4 drilldown levels
                 return (
                   <AccordionListItem
-                    key={`${node1.code}-${node1.code}`}
+                    key={`${node1.name}-${node1.code}`}
                     node={node1}
                     nodeStyle="has2NodesStyle"
                     onFilterCheckboxChange={props.onFilterCheckboxChange}
@@ -179,14 +211,14 @@ const CardContent = (props: FilterProps) => {
                         {node1.children.map((node2) => {
                           return (
                             <AccordionListItem
-                              key={`${node2.code}-${node2.code}`}
+                              key={`${node2.name}-${node2.code}`}
                               node={node2}
                               component={
                                 <>
                                   {node2.children?.map((node3) => {
                                     return (
                                       <AccordionListItem
-                                        key={`${node3.code}-${node3.code}`}
+                                        key={`${node3.name}-${node3.code}`}
                                         node={node3}
                                         component={
                                           <CheckboxGridListItem
@@ -230,7 +262,7 @@ const CardContent = (props: FilterProps) => {
                 // Component with 3 drilldown levels
                 return (
                   <AccordionListItem
-                    key={`${node1.code}-${node1.code}`}
+                    key={`${node1.name}-${node1.code}`}
                     node={node1}
                     nodeStyle="has2NodesStyle"
                     onFilterCheckboxChange={props.onFilterCheckboxChange}
@@ -240,7 +272,7 @@ const CardContent = (props: FilterProps) => {
                         {node1.children.map((node2) => {
                           return (
                             <AccordionListItem
-                              key={`${node2.code}-${node2.code}`}
+                              key={`${node2.name}-${node2.code}`}
                               node={node2}
                               component={
                                 <CheckboxGridListItem
@@ -281,7 +313,7 @@ const CardContent = (props: FilterProps) => {
               }
               return (
                 <AccordionListItem
-                  key={`${node1.code}-${node1.code}`}
+                  key={`${node1.name}-${node1.code}`}
                   node={node1}
                   selected={isChecked}
                   component={

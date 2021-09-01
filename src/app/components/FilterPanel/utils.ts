@@ -93,11 +93,11 @@ export function getMainFilterPanelData(
   if (selectedFilters.sectors.length > 0) {
     updatedData[2].selection.push(`${selectedFilters.sectors.length} sectors`);
   }
-  if (selectedFilters.organisationtypes.length > 0) {
-    updatedData[3].selection.push(
-      `${selectedFilters.organisationtypes.length} organisation types`
-    );
-  }
+  // if (selectedFilters.organisationtypes.length > 0) {
+  //   updatedData[3].selection.push(
+  //     `${selectedFilters.organisationtypes.length} organisation types`
+  //   );
+  // }
   if (selectedFilters.organisations.length > 0) {
     updatedData[3].selection.push(
       `${selectedFilters.organisations.length} organisations`

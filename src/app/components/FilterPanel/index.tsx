@@ -74,6 +74,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
     const updatedSelectedFilters = { ...localSelectedFilters };
     switch (type) {
       case FILTER_TYPES.THEMATIC_AREAS:
+        console.log(param);
         if (typeof param === "string") {
           if (updatedSelectedFilters.tag.indexOf(value) > -1) {
             updatedSelectedFilters.tag = filter(
@@ -349,10 +350,18 @@ export const FilterPanel = (props: FilterPanelProps) => {
   function onSelectAllCheckboxChange(type: any): void {
     const updatedSelectedFilters = { ...localSelectedFilters };
     let values: string[] = [];
+    let countryValues: string[] = [];
+    let regionValues: string[] = [];
     switch (type) {
       case FILTER_TYPES.THEMATIC_AREAS:
-        values = get(filterOptionsData.thematicareas, "data.data", []).map(
-          (value: any) => value.code
+        get(filterOptionsData.thematicareas, "data.data", []).forEach(
+          (thematicarea: any) => {
+            if (thematicarea.children) {
+              thematicarea.children.forEach((child: any) => {
+                values = [...values, child.code];
+              });
+            }
+          }
         );
         if (updatedSelectedFilters.tag.length === values.length) {
           updatedSelectedFilters.tag = [];
@@ -364,25 +373,29 @@ export const FilterPanel = (props: FilterPanelProps) => {
         }
         break;
       case FILTER_TYPES.COUNTRIES:
-        values = [
-          ...get(filterOptionsData.locations, "data.data", []).map((l: any) => [
-            ...l.children,
-          ]),
-        ].map((value: any) => value.code);
-        if (updatedSelectedFilters.countries.length === values.length) {
+        get(filterOptionsData.locations, "data.data", []).forEach((l: any) => {
+          if (l.children) {
+            l.children.forEach((child: any) => {
+              values = [...values, child.code];
+            });
+          }
+        });
+        countryValues = filter(values, (code: string) => code.length === 2);
+        if (updatedSelectedFilters.countries.length === countryValues.length) {
           updatedSelectedFilters.countries = [];
         } else {
           updatedSelectedFilters.countries = [
             ...updatedSelectedFilters.countries,
-            ...values,
+            ...countryValues,
           ];
         }
-        if (updatedSelectedFilters.regions.length === values.length) {
+        regionValues = filter(values, (code: string) => code.length === 3);
+        if (updatedSelectedFilters.regions.length === regionValues.length) {
           updatedSelectedFilters.regions = [];
         } else {
           updatedSelectedFilters.regions = [
             ...updatedSelectedFilters.regions,
-            ...values,
+            ...regionValues,
           ];
         }
         break;
@@ -413,25 +426,28 @@ export const FilterPanel = (props: FilterPanelProps) => {
         }
         break;
       case FILTER_TYPES.ORGANISATIONS:
-        values = get(filterOptionsData.organisations, "data.data", []).map(
-          (value: any) => value.code
-        );
-        if (updatedSelectedFilters.organisationtypes.length === values.length) {
-          updatedSelectedFilters.organisationtypes = [];
-        } else {
-          updatedSelectedFilters.organisationtypes = [
-            ...updatedSelectedFilters.organisationtypes,
-            ...values,
-          ];
-        }
-        values = [];
         get(filterOptionsData.organisations, "data.data", []).forEach(
           (organisation: any) => {
+            values = [...values, organisation.code];
             if (organisation.children) {
-              values = [
-                ...values,
-                ...organisation.children.map((child: any) => child.code),
-              ];
+              organisation.children.forEach((child: any) => {
+                values = [...values, child.code];
+                if (child.children) {
+                  child.children.forEach((gchild: any) => {
+                    values = [...values, gchild.code];
+                    if (gchild.children) {
+                      gchild.children.forEach((ggchild: any) => {
+                        values = [...values, ggchild.code];
+                        if (ggchild.children) {
+                          ggchild.children.forEach((gggchild: any) => {
+                            values = [...values, gggchild.code];
+                          });
+                        }
+                      });
+                    }
+                  });
+                }
+              });
             }
           }
         );
@@ -521,6 +537,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
         }
         break;
       case FILTER_TYPES.HUMAN_RIGHTS:
+        values = humanrightfilteroptions.map((value: any) => value.code);
         if (
           updatedSelectedFilters.humanrights.length ===
           humanrightfilteroptions.length
@@ -730,10 +747,6 @@ export const FilterPanel = (props: FilterPanelProps) => {
           />
         );
       case FILTER_TYPES.ORGANISATIONS:
-        console.log([
-          ...localSelectedFilters.organisations,
-          ...localSelectedFilters.organisationtypes,
-        ]);
         return (
           <Filter
             title={get(cmsData, "general.organisations", "Organisations")}
@@ -743,10 +756,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             onFilterCheckboxChange={(value: string | string[]) =>
               onFilterCheckboxChange(value, FILTER_TYPES.ORGANISATIONS)
             }
-            selectedItems={[
-              ...localSelectedFilters.organisations,
-              ...localSelectedFilters.organisationtypes,
-            ]}
+            selectedItems={localSelectedFilters.organisations}
             onSelectAllCheckboxChange={() =>
               onSelectAllCheckboxChange(FILTER_TYPES.ORGANISATIONS)
             }
@@ -873,7 +883,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title={get(cmsData, "general.budgetlines", "Budget lines")}
-            data={get(filterOptionsData.budgetlines, "data.data.data", [])}
+            data={get(filterOptionsData.budgetlines, "data.data", [])}
             renderSearch
             selection={advancedPanelData[2].selection}
             onFilterCheckboxChange={(value: string | string[]) =>
