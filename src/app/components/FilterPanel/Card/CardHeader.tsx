@@ -1,7 +1,6 @@
-import { css } from "styled-components/macro";
 import React from "react";
+import { css } from "styled-components/macro";
 import { Checkbox, Typography } from "@material-ui/core";
-import { Tabs } from "./Tabs";
 
 export const CardHeader = () => {
   const styles = {
@@ -32,7 +31,7 @@ export const CardHeader = () => {
   };
   return (
     <div css={styles.container}>
-      <Tabs />
+      <div />
       <span>
         <Checkbox id="select_all" css={styles.checkbox} color="default" />
         <Typography variant="button" css={styles.checkboxLabel}>

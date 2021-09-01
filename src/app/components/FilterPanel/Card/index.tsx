@@ -3,7 +3,6 @@ import get from "lodash/get";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
-import { Tabs } from "app/components/FilterPanel/Card/Tabs";
 import { Checkbox, Typography } from "@material-ui/core";
 import { FilterProps, FilterOption } from "app/components/FilterPanel/data";
 import { CardContentPeriod } from "app/components/FilterPanel/Card/PeriodCardContent";
@@ -84,7 +83,7 @@ const CardHeader = (props: FilterProps) => {
 
   return (
     <div css={styles.container}>
-      <Tabs />
+      <div />
       <span>
         <Checkbox
           id="select_all"
