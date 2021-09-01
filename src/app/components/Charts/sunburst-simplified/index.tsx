@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
@@ -22,6 +24,12 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
   const [prevSelections, setPrevSelections] = React.useState<
     { name: string; code: string }[]
   >([]);
+  const [hoveredNode, setHoveredNode] = React.useState<SunburstPoint | null>(
+    null
+  );
+  const [clickedNode, setClickedNode] = React.useState<SunburstPoint | null>(
+    null
+  );
 
   React.useEffect(() => {
     // if (selected.code.length !== 3 || prevSelections.length === 1) {
@@ -169,6 +177,10 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
           <SunburstVizSimplified
             size={220}
             setSelected={onArcClick}
+            hoveredNode={hoveredNode}
+            clickedNode={clickedNode}
+            setHoveredNode={setHoveredNode}
+            setClickedNode={setClickedNode}
             data={normalizeData(localData)}
             setSelectedCount={setSelectedCount}
             onSectorSelectChange={props.onSectorSelectChange}
@@ -188,13 +200,23 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
               return (
                 <div
                   key={item.title}
+                  onClick={() => {
+                    setClickedNode(item);
+                    setHoveredNode(null);
+                  }}
                   css={`
                     display: flex;
-                    flex-direction: column;
                     margin-bottom: 6px;
+                    flex-direction: column;
+
+                    &:hover {
+                      cursor: pointer;
+                      > span {
+                        text-decoration: underline;
+                      }
+                    }
                   `}
                 >
-                  {/* TODO: sort on size */}
                   <span
                     css={`
                       ::before {

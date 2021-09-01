@@ -23,6 +23,7 @@ export const tooltipcss = css`
 `;
 
 export const tooltiprowcss = css`
+  gap: 20px;
   width: 100%;
   display: flex;
   color: #2e4063;
