@@ -85,7 +85,7 @@ export function AppBar() {
           {!mobileSearchOpen && (
             <NavLink
               to={`/${location.search}`}
-              css={appbarStyle.logoLink(!isFocused)}
+              css={appbarStyle.logoLink(!isFocused, !mobileSearchOpen)}
               onClick={() => {
                 setCurrentFilterOpen(FILTER_TYPES.NONE);
               }}

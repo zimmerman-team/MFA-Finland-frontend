@@ -56,18 +56,21 @@ export const appbarStyle = {
     box-shadow: -1240px 0px 0px 0px ${PrimaryColor[0]},
       1240px 0px 0px 0px ${PrimaryColor[0]};
   `,
-  logoLink: (show: boolean) => css`
+  logoLink: (show: boolean, showMobile: boolean) => css`
     display: flex;
-    @media (max-width: 992px) {
-      display: ${show ? "flex" : "none"};
-    }
     text-decoration: none;
+
     @media (max-width: 960px) {
       margin-left: 12px;
     }
 
+    @media (max-width: 992px) {
+      display: ${show ? "flex" : "none"};
+    }
+
     @media (max-width: 600px) {
       margin-right: auto;
+      display: ${showMobile ? "flex" : "none"};
     }
   `,
   langSwitchContainer: css`
