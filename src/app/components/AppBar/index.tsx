@@ -13,6 +13,7 @@ import {
   searchFocusAtom,
   currentFilterOpenAtom,
   bottomDrawerAtom,
+  mobileSearchFocusAtom,
 } from "app/state/recoil/atoms";
 import { MfaLogo } from "app/assets/mfa_logo";
 import LanguageIcon from "@material-ui/icons/Language";
@@ -32,6 +33,9 @@ export function AppBar() {
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
   const [bottomMenuState, setBottomMenuState] = useRecoilState(
     bottomDrawerAtom
+  );
+  const [mobileSearchOpen, setMobileSearchOpen] = useRecoilState(
+    mobileSearchFocusAtom
   );
 
   const toggleBottomMenu = (open: boolean) => (
@@ -66,16 +70,6 @@ export function AppBar() {
     <React.Fragment>
       <MUIAppBar position="relative" color="inherit" css={appbarStyle.appBar}>
         <Toolbar disableGutters css={appbarStyle.toolBar(isFocused)}>
-          <Hidden smUp>
-            {!isFocused && (
-              <LanguageSwitch
-                id={id}
-                currentLanguage={currentLanguage}
-                handleClick={handleClick}
-              />
-            )}
-          </Hidden>
-
           {/* Accessibillity anchor */}
           <a
             css={appbarStyle.skipLink}
@@ -88,54 +82,72 @@ export function AppBar() {
 
           {/* ---------------------------------------------- */}
           {/* logo */}
-          <NavLink
-            to={`/${location.search}`}
-            css={appbarStyle.logoLink(!isFocused)}
-            onClick={() => {
-              setCurrentFilterOpen(FILTER_TYPES.NONE);
-            }}
-          >
-            <Hidden xsDown>
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="Go to homepage"
-              >
-                <MfaLogo />
-              </IconButton>
-            </Hidden>
-            <h1 css={appbarStyle.logoText(PrimaryColor[2])}>
-              {get(cmsData, "general.pagetitle", "")}
-            </h1>
-          </NavLink>
+          {!mobileSearchOpen && (
+            <NavLink
+              to={`/${location.search}`}
+              css={appbarStyle.logoLink(!isFocused)}
+              onClick={() => {
+                setCurrentFilterOpen(FILTER_TYPES.NONE);
+              }}
+            >
+              <Hidden xsDown>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="Go to homepage"
+                >
+                  <MfaLogo />
+                </IconButton>
+              </Hidden>
+              <h1 css={appbarStyle.logoText(PrimaryColor[2])}>
+                {get(cmsData, "general.pagetitle", "")}
+              </h1>
+            </NavLink>
+          )}
 
           <div
             css={`
               display: flex;
-              justify-content: center;
               align-items: center;
+              justify-content: center;
+
+              ${mobileSearchOpen
+                ? `
+                width: 100%;
+                padding-right: 16px;
+
+                > div {
+                  width: 100%;
+                }
+              `
+                : ""}
             `}
           >
             {/* ---------------------------------------------- */}
             {/* searchfield */}
-            <Search />
+            <Search
+              mobileSearchOpen={mobileSearchOpen}
+              setMobileSearchOpen={setMobileSearchOpen}
+            />
 
             {/* ---------------------------------------------- */}
             {/* lang switch */}
-            <Hidden smDown>
+            {!mobileSearchOpen && (
               <LanguageSwitch
                 id={id}
                 currentLanguage={currentLanguage}
                 handleClick={handleClick}
               />
-            </Hidden>
+            )}
 
             {LanguagePopover(id, open, anchorEl, handleClose, setLanguage)}
 
             {/* ---------------------------------------------- */}
             {/* three dots */}
             <Hidden mdUp>
-              <ThreeDots toggleBottomMenu={toggleBottomMenu} />
+              {!mobileSearchOpen && (
+                <ThreeDots toggleBottomMenu={toggleBottomMenu} />
+              )}
             </Hidden>
 
             {/* ---------------------------------------------- */}
@@ -155,7 +167,7 @@ export function AppBar() {
   );
 }
 
-const Search = () => {
+const Search = (props: any) => {
   return (
     <>
       <Hidden xsDown>
@@ -163,22 +175,37 @@ const Search = () => {
         <SearchComponent tabIndex={2} />
       </Hidden>
       <Hidden smUp>
-        <IconButton
-          color="inherit"
-          aria-label="Search"
-          css={`
-            @media (max-width: 600px) {
-              padding-right: 4px;
-            }
-          `}
-        >
-          {/* TODO: Search panel implementation see: MF-456 */}
-          <SearchIcon
+        {!props.mobileSearchOpen && (
+          <IconButton
+            color="inherit"
+            aria-label="Search"
+            onClick={() => props.setMobileSearchOpen(true)}
             css={`
-              fill: ${PrimaryColor[2]};
+              @media (max-width: 600px) {
+                padding-right: 4px;
+              }
             `}
-          />
-        </IconButton>
+          >
+            {/* TODO: Search panel implementation see: MF-456 */}
+            <SearchIcon
+              css={`
+                fill: ${PrimaryColor[2]};
+              `}
+            />
+          </IconButton>
+        )}
+        {props.mobileSearchOpen && (
+          <div
+            css={`
+              > div {
+                width: 100%;
+              }
+            `}
+          >
+            {/* eslint-disable-next-line jsx-a11y/tabindex-no-positive */}
+            <SearchComponent tabIndex={2} />
+          </div>
+        )}
       </Hidden>
     </>
   );

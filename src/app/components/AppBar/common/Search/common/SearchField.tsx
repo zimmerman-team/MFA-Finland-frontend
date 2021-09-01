@@ -1,8 +1,12 @@
 import React from "react";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
+import Hidden from "@material-ui/core/Hidden";
+import CloseIcon from "@material-ui/icons/Close";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import { PrimaryColor, SecondaryColor } from "app/theme";
+import { mobileSearchFocusAtom } from "app/state/recoil/atoms";
 import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 type Props = {
@@ -29,6 +33,9 @@ const StyledInput = withStyles((theme: Theme) =>
 )(InputBase);
 
 export const SearchField = (props: Props) => {
+  const [mobileSearchOpen, setMobileSearchOpen] = useRecoilState(
+    mobileSearchFocusAtom
+  );
   const unfocusedWidth = props.smallWidth ? props.smallWidth : "144px";
   return (
     <StyledInput
@@ -75,11 +82,21 @@ export const SearchField = (props: Props) => {
             background-color: ${PrimaryColor[2]};
           `}
         >
-          <SearchIcon
-            css={`
-              fill: ${PrimaryColor[0]};
-            `}
-          />
+          <Hidden xsDown>
+            <SearchIcon
+              css={`
+                fill: ${PrimaryColor[0]};
+              `}
+            />
+          </Hidden>
+          <Hidden smUp>
+            <CloseIcon
+              onClick={() => setMobileSearchOpen(false)}
+              css={`
+                fill: ${PrimaryColor[0]};
+              `}
+            />
+          </Hidden>
         </div>
       }
       onFocus={() => props.setIsFocused(true)}

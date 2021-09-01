@@ -24,6 +24,10 @@ const containercss = (active: boolean) => css`
   &:hover {
     border-bottom-color: #2e4063;
   }
+
+  @media (max-width: 600px) {
+    margin-right: 0;
+  }
 `;
 
 const typographycss = css`

@@ -20,6 +20,12 @@ const containercss = css`
   padding: 15px 24px;
   align-items: flex-start;
   justify-content: flex-start;
+
+  @media (max-width: 600px) {
+    gap: 10px;
+    width: 100%;
+    padding: 15px 10px;
+  }
 `;
 
 export const SearchResultNavigation = (props: Props) => {

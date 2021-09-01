@@ -215,6 +215,11 @@ export const searchFocusAtom = atom({
   default: false, // default value (aka initial value)
 });
 
+export const mobileSearchFocusAtom = atom({
+  key: "mobileSearchFocus", // unique ID (with respect to other atoms/selectors)
+  default: false, // default value (aka initial value)
+});
+
 export const ChangeEmailDialogState = atom({
   key: "changeEmailDialogState", // unique ID (with respect to other atoms/selectors)
   default: false, // default value (aka initial value)

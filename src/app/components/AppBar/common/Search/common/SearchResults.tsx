@@ -40,8 +40,12 @@ const containercss = css`
   align-items: flex-start;
   justify-content: flex-start;
   box-shadow: 0 1px 14px rgba(0, 0, 0, 0.12);
+
   @media (max-width: 992px) {
     width: calc(100vw - 135px);
+  }
+  @media (max-width: 600px) {
+    width: calc(100vw - 32px);
   }
 `;
 
@@ -50,12 +54,21 @@ const projectslinkcss = css`
   display: flex;
   padding: 0 24px;
   justify-content: flex-end;
+
+  @media (max-width: 600px) {
+    padding-bottom: 12px;
+    justify-content: center;
+  }
 `;
 
 const resultscss = css`
   width: 100%;
   overflow-y: auto;
   max-height: 338px;
+
+  @media (max-width: 600px) {
+    width: calc(100vw - 32px);
+  }
 
   &::-webkit-scrollbar {
     width: 6px;

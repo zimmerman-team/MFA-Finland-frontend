@@ -68,7 +68,6 @@ export const appbarStyle = {
 
     @media (max-width: 600px) {
       margin-right: auto;
-      margin-left: 0;
     }
   `,
   langSwitchContainer: css`
