@@ -1,5 +1,6 @@
 import get from "lodash/get";
 import find from "lodash/find";
+import uniqBy from "lodash/uniqBy";
 import {
   FILTER_TYPES,
   humanrightfilteroptions,
@@ -276,22 +277,82 @@ function createOrganisationChip(
   filterOptions: any
 ) {
   const organisations = get(filterOptions, "organisations.data.data", []);
-  const values: { label: string; value: string }[] = [];
+  let values: { label: string; value: string }[] = [];
   selectedFilters.organisations.forEach((organisation: string) => {
     let fOrg;
     organisations.forEach((orgType: any) => {
       fOrg = find(orgType.children, (child) => {
         return child.code === organisation;
       });
-
       if (fOrg) {
         values.push({
           label: get(fOrg, "name", ""),
           value: organisation,
         });
+      } else {
+        organisations.forEach((orgOpt: any) => {
+          if (orgOpt.children) {
+            const fOrgSub = find(orgOpt.children, { code: organisation });
+            if (fOrgSub) {
+              values.push({
+                label: fOrgSub.name,
+                value: organisation,
+              });
+            } else {
+              orgOpt.children.forEach((orgOptSub: any) => {
+                if (orgOptSub.children) {
+                  const fOrgSubSub = find(orgOptSub.children, {
+                    code: organisation,
+                  });
+                  if (fOrgSubSub) {
+                    values.push({
+                      label: fOrgSubSub.name,
+                      value: organisation,
+                    });
+                  } else {
+                    orgOptSub.children.forEach((orgOptSubSub: any) => {
+                      if (orgOptSubSub.children) {
+                        const fOrgSubSubSub = find(orgOptSubSub.children, {
+                          code: organisation,
+                        });
+                        if (fOrgSubSubSub) {
+                          values.push({
+                            label: fOrgSubSubSub.name,
+                            value: organisation,
+                          });
+                        } else {
+                          orgOptSubSub.children.forEach(
+                            (orgOptSubSubSub: any) => {
+                              if (orgOptSubSubSub.children) {
+                                const fOrgSubSubSubSub = find(
+                                  orgOptSubSubSub.children,
+                                  {
+                                    code: organisation,
+                                  }
+                                );
+                                if (fOrgSubSubSubSub) {
+                                  values.push({
+                                    label: fOrgSubSubSubSub.name,
+                                    value: organisation,
+                                  });
+                                }
+                              }
+                            }
+                          );
+                        }
+                      }
+                    });
+                  }
+                }
+              });
+            }
+          }
+        });
       }
     });
   });
+
+  values = uniqBy(values, ["label", "value"]);
 
   if (selectedFilters.organisations.length > 1) {
     return { label: "Organisations", values, type: FILTER_TYPES.ORGANISATIONS };
