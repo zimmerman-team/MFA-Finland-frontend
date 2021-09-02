@@ -56,7 +56,7 @@ const projectslinkcss = css`
   justify-content: flex-end;
 
   @media (max-width: 600px) {
-    padding-bottom: 12px;
+    padding: 12px 0;
     justify-content: center;
   }
 `;

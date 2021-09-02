@@ -13,8 +13,11 @@ interface NavItemParams {
 }
 
 const containercss = (active: boolean) => css`
+  gap: 5px;
+  display: flex;
   cursor: pointer;
   margin-right: 15px;
+  flex-direction: row;
   padding-bottom: 8px;
   border-bottom-width: 2px;
   border-bottom-style: solid;
@@ -31,17 +34,14 @@ const containercss = (active: boolean) => css`
 `;
 
 const typographycss = css`
-  //opacity: 0.8;
-  //color: #2e4063;
-
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 18px;
   color: #2e4063;
-  //color: red;
-  //font-size: 14px;
+  font-size: 12px;
+  white-space: pre;
+  font-weight: bold;
+  line-height: 18px;
+  font-style: normal;
   text-transform: capitalize;
+
   &:hover {
     opacity: 0.8;
   }
@@ -54,9 +54,8 @@ export const SearchResultNavItem = (props: NavItemParams) => {
       css={containercss(props.active)}
       data-cy={`search-nav-item-${props.index}`}
     >
-      <Typography css={typographycss}>
-        {props.count} {props.name}
-      </Typography>
+      <div css={typographycss}>{props.count}</div>
+      <div css={typographycss}>{props.name}</div>
     </div>
   );
 };

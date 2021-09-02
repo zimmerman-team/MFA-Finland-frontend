@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { SearchResultNavItem } from "app/components/AppBar/common/Search/common/SearchResultNavItem";
 import {
@@ -17,14 +18,30 @@ type Props = {
 
 const containercss = css`
   display: flex;
-  padding: 15px 24px;
+  padding: 15px 10px;
   align-items: flex-start;
   justify-content: flex-start;
 
   @media (max-width: 600px) {
-    gap: 10px;
+    gap: 12px;
     width: 100%;
-    padding: 15px 10px;
+    max-width: 100%;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+      background: #ededf6;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 4px;
+      background: #ededf6;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background: #2e4063;
+    }
   }
 `;
 
