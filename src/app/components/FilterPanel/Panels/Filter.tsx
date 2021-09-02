@@ -63,12 +63,43 @@ export const Filter = (props: FilterProps) => {
         if (cat) {
           updatedOptions.push(item);
         } else if (item.children) {
-          const children = filter(
-            item.children,
-            (child: any) => child.name.toLowerCase().indexOf(fvalue) > -1
-          );
-          if (children.length > 0) {
-            updatedOptions.push({ ...item, children });
+          const fItem: FilterOption = {
+            ...item,
+            children: [],
+          };
+          item.children.forEach((child: FilterOption) => {
+            if (child.name.toLowerCase().indexOf(fvalue) > -1) {
+              fItem.children?.push(child);
+            } else if (child.children) {
+              const fChildItem: FilterOption = {
+                ...child,
+                children: [],
+              };
+              child.children.forEach((gchild: FilterOption) => {
+                if (gchild.name.toLowerCase().indexOf(fvalue) > -1) {
+                  fChildItem.children?.push(gchild);
+                } else if (gchild.children) {
+                  const fGChildItem: FilterOption = {
+                    ...child,
+                    children: [],
+                  };
+                  gchild.children.forEach((ggchild: FilterOption) => {
+                    if (ggchild.name.toLowerCase().indexOf(fvalue) > -1) {
+                      fGChildItem.children?.push(ggchild);
+                    }
+                  });
+                  if (fGChildItem.children && fGChildItem.children.length > 0) {
+                    fChildItem.children?.push(fGChildItem);
+                  }
+                }
+              });
+              if (fChildItem.children && fChildItem.children.length > 0) {
+                fItem.children?.push(fChildItem);
+              }
+            }
+          });
+          if (fItem.children && fItem.children.length > 0) {
+            updatedOptions.push({ ...fItem });
           }
         }
       });
