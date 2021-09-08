@@ -536,7 +536,7 @@ function createBudgetLinesChip(
   selectedFilters: SelectedFilterAtomModel,
   filterOptions: any
 ) {
-  const budgetlines = get(filterOptions, "budgetlines.data.data.data", []);
+  const budgetlines = get(filterOptions, "budgetlines.data.data", []);
   const values: { label: string; value: string }[] = [];
 
   selectedFilters.budgetlines.forEach((line: string) => {
