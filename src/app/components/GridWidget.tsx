@@ -11,6 +11,11 @@ import { useStoreState } from "app/state/store/hooks";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { formatLocaleN } from "app/utils/formatLocale";
+import { useRecoilState } from "recoil";
+import {
+  selectedFilterAtom,
+  SelectedFilterAtomModel,
+} from "app/state/recoil/atoms";
 
 const style = {
   widgetHeader: (odaWidget: boolean) => css`
@@ -187,6 +192,33 @@ interface GridWidgetProps {
   };
 }
 
+export function displayPeriod(selectedFilters: SelectedFilterAtomModel) {
+  if (selectedFilters.years.length === 2) {
+    const startYear = new Date(selectedFilters.years[0]).getFullYear();
+
+    const endYear = new Date(selectedFilters.years[1]).getFullYear();
+
+    if (startYear === endYear && startYear > 2014 && startYear < 2022) {
+      return `Showing disbursements for ${startYear}`;
+    }
+
+    const years: number[] = [];
+
+    for (let i = startYear; i <= endYear; i++) {
+      if (i > 2014 && i < 2022) {
+        years.push(i);
+      }
+    }
+
+    if (years.length > 0) {
+      return `Showing disbursements for ${years[0]}${
+        years.length > 1 ? ` to ${years[years.length - 1]}` : ""
+      }`;
+    }
+  }
+  return "Showing disbursements for 2015 to 2021";
+}
+
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const history = useHistory();
   const cmsData = useCMSData({ returnData: true });
@@ -218,6 +250,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const projCount = useStoreState((state) =>
     get(state.geoMap, "data.projectCount", 0)
   );
+  const [selectedFilters] = useRecoilState(selectedFilterAtom);
 
   let searchFilterString = `${
     props.detailPageFilter
@@ -251,24 +284,31 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     >
       <div css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <h3
-            role="button"
-            tabIndex={0}
-            onClick={() => handleClick()}
-            aria-label={`Go to ${props.label} detail page`}
-            onKeyPress={(e) => {
-              if (e.code === "Enter") {
-                handleClick();
-              }
-            }}
-            css={style.widgetLabel(props.link !== undefined)}
-            onMouseEnter={() => !itemLinkable && setIsHovered(true)}
-            onMouseLeave={() => !itemLinkable && setIsHovered(false)}
-          >
-            {!odaWidget
-              ? props.label
-              : get(cmsData, "general.overview", "Overview Disbursements")}
-          </h3>
+          <div>
+            <h3
+              role="button"
+              tabIndex={0}
+              onClick={() => handleClick()}
+              aria-label={`Go to ${props.label} detail page`}
+              onKeyPress={(e) => {
+                if (e.code === "Enter") {
+                  handleClick();
+                }
+              }}
+              css={style.widgetLabel(props.link !== undefined)}
+              onMouseEnter={() => !itemLinkable && setIsHovered(true)}
+              onMouseLeave={() => !itemLinkable && setIsHovered(false)}
+            >
+              {!odaWidget
+                ? props.label
+                : get(cmsData, "general.overview", "Overview Disbursements")}
+            </h3>
+            {odaWidget && (
+              <div css="font-size: 10px;margin-top: 6px;">
+                {displayPeriod(selectedFilters)}
+              </div>
+            )}
+          </div>
           {props.tooltip && !odaWidget && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip} interactive tabIndex={0}>

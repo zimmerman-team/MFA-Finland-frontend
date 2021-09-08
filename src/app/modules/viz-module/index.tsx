@@ -13,7 +13,12 @@ import { DataTable } from "app/components/Charts/table";
 import { VizLoader } from "app/modules/common/viz-loader";
 import { VizSidePanel } from "app/components/VizSidePanel";
 import { MoreButton } from "app/components/Charts/bar/data";
-import { useMeasure, useUnmount, useDebounce } from "react-use";
+import {
+  useMeasure,
+  useUnmount,
+  useDebounce,
+  useUpdateEffect,
+} from "react-use";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { ODAvizModule } from "app/components/Charts/modules/oda";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
@@ -420,6 +425,19 @@ export default function VizModule() {
       root.style.background = "";
     }
   });
+
+  useUpdateEffect(() => {
+    const filters = getAPIFormattedFilters(selectedFilters);
+    projectsAction({
+      values: {
+        filters,
+        page: 0,
+        search: searchKey,
+        lang: currentLanguage,
+      },
+    });
+    setProjectListPage(0);
+  }, [currentLanguage]);
 
   React.useEffect(() => {
     if (selectedVizItem === null && expandedVizItem === null) {
