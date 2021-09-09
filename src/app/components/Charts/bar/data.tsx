@@ -38,6 +38,12 @@ export interface BarNodeProps extends BarItemProps<any> {
   onZoomOut: () => void;
 }
 
+export interface BarYearNotice {
+  year: number;
+  symbol: string;
+  content: string;
+}
+
 export const barMockData = [
   {
     year: 1993,

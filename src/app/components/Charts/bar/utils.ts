@@ -2,7 +2,7 @@ import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 import { formatLocale } from "app/utils/formatLocale";
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
-import { budgetLineKeys } from "./data";
+import { budgetLineKeys, BarYearNotice } from "./data";
 
 /* eslint-disable no-plusplus */
 const ranges = [
@@ -147,4 +147,22 @@ export function getBudgetLinesLegendItems(data: any): VizSidePanelItemProps[] {
       })),
     };
   });
+}
+
+export function getYearNotices(data: any): BarYearNotice[] {
+  const notices: BarYearNotice[] = [];
+
+  if (data === null || data === undefined) {
+    return notices;
+  }
+
+  Object.keys(data).forEach((item: string, index: number) => {
+    notices.push({
+      content: data[item],
+      year: parseInt(item, 10),
+      symbol: (index + 1).toString(),
+    });
+  });
+
+  return notices;
 }

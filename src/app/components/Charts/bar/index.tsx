@@ -6,18 +6,22 @@ import { PrimaryColor } from "app/theme";
 import { useWindowSize } from "react-use";
 import { useCMSData } from "app/hooks/useCMSData";
 import { Line } from "app/components/Charts/bar/common/line";
-import { BarChartProps } from "app/components/Charts/bar/data";
+import { BarChartProps, BarYearNotice } from "app/components/Charts/bar/data";
 import { BarNode } from "app/components/Charts/bar/common/node";
 import { ResponsiveBar, BarItemProps } from "@nivo/bar";
 import {
   getRange,
   getMoneyValueWithMetricPrefix,
+  getYearNotices,
 } from "app/components/Charts/bar/utils";
 import { Hidden } from "@material-ui/core";
 
 export function BarChart(props: BarChartProps) {
   const { width } = useWindowSize();
   const cmsData = useCMSData({ returnData: true });
+  const [yearNotices, setYearNotices] = React.useState<BarYearNotice[]>(
+    getYearNotices(get(cmsData, "viz.odayearsnotice", {}))
+  );
   const range = getRange(props.data, ["exclusive", "other"]);
   const maxValue: number =
     max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
@@ -82,6 +86,10 @@ export function BarChart(props: BarChartProps) {
       }
     }
   }, [props.selectedVizItemId]);
+
+  React.useEffect(() => {
+    setYearNotices(getYearNotices(get(cmsData, "viz.odayearsnotice", {})));
+  }, [cmsData]);
 
   const lineWidth = get(
     document.getElementById("linechart-in-bar"),
@@ -248,6 +256,33 @@ export function BarChart(props: BarChartProps) {
             tickSize: 0,
             tickPadding: 10,
             tickRotation: width > 800 ? 45 : 75,
+            format: (value: number) => {
+              const fItem = find(yearNotices, { year: value });
+              if (fItem) {
+                return `${value} - ${fItem.symbol}`;
+              }
+              return value;
+            },
+            renderTick: (v: any) => {
+              const fItem = find(yearNotices, { year: v.value });
+              return (
+                <g transform={`translate(${v.x},${v.y})`}>
+                  <text
+                    textAnchor="start"
+                    dominantBaseline="central"
+                    transform="translate(0,10) rotate(45)"
+                    css="fill: rgb(46, 73, 130); font-family: Finlandica;"
+                  >
+                    {v.value}
+                    {fItem && (
+                      <tspan y="-5" css="font-size: 8px; font-weight: bold;">
+                        {fItem.symbol}
+                      </tspan>
+                    )}
+                  </text>
+                </g>
+              );
+            },
           }}
           axisLeft={{
             tickSize: 0,
@@ -258,6 +293,25 @@ export function BarChart(props: BarChartProps) {
           }}
         />
       </div>
+      {yearNotices.length > 0 && (
+        <div
+          css={`
+            gap: 15px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: auto auto auto;
+          `}
+        >
+          {yearNotices.map((notice: BarYearNotice) => (
+            <div css="display: flex; align-items: flex-start;">
+              <span css="font-size: 8px; font-weight: bold; margin-right: 2px;">
+                {notice.symbol}
+              </span>
+              {notice.content}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
