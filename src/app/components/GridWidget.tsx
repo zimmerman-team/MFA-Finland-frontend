@@ -304,7 +304,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
                 : get(cmsData, "general.overview", "Overview Disbursements")}
             </h3>
             {odaWidget && (
-              <div css="font-size: 10px;margin-top: 6px;">
+              <div css="font-size: 14px;margin-top: 6px;">
                 {displayPeriod(selectedFilters)}
               </div>
             )}
