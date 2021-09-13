@@ -27,9 +27,51 @@ function getOrganisationValues(
   const filterArr = [];
 
   if (!fLvl0Org) {
-    filterArr.push(orgRef);
+    orgFilterOptions.forEach((lvl0Org: any) => {
+      const fLvl1Org = find(lvl0Org.children, { code: orgRef });
+      if (!fLvl1Org) {
+        lvl0Org.children.forEach((lvl1Org: any) => {
+          const fLvl2Org = find(lvl1Org.children, { code: orgRef });
+          if (!fLvl2Org) {
+            lvl1Org.children.forEach((lvl2Org: any) => {
+              const fLvl3Org = find(lvl2Org.children, { code: orgRef });
+              if (fLvl3Org) {
+                get(fLvl3Org, "children", []).forEach((child: any) => {
+                  filterArr.push(child.code);
+                  get(child, "children", []).forEach((gchild: any) => {
+                    filterArr.push(gchild.code);
+                    get(gchild, "children", []).forEach((ggchild: any) => {
+                      filterArr.push(ggchild.code);
+                    });
+                  });
+                });
+              }
+            });
+          } else {
+            get(fLvl2Org, "children", []).forEach((child: any) => {
+              filterArr.push(child.code);
+              get(child, "children", []).forEach((gchild: any) => {
+                filterArr.push(gchild.code);
+                get(gchild, "children", []).forEach((ggchild: any) => {
+                  filterArr.push(ggchild.code);
+                });
+              });
+            });
+          }
+        });
+      } else {
+        get(fLvl1Org, "children", []).forEach((child: any) => {
+          filterArr.push(child.code);
+          get(child, "children", []).forEach((gchild: any) => {
+            filterArr.push(gchild.code);
+            get(gchild, "children", []).forEach((ggchild: any) => {
+              filterArr.push(ggchild.code);
+            });
+          });
+        });
+      }
+    });
   } else {
-    filterArr.push(orgRef);
     get(fLvl0Org, "children", []).forEach((child: any) => {
       filterArr.push(child.code);
       get(child, "children", []).forEach((gchild: any) => {
@@ -40,6 +82,8 @@ function getOrganisationValues(
       });
     });
   }
+
+  filterArr.push(orgRef);
 
   return filterArr;
 }
@@ -100,7 +144,7 @@ export function OrganisationDetailModule() {
       unallocablePercentage={unallocablePercentage}
       detailPageFilter={{
         key: "participating_org_ref",
-        value: get(params, "organisation", ""),
+        value: orgValues,
       }}
     />
   );
