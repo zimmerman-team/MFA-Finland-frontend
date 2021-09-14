@@ -638,7 +638,7 @@ export const OrganisationTypesDataTableColumns: MUIDataTableColumnDef[] = [
     options: {
       sort: false,
       customBodyRender: (value, tableMeta) => {
-        const link = `/organisation-types/${encodeURIComponent(
+        const link = `/organisations/${encodeURIComponent(
           tableMeta.rowData[0]
         )}`;
         return <LinkCell link={link} value={value} />;

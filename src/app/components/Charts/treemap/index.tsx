@@ -58,7 +58,7 @@ export function Treemap(props: TreemapProps) {
         );
         if (node.data.ref.length === 2) {
           history.push(
-            `/organisation-types/${node.data.ref}${history.location.search}`
+            `/organisations/${node.data.ref}${history.location.search}`
           );
         } else {
           history.push(
