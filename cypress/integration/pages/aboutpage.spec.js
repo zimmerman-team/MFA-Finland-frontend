@@ -6,17 +6,18 @@ context("About", () => {
   beforeEach(() => {
     cy.viewport(1536, 860);
     cy.visit("localhost:3000");
+    //TODO: add a waiting function
     cy.get('[test-id="main-page-accept"]').click();
     cy.visit("localhost:3000/about");
   });
 
   it("should show correct title", () => {
-    aboutTest.map((text) => cy.get("h2").contains(text).should("exist"));
+    aboutTest.forEach((text) => cy.get("h2").contains(text).should("exist"));
   });
 
   it("inpage navigation", () => {
     cy.get(".InPageNavigation___StyledDiv-sc-1nr5zk8-0").should("exist");
-    aboutTest.map((text) => cy.contains(text).click());
+    aboutTest.forEach((text) => cy.contains(text).click());
   });
 
   it("go to homepage via breadcrumbs", () => {
