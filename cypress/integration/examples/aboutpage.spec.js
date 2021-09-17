@@ -29,8 +29,4 @@ context("About", () => {
     // reload the page without using the cache
     cy.reload(true);
   });
-
-  it("make screenshot", () => {
-    cy.screenshot();
-  });
 });
