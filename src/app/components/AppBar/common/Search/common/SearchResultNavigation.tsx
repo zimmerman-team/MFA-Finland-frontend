@@ -23,7 +23,6 @@ const containercss = css`
   justify-content: flex-start;
 
   @media (max-width: 600px) {
-    gap: 12px;
     width: 100%;
     max-width: 100%;
     overflow-x: auto;
