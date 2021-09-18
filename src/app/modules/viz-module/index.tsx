@@ -55,7 +55,7 @@ export default function VizModule() {
   const cmsData = useCMSData({ returnData: true });
   const mobile = useMediaQuery("(max-width: 600px)");
   const [searchKey, setSearchKey] = React.useState(
-    localStorage.getItem("searchValue") || ""
+    sessionStorage.getItem("searchValue") || ""
   );
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   const [activeTab, setActiveTab] = React.useState("chart");
@@ -473,7 +473,7 @@ export default function VizModule() {
   useDebounce(
     () => {
       const filters = getAPIFormattedFilters(selectedFilters);
-      localStorage.setItem("searchValue", searchKey);
+      sessionStorage.setItem("searchValue", searchKey);
       setProjectListPage(0);
       projectsAction({
         values: {

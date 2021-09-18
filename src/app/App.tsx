@@ -14,7 +14,7 @@ import { MdBottomMenu } from "./components/MdBottomMenu";
 export const App = () => {
   const { i18n } = useTranslation();
 
-  const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   React.useEffect(() => {
     i18n.changeLanguage(currentLanguage);
