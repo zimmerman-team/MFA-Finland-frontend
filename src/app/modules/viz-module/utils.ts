@@ -13,11 +13,12 @@ export function getSidebarLegendItems(
   data: any,
   filter: string | number | null,
   cmsData: any,
-  thematicAreaChartSingle: boolean
+  thematicAreaChartSingle: boolean,
+  hideODAGNI: boolean
 ): VizSidePanelItemProps[] {
   switch (vizType) {
     case "oda":
-      return getODALegendItems(data[vizType], cmsData);
+      return getODALegendItems(data[vizType], cmsData, hideODAGNI);
     case "oda-drilldown":
       return getSimpleBarLegendItems(data[vizType]);
     case "thematic-areas":

@@ -29,7 +29,6 @@ export const GenericPageLayout = (props: GenericPageModuleProps) => {
     return list;
   }
 
-  // @ts-ignore
   return (
     <>
       <ModuleContainer>
