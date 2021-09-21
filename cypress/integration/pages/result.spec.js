@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-context("About", () => {
+context("Result", () => {
   beforeEach(() => {
     cy.viewport(1536, 860);
   });
