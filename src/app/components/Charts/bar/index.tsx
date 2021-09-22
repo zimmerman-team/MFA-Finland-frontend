@@ -2,19 +2,21 @@ import React from "react";
 import get from "lodash/get";
 import max from "lodash/max";
 import find from "lodash/find";
+import { useRecoilState } from "recoil";
 import { PrimaryColor } from "app/theme";
 import { useWindowSize } from "react-use";
+import Hidden from "@material-ui/core/Hidden";
 import { useCMSData } from "app/hooks/useCMSData";
-import { Line } from "app/components/Charts/bar/common/line";
-import { BarChartProps, BarYearNotice } from "app/components/Charts/bar/data";
-import { BarNode } from "app/components/Charts/bar/common/node";
 import { ResponsiveBar, BarItemProps } from "@nivo/bar";
+import { selectedFilterAtom } from "app/state/recoil/atoms";
+import { Line } from "app/components/Charts/bar/common/line";
+import { BarNode } from "app/components/Charts/bar/common/node";
+import { BarChartProps, BarYearNotice } from "app/components/Charts/bar/data";
 import {
   getRange,
   getMoneyValueWithMetricPrefix,
   getYearNotices,
 } from "app/components/Charts/bar/utils";
-import { Hidden } from "@material-ui/core";
 
 export function BarChart(props: BarChartProps) {
   const { width } = useWindowSize();
@@ -37,6 +39,7 @@ export function BarChart(props: BarChartProps) {
         }
       : null
   );
+  const [selectedFilters] = useRecoilState(selectedFilterAtom);
 
   const onSelect = (b: any | null) => {
     setSelected(b);
@@ -88,7 +91,28 @@ export function BarChart(props: BarChartProps) {
   }, [props.selectedVizItemId]);
 
   React.useEffect(() => {
-    setYearNotices(getYearNotices(get(cmsData, "viz.odayearsnotice", {})));
+    const allYearNotices = getYearNotices(
+      get(cmsData, "viz.odayearsnotice", [])
+    );
+    const newYearNotices: BarYearNotice[] = [];
+    if (selectedFilters.years.length === 2) {
+      const startYear = new Date(selectedFilters.years[0]).getFullYear();
+      const endYear = new Date(selectedFilters.years[1]).getFullYear();
+
+      for (let i = startYear; i <= endYear; i++) {
+        allYearNotices.forEach((notice: any) => {
+          if (
+            notice.year >= startYear &&
+            notice.year <= endYear &&
+            !find(newYearNotices, { year: notice.year })
+          ) {
+            newYearNotices.push(notice);
+          }
+        });
+      }
+
+      setYearNotices(newYearNotices);
+    }
   }, [cmsData]);
 
   const lineWidth = get(
@@ -155,55 +179,6 @@ export function BarChart(props: BarChartProps) {
       <Hidden smDown>
         <div css="width: 100%;height: 15px;" />
       </Hidden>
-      {!props.hideODAGNI && showGni && (
-        <div
-          id="linechart-in-bar"
-          css={`
-            left: 0;
-            top: 30px;
-            position: absolute;
-            padding-left: 25px;
-            width: calc(100% - 25px);
-            height: ${props.height || 450}px;
-
-            @media (max-width: 600px) {
-              width: 1000px;
-            }
-
-            circle {
-              r: 6px;
-            }
-
-            > div {
-              > div {
-                > svg {
-                  > g {
-                    > g:first-of-type {
-                      ${lineWidth
-                        ? `transform: translate(${lineWidth - 17 - 100}px, 0);`
-                        : ""}
-                    }
-                  }
-                }
-              }
-            }
-          `}
-        >
-          <Line
-            data={[
-              {
-                id: "gni",
-                data: props.data.map((d: any) => ({
-                  x: d.year,
-                  y: d.gni,
-                })),
-              },
-            ]}
-            selected={selected}
-            hovered={hoveredXIndex}
-          />
-        </div>
-      )}
       <div
         css={`
           width: 100%;
@@ -293,6 +268,55 @@ export function BarChart(props: BarChartProps) {
           }}
         />
       </div>
+      {!props.hideODAGNI && showGni && (
+        <div
+          id="linechart-in-bar"
+          css={`
+            left: 0;
+            top: 30px;
+            position: absolute;
+            padding-left: 25px;
+            width: calc(100% - 25px);
+            height: ${props.height || 450}px;
+
+            @media (max-width: 600px) {
+              width: 1000px;
+            }
+
+            circle {
+              r: 6px;
+            }
+
+            > div {
+              > div {
+                > svg {
+                  > g {
+                    > g:first-of-type {
+                      ${lineWidth
+                        ? `transform: translate(${lineWidth - 17 - 100}px, 0);`
+                        : ""}
+                    }
+                  }
+                }
+              }
+            }
+          `}
+        >
+          <Line
+            data={[
+              {
+                id: "gni",
+                data: props.data.map((d: any) => ({
+                  x: d.year,
+                  y: d.gni,
+                })),
+              },
+            ]}
+            selected={selected}
+            hovered={hoveredXIndex}
+          />
+        </div>
+      )}
       {yearNotices.length > 0 && (
         <div
           css={`
