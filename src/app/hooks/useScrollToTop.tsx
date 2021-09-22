@@ -1,15 +1,14 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export function useScrollToTop() {
   const history = useHistory();
-  const location = useLocation();
 
   React.useEffect(() => {
     return history.listen(() => {
       if (
         history.location.pathname.indexOf("/project") === -1 &&
-        location.hash === ""
+        history.location.hash === ""
       ) {
         setTimeout(() => {
           window.scrollTo({

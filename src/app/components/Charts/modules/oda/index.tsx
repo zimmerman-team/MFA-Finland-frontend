@@ -1,5 +1,6 @@
 import React from "react";
 import get from "lodash/get";
+import filter from "lodash/filter";
 import { useCMSData } from "app/hooks/useCMSData";
 import { BarChart } from "app/components/Charts/bar";
 import {
@@ -93,6 +94,13 @@ export function ODAvizModule(props: ODAvizModuleProps) {
 
     return hasValue !== null;
   };
+
+  if (hideODAGNI()) {
+    tableConfig.columns = filter(
+      tableConfig.columns,
+      (column: any) => column.name !== "gni"
+    );
+  }
 
   if (props.activeTab === "chart" || props.selectedVizItemId) {
     return (
