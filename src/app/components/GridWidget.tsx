@@ -192,14 +192,22 @@ interface GridWidgetProps {
   };
 }
 
-export function displayPeriod(selectedFilters: SelectedFilterAtomModel) {
+export function displayPeriod(
+  selectedFilters: SelectedFilterAtomModel,
+  cmsData: any
+) {
+  const cmsLabel = get(
+    cmsData,
+    "viz.overviewdisbursementsperiodnotice",
+    "Showing disbursements for {start} to {end}"
+  );
   if (selectedFilters.years.length === 2) {
     const startYear = new Date(selectedFilters.years[0]).getFullYear();
 
     const endYear = new Date(selectedFilters.years[1]).getFullYear();
 
     if (startYear === endYear && startYear > 2014 && startYear < 2022) {
-      return `Showing disbursements for ${startYear}`;
+      return cmsLabel.replace("{start}", startYear).replace(" to {end}", "");
     }
 
     const years: number[] = [];
@@ -211,12 +219,15 @@ export function displayPeriod(selectedFilters: SelectedFilterAtomModel) {
     }
 
     if (years.length > 0) {
-      return `Showing disbursements for ${years[0]}${
-        years.length > 1 ? ` to ${years[years.length - 1]}` : ""
-      }`;
+      return cmsLabel
+        .replace("{start}", years[0])
+        .replace(
+          "{end}",
+          years.length > 1 ? ` to ${years[years.length - 1]}` : ""
+        );
     }
   }
-  return "Showing disbursements for 2015 to 2021";
+  return cmsLabel.replace("{start}", 2015).replace("{end}", 2021);
 }
 
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
@@ -305,7 +316,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
             </h3>
             {odaWidget && (
               <div css="font-size: 14px;margin-top: 6px;">
-                {displayPeriod(selectedFilters)}
+                {displayPeriod(selectedFilters, cmsData)}
               </div>
             )}
           </div>

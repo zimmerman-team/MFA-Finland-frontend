@@ -13,7 +13,6 @@ interface NavItemParams {
 }
 
 const containercss = (active: boolean) => css`
-  gap: 5px;
   display: flex;
   cursor: pointer;
   margin-right: 15px;
@@ -29,11 +28,12 @@ const containercss = (active: boolean) => css`
   }
 
   @media (max-width: 600px) {
-    margin-right: 0;
+    margin-right: 12px;
   }
 `;
 
 const typographycss = css`
+  margin: 0 2px;
   color: #2e4063;
   font-size: 12px;
   white-space: pre;

@@ -19,7 +19,6 @@ import {
   useDebounce,
   useUpdateEffect,
 } from "react-use";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { ODAvizModule } from "app/components/Charts/modules/oda";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
@@ -27,6 +26,7 @@ import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { SectorsVizModule } from "app/components/Charts/modules/sectors";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import { ProjectsListModule } from "app/components/Charts/modules/projects";
+import { Switch, Route, useRouteMatch, useLocation } from "react-router-dom";
 import { BudgetLinesModule } from "app/components/Charts/modules/budgetlines";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { CountriesRegionsModule } from "app/components/Charts/modules/locations";
@@ -51,11 +51,12 @@ import {
 } from "app/state/recoil/atoms";
 
 export default function VizModule() {
+  const location = useLocation();
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
   const mobile = useMediaQuery("(max-width: 600px)");
   const [searchKey, setSearchKey] = React.useState(
-    localStorage.getItem("searchValue") || ""
+    sessionStorage.getItem("searchValue") || ""
   );
   const [ref, { height }] = useMeasure<HTMLDivElement>();
   const [activeTab, setActiveTab] = React.useState("chart");
@@ -473,7 +474,7 @@ export default function VizModule() {
   useDebounce(
     () => {
       const filters = getAPIFormattedFilters(selectedFilters);
-      localStorage.setItem("searchValue", searchKey);
+      sessionStorage.setItem("searchValue", searchKey);
       setProjectListPage(0);
       projectsAction({
         values: {
@@ -506,6 +507,45 @@ export default function VizModule() {
       thematicAreaChartSingle = splits[0][0] === splits[1][0];
     }
   }
+
+  const hideODAGNI = () => {
+    const currentURLParams = new URLSearchParams(location.search);
+    const countries = currentURLParams.get("recipient_country_code");
+    const regions = currentURLParams.get("recipient_region_code");
+    const sectors = currentURLParams.get("sector_code");
+    const organisations = currentURLParams.get("participating_org_ref");
+    const activitystatus = currentURLParams.get("activity_status_code");
+    const activityscope = currentURLParams.get("activity_scope_code");
+    const tag = currentURLParams.get("tag_narrative");
+    const sdg = currentURLParams.get("tag_code");
+    const defaultaidtype = currentURLParams.get("default_aid_type_code");
+    const defaulttiedstatus = currentURLParams.get("default_tied_status_code");
+    const defaultflowtype = currentURLParams.get("default_flow_type_code");
+    const collaborationtype = currentURLParams.get("collaboration_type_code");
+    const policymarker = currentURLParams.get("policy_marker_code");
+    const budgetlines = currentURLParams.get("budget_line");
+    const humanrights = currentURLParams.get("human_rights_approach");
+    const years = currentURLParams.get("years");
+    const hasValue =
+      countries ||
+      regions ||
+      sectors ||
+      organisations ||
+      activitystatus ||
+      activityscope ||
+      tag ||
+      sdg ||
+      defaultaidtype ||
+      defaulttiedstatus ||
+      defaultflowtype ||
+      collaborationtype ||
+      policymarker ||
+      budgetlines ||
+      humanrights ||
+      years;
+
+    return hasValue !== null;
+  };
 
   function renderSideList() {
     if ((mobile && isThematic) || isProjects) {
@@ -568,7 +608,8 @@ export default function VizModule() {
               },
               selectedVizItem,
               cmsData,
-              thematicAreaChartSingle
+              thematicAreaChartSingle,
+              hideODAGNI()
             )}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
