@@ -6,9 +6,7 @@ context("Result", () => {
   });
 
   it("should show correct title", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
+    cy.acceptCookie();
     cy.visit("localhost:3000/result");
     cy.get("h2").contains("Result").should("exist");
   });

@@ -1,15 +1,11 @@
 /// <reference types="cypress" />
 
-const { validateYupSchema } = require("formik");
-
 const feedbackTest = ["Feedback", "FAQ's"];
 
 context("Feedback", () => {
   it("should show correct title", () => {
     cy.viewport(1536, 860);
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
+    cy.acceptCookie();
     cy.visit("localhost:3000/feedback");
     feedbackTest.forEach((text) => cy.get("h2").contains(text).should("exist"));
   });

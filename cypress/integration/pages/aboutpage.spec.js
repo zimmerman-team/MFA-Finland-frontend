@@ -8,9 +8,7 @@ context("About", () => {
   });
 
   it("should show correct title", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
+    cy.acceptCookie();
     cy.visit("localhost:3000/about");
     aboutTest.forEach((text) => cy.get("h2").contains(text).should("exist"));
   });
@@ -25,9 +23,7 @@ context("About", () => {
   });
 
   it("cy.reload() - reload the page", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
+    cy.acceptCookie();
     cy.visit("localhost:3000/about");
     cy.reload();
     // reload the page without using the cache

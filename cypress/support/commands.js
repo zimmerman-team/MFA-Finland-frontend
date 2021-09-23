@@ -23,3 +23,8 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add("acceptCookie", () => {
+  cy.visit("localhost:3000");
+  cy.wait(10000);
+  cy.get('[test-id="main-page-accept"]').click();
+});
