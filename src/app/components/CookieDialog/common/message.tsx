@@ -70,7 +70,9 @@ export const Message = (props: MessageProps) => {
       </Copy>
       <Buttons>
         <Button onClick={() => props.handleReject()}>Reject</Button>
-        <Button onClick={() => props.handleAccept()}>Accept</Button>
+        <Button test-id="main-page-accept" onClick={() => props.handleAccept()}>
+          Accept
+        </Button>
       </Buttons>
     </MessageContainer>
   );
