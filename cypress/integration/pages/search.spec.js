@@ -8,51 +8,51 @@ context("search", () => {
 
   it("accept cookies", () => {
     cy.acceptCookie();
-    // cy.visit("localhost:3000");
-    // cy.wait(10000);
-    // cy.get('[test-id="main-page-accept"]').click();
   });
 
   it("search activity by word", () => {
-    cy.get('[aria-label="Search in application"]').click().type("networking");
-    cy.wait(5000);
-
-    cy.get('[data-cy="search-result-navigation"]').should("be.visible");
-    cy.get('[data-cy="search-result-item-0"]').click();
-
-    cy.wait(2000);
-    cy.get(".MuiTypography-body1").contains("networking");
+    cy.search("networking");
+    cy.get('[data-cy="search-nav-item-0"]').click();
+    cy.searchContains("._StyledGrid3-fYYcky", "networking");
   });
 
   it("search activity by full title", () => {
-    cy.get('[aria-label="Search in application"]')
-      .click()
-      .type("Support for UNESCO's Global Education Monitoring Report");
-    cy.wait(5000);
-
-    cy.get('[data-cy="search-result-navigation"]').should("be.visible");
-    cy.get('[data-cy="search-nav-item-0"]').click();
-    cy.get('[data-cy="search-result-item-0"]').click();
-
-    cy.wait(2000);
-    cy.get(".MuiTypography-body1").contains(
+    cy.search("Support for UNESCO's Global Education Monitoring Report");
+    cy.searchContains(
+      "._StyledGrid3-fYYcky",
       "Support for UNESCO's Global Education Monitoring Report"
     );
   });
 
   it("search activity by half title", () => {
-    cy.get('[aria-label="Search in application"]').click().type("human mine");
-    cy.wait(5000);
-
-    cy.get('[data-cy="search-result-navigation"]').should("be.visible");
-    cy.get('[data-cy="search-result-item-0"]').click();
-
-    cy.wait(2000);
-    cy.get(".MuiTypography-body1").contains("humanitarian mine");
+    cy.search("human mine");
+    cy.searchContains("._StyledGrid3-fYYcky", "humanitarian mine");
   });
 
-  it("cy.reload() - reload the page", () => {
-    cy.acceptCookie();
-    cy.reload();
+  it("search organistion by word", () => {
+    cy.search("halo");
+    cy.get('[data-cy="search-nav-item-3"]').click();
+    cy.wait(2000);
+    cy.get('[data-cy="search-result-item-1"]').click();
+    cy.get("h2").contains("HALO");
+  });
+
+  it("search sector by word", () => {
+    cy.search("building");
+    cy.get('[data-cy="search-nav-item-2"]').click();
+    cy.searchContains("h2", "building");
+  });
+
+  it("search country by word", () => {
+    cy.search("peru");
+    cy.get('[data-cy="search-nav-item-4"]').click();
+    cy.searchContains("h2", "Peru");
+  });
+
+  it("go to project lists", () => {
+    cy.search("report");
+    cy.get('[data-cy="search-nav-item-0"]').click();
+    cy.get("a").contains("Go to projects list").click();
+    cy.get(".projects___StyledTypography-sc-1bi33pa-2").contains("project");
   });
 });

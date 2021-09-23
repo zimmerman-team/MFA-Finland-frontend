@@ -28,3 +28,15 @@ Cypress.Commands.add("acceptCookie", () => {
   cy.wait(10000);
   cy.get('[test-id="main-page-accept"]').click();
 });
+
+Cypress.Commands.add("search", (label) => {
+  cy.get('[aria-label="Search in application"]').click().type(label);
+  cy.wait(5000);
+  cy.get('[data-cy="search-result-navigation"]').should("be.visible");
+});
+
+Cypress.Commands.add("searchContains", (id, label) => {
+  cy.get('[data-cy="search-result-item-0"]').click();
+  cy.wait(2000);
+  cy.get(id).contains(label);
+});
