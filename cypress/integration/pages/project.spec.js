@@ -74,9 +74,7 @@ context("Project detail", () => {
     });
 
     cy.get(".InPageNavigation___StyledArrowDownwardIcon-sc-1nr5zk8-1").click();
-    // cy.get('.dXwhve').should('be.visible');
     cy.get(".bsiwwe").should("be.visible");
     cy.get(".InPageNavigation___StyledArrowUpwardIcon-sc-1nr5zk8-2").click();
-    // cy.get('.dXwhve').should('be.visible');
   });
 });
