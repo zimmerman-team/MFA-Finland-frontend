@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-const title = ["Description", "Project disbursements for year", "Transactions"];
+const title = ["Description", "Project disbursements for year", "Dismursement"];
 const accodionTitle = [
   "Participating organisations",
   "Activity summary",
@@ -21,7 +21,7 @@ context("Project detail", () => {
     cy.wait(10000);
     cy.get('[test-id="main-page-accept"]').click();
     cy.visit("localhost:3000/viz/projects");
-    cy.get("h6").contains("projects");
+    cy.get("h6").contains("activities");
   });
 
   it("go to the project detail page", () => {
@@ -30,9 +30,9 @@ context("Project detail", () => {
 
   it("should have the correct title", () => {
     cy.get("._StyledTypography2-fNTwbf").contains(
-      "OYO Gentlemen and Supergirls - Addressing GBV with teenagers in Ohangwena and Omusati"
+      "Consolidating Institutional Capacities for National Surface Water Quality Monitoring in the Kyrgyz Republic FinWaterWEI III"
     );
-    title.map((text) => {
+    title.forEach((text) => {
       cy.get(".MuiTypography-body1").contains(text);
     });
   });
@@ -48,18 +48,18 @@ context("Project detail", () => {
 
   it("transcation table", () => {
     cy.get(".PillButton___StyledButton-faslku-0").contains("Table").click();
-    cy.get("table").contains("Disbursements");
+    cy.get("table").contains("disbursements");
     cy.get(".PillButton___StyledButton-faslku-0").contains("Chart").click();
   });
 
   it("Accordion show correct title", () => {
-    accodionTitle.map((text) => {
+    accodionTitle.forEach((text) => {
       cy.get(".MuiAccordionSummary-content p").contains(text);
     });
   });
 
   it("Accordion should expand smoothly", () => {
-    number.map((num) => {
+    number.forEach((num) => {
       cy.get("._StyledExpandMoreIcon-ldWMvY").eq(num).click();
       cy.get("._StyledMUIAccordionDetails-eBIbjj").should("be.visible");
       cy.get("._StyledExpandLessIcon-fnJIsc").click();
@@ -69,7 +69,7 @@ context("Project detail", () => {
 
   it("Inpage navigation", () => {
     cy.get(".InPageNavigation___StyledDiv-sc-1nr5zk8-0").should("exist");
-    accodionTitle.map((text) => {
+    accodionTitle.forEach((text) => {
       cy.get("._StyledDiv2-Rvwug").contains(text);
     });
 
