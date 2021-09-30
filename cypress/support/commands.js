@@ -22,6 +22,9 @@
 //
 //
 // -- This will overwrite an existing command --
+
+const { visitFunctionBody } = require("typescript");
+
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add("acceptCookie", () => {
   cy.visit("localhost:3000");
@@ -67,4 +70,27 @@ Cypress.Commands.add("checkRegion", (id) => {
   cy.get('[id="' + id + '"]').click({ force: true });
   cy.get("b").contains(id).should("exist");
   cy.get(".clgFzd").click();
+});
+
+Cypress.Commands.add("checkSDG", (index, id) => {
+  cy.get('[aria-label="SDG: ' + index + " - " + id + '"]').trigger(
+    "mouseover",
+    { force: true }
+  );
+  cy.get("b").contains(id).should("be.visible");
+});
+
+Cypress.Commands.add("checkCharts", () => {
+  // Overview Disbursements
+  cy.get("._StyledDiv4-jwxTbH").should("exist");
+  // Thematic areas
+  cy.get("._StyledGrid2-jcxLZB").should("exist");
+  // Sectors
+  cy.get("._StyledDiv-kdVnjk").should("exist");
+
+  cy.checkBudgetLine();
+  cy.checkMapContent();
+
+  cy.get("header").should("exist");
+  cy.get("footer").should("exist");
 });
