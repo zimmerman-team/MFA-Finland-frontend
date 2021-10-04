@@ -36,7 +36,6 @@ context("detail sector page", () => {
 
   it("sector should be only one sector", () => {
     cy.scrollTo(200);
-    // cy.get("._StyledDiv-kdVnjk").should("exist");
     cy.get("._StyledDiv4-ggjYTm").contains("100%");
   });
 

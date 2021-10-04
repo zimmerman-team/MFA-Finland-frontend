@@ -15,11 +15,10 @@ context("detail thematic area page", () => {
     cy.viewport(1536, 860);
   });
 
-  it("go to the org page", () => {
+  it("go to the thematic area page", () => {
     cy.acceptCookie();
     cy.wait(5000);
     cy.get(".ctlqna").click({ force: true });
-    // cy.get('.smTooltipContainer___StyledButton-sc-1e6tvjb-6').click();
     cy.wait(5000);
   });
 
