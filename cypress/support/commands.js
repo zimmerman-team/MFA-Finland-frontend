@@ -23,8 +23,6 @@
 //
 // -- This will overwrite an existing command --
 
-const { visitFunctionBody } = require("typescript");
-
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add("acceptCookie", () => {
   cy.visit("localhost:3000");
