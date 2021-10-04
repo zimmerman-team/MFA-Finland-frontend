@@ -1,11 +1,10 @@
 /// <reference types="cypress" />
 
-import { closeSync } from "fs";
 import path from "path";
 import validateImage from "../../plugins/index";
 
 const validateCsvList = (list) => {
-  expect(list, "thematic-areas").to.have.length(609);
+  expect(list, "thematic-areas").to.have.length.gt(600);
 };
 const downloadsFolder = Cypress.config("downloadsFolder");
 const coordinate = [

@@ -23,3 +23,31 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import path from "path";
+import validateImage from "../plugins/index";
+
+Cypress.Commands.add("checkPNG", () => {
+  // image comes from a domain different from the page
+  cy.get(".FloatingButtons___StyledTypography3-j96bs6-11").click({
+    force: true,
+  });
+  cy.log("**confirm downloaded image**");
+  validateImage();
+});
+
+Cypress.Commands.add("checkTooltip", () => {
+  cy.get(".FloatingButtons___StyledMoreHoriz-j96bs6-3").click();
+  cy.get(".FloatingButtons___StyledShare-j96bs6-5").trigger("mouseover", {
+    force: true,
+  });
+  cy.get(".MuiTooltip-popper").should("be.visible");
+  cy.get(".FloatingButtons___StyledCloudDownload-j96bs6-7").click();
+});
+
+Cypress.Commands.add("checkCSV", (file, length) => {
+  cy.get('[id="download-csv"]').click();
+  cy.log("**read downloaded file**");
+  const downloadsFolder = Cypress.config("downloadsFolder");
+  const filename = path.join(downloadsFolder, file);
+  cy.readFile(filename, { timeout: 15000 }).should("have.length.gt", length);
+});

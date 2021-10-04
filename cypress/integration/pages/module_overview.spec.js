@@ -3,7 +3,7 @@ import path from "path";
 import { validateImage, downloadsFolder } from "../../plugins/index";
 
 const validateCsvList = (list) => {
-  expect(list, "oda").to.have.length(917);
+  expect(list, "oda").to.have.length.gt(900);
 };
 const downloadsFolder = Cypress.config("downloadsFolder");
 
