@@ -72,8 +72,7 @@ context("viz module page sectors", () => {
   });
 
   it("check detail info", () => {
-    cy.visit("http://localhost:3000/viz/sectors");
-    cy.wait(8000);
+    cy.wait(5000);
     sectors.forEach((text) => {
       cy.get("._StyledDiv-hfFXsB").contains(text);
     });
