@@ -24,17 +24,13 @@ context("viz module page country and region", () => {
   });
 
   it("go to the module region page", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
-
+    cy.acceptCookie();
     cy.get("h3").contains("Regions").click();
   });
 
   it("check chart and hover", () => {
     cy.wait(5000);
     cy.get(".treemap___StyledDiv3-dnl4if-3").should("exist");
-    //TODO: maybe can refactor with the detail page function check region
     cy.get('[aria-label="Regional and Unspecified"]').trigger("mouseover", {
       force: true,
     });

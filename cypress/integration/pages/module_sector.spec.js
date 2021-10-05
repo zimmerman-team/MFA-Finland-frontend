@@ -28,10 +28,7 @@ context("viz module page sectors", () => {
   });
 
   it("go to the viz module sector page", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
-
+    cy.acceptCookie();
     cy.get("h3").contains("Sectors").click();
   });
   it("check charts", () => {

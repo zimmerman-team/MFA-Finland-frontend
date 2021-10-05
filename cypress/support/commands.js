@@ -26,6 +26,12 @@
 import path from "path";
 import validateImage from "../plugins/index";
 
+Cypress.Commands.add("acceptCookie", () => {
+  cy.visit("localhost:3000");
+  cy.wait(10000);
+  cy.get('[test-id="main-page-accept"]').click();
+});
+
 Cypress.Commands.add("checkPNG", () => {
   // image comes from a domain different from the page
   cy.get(".FloatingButtons___StyledTypography3-j96bs6-11").click({

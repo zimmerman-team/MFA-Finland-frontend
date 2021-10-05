@@ -1,12 +1,5 @@
 /// <reference types="cypress" />
 
-import path from "path";
-import validateImage from "../../plugins/index";
-
-const validateCsvList = (list) => {
-  expect(list, "thematic-areas").to.have.length.gt(600);
-};
-const downloadsFolder = Cypress.config("downloadsFolder");
 const coordinate = [
   "Strengthening the status and rights of women and girls",
   "Education, well-functioning societies and democracy",
@@ -20,11 +13,8 @@ context("viz module page thematic", () => {
   });
 
   it("go to the viz thematic area page", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
-
-    cy.get("h3").contains("Thematic areas").click();
+    cy.acceptCookie();
+    cy.get("h3").contains("Priority areas").click();
   });
 
   it("check charts", () => {
@@ -43,36 +33,21 @@ context("viz module page thematic", () => {
       cy.get("._StyledDiv-hfFXsB").contains(text);
     });
   });
-  it("should download the correct file", () => {
-    cy.get(".FloatingButtons___StyledMoreHoriz-j96bs6-3").click();
-    cy.get(".FloatingButtons___StyledShare-j96bs6-5").trigger("mouseover", {
-      force: true,
-    });
-    cy.get(".MuiTooltip-popper").should("be.visible");
-    cy.get(".FloatingButtons___StyledCloudDownload-j96bs6-7").click();
+  it("check tooltip", () => {
+    cy.checkTooltip();
   });
 
   it("CSV file", () => {
-    cy.get('[id="download-csv"]').click();
-    cy.log("**read downloaded file**");
-    const filename = path.join(downloadsFolder, "thematic-areas.csv");
-    cy.readFile(filename, { timeout: 15000 })
-      .should("have.length.gt", 20)
-      .then(validateCsvList);
+    cy.checkCSV("thematic-areas.csv", 590);
   });
 
   it("PNG image", () => {
-    // image comes from a domain different from the page
-    cy.get(".FloatingButtons___StyledTypography3-j96bs6-11").click({
-      force: true,
-    });
-    cy.log("**confirm downloaded image**");
-    validateImage();
+    cy.checkPNG();
   });
 
   it("change to table display", () => {
     cy.get("._StyledButton-gQDzsd").eq(1).click({ force: true });
-    cy.get("h6").contains("thematic areas");
+    cy.get("h6").contains("priority areas");
     cy.get("table").should("exist");
   });
 

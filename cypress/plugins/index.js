@@ -34,5 +34,4 @@ module.exports = (on, config) => {
       }
     );
   };
-  // const downloadsFolder = Cypress.config('downloadsFolder');
 };

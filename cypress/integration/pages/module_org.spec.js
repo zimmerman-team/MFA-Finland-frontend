@@ -20,17 +20,13 @@ context("viz module page organisation", () => {
   });
 
   it("go to the module org page", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
-
+    cy.acceptCookie();
     cy.get("h3").contains("Organisations").click();
   });
 
   it("check chart and hover", () => {
     cy.wait(5000);
     cy.get(".treemap___StyledDiv3-dnl4if-3").should("exist");
-    //TODO: maybe can refactor with the detail page function check region
     cy.get(
       '[aria-label="Non-Governmental Organisation (NGO) and Civil Society"]'
     ).trigger("mouseover", {
@@ -101,6 +97,7 @@ context("viz module page organisation", () => {
       force: true,
     });
     cy.get("b").contains("International NGO");
+    // cant click bcs some react errors
     // cy.get('.node___StyledDiv-t9xrnj-0 >:nth-child(3)').click()
   });
 });

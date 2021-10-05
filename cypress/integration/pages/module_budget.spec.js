@@ -15,10 +15,7 @@ context("viz module page budget", () => {
   });
 
   it("go to the module org page", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
-
+    cy.acceptCookie();
     cy.get("h3").contains("Budget lines").click();
   });
 
