@@ -35,7 +35,27 @@ export function ThematicAreas(props: ThematicAreasProps) {
   const maxValue = get(maxBy(props.data, "value"), "value", 0);
 
   if (props.showSingleCircle) {
-    const selected = props.data[0];
+    let selected = props.data[0];
+    if (!selected) {
+      selected = {
+        ref: "",
+        name: "",
+        size: 0,
+        area: "",
+        color: "",
+        value: 0,
+        primary: {
+          name: "",
+          area: "",
+          value: 0,
+        },
+        secondary: {
+          name: "",
+          area: "",
+          value: 0,
+        },
+      };
+    }
     return (
       <Grid
         container
