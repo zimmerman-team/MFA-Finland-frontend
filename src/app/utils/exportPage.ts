@@ -3,12 +3,15 @@ import JSPDF from "jspdf";
 import domtoimage from "dom-to-image";
 import background from "app/assets/background.png";
 
-export function exportPage(type: string) {
+export function exportPage(type: string, bgcolor: string) {
   const node = document.getElementById("root");
-  const filter = (n: any) => n.id !== "page-ornament";
+  const filter = (n: any) =>
+    n.id !== "page-ornament" &&
+    n.id !== "viz-floating-buttons" &&
+    n.id !== "viz-sidepanel-background";
   if (type === "jpg") {
     domtoimage
-      .toJpeg(node, { filter, bgcolor: "#f8f8f8" })
+      .toJpeg(node, { filter, bgcolor })
       .then((dataUrl: any) => {
         const link = document.createElement("a");
         link.download = "download.jpg";
@@ -20,7 +23,7 @@ export function exportPage(type: string) {
       });
   } else if (type === "svg") {
     domtoimage
-      .toSvg(node, { bgcolor: "#f8f8f8" })
+      .toSvg(node, { bgcolor })
       .then((dataUrl: any) => {
         const link = document.createElement("a");
         link.download = "download.svg";
@@ -32,7 +35,7 @@ export function exportPage(type: string) {
       });
   } else if (type === "pdf") {
     domtoimage
-      .toPng(node, { filter, bgcolor: "#f8f8f8" })
+      .toPng(node, { filter, bgcolor })
       .then((dataUrl: any) => {
         const pdf = new JSPDF({
           orientation: "portrait",
@@ -65,7 +68,7 @@ export function exportPage(type: string) {
     domtoimage
       .toPng(node, {
         filter,
-        bgcolor: "#f8f8f8",
+        bgcolor,
       })
       .then((dataUrl: any) => {
         const link = document.createElement("a");
