@@ -1,9 +1,5 @@
 /// <reference types="cypress" />
 
-const { CategoryTwoTone } = require("@material-ui/icons");
-const { createVerify } = require("crypto");
-const { multiply } = require("lodash-es");
-
 context("Filter", () => {
   beforeEach(() => {
     cy.viewport(1536, 860);
@@ -23,9 +19,9 @@ context("Filter", () => {
     cy.get("h3").contains("SDG - Sustainable Development Goals");
   });
 
-  it("Thematic area show correct content", () => {
+  it("Priority area show correct content", () => {
     cy.get(".ChooseAFilterListItem___StyledPillButton-sc-14r1r0b-2")
-      .contains("Thematic areas")
+      .contains("Priority areas")
       .click();
     cy.wait(1000);
     cy.get("h6").contains(
@@ -36,28 +32,12 @@ context("Filter", () => {
     );
   });
 
-  it("select thematic area", () => {
-    cy.get('[data-indeterminate="false"]').eq(1).check();
-    cy.get(".BottomActions___StyledPillButton2-sc-1yyxikb-2").click();
-    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("€2.44 bln");
-    cy.wait(5000);
-    cy.get("._StyledGrid-fmVJvG").should("exist");
-    cy.get("g text").contains("Main priority");
-  });
-
-  it("cancel select", () => {
-    // delete last selection
-    cy.get(".MuiChip-deleteIcon").click({ force: true });
-    // make sure get back to the main page
-    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("€6.41 bln");
-  });
-
   it("single select thematic area", () => {
     cy.get(".PillButton___StyledButton-faslku-0")
       .contains("Add Filters")
       .click();
     cy.get(".ChooseAFilterListItem___StyledPillButton-sc-14r1r0b-2")
-      .contains("Thematic areas")
+      .contains("Priority areas")
       .click();
     cy.get(".MuiAccordionSummary-expandIcon").eq(2).click();
     cy.get('[data-indeterminate="false"]').eq(8).check();
@@ -69,7 +49,7 @@ context("Filter", () => {
     cy.get(".MuiChip-label").contains(
       "Education, well-functioning societies and democracy - Main priority"
     );
-    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("€597.32 mln");
+    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("mln");
     cy.wait(5000);
     cy.get("._StyledGrid-fmVJvG").should("exist");
     cy.get("g text").contains("Main priority");
@@ -79,7 +59,7 @@ context("Filter", () => {
     // delete last selection
     cy.get(".MuiChip-deleteIcon").click({ force: true });
     // make sure get back to the main page
-    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("€6.41 bln");
+    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("bln");
   });
 
   it("select both contries and sectors", () => {
@@ -113,7 +93,7 @@ context("Filter", () => {
   });
 
   it("then homepage should show the correct items", () => {
-    //sectors cant work due to the cypress network
+    // sectors cant work due to the cypress network
     // cy.get('._StyledSpan-dAExTZ').contains('Economic sectors');
     // cy.get('._StyledSpan2-eLKqDV').contains('100%');
 
@@ -152,7 +132,7 @@ context("Filter", () => {
 
     cy.wait(5000);
     // make sure get back to the main page
-    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("€6.41 bln");
+    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("bln");
   });
 
   it("select and organisation and SDGs and period and advanced filter", () => {
@@ -177,7 +157,7 @@ context("Filter", () => {
 
     // years 2016-2020
     cy.get(".ChooseAFilterListItem___StyledPillButton-sc-14r1r0b-2")
-      .contains("years")
+      .contains("Years")
       .click();
     cy.get('[id="button-2016"]').click();
     cy.get(".PeriodCardContent___StyledPillButton2-sc-5bzdry-7").click();
@@ -200,7 +180,7 @@ context("Filter", () => {
   it("homepage should show the correct content", () => {
     cy.wait(5000);
     cy.get(".GridWidget___StyledDiv4-sc-1fjyyq1-4").contains("2016 - to 2020");
-    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("€5.27 mln");
+    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("mln");
 
     cy.get('[aria-label="Public Sector Institutions"]').trigger("mouseover", {
       force: true,
@@ -247,7 +227,7 @@ context("Filter", () => {
   it("homepage should show the correct content", () => {
     cy.wait(5000);
     cy.get(".GridWidget___StyledDiv4-sc-1fjyyq1-4").contains("2016 - to 2021");
-    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("€6.32 mln");
+    cy.get(".GridWidget___StyledDiv7-sc-1fjyyq1-8").contains("mln");
 
     cy.get('[aria-label="Public Sector Institutions"]').trigger("mouseover", {
       force: true,
@@ -256,6 +236,6 @@ context("Filter", () => {
       "Public Sector Institutions"
     );
 
-    cy.get("h6").contains("€6.32 mln");
+    cy.get("h6").contains("mln");
   });
 });
