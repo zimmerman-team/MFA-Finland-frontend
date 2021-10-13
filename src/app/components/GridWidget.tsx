@@ -295,7 +295,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     >
       <div css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <div>
+          <div data-cy="disbursement-period">
             <h3
               role="button"
               tabIndex={0}
@@ -330,7 +330,10 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         </div>
         {odaWidget && (
           <div css={style.odaHeaderStats}>
-            <div css={style.headerStat}>
+            <div
+              data-cy="homepage-overview disbursement"
+              css={style.headerStat}
+            >
               <div>
                 {get(
                   cmsData,
@@ -340,7 +343,10 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
               </div>
               <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
             </div>
-            <div css={style.headerStat}>
+            <div
+              data-cy="homepage-overview organisations"
+              css={style.headerStat}
+            >
               <div>
                 {get(cmsData, "general.organisations", "Organisations")}
               </div>
@@ -354,7 +360,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
                 </Link>
               </div>
             </div>
-            <div css={style.headerStat}>
+            <div data-cy="homepage-overview projects" css={style.headerStat}>
               <div>{get(cmsData, "viz.projects", "Projects")}</div>
               <div>{formatLocaleN(projCount)}</div>
               <div>

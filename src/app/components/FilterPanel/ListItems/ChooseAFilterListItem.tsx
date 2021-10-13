@@ -81,6 +81,7 @@ export const ChooseAFilterListItem = (props: ChooseAFilterListItemProps) => {
         {props.heading}
       </Typography>
       <PillButton
+        data-cy={`PillButton-${props.label}`}
         css={styles.button}
         fullWidth
         endIcon={<ArrowForwardIos style={{ fontSize: 24 }} />}

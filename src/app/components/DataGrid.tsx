@@ -324,6 +324,7 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       <Grid item xs={12} sm={12} md={12} lg={8} xl={8} component="section">
         <GridWidget
+          data-cy="overview_disbursements"
           link="/viz/oda"
           tooltip={get(cmsData, "tooltips.overview_disbursements", "")}
           label="Overview Disbursements"
