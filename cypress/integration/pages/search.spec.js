@@ -13,20 +13,20 @@ context("search", () => {
   it("search activity by word", () => {
     cy.search("networking");
     cy.get('[data-cy="search-nav-item-0"]').click();
-    cy.searchContains("._StyledGrid3-fYYcky", "networking");
+    cy.searchContains('[data-cy="project-detail-title"]', "Networking");
   });
 
   it("search activity by full title", () => {
     cy.search("Support for UNESCO's Global Education Monitoring Report");
     cy.searchContains(
-      "._StyledGrid3-fYYcky",
+      '[data-cy="project-detail-title"]',
       "Support for UNESCO's Global Education Monitoring Report"
     );
   });
 
   it("search activity by half title", () => {
     cy.search("human mine");
-    cy.searchContains("._StyledGrid3-fYYcky", "humanitarian mine");
+    cy.searchContains('[data-cy="project-detail-title"]', "humanitarian mine");
   });
 
   it("search organistion by word", () => {
@@ -44,15 +44,15 @@ context("search", () => {
   });
 
   it("search country by word", () => {
-    cy.search("peru");
+    cy.search("Nepal");
     cy.get('[data-cy="search-nav-item-4"]').click();
-    cy.searchContains("h2", "Peru");
+    cy.searchContains("h2", "Nepal");
   });
 
   it("go to project lists", () => {
     cy.search("report");
     cy.get('[data-cy="search-nav-item-0"]').click();
     cy.get("a").contains("Go to projects list").click();
-    cy.get(".projects___StyledTypography-sc-1bi33pa-2").contains("project");
+    cy.get("h6").contains("activities");
   });
 });
