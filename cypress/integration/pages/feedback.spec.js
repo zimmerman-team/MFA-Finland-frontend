@@ -1,7 +1,5 @@
 /// <reference types="cypress" />
 
-const { validateYupSchema } = require("formik");
-
 const feedbackTest = ["Feedback", "FAQ's"];
 
 context("Feedback", () => {
@@ -16,17 +14,17 @@ context("Feedback", () => {
 
   it("inpage navigation", () => {
     cy.viewport(1536, 860);
-    cy.get(".InPageNavigation___StyledDiv-sc-1nr5zk8-0").should("exist");
+    cy.get('[data-cy="in-page-nav"]').should("exist");
     feedbackTest.forEach((text) => cy.contains(text).click());
-    cy.get(".InPageNavigation___StyledArrowUpwardIcon-sc-1nr5zk8-2").click();
-    cy.get(".InPageNavigation___StyledArrowDownwardIcon-sc-1nr5zk8-1").click();
+    cy.get('[data-cy="arrow-down-button"]').click();
+    cy.get('[data-cy="arrow-up-button"]').click();
   });
 
   it("go to homepage via breadcrumbs", () => {
     cy.viewport(1536, 860);
-    cy.get("._StyledNavLink-cajSdB").click();
+    cy.get('[aria-label="breadcrumb"] [aria-current="page"]').click();
     cy.scrollTo("bottom");
-    cy.get(".Footer___StyledNavLink-sc-93h9it-7").click();
+    cy.get('[data-cy="link-to-feedback"]').click();
   });
 
   it("cy.reload() - reload the page", () => {

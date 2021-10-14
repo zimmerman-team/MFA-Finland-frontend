@@ -118,16 +118,24 @@ export function Footer() {
               component="nav"
               css={drawerStyle.AddressContainer}
             >
-              <NavLink to="/feedback" css={styles.link}>
+              <NavLink
+                data-cy="link-to-feedback"
+                to="/feedback"
+                css={styles.link}
+              >
                 {get(cmsData, `menu.feedback`, "Feedback")}
               </NavLink>
-              <NavLink to="/about" css={styles.link}>
+              <NavLink data-cy="link-to-about" to="/about" css={styles.link}>
                 {get(cmsData, `menu.about`, "About")}
               </NavLink>
-              <NavLink to="/result" css={styles.link}>
+              <NavLink data-cy="link-to-result" to="/result" css={styles.link}>
                 {get(cmsData, `menu.result`, "Result")}
               </NavLink>
-              <NavLink to="/statements" css={styles.link}>
+              <NavLink
+                data-cy="link-to-statement"
+                to="/statements"
+                css={styles.link}
+              >
                 {get(cmsData, `menu.statements`, "Statements")}
               </NavLink>
             </Grid>

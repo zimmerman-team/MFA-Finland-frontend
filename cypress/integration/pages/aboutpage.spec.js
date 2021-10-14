@@ -16,12 +16,12 @@ context("About", () => {
   });
 
   it("inpage navigation", () => {
-    cy.get(".InPageNavigation___StyledDiv-sc-1nr5zk8-0").should("exist");
+    cy.get('[data-cy="in-page-nav"]').should("exist");
     aboutTest.forEach((text) => cy.contains(text).click());
   });
 
   it("go to homepage via breadcrumbs", () => {
-    cy.get("._StyledNavLink-kabrGe").click();
+    cy.get('[aria-label="breadcrumb"] [aria-current="page"]').click();
   });
 
   it("cy.reload() - reload the page", () => {

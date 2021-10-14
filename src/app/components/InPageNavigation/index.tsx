@@ -104,7 +104,7 @@ export function InPageNavigation(props: InPageNavModel) {
   }
 
   return (
-    <div css={inPageNavigationStyle}>
+    <div data-cy="in-page-nav" css={inPageNavigationStyle}>
       {props.lists.map((item: ActivityItemProps, index: number) => (
         <InPageNavItem
           {...item}
@@ -124,8 +124,16 @@ export function InPageNavigation(props: InPageNavModel) {
         />
       ))}
       <Controls>
-        <ArrowDownwardIcon css={iconStyle} onClick={() => handleClickDown()} />
-        <ArrowUpwardIcon css={iconStyle} onClick={() => handleClickUp()} />
+        <ArrowDownwardIcon
+          data-cy="arrow-down-button"
+          css={iconStyle}
+          onClick={() => handleClickDown()}
+        />
+        <ArrowUpwardIcon
+          data-cy="arrow-up-button"
+          css={iconStyle}
+          onClick={() => handleClickUp()}
+        />
       </Controls>
     </div>
   );

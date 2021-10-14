@@ -14,16 +14,16 @@ context("Accessibility statement", () => {
   });
 
   it("inpage navigation", () => {
-    cy.get(".InPageNavigation___StyledDiv-sc-1nr5zk8-0").should("exist");
+    cy.get('[data-cy="in-page-nav"]').should("exist");
     cy.contains("Accessibility statement").click();
-    cy.get(".InPageNavigation___StyledArrowUpwardIcon-sc-1nr5zk8-2").click();
-    cy.get(".InPageNavigation___StyledArrowDownwardIcon-sc-1nr5zk8-1").click();
+    cy.get('[data-cy="arrow-down-button"]').click();
+    cy.get('[data-cy="arrow-up-button"]').click();
   });
 
   it("go to homepage via breadcrumbs", () => {
-    cy.get("._StyledNavLink-kabrGe").click();
+    cy.get('[aria-label="breadcrumb"] [aria-current="page"]').click();
     cy.scrollTo("bottom");
-    cy.get(".Footer___StyledNavLink4-sc-93h9it-10").click();
+    cy.get('[data-cy="link-to-statement"]').click();
   });
 
   it("cy.reload() - reload the page", () => {

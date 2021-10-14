@@ -4,6 +4,7 @@ import { InpageNavItemModel } from "app/components/InPageNavigation/model";
 export const InPageNavItem = (props: InpageNavItemModel) => {
   return (
     <a
+      data-cy={`in-page-nav-${props.id}`}
       onClick={props.onClick}
       css={`
         margin-bottom: 20px;
