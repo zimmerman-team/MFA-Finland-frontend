@@ -229,6 +229,7 @@ export const FilterBar = (props: FilterBarProps) => {
         <div css={styles.container} id="filterbar-container">
           <div css={styles.buttonContainer}>
             <PillButton
+              data-cy="PillButton-Add Filters"
               css={styles.button}
               onClick={() => setCurrentFilterOpen(FILTER_TYPES.MAIN)}
             >

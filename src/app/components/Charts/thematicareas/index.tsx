@@ -38,6 +38,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
     const selected = props.data[0];
     return (
       <Grid
+        data-cy="priority-area-pie-simple"
         container
         direction="row"
         justify="center"
@@ -120,6 +121,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
         lg={props.showOnlyViz ? 12 : 6}
         xl={props.showOnlyViz ? 12 : 6}
         css={containercss}
+        data-cy="priority-area-pie-chart"
       >
         {props.data.map((item: DataProps, index: number) => (
           <React.Fragment key={item.name}>
@@ -170,7 +172,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
       </Hidden>
       {!props.showOnlyViz && (
         <Grid item xs={12} md={12} lg={6} xl={6} css={rightsideinfopanel}>
-          <div css={rightsideinfopaneltitle}>
+          <div data-cy="priority-area-coordinate" css={rightsideinfopaneltitle}>
             {get(cmsData, "priorityAreas.main", "Main priority")}/
             {get(cmsData, "priorityAreas.secondary", "Secondary priority")}
           </div>

@@ -287,6 +287,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   return (
     <div
+      aria-label={`${props.label} module`}
       css={style.widgetContainer(
         props.height,
         isHovered && !props.interactive && props.link !== undefined,
@@ -295,7 +296,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     >
       <div css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <div>
+          <div data-cy={`${props.label} title`}>
             <h3
               role="button"
               tabIndex={0}

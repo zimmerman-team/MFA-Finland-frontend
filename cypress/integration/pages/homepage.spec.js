@@ -1,8 +1,7 @@
 /// <reference types="cypress" />
 
 const homeTitle = [
-  "Overview Disbursements",
-  "Thematic area",
+  "Priority area",
   "Sectors",
   "Regions",
   "Organisations",
@@ -20,7 +19,7 @@ context("Homepage", () => {
 
   it("go to homepage", () => {
     cy.visit("localhost:3000");
-    cy.wait(20000);
+    cy.wait(8000);
     cy.get('[test-id="main-page-accept"]').click();
   });
 
@@ -29,18 +28,18 @@ context("Homepage", () => {
   });
 
   it("Overview Disbursements", () => {
-    cy.get("._StyledDiv4-jwxTbH").should("exist");
-    cy.get("._StyledDiv4-jwxTbH").click({ force: true });
+    cy.get('[id="viz-scroller"]').should("exist");
+    cy.get('[id="viz-scroller"]').eq(0).click({ force: true });
     cy.visit("localhost:3000");
-    cy.wait(20000);
+    cy.wait(8000);
   });
 
   it("Thematic areas and Sectors", () => {
-    cy.get("._StyledGrid2-jcxLZB").should("exist");
+    cy.get('[data-cy="priority-area-pie-chart"]').should("exist");
 
     // Sectors
     cy.scrollTo(200);
-    cy.get("._StyledDiv-kdVnjk").should("exist");
+    cy.get(".rv-xy-plot__inner").should("exist");
   });
 
   it("Regions", () => {
@@ -48,29 +47,31 @@ context("Homepage", () => {
     cy.get('[id="Regional and Unspecified"]').trigger("mouseover", {
       force: true,
     });
-    cy.get(".treemap___StyledDiv-dnl4if-0").should("be.visible");
+    cy.get("b").contains("Regional and Unspecified");
     // Regions-click
     cy.get('[id="Regional and Unspecified"]').click({ force: true });
-    cy.get("b").contains("Regional and Unspecified").should("exist");
-    cy.get(".clgFzd").click();
+    cy.get('[id="treemap-tooltip"]').should("exist");
+    cy.get('[data-cy="CloseButton"]').click();
   });
 
   it("Orgnisations", () => {
     //hover
-    cy.get('[aria-label="Multilateral Organisations"]').click({ force: true });
-    cy.get(".treemap___StyledDiv-dnl4if-0").should("be.visible");
+    cy.get('[aria-label="Multilateral Organisations"]').trigger("mouseover", {
+      force: true,
+    });
+    cy.get("b").contains("Multilateral Organisations");
     //click
     cy.get('[aria-label="Multilateral Organisations"]').click({ force: true });
-    cy.get("b").contains("Multilateral Organisations").should("exist");
-    cy.get(".clgFzd").click();
+    cy.get('[id="treemap-tooltip"]').should("exist");
+    cy.get('[data-cy="CloseButton"]').click();
   });
 
   it("Budget lines", () => {
-    cy.get("._StyledDiv2-kDlTqH").should("exist");
+    cy.get('[id="viz-scroller"]').eq(1).should("exist");
   });
 
   it("About the site", () => {
-    cy.get("._StyledDiv5-iiwrxn").contains(
+    cy.get('[data-cy="about"]').contains(
       "Openaid.fi is databank on Finland’s development cooperation."
     );
   });
@@ -84,7 +85,7 @@ context("Homepage", () => {
   });
 
   it("Result content", () => {
-    cy.get(".GridWidget___StyledDiv12-sc-1fjyyq1-17").contains(
+    cy.get('[data-cy="result"]').contains(
       "Positive results build societies and contribute to global stability and wellbeing."
     );
   });
@@ -97,10 +98,10 @@ context("Homepage", () => {
     cy.get(
       '[aria-label="Collapse Geographically unallocable ODA visualisation"]'
     ).click();
-    cy.get(".Collapseable___StyledDiv2-sc-18do71n-3").should("be.visible");
+    cy.get("h6").contains("Geographically unallocable ODA");
 
     //Disbursements amount
-    cy.get(".Legend___StyledDiv2-sc-12zjtsg-2").should("exist");
+    cy.get("h6").contains("Aggregated disbursements");
   });
 
   it("Footer and Header", () => {

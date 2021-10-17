@@ -322,7 +322,16 @@ export const DataGrid = (props: DataGridProps) => {
       {/* ----------------------------- */}
       {/*  row 1 */}
       {/* ----------------------------- */}
-      <Grid item xs={12} sm={12} md={12} lg={8} xl={8} component="section">
+      <Grid
+        data-cy="overview-disbursements-module"
+        item
+        xs={12}
+        sm={12}
+        md={12}
+        lg={8}
+        xl={8}
+        component="section"
+      >
         <GridWidget
           link="/viz/oda"
           tooltip={get(cmsData, "tooltips.overview_disbursements", "")}
@@ -529,6 +538,7 @@ export const DataGrid = (props: DataGridProps) => {
         </GridWidget>
       </Grid>
       <Grid
+        data-cy="about"
         item
         xs={12}
         sm={6}
@@ -634,6 +644,7 @@ export const DataGrid = (props: DataGridProps) => {
             order: 1;
           }
         `}
+        data-cy="result"
       >
         <GridWidget
           interactive
