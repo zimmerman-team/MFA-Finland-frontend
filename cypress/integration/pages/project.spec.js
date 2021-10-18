@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-const title = ["Description", "Project disbursements for year", "Dismursement"];
+const title = ["Description", "Project disbursements for year", "Disbursement"];
 const accodionTitle = [
   "Participating organisations",
   "Activity summary",
@@ -25,11 +25,11 @@ context("Project detail", () => {
   });
 
   it("go to the project detail page", () => {
-    cy.get(".projects___StyledDiv4-sc-1bi33pa-6 a").eq(0).click();
+    cy.get('[id="image-container"] a').eq(0).click();
   });
 
   it("should have the correct title", () => {
-    cy.get("._StyledTypography2-fNTwbf").contains(
+    cy.get('[data-cy="project-detail-title"]').contains(
       "Consolidating Institutional Capacities for National Surface Water Quality Monitoring in the Kyrgyz Republic FinWaterWEI III"
     );
     title.forEach((text) => {
@@ -38,7 +38,7 @@ context("Project detail", () => {
   });
 
   it("project disbursements progress bar", () => {
-    cy.get(".Disbursements___StyledDiv-agjdzy-0").should("exist");
+    cy.get('[data-cy="disbursement-bar"]').should("exist");
   });
 
   it("transcation hover", () => {
@@ -47,9 +47,9 @@ context("Project detail", () => {
   });
 
   it("transcation table", () => {
-    cy.get(".PillButton___StyledButton-faslku-0").contains("Table").click();
+    cy.get('[data-cy="PillButton-table"]').click();
     cy.get("table").contains("disbursements");
-    cy.get(".PillButton___StyledButton-faslku-0").contains("Chart").click();
+    cy.get('[data-cy="PillButton-chart"]').click();
   });
 
   it("Accordion show correct title", () => {
@@ -60,21 +60,21 @@ context("Project detail", () => {
 
   it("Accordion should expand smoothly", () => {
     number.forEach((num) => {
-      cy.get("._StyledExpandMoreIcon-ldWMvY").eq(num).click();
-      cy.get("._StyledMUIAccordionDetails-eBIbjj").should("be.visible");
-      cy.get("._StyledExpandLessIcon-fnJIsc").click();
-      cy.get("._StyledMUIAccordionDetails-eBIbjj").should("be.hidden");
+      cy.get('[data-cy="expandmore-icon"]').eq(num).click();
+      cy.get('[data-cy="accordion-detail"]').should("be.visible");
+      cy.get('[data-cy="expandless-icon"]').click();
+      cy.get('[data-cy="accordion-detail"]').should("be.hidden");
     });
   });
 
   it("Inpage navigation", () => {
-    cy.get(".InPageNavigation___StyledDiv-sc-1nr5zk8-0").should("exist");
+    cy.get('[data-cy="in-page-nav"]').should("exist");
     accodionTitle.forEach((text) => {
-      cy.get("._StyledDiv2-Rvwug").contains(text);
+      cy.get('[data-cy="in-page-nav"]').contains(text);
     });
 
-    cy.get(".InPageNavigation___StyledArrowDownwardIcon-sc-1nr5zk8-1").click();
-    cy.get(".bsiwwe").should("be.visible");
-    cy.get(".InPageNavigation___StyledArrowUpwardIcon-sc-1nr5zk8-2").click();
+    cy.get('[data-cy="arrow-down-button"]').click();
+    cy.get('[data-cy="nav-active"]').should("be.visible");
+    cy.get('[data-cy="arrow-up-button"]').click();
   });
 });

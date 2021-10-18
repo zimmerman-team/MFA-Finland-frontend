@@ -94,7 +94,7 @@ export const TotalDisbursements = (props: TotalDisbursementsProps) => {
   return (
     <React.Fragment>
       {/* bar container */}
-      <div css={style.barContainer}>
+      <div data-cy="disbursement-bar" css={style.barContainer}>
         {/* bar fill */}
         <div
           css={`
