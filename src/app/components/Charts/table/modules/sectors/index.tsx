@@ -5,13 +5,12 @@ import filter from "lodash/filter";
 import { useCMSData } from "app/hooks/useCMSData";
 import { DataTable } from "app/components/Charts/table";
 import { MUIDataTableIsRowCheck } from "mui-datatables";
+import { MoreButton } from "app/components/Charts/bar/data";
+import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
 import {
   DataTableProps,
   SectorsDataTableOptions,
 } from "app/components/Charts/table/data";
-import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
-import { MoreButton } from "app/components/Charts/bar/data";
-import { useRouteMatch } from "react-router-dom";
 
 export function SectorsFragmentTable(props: DataTableProps) {
   const cmsData = useCMSData({ returnData: true });
@@ -61,7 +60,6 @@ export function SectorsFragmentTable(props: DataTableProps) {
   }
 
   React.useEffect(() => setShownData(props.data), [props.data]);
-  const { params } = useRouteMatch();
 
   return (
     <DataTable
@@ -70,7 +68,14 @@ export function SectorsFragmentTable(props: DataTableProps) {
       options={{
         ...SectorsDataTableOptions,
         count: shownData.length,
-        customToolbar: () => <MoreButton params={params} />,
+        customToolbar: () => (
+          <MoreButton
+            data={{
+              children: props.data,
+            }}
+            params={{ tab: "sectors" }}
+          />
+        ),
         onSearchChange,
         isRowExpandable: (
           dataIndex: number,

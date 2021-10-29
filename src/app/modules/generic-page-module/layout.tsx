@@ -22,7 +22,7 @@ export const GenericPageLayout = (props: GenericPageModuleProps) => {
     cards.forEach((card) => {
       list.push({
         label: card.title,
-        path: card.title.toLowerCase().replace(/\s/g, "-"),
+        path: card.title ? card.title.toLowerCase().replace(/\s/g, "-") : "",
       });
     });
 

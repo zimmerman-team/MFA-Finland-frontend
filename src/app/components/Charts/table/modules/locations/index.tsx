@@ -2,10 +2,9 @@ import React from "react";
 import filter from "lodash/filter";
 import { DataTable } from "app/components/Charts/table";
 import { MUIDataTableIsRowCheck } from "mui-datatables";
+import { MoreButton } from "app/components/Charts/bar/data";
 import { DataTableProps } from "app/components/Charts/table/data";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
-import { MoreButton } from "app/components/Charts/bar/data";
-import { useRouteMatch } from "react-router-dom";
 
 interface LocationsFragmentTableProps extends DataTableProps {
   type: string;
@@ -41,7 +40,6 @@ export function LocationsFragmentTable(props: LocationsFragmentTableProps) {
   }
 
   React.useEffect(() => setShownData(props.data), [props.data]);
-  const { params } = useRouteMatch();
 
   return (
     <DataTable
@@ -51,7 +49,19 @@ export function LocationsFragmentTable(props: LocationsFragmentTableProps) {
       options={{
         ...props.options,
         count: shownData.length,
-        customToolbar: () => <MoreButton params={params} />,
+        customToolbar: () => (
+          <MoreButton
+            data={{
+              children: props.data,
+            }}
+            params={{
+              tab:
+                props.type === "location"
+                  ? "countries-regions"
+                  : "organisations",
+            }}
+          />
+        ),
         onSearchChange,
         isRowExpandable: (
           dataIndex: number,

@@ -54,14 +54,14 @@ export function SunburstTooltipContent(props: SunburstTooltipProps) {
   if (props.hoveredNode) {
     if (props.showOnlyTitle) {
       return (
-        <div css={tooltiprowcss}>
+        <div data-cy="OnlyTitleHoverNode" css={tooltiprowcss}>
           <b>{props.hoveredNode.title}</b>
         </div>
       );
     }
     return (
       <>
-        <div css={tooltiprowcss}>
+        <div data-cy="HoverNode" css={tooltiprowcss}>
           <b>{props.hoveredNode.title}</b>
         </div>
         <div css="width: 100%;height: 30px;" />

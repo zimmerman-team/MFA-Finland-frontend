@@ -15,6 +15,7 @@ const project: ProjectType = {
   disbursed: 0,
   committed: 0,
   cmsData: {},
+  orgs: "",
 };
 
 export const projects: ProjectType[] = [
