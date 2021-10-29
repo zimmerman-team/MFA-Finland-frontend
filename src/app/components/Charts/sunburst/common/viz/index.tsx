@@ -21,6 +21,7 @@ export function SunburstViz(props: any) {
   return (
     <React.Fragment>
       <Sunburst
+        data-cy="sunburstViz"
         hideRootNode
         colorType="literal"
         padAngle={0.02}

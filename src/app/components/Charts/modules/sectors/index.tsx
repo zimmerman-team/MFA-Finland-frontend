@@ -84,7 +84,10 @@ export function SectorsVizModule(props: SectorsVizModuleProps) {
           `}
         >
           {sectorProjectsLoading ? (
-            <VizLoader loading={sectorProjectsLoading} />
+            <VizLoader
+              dataCy="projects-loader"
+              loading={sectorProjectsLoading}
+            />
           ) : (
             <React.Fragment>
               <Grid item sm={12} md={2} lg={1}>

@@ -64,7 +64,7 @@ interface SmTooltipContainerProps {
 }
 
 export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
-  <div css={containercss}>
+  <div data-cy="smalltooltipcontainer" css={containercss}>
     <div css={innercontainercss}>
       <div
         css={`
@@ -73,7 +73,11 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
           justify-content: flex-end;
         `}
       >
-        <IconButton css={closebtncss} onClick={() => props.close()}>
+        <IconButton
+          data-cy="CloseButton"
+          css={closebtncss}
+          onClick={() => props.close()}
+        >
           <IconClose />
         </IconButton>
       </div>
@@ -84,6 +88,7 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
           <div css="width: 100%;display: flex;justify-content: flex-end;align-items: center;gap: 16px;">
             {props.gotoDetail && (
               <Button
+                data-cy="GotoDetailButton"
                 css={buttoncss}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                   props.close();
@@ -95,6 +100,7 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
             )}
             {props.showDrilldownBtn && (
               <Button
+                data-cy="DrillDownButton"
                 css={buttoncss}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                   props.close();

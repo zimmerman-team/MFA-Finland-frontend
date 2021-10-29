@@ -34,6 +34,7 @@ export type ProjectType = {
   disbursed: number;
   committed: number;
   cmsData: any;
+  orgs: string;
 };
 
 export const ProjectsListModule = (props: ProjectsListModuleProps) => {
@@ -250,15 +251,15 @@ const ListItem = (project: ProjectType) => {
             value={project.sectors.join(", ")}
           />
           <LabelValueGridItem
-            label={get(project.cmsData, "viz.status", "Status")}
+            label={get(project.cmsData, "viz.status", "Type of aid")}
             value={project.status}
           />
           <LabelValueGridItem
-            value="MFA Finland"
+            value={project.orgs}
             label={get(
               project.cmsData,
               "viz.reportingorg",
-              "Reporting organisation"
+              "Participating organisation"
             )}
           />
           <LabelValueGridItem

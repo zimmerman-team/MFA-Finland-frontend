@@ -24,11 +24,13 @@
 // -- This will overwrite an existing command --
 
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
 Cypress.Commands.add("acceptCookie", () => {
   cy.visit("localhost:3000");
   cy.wait(10000);
   cy.get('[test-id="main-page-accept"]').click();
 });
+
 
 Cypress.Commands.add("checkBudgetLine", () => {
   cy.get("._StyledDiv2-kDlTqH").should("exist");
@@ -91,4 +93,20 @@ Cypress.Commands.add("checkCharts", () => {
 
   cy.get("header").should("exist");
   cy.get("footer").should("exist");
+});
+
+Cypress.Commands.add("search", (label) => {
+  cy.get('[aria-label="Search in application"]').click().type(label);
+  cy.wait(5000);
+  cy.get('[data-cy="search-result-navigation"]').should("be.visible");
+});
+
+Cypress.Commands.add("searchContains", (id, label) => {
+  cy.get('[data-cy="search-result-item-0"]').click();
+  cy.wait(2000);
+  cy.get(id).contains(label);
+});
+
+Cypress.Commands.add("waitLoader", (dataCy, timeout = 50000) => {
+  cy.get(`[data-cy=${dataCy}]`, { timeout }).should("not.exist");
 });

@@ -59,10 +59,10 @@ export const searchNavItems = [
     name: "Countries",
     cmsKey: "viz.countriesregions",
   },
-  {
-    name: "All",
-    cmsKey: "filters.all",
-  },
+  // {
+  //   name: "All",
+  //   cmsKey: "filters.all",
+  // },
 ];
 
 const mockResultItem = {
