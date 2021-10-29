@@ -8,12 +8,12 @@ context("Result", () => {
   it("should show correct title", () => {
     cy.acceptCookie();
     cy.visit("localhost:3000/result");
-    cy.get("h2").contains("Result").should("exist");
+    cy.get("h2").contains("Development cooperation results").should("exist");
   });
 
   it("inpage navigation", () => {
     cy.get(".InPageNavigation___StyledDiv-sc-1nr5zk8-0").should("exist");
-    cy.contains("Result").click();
+    cy.contains("Development cooperation results").click();
     cy.get(".InPageNavigation___StyledArrowUpwardIcon-sc-1nr5zk8-2").click();
     cy.get(".InPageNavigation___StyledArrowDownwardIcon-sc-1nr5zk8-1").click();
   });
@@ -24,9 +24,9 @@ context("Result", () => {
     cy.get(".Footer___StyledNavLink3-sc-93h9it-9").click();
   });
 
-  it("cy.reload() - reload the page", () => {
-    cy.reload();
-    // not allowed to get into the page without accept cookies.
-    //   cy.reload(true);
-  });
+  // it("cy.reload() - reload the page", () => {
+  //   cy.reload();
+  //   // not allowed to get into the page without accept cookies.
+  //   //   cy.reload(true);
+  // });
 });

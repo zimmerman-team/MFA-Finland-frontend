@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const aboutTest = ["About", "Privacy", "Cookie policy"];
+const aboutTest = ["About", "Privacy Policy"];
 
 context("About", () => {
   beforeEach(() => {
@@ -22,11 +22,11 @@ context("About", () => {
     cy.get("._StyledNavLink-kabrGe").click();
   });
 
-  it("cy.reload() - reload the page", () => {
-    cy.acceptCookie();
-    cy.visit("localhost:3000/about");
-    cy.reload();
-    // reload the page without using the cache
-    // cy.reload(true);
-  });
+  // it("cy.reload() - reload the page", () => {
+  //   cy.acceptCookie();
+  //   cy.visit("localhost:3000/about");
+  //   cy.reload();
+  //   // reload the page without using the cache
+  //   // cy.reload(true);
+  // });
 });
