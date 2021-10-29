@@ -21,18 +21,17 @@ context("viz module page budget", () => {
 
   it("check chart and hover", () => {
     cy.wait(5000);
-    cy.get("._StyledDiv2-kDlTqH").should("exist");
-    cy.get("._StyledGrid-fwVrLc").should("be.hidden");
+    cy.get("#viz-scroller").should("exist");
     cy.get('[data-cy="bf-barchart-bar-comp"]').eq(18).click();
-    cy.get("._StyledGrid-fwVrLc").should("be.visible");
+    cy.get('[data-cy="legend-items-space"]').should("be.visible");
     budgets.forEach((text) => {
-      cy.get("._StyledGrid-fwVrLc").contains(text);
+      cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
   });
 
   it("check right coordinate", () => {
     years.forEach((text) => {
-      cy.get("._StyledDiv-hfFXsB").contains(text);
+      cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
   });
 
@@ -49,7 +48,7 @@ context("viz module page budget", () => {
   });
 
   it("change to table display", () => {
-    cy.get("._StyledButton-gQDzsd").eq(1).click({ force: true });
+    cy.get('[data-cy="filled-button-Table"]').click({ force: true });
     cy.get("h6").contains("budget line");
     cy.get("table").should("exist");
   });
@@ -61,7 +60,7 @@ context("viz module page budget", () => {
   });
 
   it("table show the correct content", () => {
-    cy.get('[id="expandable-button"]').eq(1).click();
+    cy.get('[data-testid="MUIDataTableBodyRow-0"] button').click();
     cy.get("td").contains("Support").should("be.visible");
   });
 });

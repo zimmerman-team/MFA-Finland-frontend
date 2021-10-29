@@ -34,7 +34,7 @@ Cypress.Commands.add("acceptCookie", () => {
 
 Cypress.Commands.add("checkPNG", () => {
   // image comes from a domain different from the page
-  cy.get(".FloatingButtons___StyledTypography3-j96bs6-11").click({
+  cy.get("p").contains("PNG").click({
     force: true,
   });
   cy.log("**confirm downloaded image**");
@@ -42,12 +42,12 @@ Cypress.Commands.add("checkPNG", () => {
 });
 
 Cypress.Commands.add("checkTooltip", () => {
-  cy.get(".FloatingButtons___StyledMoreHoriz-j96bs6-3").click();
-  cy.get(".FloatingButtons___StyledShare-j96bs6-5").trigger("mouseover", {
+  cy.get('[aria-label="Toggle more options"]').click();
+  cy.get('[aria-label="Share"]').trigger("mouseover", {
     force: true,
   });
   cy.get(".MuiTooltip-popper").should("be.visible");
-  cy.get(".FloatingButtons___StyledCloudDownload-j96bs6-7").click();
+  cy.get('[aria-label="Download"]').click();
 });
 
 Cypress.Commands.add("checkCSV", (file, length) => {

@@ -38,6 +38,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
     const selected = props.data[0];
     return (
       <Grid
+        data-cy="single-circle-pie"
         container
         direction="row"
         justify="center"
@@ -114,6 +115,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
   return (
     <Grid container justify="center" alignItems="center" direction="row">
       <Grid
+        data-cy="viz-pie-chart"
         item
         xs={12}
         md={12}

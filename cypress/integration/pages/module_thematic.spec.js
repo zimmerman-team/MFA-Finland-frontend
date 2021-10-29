@@ -19,18 +19,18 @@ context("viz module page thematic", () => {
 
   it("check charts", () => {
     cy.wait(8000);
-    cy.get("._StyledGrid2-jcxLZB").should("exist");
+    cy.get('[data-cy="viz-pie-chart"]').should("exist");
   });
 
   it("check chart coordinate", () => {
     coordinate.forEach((text) => {
-      cy.get("._StyledDiv6-kdYCbT").contains(text);
+      cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
   });
 
   it("check detail info", () => {
     coordinate.forEach((text) => {
-      cy.get("._StyledDiv-hfFXsB").contains(text);
+      cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
   });
   it("check tooltip", () => {
@@ -46,7 +46,7 @@ context("viz module page thematic", () => {
   });
 
   it("change to table display", () => {
-    cy.get("._StyledButton-gQDzsd").eq(1).click({ force: true });
+    cy.get('[data-cy="filled-button-Table"]').click({ force: true });
     cy.get("h6").contains("priority areas");
     cy.get("table").should("exist");
   });

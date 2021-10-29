@@ -7,20 +7,19 @@ context("viz module page overview", () => {
 
   it("go to the module overview page", () => {
     cy.acceptCookie();
-    cy.get('[id="viz-scroller"]').eq(0).click({ force: true });
+    cy.get("#viz-scroller").eq(0).click({ force: true });
   });
 
   it("check chart", () => {
     cy.wait(8000);
-    cy.get("._StyledDiv5-imxKnE").should("exist");
+    cy.get('[id="viz-oda"]').should("exist");
   });
 
   it("expand 2018 ODA", () => {
-    cy.get("._StyledArrowDropDown-ilkZlG").eq(3).click();
+    cy.get('[data-cy="sub-legend-items-2018 Total ODA"] svg').click();
     cy.get("g circle");
-    cy.get("._StyledGrid-fwVrLc").contains("Exclusive ODA");
-    cy.get("._StyledGrid-fwVrLc").contains("Other ODA");
-    cy.get("._StyledGrid-fwVrLc").contains("ODA/GNI");
+    cy.get("[data-cy^=sub-legend-items-]").contains("Exclusive ODA");
+    cy.get("[data-cy^=sub-legend-items-]").contains("Other ODA");
   });
 
   it("check the tooltip", () => {

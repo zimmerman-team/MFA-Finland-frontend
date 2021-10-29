@@ -26,7 +26,7 @@ context("viz module page organisation", () => {
 
   it("check chart and hover", () => {
     cy.wait(5000);
-    cy.get(".treemap___StyledDiv3-dnl4if-3").should("exist");
+    cy.get("#treemap").should("exist");
     cy.get(
       '[aria-label="Non-Governmental Organisation (NGO) and Civil Society"]'
     ).trigger("mouseover", {
@@ -44,7 +44,7 @@ context("viz module page organisation", () => {
 
   it("check right coordinate", () => {
     orgs.forEach((text) => {
-      cy.get("._StyledDiv-hfFXsB").contains(text);
+      cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
   });
 
@@ -61,7 +61,7 @@ context("viz module page organisation", () => {
   });
 
   it("change to table display", () => {
-    cy.get("._StyledButton-gQDzsd").eq(1).click({ force: true });
+    cy.get('[data-cy="filled-button-Table"]').click({ force: true });
     cy.get("h6").contains("organisation");
     cy.get("table").should("exist");
   });
@@ -85,19 +85,17 @@ context("viz module page organisation", () => {
 
   it("check deep chart click", () => {
     cy.viewport(1536, 860);
-    cy.get("._StyledButton-gQDzsd").eq(0).click({ force: true });
+    cy.get('[data-cy="filled-button-Chart"]').click({ force: true });
     cy.get(
       '[aria-label="Non-Governmental Organisation (NGO) and Civil Society"]'
     ).click({ force: true });
     cy.wait(3000);
     NGOorgs.forEach((text) => {
-      cy.get("._StyledDiv-hfFXsB").contains(text);
+      cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
     cy.get('[aria-label="International NGO"]').trigger("mouseover", {
       force: true,
     });
     cy.get("b").contains("International NGO");
-    // cant click bcs some react errors
-    // cy.get('.node___StyledDiv-t9xrnj-0 >:nth-child(3)').click()
   });
 });

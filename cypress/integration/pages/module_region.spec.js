@@ -25,12 +25,12 @@ context("viz module page country and region", () => {
 
   it("go to the module region page", () => {
     cy.acceptCookie();
-    cy.get("h3").contains("Regions").click();
+    cy.get("h3").contains("regions").click();
   });
 
   it("check chart and hover", () => {
     cy.wait(5000);
-    cy.get(".treemap___StyledDiv3-dnl4if-3").should("exist");
+    cy.get("#treemap").should("exist");
     cy.get('[aria-label="Regional and Unspecified"]').trigger("mouseover", {
       force: true,
     });
@@ -44,7 +44,7 @@ context("viz module page country and region", () => {
 
   it("check right coordinate", () => {
     regions.forEach((text) => {
-      cy.get("._StyledDiv-hfFXsB").contains(text);
+      cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
   });
 
@@ -61,7 +61,7 @@ context("viz module page country and region", () => {
   });
 
   it("change to table display", () => {
-    cy.get("._StyledButton-gQDzsd").eq(1).click({ force: true });
+    cy.get('[data-cy="filled-button-Table"]').click({ force: true });
     cy.get("h6").contains("countries and regions");
     cy.get("table").should("exist");
   });
@@ -83,11 +83,11 @@ context("viz module page country and region", () => {
 
   it("check deep chart click", () => {
     cy.viewport(1536, 860);
-    cy.get("._StyledButton-gQDzsd").eq(0).click({ force: true });
+    cy.get('[data-cy="filled-button-Chart"]').click({ force: true });
     cy.get('[aria-label="South & Central Asia"]').click({ force: true });
     cy.wait(3000);
     asiaCountries.forEach((text) => {
-      cy.get("._StyledDiv-hfFXsB").contains(text);
+      cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
     cy.get('[aria-label="Myanmar"]').trigger("mouseover", {
       force: true,

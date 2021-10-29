@@ -13,6 +13,7 @@ export const FilledButton = (props: GeneralButtonProps) => {
   // tidy up and make re-useable
   return (
     <button
+      data-cy={`filled-button-${props.label}`}
       type="button"
       onClick={() => props.onClick && props.onClick()}
       css={`

@@ -170,7 +170,7 @@ export function Treemap(props: TreemapProps) {
         )}
       </Grid>
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        <div ref={ref} css={containercss(props.height)}>
+        <div id="treemap" ref={ref} css={containercss(props.height)}>
           <ResponsiveTreeMapHtml
             data={renderedNodes}
             {...TreemapVizModel}

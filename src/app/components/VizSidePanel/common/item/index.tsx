@@ -64,6 +64,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
       style={isSectorOROrgORLocation ? { opacity: 1 } : {}}
     >
       <div
+        data-cy={`sub-legend-items-${props.name}`}
         css={`
           position: relative;
           ${((props.vizType === "oda" || props.vizType === "budget-lines") &&
@@ -140,6 +141,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
         props.vizType !== "organisations" && (
           <React.Fragment>
             <div
+              data-cy="legend-items-space"
               css={`
                 height: 12px;
                 pointer-events: none;
