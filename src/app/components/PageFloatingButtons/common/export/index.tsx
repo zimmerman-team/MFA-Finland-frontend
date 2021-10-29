@@ -51,17 +51,26 @@ export function ExportTooltip(cmsData: any) {
       </Typography>
       <Grid container css={iconscontainercss}>
         <Grid item xs={3}>
-          <div css={downloadButton} onClick={() => exportPage("png")}>
+          <div
+            css={downloadButton}
+            onClick={() => exportPage("png", "#f8f8f8")}
+          >
             PNG
           </div>
         </Grid>
         <Grid item xs={3}>
-          <div css={downloadButton} onClick={() => exportPage("pdf")}>
+          <div
+            css={downloadButton}
+            onClick={() => exportPage("pdf", "#f8f8f8")}
+          >
             PDF
           </div>
         </Grid>
         <Grid item xs={3}>
-          <div css={downloadButton} onClick={() => exportPage("svg")}>
+          <div
+            css={downloadButton}
+            onClick={() => exportPage("svg", "#f8f8f8")}
+          >
             SVG
           </div>
         </Grid>

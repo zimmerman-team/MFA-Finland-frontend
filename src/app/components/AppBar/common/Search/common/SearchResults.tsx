@@ -117,7 +117,7 @@ export const SearchResults = (props: SearchResultsProps) => {
           <Link
             to="/viz/projects"
             onClick={() => {
-              localStorage.setItem("searchValue", props.value);
+              sessionStorage.setItem("searchValue", props.value);
               props.close();
             }}
           >

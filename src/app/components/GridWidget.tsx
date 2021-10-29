@@ -287,6 +287,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   return (
     <div
+      aria-label={`${props.label} module`}
       css={style.widgetContainer(
         props.height,
         isHovered && !props.interactive && props.link !== undefined,

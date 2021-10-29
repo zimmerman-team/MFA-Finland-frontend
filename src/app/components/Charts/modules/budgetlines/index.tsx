@@ -73,6 +73,7 @@ export function BudgetLinesModule(props: BudgetLinesModuleModel) {
       `}
     >
       <BudgetLinesFragmentTable
+        csvData={props.data}
         data={formatDataForTable(props.data)}
         options={{
           ...SectorsDataTableOptions,

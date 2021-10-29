@@ -32,19 +32,28 @@ function Providers(props: ProviderProps) {
               <Router>
                 <AppBar />
                 <FilterBar />
-                <Container
-                  maxWidth="lg"
+                <div
                   css={`
-                    //min-height: 100%;
-                    padding: 0 32px;
-
-                    @media (max-width: 992px) {
-                      padding: 0;
-                    }
+                    display: flex;
+                    justify-content: center;
                   `}
                 >
-                  {props.children}
-                </Container>
+                  <Container
+                    maxWidth="lg"
+                    css={`
+                      //min-height: 100%;
+                      padding: 0 32px;
+                      margin-left: unset;
+                      margin-right: unset;
+
+                      @media (max-width: 992px) {
+                        padding: 0;
+                      }
+                    `}
+                  >
+                    {props.children}
+                  </Container>
+                </div>
               </Router>
             </AppContainer>
           </StoreProvider>

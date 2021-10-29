@@ -6,9 +6,7 @@ context("Result", () => {
   });
 
   it("should show correct title", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
+    cy.acceptCookie();
     cy.visit("localhost:3000/result");
     cy.get("h2").contains("Development cooperation results").should("exist");
   });
@@ -26,9 +24,9 @@ context("Result", () => {
     cy.get(".Footer___StyledNavLink3-sc-93h9it-9").click();
   });
 
-  it("cy.reload() - reload the page", () => {
-    cy.reload();
-    // not allowed to get into the page without accept cookies.
-    //   cy.reload(true);
-  });
+  // it("cy.reload() - reload the page", () => {
+  //   cy.reload();
+  //   // not allowed to get into the page without accept cookies.
+  //   //   cy.reload(true);
+  // });
 });

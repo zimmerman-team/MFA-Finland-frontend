@@ -130,7 +130,9 @@ export const ProjectDetailModuleLayout = (
             z-index: 1;
           `}
         >
-          <Typography css={FieldTwoStyle}>{props.metadata.title}</Typography>
+          <Typography data-cy="project-detail-title" css={FieldTwoStyle}>
+            {props.metadata.title}
+          </Typography>
         </Grid>
         <Box width="100%" height="24px" />
 
@@ -209,23 +211,24 @@ export const ProjectDetailModuleLayout = (
       {/* ------------------------------------------------------------------ */}
       {/* SDG's */}
       {hasSDGData && (
-        <Grid
-          item
-          xs={12}
-          md={12}
-          lg={8}
-          id="sdg-container"
-          css={`
-            position: relative;
-          `}
-        >
-          <Typography css={DescriptionLabelStyle}>SDGs</Typography>
-          <Box width="100%" height="15px" />
-          <SDGviz data={props.sdgVizData} containerId="sdg-container" />
-        </Grid>
+        <>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            lg={8}
+            id="sdg-container"
+            css={`
+              position: relative;
+            `}
+          >
+            <Typography css={DescriptionLabelStyle}>SDGs</Typography>
+            <Box width="100%" height="15px" />
+            <SDGviz data={props.sdgVizData} containerId="sdg-container" />
+          </Grid>
+          <Box width="100%" height="60px" />
+        </>
       )}
-
-      <Box width="100%" height="60px" />
 
       <Hidden mdDown>
         <Grid item lg={3}>
