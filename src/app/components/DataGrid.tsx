@@ -342,7 +342,7 @@ export const DataGrid = (props: DataGridProps) => {
           }}
         >
           {props.vizDataLoading.oda || props.odaBarChartData.length === 0 ? (
-            <VizLoader loading={props.vizDataLoading.oda} />
+            <VizLoader dataCy="oda-loader" loading={props.vizDataLoading.oda} />
           ) : (
             <BarChart
               aria-label="Bar chart displaying the disbursed amount of euro's per year"
@@ -368,7 +368,10 @@ export const DataGrid = (props: DataGridProps) => {
           label={get(cmsData, "general.thematicareas", "Thematic areas")}
         >
           {props.vizDataLoading.thematic ? (
-            <VizLoader loading={props.vizDataLoading.thematic} />
+            <VizLoader
+              dataCy="thematic-loader"
+              loading={props.vizDataLoading.thematic}
+            />
           ) : (
             <>
               {!showSingleAreaCircle && <div css="width: 100%;height: 70px;" />}
@@ -403,7 +406,10 @@ export const DataGrid = (props: DataGridProps) => {
         >
           {props.vizDataLoading.sectors ||
           props.sectorsSunburstData.children.length === 0 ? (
-            <VizLoader loading={props.vizDataLoading.sectors} />
+            <VizLoader
+              dataCy="sectors-loader"
+              loading={props.vizDataLoading.sectors}
+            />
           ) : (
             <SunburstChartSimplified
               aria-label="Visualisation displaying which thematic area has been worked on the most/has the most money funded to."
@@ -433,7 +439,10 @@ export const DataGrid = (props: DataGridProps) => {
           >
             {props.vizDataLoading.locations ||
             props.locationsTreemapData.children.length === 0 ? (
-              <VizLoader loading={props.vizDataLoading.locations} />
+              <VizLoader
+                dataCy="locations-loader"
+                loading={props.vizDataLoading.locations}
+              />
             ) : (
               <Treemap
                 height={230}
@@ -489,7 +498,10 @@ export const DataGrid = (props: DataGridProps) => {
         >
           {props.vizDataLoading.organisations ||
           props.organisationsTreemapData.children.length === 0 ? (
-            <VizLoader loading={props.vizDataLoading.organisations} />
+            <VizLoader
+              dataCy="orgs-loader"
+              loading={props.vizDataLoading.organisations}
+            />
           ) : (
             <Treemap
               height={230}
@@ -522,7 +534,10 @@ export const DataGrid = (props: DataGridProps) => {
         >
           {props.vizDataLoading.budgetLines ||
           props.budgetLinesBarChartData.length === 0 ? (
-            <VizLoader loading={props.vizDataLoading.budgetLines} />
+            <VizLoader
+              dataCy="budgetlines-loader"
+              loading={props.vizDataLoading.budgetLines}
+            />
           ) : (
             <BudgetLinesBarChart
               height={450}
@@ -622,7 +637,7 @@ export const DataGrid = (props: DataGridProps) => {
           label={get(cmsData, "general.sdgs", "SDGs")}
         >
           {props.vizDataLoading.sdg ? (
-            <VizLoader loading={props.vizDataLoading.sdg} />
+            <VizLoader dataCy="sdg-loader" loading={props.vizDataLoading.sdg} />
           ) : (
             <SDGviz data={props.sdgVizData} />
           )}
@@ -698,7 +713,10 @@ export const DataGrid = (props: DataGridProps) => {
             }}
           >
             {props.vizDataLoading.geo ? (
-              <VizLoader loading={props.vizDataLoading.geo} />
+              <VizLoader
+                dataCy="geo-loader"
+                loading={props.vizDataLoading.geo}
+              />
             ) : (
               <div
                 css={`

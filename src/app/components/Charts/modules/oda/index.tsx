@@ -131,7 +131,10 @@ export function ODAvizModule(props: ODAvizModuleProps) {
           close={() => props.setSelectedVizItem(null)}
         >
           {props.odaBudgetLinesChartLoading ? (
-            <VizLoader loading={props.odaBudgetLinesChartLoading} />
+            <VizLoader
+              dataCy="budgetlines-loader"
+              loading={props.odaBudgetLinesChartLoading}
+            />
           ) : (
             <React.Fragment>
               <div
