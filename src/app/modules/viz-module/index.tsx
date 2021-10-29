@@ -676,7 +676,7 @@ export default function VizModule() {
           <Switch>
             <Route path="/viz/oda">
               {vizDataLoading.oda ? (
-                <VizLoader loading={vizDataLoading.oda} />
+                <VizLoader dataCy="oda-loader" loading={vizDataLoading.oda} />
               ) : (
                 <ODAvizModule
                   vizScale={vizScale}
@@ -700,7 +700,10 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/thematic-areas">
               {vizDataLoading.thematic ? (
-                <VizLoader loading={vizDataLoading.thematic} />
+                <VizLoader
+                  dataCy="thematic-loader"
+                  loading={vizDataLoading.thematic}
+                />
               ) : activeTab === "chart" ? (
                 <>
                   <div css="width: 100%;height: 100px;" />
@@ -757,7 +760,10 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/sectors">
               {vizDataLoading.sectors ? (
-                <VizLoader loading={vizDataLoading.sectors} />
+                <VizLoader
+                  dataCy="sectors-loader"
+                  loading={vizDataLoading.sectors}
+                />
               ) : (
                 <SectorsVizModule
                   vizLevel={vizLevel}
@@ -777,7 +783,10 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/countries-regions">
               {vizDataLoading.locations ? (
-                <VizLoader loading={vizDataLoading.locations} />
+                <VizLoader
+                  dataCy="locations-loader"
+                  loading={vizDataLoading.locations}
+                />
               ) : (
                 <CountriesRegionsModule
                   label=""
@@ -792,7 +801,10 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/organisations">
               {vizDataLoading.organisations ? (
-                <VizLoader loading={vizDataLoading.organisations} />
+                <VizLoader
+                  dataCy="orgs-loader"
+                  loading={vizDataLoading.organisations}
+                />
               ) : (
                 <OrganisationsModule
                   label=""
@@ -807,7 +819,10 @@ export default function VizModule() {
             </Route>
             <Route path="/viz/budget-lines">
               {vizDataLoading.budgetLines ? (
-                <VizLoader loading={vizDataLoading.budgetLines} />
+                <VizLoader
+                  dataCy="budgetlines-loader"
+                  loading={vizDataLoading.budgetLines}
+                />
               ) : (
                 <BudgetLinesModule
                   activeTab={activeTab}
