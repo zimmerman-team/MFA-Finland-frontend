@@ -19,10 +19,8 @@ interface TransactionsProps {
   data: any;
 }
 
-interface TransactionsProps {}
-
 export const Transactions = (props: TransactionsProps) => {
-  const [activeTab, setActiveTab] = React.useState("chart");
+  // const [activeTab, setActiveTab] = React.useState("chart");
 
   const styles = {
     container: css`
@@ -43,22 +41,22 @@ export const Transactions = (props: TransactionsProps) => {
     `,
   };
 
-  const tab = (active: boolean) => {
-    return css`
-      height: 36px;
-      box-shadow: none;
-      padding: 9px 16px;
-      border-radius: 22px;
-      text-transform: unset;
-      color: ${active ? "white" : PrimaryColor[0]};
-      background-color: ${active ? PrimaryColor[0] : SecondaryColor[1]};
+  // const tab = (active: boolean) => {
+  //   return css`
+  //     height: 36px;
+  //     box-shadow: none;
+  //     padding: 9px 16px;
+  //     border-radius: 22px;
+  //     text-transform: unset;
+  //     color: ${active ? "white" : PrimaryColor[0]};
+  //     background-color: ${active ? PrimaryColor[0] : SecondaryColor[1]};
 
-      :hover {
-        color: ${active ? PrimaryColor[0] : "white"};
-        background-color: ${active ? SecondaryColor[1] : PrimaryColor[0]};
-      }
-    `;
-  };
+  //     :hover {
+  //       color: ${active ? PrimaryColor[0] : "white"};
+  //       background-color: ${active ? SecondaryColor[1] : PrimaryColor[0]};
+  //     }
+  //   `;
+  // };
 
   return (
     <>
@@ -67,7 +65,7 @@ export const Transactions = (props: TransactionsProps) => {
         <Typography css={DescriptionLabelStyle}>
           {get(props.cmsData, "viz.transactions", "Transactions")}
         </Typography>
-        <div css={styles.tabContainer}>
+        {/* <div css={styles.tabContainer}>
           <PillButton
             css={tab(activeTab === "chart")}
             onClick={() => setActiveTab("chart")}
@@ -80,26 +78,23 @@ export const Transactions = (props: TransactionsProps) => {
           >
             {get(props.cmsData, "general.table", "Table")}
           </PillButton>
-        </div>
+        </div> */}
       </div>
 
       {/* Rendered panel based on active tab */}
-      <div css={styles.contentContainer}>
+      {/* <div css={styles.contentContainer}>
         {activeTab === "chart" ? (
           <TransactionsBar data={props.data} cmsData={props.cmsData} />
-        ) : (
-          <DataTable
-            title=""
-            data={props.data}
-            theme={transactionsTableTheme}
-            options={TransactionsDataTableOptions}
-            columns={getTranslatedCols(
-              TransactionsDataTableColumns,
-              props.cmsData
-            )}
-          />
-        )}
-      </div>
+        ) : ( */}
+      <DataTable
+        title=""
+        data={props.data}
+        theme={transactionsTableTheme}
+        options={TransactionsDataTableOptions}
+        columns={getTranslatedCols(TransactionsDataTableColumns, props.cmsData)}
+      />
+      {/* )}
+      </div> */}
     </>
   );
 };

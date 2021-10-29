@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const aboutTest = ["About", "Privacy", "Cookie policy"];
+const aboutTest = ["About", "Privacy Policy"];
 
 context("About", () => {
   beforeEach(() => {
@@ -8,9 +8,7 @@ context("About", () => {
   });
 
   it("should show correct title", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
+    cy.acceptCookie();
     cy.visit("localhost:3000/about");
     aboutTest.forEach((text) => cy.get("h2").contains(text).should("exist"));
   });
@@ -24,13 +22,11 @@ context("About", () => {
     cy.get("._StyledNavLink-kabrGe").click();
   });
 
-  it("cy.reload() - reload the page", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
-    cy.visit("localhost:3000/about");
-    cy.reload();
-    // reload the page without using the cache
-    // cy.reload(true);
-  });
+  // it("cy.reload() - reload the page", () => {
+  //   cy.acceptCookie();
+  //   cy.visit("localhost:3000/about");
+  //   cy.reload();
+  //   // reload the page without using the cache
+  //   // cy.reload(true);
+  // });
 });

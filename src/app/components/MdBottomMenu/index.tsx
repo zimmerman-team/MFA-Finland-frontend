@@ -129,17 +129,26 @@ export const MdBottomMenu = () => {
             <div css="width: 100%; height: 32px;" />
           </Grid>
           <Grid item xs={4} sm={4} md={4}>
-            <div css={style.downloadButton} onClick={() => exportPage("png")}>
+            <div
+              css={style.downloadButton}
+              onClick={() => exportPage("png", "#f8f8f8")}
+            >
               PNG
             </div>
           </Grid>
           <Grid item xs={4} sm={4} md={4}>
-            <div css={style.downloadButton} onClick={() => exportPage("pdf")}>
+            <div
+              css={style.downloadButton}
+              onClick={() => exportPage("pdf", "#f8f8f8")}
+            >
               PDF
             </div>
           </Grid>
           <Grid item xs={4} sm={4} md={4}>
-            <div css={style.downloadButton} onClick={() => exportPage("svg")}>
+            <div
+              css={style.downloadButton}
+              onClick={() => exportPage("svg", "#f8f8f8")}
+            >
               SVG
             </div>
           </Grid>

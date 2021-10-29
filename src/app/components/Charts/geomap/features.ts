@@ -11564,7 +11564,7 @@ export const geojson = {
     {
       type: "Feature",
       properties: {
-        name: "Swaziland",
+        name: "Eswatini",
       },
       geometry: {
         type: "Polygon",
@@ -13149,7 +13149,7 @@ export const geojson = {
     {
       type: "Feature",
       properties: {
-        name: "West Bank",
+        name: "Palestinian Territory",
       },
       geometry: {
         type: "Polygon",

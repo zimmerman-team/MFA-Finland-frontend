@@ -37,6 +37,7 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
             flex-direction: row;
             align-items: center;
           `}
+          data-cy="common-module-header"
         >
           <Typography
             variant="h5"
