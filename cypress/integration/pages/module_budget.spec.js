@@ -20,9 +20,13 @@ context("viz module page budget", () => {
   });
 
   it("check chart and hover", () => {
-    cy.wait(5000);
+    cy.waitLoader("budgetlines-loader");
     cy.get("#viz-scroller").should("exist");
-    cy.get('[data-cy="bf-barchart-bar-comp"]').eq(18).click();
+    cy.get('[data-cy="bf-barchart-bar-comp"]')
+      .eq(18)
+      .then(($bar) => {
+        cy.wrap($bar).click();
+      });
     cy.get('[data-cy="legend-items-space"]').should("be.visible");
     budgets.forEach((text) => {
       cy.get("[data-cy^=sub-legend-items-]").contains(text);

@@ -40,7 +40,7 @@ context("Homepage", () => {
 
   it("Thematic areas and Sectors", () => {
     cy.waitLoader("thematic-loader");
-    cy.get('[data-cy="priority-area-pie-chart"]').should("exist");
+    cy.get('[data-cy="viz-pie-chart"]').should("exist");
 
     // Sectors
     cy.scrollTo(200);

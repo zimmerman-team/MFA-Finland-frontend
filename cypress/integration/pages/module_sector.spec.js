@@ -32,7 +32,7 @@ context("viz module page sectors", () => {
     cy.get("h3").contains("Sectors").click();
   });
   it("check charts", () => {
-    cy.wait(5000);
+    cy.waitLoader("sectors-loader");
     cy.get(".rv-xy-plot__inner").should("exist");
   });
 
@@ -45,7 +45,7 @@ context("viz module page sectors", () => {
 
   it("check chart click", () => {
     cy.get('[pointer-events="all"] > :nth-child(3)').click();
-    cy.wait(3000);
+    cy.waitLoader("sectors-loader");
     governSector.forEach((text) => {
       cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
@@ -53,7 +53,7 @@ context("viz module page sectors", () => {
 
   it("check chart deep click", () => {
     cy.get('[pointer-events="all"] > :nth-child(1)').click({ force: true });
-    cy.wait(3000);
+    cy.waitLoader("sectors-loader");
     governDetailSector.forEach((text) => {
       cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
@@ -64,12 +64,12 @@ context("viz module page sectors", () => {
 
   it("back to sector page", () => {
     cy.get(".MuiBreadcrumbs-li").contains("page").click();
-    cy.wait(10000);
+    cy.waitLoader("sectors-loader");
     cy.get("h3").contains("Sectors").click();
   });
 
   it("check detail info", () => {
-    cy.wait(5000);
+    cy.waitLoader("sectors-loader");
     sectors.forEach((text) => {
       cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });

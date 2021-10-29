@@ -7,11 +7,12 @@ context("viz module page overview", () => {
 
   it("go to the module overview page", () => {
     cy.acceptCookie();
+    cy.waitLoader("oda-loader");
     cy.get("#viz-scroller").eq(0).click({ force: true });
   });
 
   it("check chart", () => {
-    cy.wait(8000);
+    cy.waitLoader("oda-loader");
     cy.get('[id="viz-oda"]').should("exist");
   });
 

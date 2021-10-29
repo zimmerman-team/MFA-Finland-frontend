@@ -29,7 +29,7 @@ context("viz module page country and region", () => {
   });
 
   it("check chart and hover", () => {
-    cy.wait(5000);
+    cy.waitLoader("locations-loader");
     cy.get("#treemap").should("exist");
     cy.get('[aria-label="Regional and Unspecified"]').trigger("mouseover", {
       force: true,
@@ -85,7 +85,7 @@ context("viz module page country and region", () => {
     cy.viewport(1536, 860);
     cy.get('[data-cy="filled-button-Chart"]').click({ force: true });
     cy.get('[aria-label="South & Central Asia"]').click({ force: true });
-    cy.wait(3000);
+    cy.waitLoader("locations-loader");
     asiaCountries.forEach((text) => {
       cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });

@@ -18,7 +18,7 @@ context("viz module page thematic", () => {
   });
 
   it("check charts", () => {
-    cy.wait(8000);
+    cy.waitLoader("thematic-loader");
     cy.get('[data-cy="viz-pie-chart"]').should("exist");
   });
 

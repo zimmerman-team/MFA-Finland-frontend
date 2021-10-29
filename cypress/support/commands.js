@@ -33,7 +33,6 @@ Cypress.Commands.add("acceptCookie", () => {
   cy.get('[test-id="main-page-accept"]').click();
 });
 
-
 Cypress.Commands.add("checkPNG", () => {
   // image comes from a domain different from the page
   cy.get("p").contains("PNG").click({
@@ -58,6 +57,7 @@ Cypress.Commands.add("checkCSV", (file, length) => {
   const downloadsFolder = Cypress.config("downloadsFolder");
   const filename = path.join(downloadsFolder, file);
   cy.readFile(filename, { timeout: 15000 }).should("have.length.gt", length);
+});
 
 Cypress.Commands.add("search", (label) => {
   cy.get('[aria-label="Search in application"]').click().type(label);

@@ -25,7 +25,7 @@ context("viz module page organisation", () => {
   });
 
   it("check chart and hover", () => {
-    cy.wait(5000);
+    cy.waitLoader("orgs-loader");
     cy.get("#treemap").should("exist");
     cy.get(
       '[aria-label="Non-Governmental Organisation (NGO) and Civil Society"]'
@@ -86,10 +86,11 @@ context("viz module page organisation", () => {
   it("check deep chart click", () => {
     cy.viewport(1536, 860);
     cy.get('[data-cy="filled-button-Chart"]').click({ force: true });
+    cy.waitLoader("orgs-loader");
     cy.get(
       '[aria-label="Non-Governmental Organisation (NGO) and Civil Society"]'
     ).click({ force: true });
-    cy.wait(3000);
+    cy.waitLoader("orgs-loader");
     NGOorgs.forEach((text) => {
       cy.get("[data-cy^=sub-legend-items-]").contains(text);
     });
