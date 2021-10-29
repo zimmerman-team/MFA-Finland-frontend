@@ -120,9 +120,9 @@ context("Homepage", () => {
     cy.get("footer").should("exist");
   });
 
-  it("cy.reload() - reload the page", () => {
-    cy.reload();
-    // not allowed to get into the page without accept cookies.
-    //   cy.reload(true);
-  });
+  // it("cy.reload() - reload the page", () => {
+  //   cy.reload();
+  //   // not allowed to get into the page without accept cookies.
+  //   //   cy.reload(true);
+  // });
 });
