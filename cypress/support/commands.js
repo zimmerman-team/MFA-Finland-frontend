@@ -23,3 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("waitLoader", (dataCy, timeout = 50000) => {
+  cy.get(`[data-cy=${dataCy}]`, { timeout }).should("not.exist");
+});
