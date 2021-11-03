@@ -29,7 +29,7 @@ export function getSidebarLegendItems(
         cmsData.priorityAreas
       );
     case "sectors":
-      return getSectorsLegends(data[vizType], filter);
+      return getSectorsLegends(data[vizType], filter, currentLanguage);
     case "countries-regions":
       return getTreemapLegends(data[vizType], filter, currentLanguage);
     case "organisations":

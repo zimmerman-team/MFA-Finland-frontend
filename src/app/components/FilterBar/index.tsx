@@ -68,7 +68,16 @@ export const FilterBar = (props: FilterBarProps) => {
         getFilterChip(selectedFilters, filterOptionsData, currentLanguage)
       );
     }
-  }, [selectedFilters, filterOptionsData]);
+  }, [selectedFilters, filterOptionsData, filterOptionsLoading]);
+
+  React.useEffect(() => {
+    const newChips = getFilterChip(
+      selectedFilters,
+      filterOptionsData,
+      currentLanguage
+    );
+    setChips(newChips);
+  }, [currentLanguage]);
 
   React.useEffect(() => {
     const filterbarElement = document.querySelector("#filterbar-container");

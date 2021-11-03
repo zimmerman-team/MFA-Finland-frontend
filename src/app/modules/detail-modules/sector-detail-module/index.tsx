@@ -8,6 +8,7 @@ import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
+import { getName } from "app/components/Charts/sdg";
 
 export function SectorDetailModule() {
   const { params } = useRouteMatch();
@@ -25,8 +26,8 @@ export function SectorDetailModule() {
     sdgVizData,
     geoMapData,
     unallocablePercentage,
-    detailPageNameData,
     sectorDescription,
+    sectorNames,
   } = useDataGridData({
     detailPageFilter: {
       key: "sector_code",
@@ -34,20 +35,20 @@ export function SectorDetailModule() {
     },
   });
 
+  const pageName = sectorNames[getName(currentLanguage)];
+
   const crumbs: BreadcrumbLinkModel[] = [
     { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
-    { label: detailPageNameData || get(params, "sector", ""), cmsKey: "" },
+    { label: pageName || get(params, "sector", ""), cmsKey: "" },
   ];
 
   useTitle(
-    `${detailPageNameData || get(params, "sector", "")} | ${getAppName(
-      currentLanguage
-    )}`
+    `${pageName || get(params, "sector", "")} | ${getAppName(currentLanguage)}`
   );
 
   return (
     <DetailModuleLayout
-      label={detailPageNameData || get(params, "sector", "")}
+      label={pageName || get(params, "sector", "")}
       crumbs={crumbs}
       vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}

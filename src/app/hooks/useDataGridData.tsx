@@ -132,8 +132,11 @@ export function useDataGridData(props: useDataGridDataProps) {
     isPartner: get(state.detailPageName.data, "data.isPartner", ""),
     countryIndicators: get(state.detailPageName.data, "data.indicators", []),
   }));
+  const sectorNames = useStoreState((state) =>
+    get(state.detailPageName.data, "data.names", "")
+  );
   const sectorDescription = useStoreState((state) =>
-    get(state.detailPageName.data, "data[1]", "")
+    get(state.detailPageName.data, "data.description", "")
   );
   const geoMapAction = useStoreActions((actions) => actions.geoMap.fetch);
   const geoMapData = useStoreState((state) =>
@@ -489,5 +492,6 @@ export function useDataGridData(props: useDataGridDataProps) {
     countryData,
     detailPageNameData,
     sectorDescription,
+    sectorNames,
   };
 }

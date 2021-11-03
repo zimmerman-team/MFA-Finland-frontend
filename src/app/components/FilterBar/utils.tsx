@@ -62,6 +62,7 @@ export interface ChipModel {
   values: { label: string; value: string }[];
   type: FILTER_TYPES;
 }
+
 export function getFilterChip(
   filters: SelectedFilterAtomModel,
   filterOptions: any,
@@ -74,7 +75,11 @@ export function getFilterChip(
     filterOptions,
     currentLanguage
   );
-  const sectorsChip = createSectorsChip(filters, filterOptions);
+  const sectorsChip = createSectorsChip(
+    filters,
+    filterOptions,
+    currentLanguage
+  );
   const organisationChip = createOrganisationChip(filters, filterOptions);
   const organisationTypeChip = createOrganisationTypeChip(
     filters,
@@ -230,16 +235,17 @@ function createCountriesChip(
 
 function createSectorsChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  currentLanguage: string
 ) {
   const sectors = get(filterOptions, "sectors.data.data", []);
   const values: { label: string; value: string }[] = [];
 
-  selectedFilters.sectors.forEach((sector: string, index) => {
+  selectedFilters.sectors.forEach((sector: string) => {
     const fSector = find(sectors, { code: sector });
     if (fSector) {
       values.push({
-        label: fSector.name,
+        label: fSector[getName(currentLanguage)] || fSector.name,
         value: sector,
       });
     } else {
@@ -248,7 +254,7 @@ function createSectorsChip(
           const fSectorSub = find(sectorOpt.children, { code: sector });
           if (fSectorSub) {
             values.push({
-              label: fSectorSub.name,
+              label: fSectorSub[getName(currentLanguage)] || fSectorSub.name,
               value: sector,
             });
           } else {
@@ -259,7 +265,9 @@ function createSectorsChip(
                 });
                 if (fSectorSubSub) {
                   values.push({
-                    label: fSectorSubSub.name,
+                    label:
+                      fSectorSubSub[getName(currentLanguage)] ||
+                      fSectorSubSub.name,
                     value: sector,
                   });
                 }
