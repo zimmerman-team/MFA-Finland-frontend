@@ -18,6 +18,7 @@ import {
 import {
   currentFilterOpenAtom,
   filterbarHeightAtom,
+  languageAtom,
   selectedFilterAtom,
 } from "app/state/recoil/atoms";
 
@@ -30,6 +31,7 @@ export interface FilterBarProps {
 export const FilterBar = (props: FilterBarProps) => {
   const location = useLocation();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [chips, setChips] = React.useState<ChipModel[]>([]);
   const render: boolean = shouldRender(location);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
@@ -52,7 +54,7 @@ export const FilterBar = (props: FilterBarProps) => {
       state.filterOptions.aidtypes.loading ||
       state.filterOptions.budgetlines.loading
   );
-  const heightObserver = new ResizeObserver(function (entries) {
+  const heightObserver = new ResizeObserver((entries) => {
     const height = entries[0].target.clientHeight;
     if (height !== filterbarHeight) {
       setFilterbarHeight(height);
@@ -62,7 +64,9 @@ export const FilterBar = (props: FilterBarProps) => {
 
   React.useEffect(() => {
     if (!filterOptionsLoading) {
-      setChips(getFilterChip(selectedFilters, filterOptionsData));
+      setChips(
+        getFilterChip(selectedFilters, filterOptionsData, currentLanguage)
+      );
     }
   }, [selectedFilters, filterOptionsData]);
 
@@ -72,6 +76,7 @@ export const FilterBar = (props: FilterBarProps) => {
       heightObserver.observe(filterbarElement);
     }
   }, []);
+
   function removeChip(chip: ChipModel) {
     const updatedSelectedFilters = { ...selectedFilters };
     switch (chip.type) {

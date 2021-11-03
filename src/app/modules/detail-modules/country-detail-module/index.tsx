@@ -1,25 +1,17 @@
 import React from "react";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
 import useTitle from "react-use/lib/useTitle";
-import { Path, getAppName } from "app/const/Path";
 import { useRouteMatch } from "react-router-dom";
-import { getCountryName } from "app/utils/getCountryCode";
+import { Path, getAppName } from "app/const/Path";
+import { languageAtom } from "app/state/recoil/atoms";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
-import { useRecoilState } from "recoil";
-import { languageAtom } from "app/state/recoil/atoms";
 
 export function CountryDetailModule() {
   const { params } = useRouteMatch();
-  const countryName = getCountryName(get(params, "country", ""));
   const [currentLanguage] = useRecoilState(languageAtom);
-  useTitle(`${countryName} | ${getAppName(currentLanguage)}`);
-
-  const crumbs: BreadcrumbLinkModel[] = [
-    { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
-    { label: countryName, cmsKey: "" },
-  ];
 
   const {
     vizDataLoading,
@@ -41,10 +33,16 @@ export function CountryDetailModule() {
     },
   });
 
+  useTitle(`${countryData.name} | ${getAppName(currentLanguage)}`);
+  const crumbs: BreadcrumbLinkModel[] = [
+    { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
+    { label: countryData.name, cmsKey: "" },
+  ];
+
   return (
     <DetailModuleLayout
       crumbs={crumbs}
-      label={countryName}
+      label={countryData.name}
       vizDataLoading={vizDataLoading}
       odaBarChartData={odaBarChartData}
       flagCode={get(params, "country", "")}

@@ -1,11 +1,12 @@
 import get from "lodash/get";
 import find from "lodash/find";
 import uniqBy from "lodash/uniqBy";
+import { getName } from "app/components/Charts/sdg";
+import { SelectedFilterAtomModel } from "app/state/recoil/atoms";
 import {
   FILTER_TYPES,
   humanrightfilteroptions,
 } from "app/components/FilterPanel/data";
-import { SelectedFilterAtomModel } from "app/state/recoil/atoms";
 
 export function shouldRender(location: any) {
   const urls = [
@@ -63,11 +64,16 @@ export interface ChipModel {
 }
 export function getFilterChip(
   filters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  currentLanguage: string
 ) {
   const chips: ChipModel[] = [];
   const thematicChip = createThematicChip(filters, filterOptions);
-  const countriesChip = createCountriesChip(filters, filterOptions);
+  const countriesChip = createCountriesChip(
+    filters,
+    filterOptions,
+    currentLanguage
+  );
   const sectorsChip = createSectorsChip(filters, filterOptions);
   const organisationChip = createOrganisationChip(filters, filterOptions);
   const organisationTypeChip = createOrganisationTypeChip(
@@ -187,7 +193,8 @@ function createThematicChip(
 
 function createCountriesChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  currentLanguage: string
 ): ChipModel | null {
   const type = FILTER_TYPES.COUNTRIES;
   const values: { label: string; value: string }[] = [];
@@ -200,12 +207,12 @@ function createCountriesChip(
       allLocations = [...allLocations, ...region.children];
     }
   });
-  selectedFilters.countries.forEach((country: string, i: number) => {
+  selectedFilters.countries.forEach((country: string) => {
     const fCountry = find(allLocations, { code: country });
     if (fCountry) {
       values.push({
         value: country,
-        label: fCountry.name,
+        label: fCountry[getName(currentLanguage)] || fCountry.name,
       });
     }
   });

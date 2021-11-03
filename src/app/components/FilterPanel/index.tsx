@@ -6,10 +6,16 @@ import remove from "lodash/remove";
 import { useRecoilState } from "recoil";
 import { Container } from "@material-ui/core";
 import { useCMSData } from "app/hooks/useCMSData";
+import { getName } from "app/components/Charts/sdg";
 import { useStoreState } from "app/state/store/hooks";
 import { createStyles } from "app/components/FilterPanel/styles";
 import { Filter } from "app/components/FilterPanel/Panels/Filter";
+import { getTranslatedSDGS } from "app/components/Charts/sdg/translations";
 import { ChooseAFilterPanel } from "app/components/FilterPanel/Panels/ChooseAFilterPanel";
+import {
+  getAdvancedFilterPanelData,
+  getMainFilterPanelData,
+} from "app/components/FilterPanel/utils";
 import {
   defaultfilters,
   selectedFilterAtom,
@@ -23,11 +29,6 @@ import {
   humanrightfilteroptions,
   MailPanelInitDataItemModel,
 } from "app/components/FilterPanel/data";
-import {
-  getAdvancedFilterPanelData,
-  getMainFilterPanelData,
-} from "app/components/FilterPanel/utils";
-import { getTranslatedSDGS } from "app/components/Charts/sdg/translations";
 
 export const FilterPanel = (props: FilterPanelProps) => {
   const styles = createStyles(props);
@@ -709,7 +710,16 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title={get(cmsData, "viz.countriesregions", "Countries/Regions")}
-            data={get(filterOptionsData.locations, "data.data", [])}
+            data={get(filterOptionsData.locations, "data.data", []).map(
+              (region: any) => ({
+                code: region.code,
+                name: region[getName(currentLanguage)],
+                children: region.children.map((country: any) => ({
+                  code: country.code,
+                  name: country[getName(currentLanguage)] || country.name,
+                })),
+              })
+            )}
             renderSearch
             selection={mainPanelData[1].selection}
             onFilterCheckboxChange={(value: string | string[]) =>

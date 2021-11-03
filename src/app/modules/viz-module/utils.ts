@@ -14,7 +14,8 @@ export function getSidebarLegendItems(
   filter: string | number | null,
   cmsData: any,
   thematicAreaChartSingle: boolean,
-  hideODAGNI: boolean
+  hideODAGNI: boolean,
+  currentLanguage: string
 ): VizSidePanelItemProps[] {
   switch (vizType) {
     case "oda":
@@ -30,9 +31,9 @@ export function getSidebarLegendItems(
     case "sectors":
       return getSectorsLegends(data[vizType], filter);
     case "countries-regions":
-      return getTreemapLegends(data[vizType], filter);
+      return getTreemapLegends(data[vizType], filter, currentLanguage);
     case "organisations":
-      return getTreemapLegends(data[vizType], filter);
+      return getTreemapLegends(data[vizType], filter, currentLanguage);
     case "budget-lines":
       return getBudgetLinesLegendItems(data[vizType]);
     default:

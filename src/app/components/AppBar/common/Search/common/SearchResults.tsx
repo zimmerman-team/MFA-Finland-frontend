@@ -3,7 +3,10 @@
 import React from "react";
 import get from "lodash/get";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { css } from "styled-components/macro";
+import { getName } from "app/components/Charts/sdg";
+import { languageAtom } from "app/state/recoil/atoms";
 import { TriangleIcon } from "app/assets/TriangleIcon";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { linearprogresscss } from "app/components/AppBar/common/Search/style";
@@ -100,6 +103,7 @@ const loadmorecss = css`
 `;
 
 export const SearchResults = (props: SearchResultsProps) => {
+  const [currentLanguage] = useRecoilState(languageAtom);
   const renderedResults = get(props.results, `[${props.resultType}].data`, []);
   return (
     <div css={containercss} data-cy="search-result">
@@ -129,10 +133,10 @@ export const SearchResults = (props: SearchResultsProps) => {
         {renderedResults.map((resultItem: ResultModel, index: number) => (
           <SearchResultItem
             index={index}
-            text={resultItem.name}
             link={resultItem.link}
             key={`search-result-item-${index}`}
             handleResultClick={props.handleResultClick}
+            text={resultItem[getName(currentLanguage)] || resultItem.name}
           />
         ))}
       </div>
