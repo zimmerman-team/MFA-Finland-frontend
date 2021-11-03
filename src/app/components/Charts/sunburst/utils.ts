@@ -87,7 +87,8 @@ export function getSelectedItemData(selected: string, data: any) {
 
 export function getSectorsLegends(
   data: any,
-  sectorfilter: string | number | null
+  sectorfilter: string | number | null,
+  currentLanguage: string
 ): VizSidePanelItemProps[] {
   let filteredData = data;
   if (sectorfilter) {
@@ -95,19 +96,19 @@ export function getSectorsLegends(
   }
   const children = orderBy(filteredData.children, "size", "desc").map(
     (d: any) => ({
-      id: d.title,
-      name: d.title,
+      id: d[getTitle(currentLanguage)],
+      name: d[getTitle(currentLanguage)],
       value: formatLocale(d.size),
       color: d.color,
       children: orderBy(d.children, "size", "desc").map((child: any) => ({
-        id: child.title,
-        name: child.title,
+        id: child[getTitle(currentLanguage)],
+        name: child[getTitle(currentLanguage)],
         value: formatLocale(child.size),
         color: child.color,
         children: orderBy(child.children, "size", "desc").map(
           (gchild: any) => ({
-            id: gchild.title,
-            name: gchild.title,
+            id: gchild[getTitle(currentLanguage)],
+            name: gchild[getTitle(currentLanguage)],
             value: formatLocale(gchild.size),
             color: gchild.color,
           })
@@ -120,11 +121,20 @@ export function getSectorsLegends(
   }
   return [
     {
-      id: filteredData.title,
-      name: filteredData.title,
+      id: filteredData[getTitle(currentLanguage)],
+      name: filteredData[getTitle(currentLanguage)],
       value: formatLocale(filteredData.size),
       color: filteredData.color,
       children,
     },
   ];
+}
+
+export function getTitle(
+  currentLanguage: string
+): "title" | "title_fi" | "title_se" {
+  if (currentLanguage === "se") return "title_se";
+  if (currentLanguage === "fi") return "title_fi";
+  if (currentLanguage === "en") return "title";
+  return "title";
 }

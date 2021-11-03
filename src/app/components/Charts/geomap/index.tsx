@@ -1,16 +1,18 @@
 // @ts-nocheck
-import React, { useEffect, useRef, useState } from "react";
-import { ResponsiveChoropleth } from "@nivo/geo";
-
+import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
-import { css } from "styled-components/macro";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useRecoilState } from "recoil";
 import { ProjectPalette } from "app/theme";
+import { css } from "styled-components/macro";
+import { ResponsiveChoropleth } from "@nivo/geo";
+import { getName } from "app/components/Charts/sdg";
+import { languageAtom } from "app/state/recoil/atoms";
 import { useWindowSize } from "app/hooks/useWindowSize";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { getCountryISO2 } from "app/utils/countryISOMapping";
-import { Tooltip } from "./tooltip";
-import { geojson } from "./features";
+import { Tooltip } from "app/components/Charts/geomap/tooltip";
+import { geojson } from "app/components/Charts/geomap/features";
 
 // This is the main reason I chose to go with Nivo for this chart,
 // Mapbox does not support different projectionTypes and has the Mercator style as default.
@@ -50,22 +52,23 @@ const marginMobile = { top: -10, right: 10, bottom: -10, left: -40 };
 
 // Please refer to https://nivo.rocks/choropleth and https://nivo.rocks/geo to see all available options.
 export function Geomap({ geoData }) {
-  const [tooltip, setTooltip] = useState("");
-  const [isLocked, setIsLocked] = useState(false);
+  const [tooltip, setTooltip] = React.useState("");
+  const [isLocked, setIsLocked] = React.useState(false);
   const mobile = useMediaQuery("(max-width:960px)");
-  const [width, height] = useWindowSize();
-  const widthRef = useRef();
-  const [projectionScale, setProjectionScale] = useState(190);
-  const [projectionTranslation, setProjectionTranslation] = useState([
+  const [width] = useWindowSize();
+  const widthRef = React.useRef();
+  const [currentLanguage] = useRecoilState(languageAtom);
+  const [projectionScale, setProjectionScale] = React.useState(190);
+  const [projectionTranslation, setProjectionTranslation] = React.useState([
     0.45,
     0.59,
   ]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     widthRef.current = width;
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     switch (true) {
       case width >= 900:
         setProjectionScale(188);
@@ -135,14 +138,14 @@ export function Geomap({ geoData }) {
         isInteractive
         tooltip={(country) => handleCountryHover(country)}
       />
-      {tooltip.label && (
+      {tooltip.data && (
         <Tooltip
-          label={tooltip.label}
-          value={tooltip.value}
-          type={get(geoData, "label", "activities")}
           isLocked={isLocked}
-          handleLockClick={() => setIsLocked(!isLocked)}
+          value={tooltip.value}
           ISO2Code={getCountryISO2(tooltip.id)}
+          type={get(geoData, "label", "activities")}
+          label={tooltip.data[getName(currentLanguage)]}
+          handleLockClick={() => setIsLocked(!isLocked)}
         />
       )}
     </div>

@@ -17,8 +17,10 @@ export interface SearchComponentLayoutProps {
 }
 
 export interface ResultModel {
-  name: string;
   link: string;
+  name: string;
+  name_fi?: string;
+  name_se?: string;
 }
 
 export interface NavResultItemModel {

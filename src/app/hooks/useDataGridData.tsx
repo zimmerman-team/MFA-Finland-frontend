@@ -4,6 +4,7 @@ import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import { useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
+import { getName } from "app/components/Charts/sdg";
 import { useUpdateEffect, useUnmount } from "react-use";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
@@ -18,6 +19,7 @@ import {
   BudgetLinesLatestFiltersAtom,
   SDGlatestFiltersAtom,
   GeoLatestFiltersAtom,
+  languageAtom,
 } from "app/state/recoil/atoms";
 
 interface useDataGridDataProps {
@@ -29,6 +31,7 @@ interface useDataGridDataProps {
 
 export function useDataGridData(props: useDataGridDataProps) {
   const history = useHistory();
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
   const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
     ODAlatestFiltersAtom
@@ -120,12 +123,20 @@ export function useDataGridData(props: useDataGridDataProps) {
     get(state.detailPageName.data, "data[0]", "")
   );
   const countryData = useStoreState((state) => ({
+    name: get(
+      state.detailPageName.data,
+      `data[${getName(currentLanguage)}]`,
+      ""
+    ),
     region: get(state.detailPageName.data, "data.region", ""),
     isPartner: get(state.detailPageName.data, "data.isPartner", ""),
     countryIndicators: get(state.detailPageName.data, "data.indicators", []),
   }));
+  const sectorNames = useStoreState((state) =>
+    get(state.detailPageName.data, "data.names", "")
+  );
   const sectorDescription = useStoreState((state) =>
-    get(state.detailPageName.data, "data[1]", "")
+    get(state.detailPageName.data, "data.description", "")
   );
   const geoMapAction = useStoreActions((actions) => actions.geoMap.fetch);
   const geoMapData = useStoreState((state) =>
@@ -481,5 +492,6 @@ export function useDataGridData(props: useDataGridDataProps) {
     countryData,
     detailPageNameData,
     sectorDescription,
+    sectorNames,
   };
 }

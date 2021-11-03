@@ -2,21 +2,23 @@ import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
 import { useMeasure } from "react-use";
+import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
 import { css } from "styled-components/macro";
 import { useHistory } from "react-router-dom";
+import { useCMSData } from "app/hooks/useCMSData";
+import { getName } from "app/components/Charts/sdg";
+import { languageAtom } from "app/state/recoil/atoms";
 import { ResponsiveTreeMapHtml } from "@nivo/treemap";
+import { TreeemapNode } from "app/components/Charts/treemap/common/node";
 import { TreemapTooltip } from "app/components/Charts/treemap/common/tooltip";
+import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
+import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
 import {
   TreeemapNodeData,
   TreemapProps,
   TreemapVizModel,
 } from "app/components/Charts/treemap/data";
-import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
-import { useCMSData } from "app/hooks/useCMSData";
-
-import { TreeemapNode } from "./common/node";
-import { SmTooltipContainer } from "../common/smTooltipContainer";
 
 const containercss = (height?: number) => css`
   height: ${height || 500}px;
@@ -37,6 +39,7 @@ export function Treemap(props: TreemapProps) {
   const [prevRenderedNodes, setPrevRenderedNodes] = React.useState<
     TreeemapNodeData[][]
   >([]);
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   const showStandardTooltip = !("ontouchstart" in document.documentElement);
 
@@ -115,7 +118,7 @@ export function Treemap(props: TreemapProps) {
             font-size: 14px;
           `}
         >
-          <b>{e.node.data.name}</b>
+          <b>{e.node.data[getName(currentLanguage)] || e.node.data.name}</b>
         </div>
       );
     }

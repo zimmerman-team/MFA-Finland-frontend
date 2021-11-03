@@ -609,7 +609,8 @@ export default function VizModule() {
               selectedVizItem,
               cmsData,
               thematicAreaChartSingle,
-              hideODAGNI()
+              hideODAGNI(),
+              currentLanguage
             )}
             activeTab={activeTab}
             setActiveTab={setActiveTab}

@@ -82,6 +82,8 @@ export const Chip = (props: ChipModel) => {
     setExpanded(!expanded);
   }
 
+  React.useEffect(() => setLabel(props.label), [props.label]);
+
   return (
     <>
       <MUIChip

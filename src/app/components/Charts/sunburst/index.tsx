@@ -2,16 +2,21 @@ import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
 import sumBy from "lodash/sumBy";
+import { useRecoilState } from "recoil";
 import findIndex from "lodash/findIndex";
 import { SunburstPoint } from "react-vis";
 import { useWindowSize } from "react-use";
 import Grid from "@material-ui/core/Grid";
+import { languageAtom } from "app/state/recoil/atoms";
 import { containercss } from "app/components/Charts/sunburst/styles";
 import { SunburstViz } from "app/components/Charts/sunburst/common/viz";
 import { SunburstChartProps } from "app/components/Charts/sunburst/data";
-import { getSelectedItemData } from "app/components/Charts/sunburst/utils";
 import { InnerVizStat } from "app/components/Charts/sunburst/common/innervizstat";
 import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
+import {
+  getSelectedItemData,
+  getTitle,
+} from "app/components/Charts/sunburst/utils";
 
 export function SunburstChart(props: SunburstChartProps) {
   const { width } = useWindowSize();
@@ -22,6 +27,7 @@ export function SunburstChart(props: SunburstChartProps) {
   const [prevSelections, setPrevSelections] = React.useState<
     { name: string; code: string }[]
   >([]);
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   React.useEffect(() => {
     if (selected.code.length !== 3 || prevSelections.length === 1) {
@@ -65,10 +71,10 @@ export function SunburstChart(props: SunburstChartProps) {
     if (node.name !== selected.name) {
       setPrevSelections([
         ...prevSelections,
-        { name: node.title, code: node.code },
+        { name: node[getTitle(currentLanguage)], code: node.code },
       ]);
-      setSelected({ name: node.title, code: node.code });
-      props.setSelectedVizItem(node.title);
+      setSelected({ name: node[getTitle(currentLanguage)], code: node.code });
+      props.setSelectedVizItem(node[getTitle(currentLanguage)]);
     }
   }
 
@@ -80,9 +86,12 @@ export function SunburstChart(props: SunburstChartProps) {
       if (fItem) {
         setPrevSelections([
           ...prevSelections,
-          { name: fItem.title, code: fItem.code },
+          { name: fItem[getTitle(currentLanguage)], code: fItem.code },
         ]);
-        setSelected({ name: fItem.title, code: fItem.code });
+        setSelected({
+          name: fItem[getTitle(currentLanguage)],
+          code: fItem.code,
+        });
       }
     }
   }, [props.selectedVizItemId]);
@@ -100,7 +109,7 @@ export function SunburstChart(props: SunburstChartProps) {
       children: data.children.map((child: any) => {
         let updChild: any = {
           code: child.code,
-          title: child.title,
+          title: child[getTitle(currentLanguage)],
           color: child.color,
           disbursed: child.size,
           committed: child.committed,
@@ -111,7 +120,7 @@ export function SunburstChart(props: SunburstChartProps) {
           if (
             selected.code.length === 3 &&
             prevSelections.length > 0 &&
-            child.title === selected.name
+            child[getTitle(currentLanguage)] === selected.name
           ) {
             updChild = {
               ...updChild,
