@@ -293,7 +293,32 @@ export const DataGrid = (props: DataGridProps) => {
 
   function renderAboutContent(): JSX.Element {
     if (isCountryDetail) {
-      return <></>;
+      return (
+        <ul
+          css={`
+            margin: 0;
+            padding: 0 10px 0 0;
+            list-style-type: none;
+
+            > li {
+              margin-bottom: 10px;
+
+              > a {
+                text-decoration: underline;
+              }
+            }
+          `}
+        >
+          {props.countryData &&
+            props.countryData.news.map((n: any) => (
+              <li key={n.title}>
+                <a href={n.link} target="_blank" rel="noreferrer">
+                  {n.title}
+                </a>
+              </li>
+            ))}
+        </ul>
+      );
     }
 
     if (aboutContent.icon) {
@@ -468,7 +493,7 @@ export const DataGrid = (props: DataGridProps) => {
             childrencontainerStyle={{ paddingTop: 33 }}
           >
             {isCountryDetail ? (
-              <ContactInformation />
+              <ContactInformation data={props.countryData.contact} />
             ) : (
               <>
                 <p

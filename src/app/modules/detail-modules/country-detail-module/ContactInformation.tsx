@@ -1,10 +1,7 @@
-import { contactInformation } from "app/modules/detail-modules/country-detail-module/mock";
 import React from "react";
 import { css } from "styled-components/macro";
-import { useCMSData } from "app/hooks/useCMSData";
-import get from "lodash/get";
 
-export const ContactInformation = () => {
+export const ContactInformation = (props: any) => {
   const styles = css`
     list-style-type: none;
     padding: 0;
@@ -39,50 +36,17 @@ export const ContactInformation = () => {
       }
     }
   `;
-  const cmsData = useCMSData({ returnData: true });
-  const embassy = getEmbassy();
-  const department = getDepartment();
-
-  function getEmbassy() {
-    // TODO: fetch data from api
-    return contactInformation.contactInfos.find((item) => {
-      return item.categories["organization-types"].find((org: string) => {
-        return org === "UE";
-      });
-    });
-  }
-
-  function getDepartment() {
-    // TODO: fetch data from api
-    return contactInformation.contactInfos.find((item) => {
-      return item.categories["organization-types"].find((org: string) => {
-        return org === "UM";
-      });
-    });
-  }
 
   return (
     <ul css={styles}>
       <li>
-        <span>{get(cmsData, "general.embassy", "Embassy")}:</span>
-        {embassy ? (
-          <a href={embassy.link}>
-            {embassy.reportName ? embassy.reportName : embassy.title}
-          </a>
-        ) : (
-          <span>Information not available</span>
-        )}
-      </li>
-
-      <li>
-        <span>{get(cmsData, "general.department", "Department")}:</span>{" "}
-        {department ? (
-          <a href={department.link}>
-            {department.reportName ? department.reportName : department.title}
-          </a>
-        ) : (
-          <span>Information not available</span>
-        )}
+        <span>{props.data.title}</span>
+        <a href={props.data.link} target="_blank" rel="noreferrer">
+          {props.data.link}
+        </a>
+        <a href={`mailto:${props.data.email}`} target="_blank" rel="noreferrer">
+          {props.data.email}
+        </a>
       </li>
     </ul>
   );

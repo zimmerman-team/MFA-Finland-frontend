@@ -131,6 +131,12 @@ export function useDataGridData(props: useDataGridDataProps) {
     region: get(state.detailPageName.data, "data.region", ""),
     isPartner: get(state.detailPageName.data, "data.isPartner", ""),
     countryIndicators: get(state.detailPageName.data, "data.indicators", []),
+    news: get(state.detailPageName.data, "data.news", []),
+    contact: get(state.detailPageName.data, "data.contact", {
+      title: "",
+      link: "",
+      email: "",
+    }),
   }));
   const sectorNames = useStoreState((state) =>
     get(state.detailPageName.data, "data.names", "")
@@ -259,6 +265,7 @@ export function useDataGridData(props: useDataGridDataProps) {
           values: {
             filters,
             detail_type: props.detailPageFilter.key,
+            lang: currentLanguage,
           },
         });
       }
@@ -404,6 +411,7 @@ export function useDataGridData(props: useDataGridDataProps) {
         values: {
           filters,
           detail_type: props.detailPageFilter.key,
+          lang: currentLanguage,
         },
       });
     }
@@ -464,6 +472,35 @@ export function useDataGridData(props: useDataGridDataProps) {
       });
     }
   }, [selectedFilters]);
+
+  useUpdateEffect(() => {
+    let filters = getAPIFormattedFilters(selectedFilters);
+    const isDetailPage = props.detailPageFilter.value !== "";
+    if (isDetailPage) {
+      filters = {
+        ...filters,
+        [props.detailPageFilter.key]:
+          props.detailPageFilter.key === "tag_narrative"
+            ? [
+                props.detailPageFilter.value,
+                (props.detailPageFilter.value as string).replace(
+                  "primary",
+                  "secondary"
+                ),
+              ]
+            : typeof props.detailPageFilter.value === "string"
+            ? [props.detailPageFilter.value]
+            : props.detailPageFilter.value,
+      };
+      detailPageNameAction({
+        values: {
+          filters,
+          detail_type: props.detailPageFilter.key,
+          lang: currentLanguage,
+        },
+      });
+    }
+  }, [currentLanguage]);
 
   useUnmount(() => {
     setODAlatestFilters(selectedFilters);
