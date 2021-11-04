@@ -174,7 +174,11 @@ export const DataGrid = (props: DataGridProps) => {
     }
     if (isRegionDetail) {
       return {
-        label: "Finland and the region in development cooperation?",
+        label: get(
+          cmsData,
+          "general.regiondevelopmentcooperation",
+          "Finland and the region in development cooperation?"
+        ),
         text: regionContent,
       };
     }

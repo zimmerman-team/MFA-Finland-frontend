@@ -168,7 +168,7 @@ export function Treemap(props: TreemapProps) {
       <Grid item sm={12} md={2} lg={3}>
         {drilldownId && (
           <div css={backbuttoncss} onClick={goBack}>
-            Back
+            {get(cmsData, "general.back", "Back")}
           </div>
         )}
       </Grid>
@@ -200,7 +200,11 @@ export function Treemap(props: TreemapProps) {
       {smTooltip && (
         <SmTooltipContainer
           cmsData={cmsData}
-          detailBtnLabel={`${props.label} Detail`}
+          detailBtnLabel={get(
+            cmsData,
+            `viz.${props.label}detail`,
+            `${props.label} detail`
+          )}
           showDrilldownBtn={get(smTooltip, "data.orgs", []).length > 0}
           close={() => setSmTooltip(null)}
           gotoDetail={

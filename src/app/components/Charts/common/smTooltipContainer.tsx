@@ -50,7 +50,7 @@ const buttoncss = css`
   padding: 6px 12px;
   background: #2e4982;
   border-radius: 20px;
-  text-transform: capitalize;
+  text-transform: none;
 `;
 
 interface SmTooltipContainerProps {

@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 import sumBy from "lodash/sumBy";
 import filter from "lodash/filter";
 import { useRouteMatch } from "react-router-dom";
@@ -81,7 +82,11 @@ export function BudgetLinesModule(props: BudgetLinesModuleModel) {
             <MoreButton data={props.getActiveTabData()} params={params} />
           ),
         }}
-        title={`${props.data.length} budget line years`}
+        title={`${props.data.length} ${get(
+          cmsData,
+          "viz.budgetlineyears",
+          "budget line years"
+        )}`}
         columns={getTranslatedCols(ODAbudgetLinesDataTableColumns, cmsData)}
       />
     </div>

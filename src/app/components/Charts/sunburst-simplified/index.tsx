@@ -6,6 +6,7 @@ import find from "lodash/find";
 import sumBy from "lodash/sumBy";
 import findIndex from "lodash/findIndex";
 import { SunburstPoint } from "react-vis";
+import { useCMSData } from "app/hooks/useCMSData";
 
 import { SunburstChartProps } from "app/components/Charts/sunburst/data";
 import {
@@ -23,6 +24,7 @@ import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
 
 export function SunburstChartSimplified(props: SunburstChartProps) {
+  const cmsData = useCMSData({ returnData: true });
   const [selectedCount, setSelectedCount] = React.useState(0);
   const [localData, setLocalData] = React.useState(props.data);
   const [selected, setSelected] = React.useState({ name: "", code: " " });
@@ -164,7 +166,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
       <Grid id="sunburst-back" item xs={12} sm={3} md={3} lg={3}>
         {prevSelections.length > 0 && (
           <div css={backbuttoncss} onClick={goBack}>
-            Back
+            {get(cmsData, "general.back", "Back")}
           </div>
         )}
       </Grid>

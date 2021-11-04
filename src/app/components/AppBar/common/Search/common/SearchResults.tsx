@@ -5,6 +5,7 @@ import get from "lodash/get";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
 import { getName } from "app/components/Charts/sdg";
 import { languageAtom } from "app/state/recoil/atoms";
 import { TriangleIcon } from "app/assets/TriangleIcon";
@@ -103,6 +104,7 @@ const loadmorecss = css`
 `;
 
 export const SearchResults = (props: SearchResultsProps) => {
+  const cmsData = useCMSData({ returnData: true });
   const [currentLanguage] = useRecoilState(languageAtom);
   const renderedResults = get(props.results, `[${props.resultType}].data`, []);
   return (
@@ -125,7 +127,7 @@ export const SearchResults = (props: SearchResultsProps) => {
               props.close();
             }}
           >
-            Go to projects list
+            {get(cmsData, "general.gotoprojectslist", "Go to projects list")}
           </Link>
         </div>
       )}

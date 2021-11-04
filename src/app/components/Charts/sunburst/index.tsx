@@ -7,6 +7,7 @@ import findIndex from "lodash/findIndex";
 import { SunburstPoint } from "react-vis";
 import { useWindowSize } from "react-use";
 import Grid from "@material-ui/core/Grid";
+import { useCMSData } from "app/hooks/useCMSData";
 import { languageAtom } from "app/state/recoil/atoms";
 import { containercss } from "app/components/Charts/sunburst/styles";
 import { SunburstViz } from "app/components/Charts/sunburst/common/viz";
@@ -20,6 +21,7 @@ import {
 
 export function SunburstChart(props: SunburstChartProps) {
   const { width } = useWindowSize();
+  const cmsData = useCMSData({ returnData: true });
   const [vizSize, setVizSize] = React.useState(340);
   const [selectedCount, setSelectedCount] = React.useState(0);
   const [localData, setLocalData] = React.useState(props.data);
@@ -149,7 +151,7 @@ export function SunburstChart(props: SunburstChartProps) {
       <Grid id="sunburst-back" item xs={12} sm={3} md={2} lg={1}>
         {prevSelections.length > 0 && (
           <div css={backbuttoncss} onClick={goBack}>
-            Back
+            {get(cmsData, "general.back", "Back")}
           </div>
         )}
       </Grid>

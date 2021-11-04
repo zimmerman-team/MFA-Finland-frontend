@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 import { Treemap } from "app/components/Charts/treemap";
 import { TreemapProps } from "app/components/Charts/treemap/data";
 import { LocationsFragmentTable } from "app/components/Charts/table/modules/locations";
@@ -53,7 +54,11 @@ export function OrganisationsModule(props: OrganisationsModuleModel) {
             <MoreButton data={props.getActiveTabData()} params={params} />
           ),
         }}
-        title={`${props.data.children.length} organisation categories`}
+        title={`${props.data.children.length} ${get(
+          cmsData,
+          "viz.organisationcategories",
+          "organisation categories"
+        )}`}
         columns={getTranslatedCols(OrganisationTypesDataTableColumns, cmsData)}
       />
     </div>
