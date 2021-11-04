@@ -199,6 +199,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
             .map((item: any) => {
               return (
                 <div
+                  data-cy={`legend-${item.title}`}
                   key={item.title}
                   onClick={() => {
                     setClickedNode(item);

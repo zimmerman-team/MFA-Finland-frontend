@@ -17,24 +17,27 @@ context("detail thematic area page", () => {
 
   it("go to the thematic area page", () => {
     cy.acceptCookie();
-    cy.wait(5000);
-    cy.get(".ctlqna").click({ force: true });
+    cy.waitLoader("thematic-loader");
+    cy.get('[data-cy="viz-pie-Thematic area A"]').click({ force: true });
     cy.wait(5000);
   });
 
   it("should show the correct org name", () => {
-    cy.get("h2").contains("Priority area 2");
+    cy.get("h2").contains(
+      "Strengthening the status and rights of women and girls"
+    );
   });
 
-  it("should show the correct title", () => {
-    pageTitle.forEach((text) => cy.get("h3").contains(text).should("exist"));
-  });
+  // it("should show the correct title", () => {
+  //   pageTitle.forEach((text) => cy.get("h3").contains(text).should("exist"));
+  // });
 
   it("check charts", () => {
-    cy.wait(5000);
-    cy.get("._StyledDiv4-jwxTbH").should("exist");
+    cy.waitLoader("oda-loader");
+    cy.get("#viz-scroller").should("exist");
     // Sectors
-    cy.get("._StyledDiv-kdVnjk").should("exist");
+    cy.waitLoader("sectors-loader");
+    cy.get(".rv-xy-plot__inner").should("exist");
 
     cy.checkBudgetLine();
     cy.checkMapContent();
@@ -44,7 +47,7 @@ context("detail thematic area page", () => {
   });
 
   it("chech thematic area", () => {
-    cy.get("._StyledGrid-fmVJvG").should("exist");
+    cy.get('[data-cy="priority-area-pie-simple"]').should("exist");
     cy.get("g text").contains("Main priority");
   });
 

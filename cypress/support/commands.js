@@ -31,11 +31,6 @@ Cypress.Commands.add("acceptCookie", () => {
   cy.get('[test-id="main-page-accept"]').click();
 });
 
-
-Cypress.Commands.add("checkBudgetLine", () => {
-  cy.get("._StyledDiv2-kDlTqH").should("exist");
-});
-
 Cypress.Commands.add("checkOrganisation", (id) => {
   //hover
   cy.get('[aria-label="' + id + '"]').click({ force: true });
@@ -48,16 +43,18 @@ Cypress.Commands.add("checkOrganisation", (id) => {
 
 Cypress.Commands.add("checkMapContent", () => {
   // tooltip in right side
+  cy.waitLoader("geo-loader");
+  // tooltip in right side
   cy.get(
     '[aria-label="Collapse Geographically unallocable ODA visualisation"]'
   ).click();
   cy.get(
     '[aria-label="Collapse Geographically unallocable ODA visualisation"]'
   ).click();
-  cy.get(".Collapseable___StyledDiv2-sc-18do71n-3").should("be.visible");
+  cy.get("h6").contains("Geographically unallocable ODA");
 
   //Disbursements amount
-  cy.get(".Legend___StyledDiv2-sc-12zjtsg-2").should("exist");
+  cy.get("h6").contains("Aggregated disbursements");
 });
 
 Cypress.Commands.add("checkRegion", (id) => {
@@ -65,11 +62,11 @@ Cypress.Commands.add("checkRegion", (id) => {
   cy.get('[id="' + id + '"]').trigger("mouseover", {
     force: true,
   });
-  cy.get(".treemap___StyledDiv-dnl4if-0").should("be.visible");
+  cy.get("b").contains(id);
   // Regions-click
   cy.get('[id="' + id + '"]').click({ force: true });
   cy.get("b").contains(id).should("exist");
-  cy.get(".clgFzd").click();
+  cy.get('[data-cy="CloseButton"]').click();
 });
 
 Cypress.Commands.add("checkSDG", (index, id) => {
@@ -82,13 +79,17 @@ Cypress.Commands.add("checkSDG", (index, id) => {
 
 Cypress.Commands.add("checkCharts", () => {
   // Overview Disbursements
-  cy.get("._StyledDiv4-jwxTbH").should("exist");
+  cy.waitLoader("oda-loader");
+  cy.get('[id="viz-scroller"]').should("exist");
   // Thematic areas
-  cy.get("._StyledGrid2-jcxLZB").should("exist");
+  cy.waitLoader("thematic-loader");
+  cy.get('[data-cy="viz-pie-chart"]').should("exist");
   // Sectors
-  cy.get("._StyledDiv-kdVnjk").should("exist");
+  cy.waitLoader("sectors-loader");
+  cy.get(".rv-xy-plot__inner").should("exist");
 
-  cy.checkBudgetLine();
+  cy.waitLoader("budgetlines-loader");
+  cy.get('[id="viz-scroller"]').eq(1).should("exist");
   cy.checkMapContent();
 
   cy.get("header").should("exist");
