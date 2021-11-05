@@ -1,12 +1,14 @@
 import React from "react";
+import get from "lodash/get";
 import sumBy from "lodash/sumBy";
 import filter from "lodash/filter";
 import isEmpty from "lodash/isEmpty";
 import orderBy from "lodash/orderBy";
+import { useWindowScroll } from "react-use";
 import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
 import useMousePosition from "app/hooks/useMousePosition";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
-import { useWindowScroll } from "react-use";
 
 const styles = {
   titletext: css`
@@ -77,6 +79,7 @@ function formatLines(data: any) {
 export function BudgetLinesBarChartTooltip(props: any) {
   const { x, y } = useMousePosition();
   const windowScroll = useWindowScroll();
+  const cmsData = useCMSData({ returnData: true });
   const [style, setStyle] = React.useState({ top: 0, left: 0 });
 
   React.useEffect(() => {
@@ -115,13 +118,13 @@ export function BudgetLinesBarChartTooltip(props: any) {
       <div css={styles.titletext}>Year {props.year}</div>
       <div css="width: 100%;height: 15px;" />
       <div css={styles.titletext}>
-        <span>Total Disbursed</span>
+        <span>{get(cmsData, "viz.disbursed", "Disbursed")}</span>
         <span>{formatMoneyWithPrefix(totalValue)}</span>
       </div>
       <div css="width: 100%;height: 15px;" />
       <div css={styles.titletext}>
-        <span>Budget Lines</span>
-        <span>Disbursement</span>
+        <span>{get(cmsData, "general.budgetlines", "Budget Lines")}</span>
+        <span>{get(cmsData, "viz.disbursed", "Disbursed")}</span>
       </div>
       <div css="width: 100%;height: 10px;" />
       <ul css={styles.linelist}>
