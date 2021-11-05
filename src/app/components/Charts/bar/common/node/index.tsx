@@ -19,10 +19,8 @@ export function BarNode(props: BarNodeProps) {
     switch (props.color) {
       case "#ACD1D1":
         return hovered ? "#ACD1D1" : "#DCECEC";
-        break;
       case "#233C71":
         return hovered ? "#233C71" : "#A8BBE4";
-        break;
       default:
         return props.color;
     }
@@ -59,6 +57,18 @@ export function BarNode(props: BarNodeProps) {
     props.setSelected(props.data);
   }
 
+  function onMouseMoveOrEnter(e: React.MouseEvent<SVGGElement>) {
+    if (
+      (props.selected || { indexValue: "" }).indexValue !==
+      props.data.indexValue
+    ) {
+      props.setHoveredXIndex(props.data.indexValue as number);
+    }
+    if (props.showTooltip) {
+      props.showTooltip(props.data.data);
+    }
+  }
+
   return (
     <g
       {...fprops}
@@ -69,16 +79,15 @@ export function BarNode(props: BarNodeProps) {
         }
       }}
       onTouchStart={onItemClick}
+      // onMouseMove={onMouseMoveOrEnter}
+      onMouseEnter={onMouseMoveOrEnter}
       transform={`translate(${props.x}, ${props.y})`}
-      onMouseEnter={() => {
-        if (
-          (props.selected || { indexValue: "" }).indexValue !==
-          props.data.indexValue
-        ) {
-          props.setHoveredXIndex(props.data.indexValue as number);
+      onMouseLeave={() => {
+        if (props.hideTooltip) {
+          props.hideTooltip();
         }
+        props.setHoveredXIndex(null);
       }}
-      onMouseLeave={() => props.setHoveredXIndex(null)}
       css={`
         cursor: pointer;
         ${props.data.indexValue === get(props.selected, "indexValue", "")

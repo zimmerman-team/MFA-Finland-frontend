@@ -36,6 +36,8 @@ export interface BarNodeProps extends BarItemProps<any> {
     translation: { x: number; y: number };
   }) => void;
   onZoomOut: () => void;
+  showTooltip?: any;
+  hideTooltip?: any;
 }
 
 export interface BarYearNotice {

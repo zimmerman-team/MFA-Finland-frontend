@@ -282,8 +282,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     }
   }
 
-  const itemLinkable =
-    props.link === "/viz/oda" || props.link === "/viz/budget-lines";
+  const itemLinkable = props.link === "/viz/oda";
 
   return (
     <div
