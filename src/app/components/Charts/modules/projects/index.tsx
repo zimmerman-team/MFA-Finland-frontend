@@ -87,7 +87,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
       padding-bottom: 128px;
 
       &::-webkit-scrollbar {
-        width: 4px;
+        width: 8px;
         border-radius: 4px;
         background: transparent;
       }
