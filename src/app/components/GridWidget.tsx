@@ -33,10 +33,12 @@ const style = {
       : ""}
   `,
   odaHeaderStats: css`
+    gap: 40px;
     display: flex;
     flex-direction: row;
     width: calc(100% - 350px);
-    justify-content: space-between;
+    justify-content: flex-end;
+
     @media (max-width: 992px) {
       width: 100%;
       margin: 10px 0;
@@ -330,16 +332,6 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         </div>
         {odaWidget && (
           <div css={style.odaHeaderStats}>
-            <div css={style.headerStat}>
-              <div>
-                {get(
-                  cmsData,
-                  "viz.disbursementsamount",
-                  "Disbursements amount"
-                )}
-              </div>
-              <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
-            </div>
             <div css={style.headerStat}>
               <div>
                 {get(cmsData, "general.organisations", "Organisations")}
