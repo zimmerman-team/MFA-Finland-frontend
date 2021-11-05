@@ -282,6 +282,14 @@ export default createMuiTheme({
         paddingBottom: 12,
       },
     },
+    MuiTooltip: {
+      tooltip: {
+        color: "#2E4982",
+        fontSize: "12px",
+        backgroundColor: "#fff",
+        boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
+      },
+    },
   },
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],
