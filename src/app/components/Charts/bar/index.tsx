@@ -121,6 +121,56 @@ export function BarChart(props: BarChartProps) {
     null
   );
 
+  const lineViz = (
+    <div
+      id="linechart-in-bar"
+      css={`
+        left: 0;
+        top: 30px;
+        position: absolute;
+        padding-left: 25px;
+        width: calc(100% - 25px);
+        height: ${props.height || 450}px;
+
+        @media (max-width: 600px) {
+          width: 1000px;
+        }
+
+        circle {
+          r: 6px;
+        }
+
+        > div {
+          > div {
+            > svg {
+              > g {
+                > g:first-of-type {
+                  ${lineWidth
+                    ? `transform: translate(${lineWidth - 17 - 100}px, 0);`
+                    : ""}
+                }
+              }
+            }
+          }
+        }
+      `}
+    >
+      <Line
+        data={[
+          {
+            id: "gni",
+            data: props.data.map((d: any) => ({
+              x: d.year,
+              y: d.gni,
+            })),
+          },
+        ]}
+        selected={selected}
+        hovered={hoveredXIndex}
+      />
+    </div>
+  );
+
   return (
     <div
       id="viz-scroller"
@@ -179,55 +229,7 @@ export function BarChart(props: BarChartProps) {
       <Hidden smDown>
         <div css="width: 100%;height: 15px;" />
       </Hidden>
-      {!props.hideODAGNI && showGni && (
-        <div
-          id="linechart-in-bar"
-          css={`
-            left: 0;
-            top: 30px;
-            position: absolute;
-            padding-left: 25px;
-            width: calc(100% - 25px);
-            height: ${props.height || 450}px;
-
-            @media (max-width: 600px) {
-              width: 1000px;
-            }
-
-            circle {
-              r: 6px;
-            }
-
-            > div {
-              > div {
-                > svg {
-                  > g {
-                    > g:first-of-type {
-                      ${lineWidth
-                        ? `transform: translate(${lineWidth - 17 - 100}px, 0);`
-                        : ""}
-                    }
-                  }
-                }
-              }
-            }
-          `}
-        >
-          <Line
-            data={[
-              {
-                id: "gni",
-                data: props.data.map((d: any) => ({
-                  x: d.year,
-                  y: d.gni,
-                })),
-              },
-            ]}
-            selected={selected}
-            hovered={hoveredXIndex}
-          />
-        </div>
-      )}
+      {!props.hideODAGNI && showGni && !props.isOnDataGrid && lineViz}
       <div
         css={`
           width: 100%;
@@ -317,6 +319,7 @@ export function BarChart(props: BarChartProps) {
           }}
         />
       </div>
+      {!props.hideODAGNI && showGni && props.isOnDataGrid && lineViz}
       {yearNotices.length > 0 && (
         <div
           css={`

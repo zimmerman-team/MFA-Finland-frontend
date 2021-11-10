@@ -19,6 +19,7 @@ export interface BarChartProps {
     translation: { x: number; y: number };
   }) => void;
   hideODAGNI?: boolean;
+  isOnDataGrid?: boolean;
 }
 
 export interface SimpleBarChartProps {

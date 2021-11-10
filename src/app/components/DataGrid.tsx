@@ -391,6 +391,7 @@ export const DataGrid = (props: DataGridProps) => {
               onSelectChange={() => null}
               setSelectedVizItem={() => null}
               hideODAGNI={hideODAGNI()}
+              isOnDataGrid
             />
           )}
         </GridWidget>
