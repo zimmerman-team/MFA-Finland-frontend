@@ -286,6 +286,14 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   const itemLinkable = props.link === "/viz/oda";
 
+  const isDetailPage =
+    history.location.pathname.indexOf("organisation-types") > -1 ||
+    history.location.pathname.indexOf("organisations") > -1 ||
+    history.location.pathname.indexOf("sectors") > -1 ||
+    history.location.pathname.indexOf("countries") > -1 ||
+    history.location.pathname.indexOf("regions") > -1 ||
+    history.location.pathname.indexOf("thematic-area") > -1;
+
   return (
     <div
       aria-label={`${props.label} module`}
@@ -332,6 +340,18 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         </div>
         {odaWidget && (
           <div css={style.odaHeaderStats}>
+            {isDetailPage && (
+              <div css={style.headerStat}>
+                <div>
+                  {get(
+                    cmsData,
+                    "viz.disbursementsamount",
+                    "Disbursements amount"
+                  )}
+                </div>
+                <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
+              </div>
+            )}
             <div css={style.headerStat}>
               <div>
                 {get(cmsData, "general.organisations", "Organisations")}
