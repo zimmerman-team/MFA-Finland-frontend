@@ -88,7 +88,11 @@ export function getFilterChip(
   const sdgChip = createSDGChip(filters, filterOptions);
   const activityStatusChip = createActivityStatusChip(filters, filterOptions);
   const policyMarkerChip = createPolicyMarkerChip(filters, filterOptions);
-  const defaultAidTypeChip = createDefaultAidTypeChip(filters, filterOptions);
+  const defaultAidTypeChip = createDefaultAidTypeChip(
+    filters,
+    filterOptions,
+    currentLanguage
+  );
   const budgetLinesChip = createBudgetLinesChip(
     filters,
     filterOptions,
@@ -519,7 +523,8 @@ function createPolicyMarkerChip(
 
 function createDefaultAidTypeChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  currentLanguage: string
 ) {
   const aidtypes = get(filterOptions, "aidtypes.data.data", []);
   const values: { label: string; value: string }[] = [];
@@ -528,7 +533,7 @@ function createDefaultAidTypeChip(
     const fAidType = find(aidtypes, { code: aidType });
     if (fAidType) {
       values.push({
-        label: fAidType.name,
+        label: fAidType[getName(currentLanguage) || fAidType.name],
         value: aidType,
       });
     }

@@ -887,7 +887,12 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title={get(cmsData, "filters.typeofaid", "Type of aid")}
-            data={get(filterOptionsData.aidtypes, "data.data", [])}
+            data={get(filterOptionsData.aidtypes, "data.data", []).map(
+              (option: any) => ({
+                code: option.code,
+                name: option[getName(currentLanguage)] || option.name,
+              })
+            )}
             renderSearch
             selection={advancedPanelData[1].selection}
             onFilterCheckboxChange={(value: string | string[]) =>
