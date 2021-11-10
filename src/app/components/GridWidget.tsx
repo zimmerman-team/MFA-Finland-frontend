@@ -383,7 +383,9 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       </div>
       {odaWidget && (
         <div css="display: flex;align-items: center;">
-          <h4 css={style.widgetLabel(false)}>ODA</h4>
+          <h4 css={style.widgetLabel(false)}>
+            {get(cmsData, "viz.oda", "ODA")}
+          </h4>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
               <Tooltip title={props.tooltip}>

@@ -400,7 +400,7 @@ const Legend = (props: any) => {
             }
           `}
         >
-          ODA/GNI
+          {get(cmsData, "viz.odagni", "ODA/GNI")}
         </div>
       )}
     </div>
