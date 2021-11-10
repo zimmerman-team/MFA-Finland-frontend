@@ -89,7 +89,11 @@ export function getFilterChip(
   const activityStatusChip = createActivityStatusChip(filters, filterOptions);
   const policyMarkerChip = createPolicyMarkerChip(filters, filterOptions);
   const defaultAidTypeChip = createDefaultAidTypeChip(filters, filterOptions);
-  const budgetLinesChip = createBudgetLinesChip(filters, filterOptions);
+  const budgetLinesChip = createBudgetLinesChip(
+    filters,
+    filterOptions,
+    currentLanguage
+  );
   const collaborationChip = createCollaborationChip(filters, filterOptions);
   const humanRightsChip = createHumanRightsChip(filters, filterOptions);
   const periodChip = createPeriodChip(filters, filterOptions);
@@ -549,7 +553,8 @@ function createDefaultAidTypeChip(
 
 function createBudgetLinesChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  currentLanguage: string
 ) {
   const budgetlines = get(filterOptions, "budgetlines.data.data", []);
   const values: { label: string; value: string }[] = [];
@@ -558,7 +563,7 @@ function createBudgetLinesChip(
     const fBudgetline = find(budgetlines, { code: line });
     if (fBudgetline) {
       values.push({
-        label: fBudgetline.name,
+        label: fBudgetline[getName(currentLanguage)] || fBudgetline.name,
         value: line,
       });
     }

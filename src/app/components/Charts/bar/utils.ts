@@ -2,7 +2,10 @@ import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 import { formatLocale } from "app/utils/formatLocale";
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
-import { budgetLineKeys, BarYearNotice } from "./data";
+import {
+  BarYearNotice,
+  getBudgetLinesVizKeys,
+} from "app/components/Charts/bar/data";
 
 /* eslint-disable no-plusplus */
 const ranges = [
@@ -10,6 +13,15 @@ const ranges = [
   { divider: 1e6, suffix: "MM", abbr: "€ MLN" },
   { divider: 1e3, suffix: "k", abbr: "€ K" },
 ];
+
+export function getLineName(
+  currentLanguage: string
+): "line" | "line_fi" | "line_se" {
+  if (currentLanguage === "se") return "line_se";
+  if (currentLanguage === "fi") return "line_fi";
+  if (currentLanguage === "en") return "line";
+  return "line";
+}
 
 export function getRange(data: any, fields: string[]) {
   const rangesCount = [0, 0, 0];
@@ -117,20 +129,24 @@ export function getODALegendItems(
   });
 }
 
-export function getSimpleBarLegendItems(data: any): VizSidePanelItemProps[] {
+export function getSimpleBarLegendItems(
+  data: any,
+  currentLanguage: string
+): VizSidePanelItemProps[] {
   return orderBy(data, "value", "desc").map((d: any) => ({
-    id: d.line,
-    name: d.line,
+    id: d[getLineName(currentLanguage)],
+    name: d[getLineName(currentLanguage)],
     value: formatLocale(get(d, "value", 0)),
     color: get(d, "valueColor", ""),
   }));
 }
 
 export function getBudgetLinesLegendItems(data: any): VizSidePanelItemProps[] {
+  const vizKeys: string[] = getBudgetLinesVizKeys(data);
   return orderBy(data, "year", "desc").map((d: any) => {
     let value = 0;
     const children: VizSidePanelItemProps[] = [];
-    budgetLineKeys.forEach((key: string) => {
+    vizKeys.forEach((key: string) => {
       value += get(d, `[${key}]`, 0);
       if (get(d, `[${key}]`, 0) > 0) {
         children.push({

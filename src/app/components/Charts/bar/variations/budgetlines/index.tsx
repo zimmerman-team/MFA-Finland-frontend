@@ -4,20 +4,24 @@ import max from "lodash/max";
 import { PrimaryColor } from "app/theme";
 import { ResponsiveBar } from "@nivo/bar";
 import { BarNode } from "app/components/Charts/bar/common/node";
-import { BarChartProps, budgetLineKeys } from "app/components/Charts/bar/data";
 import { BudgetLinesBarChartTooltip } from "app/components/Charts/bar/variations/budgetlines/tooltip";
+import {
+  BarChartProps,
+  getBudgetLinesVizKeys,
+} from "app/components/Charts/bar/data";
 import {
   getRange,
   getMoneyValueWithMetricPrefix,
 } from "app/components/Charts/bar/utils";
 
 export function BudgetLinesBarChart(props: BarChartProps) {
-  const range = getRange(props.data, budgetLineKeys);
+  const vizKeys: string[] = getBudgetLinesVizKeys(props.data);
+  const range = getRange(props.data, vizKeys);
   const maxValue: number =
     max(
       props.data.map((item: any) => {
         let value = 0;
-        budgetLineKeys.forEach((key: string) => {
+        vizKeys.forEach((key: string) => {
           value += get(item, `[${key}]`, 0);
         });
         return value;
@@ -95,6 +99,7 @@ export function BudgetLinesBarChart(props: BarChartProps) {
             }
           }
         `}
+        onMouseLeave={hideTooltip}
       >
         <div
           css={`
@@ -116,13 +121,13 @@ export function BudgetLinesBarChart(props: BarChartProps) {
           <ResponsiveBar
             enableGridX
             padding={0.5}
+            keys={vizKeys}
             indexBy="year"
             data={props.data}
             enableLabel={false}
             enableGridY={false}
             innerPadding={0}
             layout="horizontal"
-            keys={budgetLineKeys}
             valueScale={{ type: "linear" }}
             maxValue={maxValue + maxValue * 0.2}
             colors={(v: any) => get(v.data, `${v.id}Color`, "")}

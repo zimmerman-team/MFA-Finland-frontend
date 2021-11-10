@@ -5,8 +5,8 @@ import { useRecoilState } from "recoil";
 import { PrimaryColor } from "app/theme";
 import { ResponsiveBar } from "@nivo/bar";
 import { useHistory } from "react-router-dom";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { SimpleBarChartProps } from "app/components/Charts/bar/data";
+import { languageAtom, selectedFilterAtom } from "app/state/recoil/atoms";
 import {
   getRange,
   getMoneyValueWithMetricPrefix,
@@ -14,6 +14,7 @@ import {
 
 export function SimpleBarChart(props: SimpleBarChartProps) {
   const history = useHistory();
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters, setSelectedFilters] = useRecoilState(
     selectedFilterAtom
   );
@@ -44,7 +45,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
       {range.abbr}
       <ResponsiveBar
         padding={0.3}
-        indexBy="line"
+        indexBy={currentLanguage === "en" ? "line" : `line_${currentLanguage}`}
         keys={["value"]}
         innerPadding={0}
         data={props.data}

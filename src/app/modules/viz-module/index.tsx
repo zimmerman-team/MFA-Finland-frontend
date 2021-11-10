@@ -27,7 +27,10 @@ import { SectorsVizModule } from "app/components/Charts/modules/sectors";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import { ProjectsListModule } from "app/components/Charts/modules/projects";
 import { Switch, Route, useRouteMatch, useLocation } from "react-router-dom";
-import { BudgetLinesModule } from "app/components/Charts/modules/budgetlines";
+import {
+  BudgetLinesModule,
+  formatDataForViz,
+} from "app/components/Charts/modules/budgetlines";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { CountriesRegionsModule } from "app/components/Charts/modules/locations";
 import { OrganisationsModule } from "app/components/Charts/modules/organisations";
@@ -159,7 +162,10 @@ export default function VizModule() {
     (actions) => actions.budgetLinesBarChart.fetch
   );
   const budgetLinesBarChartData = useStoreState((state) =>
-    get(state.budgetLinesBarChart, "data.vizData", [])
+    formatDataForViz(
+      get(state.budgetLinesBarChart, "data.vizData", []),
+      currentLanguage
+    )
   );
   const odaBudgetLinesChartAction = useStoreActions(
     (actions) => actions.odaBudgetLinesChart.fetch
@@ -690,6 +696,7 @@ export default function VizModule() {
                   setVizCompData={setVizCompData}
                   onSelectChange={onSelectChange}
                   vizTranslation={vizTranslation}
+                  currentLanguage={currentLanguage}
                   selectedVizItemId={expandedVizItem}
                   setSelectedVizItem={setExpandedVizItem}
                   onArrowSelectChange={onZoomInLevelSelectorChange}

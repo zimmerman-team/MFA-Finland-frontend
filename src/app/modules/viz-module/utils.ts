@@ -21,7 +21,7 @@ export function getSidebarLegendItems(
     case "oda":
       return getODALegendItems(data[vizType], cmsData, hideODAGNI);
     case "oda-drilldown":
-      return getSimpleBarLegendItems(data[vizType]);
+      return getSimpleBarLegendItems(data[vizType], currentLanguage);
     case "thematic-areas":
       return getThematicAreasLegends(
         data[vizType],

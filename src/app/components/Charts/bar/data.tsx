@@ -379,6 +379,24 @@ export const budgetLineKeys = [
   "Concessional credits",
 ];
 
+export function getBudgetLinesVizKeys(data: any) {
+  const vizKeys: string[] = [];
+  data.forEach((d: any) => {
+    const keys = Object.keys(d);
+    keys.forEach((key: string) => {
+      if (
+        key.indexOf("Color") === -1 &&
+        key.indexOf("Code") === -1 &&
+        key !== "year" &&
+        vizKeys.indexOf(key) === -1
+      ) {
+        vizKeys.push(key);
+      }
+    });
+  });
+  return vizKeys;
+}
+
 export const budgetLinesMockData = [
   {
     year: 1998,

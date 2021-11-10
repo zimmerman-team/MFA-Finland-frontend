@@ -3,28 +3,28 @@ import get from "lodash/get";
 import maxBy from "lodash/maxBy";
 import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
+import { MFALogo2 } from "app/assets/MFALogo2";
 import { Grid, Hidden } from "@material-ui/core";
 import { useCMSData } from "app/hooks/useCMSData";
 import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
 import { GridWidget } from "app/components/GridWidget";
+import { useWindowSize } from "app/hooks/useWindowSize";
 import { Treemap } from "app/components/Charts/treemap";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
-
+import { getCMSContent } from "app/utils/getCMSContent";
+import { VizLoader } from "app/modules/common/viz-loader";
+import { Collapsable } from "app/components/Collapseable";
+import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { Legend } from "app/components/Charts/geomap/common/Legend";
 import { DataProps } from "app/components/Charts/thematicareas/data";
-import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
 import { TreemapDataModel } from "app/components/Charts/treemap/data";
-import { SDGvizItemProps } from "app/components/Charts/sdg/data";
-import { VizLoader } from "app/modules/common/viz-loader";
-import { Collapsable } from "app/components/Collapseable";
+import { languageAtom, selectedFilterAtom } from "app/state/recoil/atoms";
+import { formatDataForViz } from "app/components/Charts/modules/budgetlines";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
-import { useWindowSize } from "app/hooks/useWindowSize";
+import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
 import { ContactInformation } from "app/modules/detail-modules/country-detail-module/ContactInformation";
-import { getCMSContent } from "app/utils/getCMSContent";
-import { MFALogo2 } from "app/assets/MFALogo2";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -59,6 +59,7 @@ export const DataGrid = (props: DataGridProps) => {
   const location = useLocation();
   const [width] = useWindowSize();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
 
   const isOrgTypeDetail = location.pathname.indexOf("organisation-types") > -1;
@@ -576,7 +577,10 @@ export const DataGrid = (props: DataGridProps) => {
               setVizCompData={() => null}
               onSelectChange={() => null}
               setSelectedVizItem={() => null}
-              data={props.budgetLinesBarChartData}
+              data={formatDataForViz(
+                props.budgetLinesBarChartData,
+                currentLanguage
+              )}
             />
           )}
         </GridWidget>

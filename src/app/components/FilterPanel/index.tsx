@@ -906,7 +906,12 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title={get(cmsData, "general.budgetlines", "Budget lines")}
-            data={get(filterOptionsData.budgetlines, "data.data", [])}
+            data={get(filterOptionsData.budgetlines, "data.data", []).map(
+              (option: any) => ({
+                code: option.code,
+                name: option[getName(currentLanguage)] || option.name,
+              })
+            )}
             renderSearch
             selection={advancedPanelData[2].selection}
             onFilterCheckboxChange={(value: string | string[]) =>
