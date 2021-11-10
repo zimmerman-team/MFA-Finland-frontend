@@ -1,7 +1,6 @@
 import React from "react";
 import { ModuleRoutes } from "app/Routes";
 import { Drawer } from "app/components/Drawer";
-import { CookieDialog } from "app/components/CookieDialog";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
@@ -29,7 +28,7 @@ export const App = () => {
       <MdBottomMenu />
       <PageOrnament />
       <ModuleRoutes />
-      <CookieDialog />
+      {/* <CookieDialog /> */}
     </React.Fragment>
   );
 };
