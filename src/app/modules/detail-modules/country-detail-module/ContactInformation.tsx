@@ -29,6 +29,7 @@ export const ContactInformation = (props: any) => {
 
     a {
       font-size: 12px;
+      word-break: break-all;
       text-decoration: underline;
 
       :hover {
@@ -44,8 +45,11 @@ export const ContactInformation = (props: any) => {
         <a href={props.data.link} target="_blank" rel="noreferrer">
           {props.data.link}
         </a>
-        <a href={`mailto:${props.data.email}`} target="_blank" rel="noreferrer">
-          {props.data.email}
+      </li>
+      <li>
+        <span>{props.data.embassy.title}</span>
+        <a href={props.data.embassy.link} target="_blank" rel="noreferrer">
+          {props.data.link}
         </a>
       </li>
     </ul>

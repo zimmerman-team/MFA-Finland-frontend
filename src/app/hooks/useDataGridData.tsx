@@ -135,7 +135,10 @@ export function useDataGridData(props: useDataGridDataProps) {
     contact: get(state.detailPageName.data, "data.contact", {
       title: "",
       link: "",
-      email: "",
+      embassy: {
+        title: "",
+        link: "",
+      },
     }),
   }));
   const sectorNames = useStoreState((state) =>

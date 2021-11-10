@@ -275,7 +275,13 @@ export const DataGrid = (props: DataGridProps) => {
   }
 
   function getAboutBlockContent() {
-    if (isOrgTypeDetail || isOrgDetail || isSectorDetail || isRegionDetail) {
+    if (
+      isOrgTypeDetail ||
+      isOrgDetail ||
+      isSectorDetail ||
+      isRegionDetail ||
+      (isCountryDetail && props.countryData && !props.countryData.isPartner)
+    ) {
       return {
         label: "",
         text: "",
@@ -297,7 +303,7 @@ export const DataGrid = (props: DataGridProps) => {
   }
 
   function renderAboutContent(): JSX.Element {
-    if (isCountryDetail) {
+    if (isCountryDetail && props.countryData && props.countryData.isPartner) {
       return (
         <ul
           css={`
