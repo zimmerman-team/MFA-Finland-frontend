@@ -41,7 +41,9 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
 
   React.useEffect(() => {
     // if (selected.code.length !== 3 || prevSelections.length === 1) {
-    setLocalData(getSelectedItemData(selected.name, props.data));
+    setLocalData(
+      getSelectedItemData(selected.name, props.data, currentLanguage)
+    );
     // }
   }, [selected, props.data]);
 
@@ -62,7 +64,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
   function goBack() {
     const prevIndex = findIndex(
       prevSelections,
-      (ps: { name: string; code: string }) => ps.name === selected.name
+      (ps: { name: string; code: string }) => ps.code === selected.code
     );
     setSelected(
       prevIndex < 1 ? { name: "", code: "" } : prevSelections[prevIndex - 1]
@@ -81,10 +83,10 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
     if (node.name !== selected.name) {
       setPrevSelections([
         ...prevSelections,
-        { name: node[getTitle(currentLanguage)], code: node.code },
+        { name: node.title, code: node.code },
       ]);
-      setSelected({ name: node[getTitle(currentLanguage)], code: node.code });
-      props.setSelectedVizItem(node[getTitle(currentLanguage)]);
+      setSelected({ name: node.title, code: node.code });
+      props.setSelectedVizItem(node.title);
     }
   }
 

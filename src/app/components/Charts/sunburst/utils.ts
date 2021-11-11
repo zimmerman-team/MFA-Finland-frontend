@@ -34,12 +34,18 @@ function flattenData(data: any) {
   return flatData;
 }
 
-export function getSelectedItemData(selected: string, data: any) {
+export function getSelectedItemData(
+  selected: string,
+  data: any,
+  currentLanguage: string
+) {
   if (selected === "") {
     return data;
   }
   const flatData = flattenData(data);
-  const filteredData = find(flatData, { title: selected });
+  const filteredData = find(flatData, {
+    [`title${currentLanguage === "en" ? "" : `_${currentLanguage}`}`]: selected,
+  });
   if (filteredData) {
     if (filteredData.children) {
       const diff = filteredData.children
@@ -92,7 +98,11 @@ export function getSectorsLegends(
 ): VizSidePanelItemProps[] {
   let filteredData = data;
   if (sectorfilter) {
-    filteredData = getSelectedItemData(sectorfilter as string, data);
+    filteredData = getSelectedItemData(
+      sectorfilter as string,
+      data,
+      currentLanguage
+    );
   }
   const children = orderBy(filteredData.children, "size", "desc").map(
     (d: any) => ({
