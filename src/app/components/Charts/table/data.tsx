@@ -41,7 +41,7 @@ export const tableTheme: ThemeOptions = createMuiTheme({
     MuiTypography: {
       h6: {
         fontWeight: 700,
-        color: "#2E4982",
+        color: "#013B82",
         fontSize: "20px",
         fontFamily: "Finlandica",
       },
@@ -53,7 +53,7 @@ export const tableTheme: ThemeOptions = createMuiTheme({
     },
     MuiSvgIcon: {
       root: {
-        fill: "#2E4982",
+        fill: "#013B82",
       },
     },
     MuiTableBody: {
@@ -63,7 +63,7 @@ export const tableTheme: ThemeOptions = createMuiTheme({
     },
     MuiTableCell: {
       head: {
-        color: "#2E4982",
+        color: "#013B82",
         fontSize: "14px",
         lineHeight: "1rem",
         fontFamily: "Finlandica",
@@ -737,7 +737,7 @@ export const transactionsTableTheme = createMuiTheme({
     MuiTypography: {
       h6: {
         fontWeight: 700,
-        color: "#2E4982",
+        color: "#013B82",
         fontSize: "20px",
         fontFamily: "Finlandica",
       },
@@ -749,7 +749,7 @@ export const transactionsTableTheme = createMuiTheme({
     },
     // MuiSvgIcon: {
     //   root: {
-    //     fill: "#2E4982",
+    //     fill: "#013B82",
     //     fontSize: "0.75em",
     //   },
     // },
@@ -771,7 +771,7 @@ export const transactionsTableTheme = createMuiTheme({
     },
     MuiTableCell: {
       head: {
-        color: "#2E4982",
+        color: "#013B82",
         fontSize: "14px",
         lineHeight: "1rem",
         fontFamily: "Finlandica",

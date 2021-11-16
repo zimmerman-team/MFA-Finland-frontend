@@ -71,7 +71,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
           }
           circle {
             stroke-width: 1px;
-            stroke: #2e4982;
+            stroke: #013b82;
           }
         `}
       >
@@ -96,18 +96,18 @@ export function ThematicAreas(props: ThematicAreasProps) {
           ]}
           margin={{ top: 80, right: 0, bottom: 30, left: 0 }}
           borderWidth={0.5}
-          borderColor="#2e4982"
+          borderColor="#013B82"
           arcLinkLabel={(e: any) => {
             return `${formatMoneyWithPrefix(e.value)}`;
           }}
           colors={["#E7C3CD", "#AE4764"]}
           arcLinkLabelsSkipAngle={6}
           arcLinkLabelsTextOffset={6}
-          arcLinkLabelsTextColor="#2e4982"
+          arcLinkLabelsTextColor="#013B82"
           arcLinkLabelsOffset={1}
           arcLinkLabelsDiagonalLength={7}
           arcLinkLabelsStraightLength={8}
-          arcLinkLabelsColor="#2e4982"
+          arcLinkLabelsColor="#013B82"
           enableArcLabels={false}
           isInteractive={false}
           legends={[

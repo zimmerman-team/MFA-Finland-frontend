@@ -93,7 +93,7 @@ const itemlabellinecardcss = [
     height: 155%;
     position: absolute;
     transform: rotate(-57deg);
-    border-right: 1px solid #2E4982;
+    border-right: 1px solid #013B82;
   `,
   `
     display: inline-block;
@@ -103,7 +103,7 @@ const itemlabellinecardcss = [
     bottom: -70%;
     position: absolute;
     transform: rotate(-70deg);
-    border-bottom: 1px solid #2E4982;
+    border-bottom: 1px solid #013B82;
   `,
   `
     display: inline-block;
@@ -113,7 +113,7 @@ const itemlabellinecardcss = [
     bottom: 48px;
     position: absolute;
     transform: rotate(-36deg);
-    border-right: 1px solid #2E4982;
+    border-right: 1px solid #013B82;
   `,
   `
     display: inline-block;
@@ -123,7 +123,7 @@ const itemlabellinecardcss = [
     width: 62px;
     position: absolute;
     transform: rotate(-54deg);
-    border-top: 1px solid #2E4982;
+    border-top: 1px solid #013B82;
   `,
 ];
 
@@ -158,7 +158,7 @@ const itemlabellinevizcss = [
     height: 265%;
     position: absolute;
     transform: rotate(-46deg);
-    border-right: 1px solid #2E4982;
+    border-right: 1px solid #013B82;
   `,
   `
     display: inline-block;
@@ -168,7 +168,7 @@ const itemlabellinevizcss = [
     bottom: -55px;
     position: absolute;
     transform: rotate(-70deg);
-    border-bottom: 1px solid #2E4982;
+    border-bottom: 1px solid #013B82;
   `,
   `
     display: inline-block;
@@ -178,7 +178,7 @@ const itemlabellinevizcss = [
     bottom: 25px;
     position: absolute;
     transform: rotate(-36deg);
-    border-right: 1px solid #2E4982;
+    border-right: 1px solid #013B82;
   `,
   `
     display: inline-block;
@@ -188,7 +188,7 @@ const itemlabellinevizcss = [
     width: 69px;
     position: absolute;
     transform: rotate(-60deg);
-    border-top: 1px solid #2E4982;
+    border-top: 1px solid #013B82;
   `,
 ];
 

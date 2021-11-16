@@ -12,7 +12,7 @@ import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 const styles = {
   titletext: css`
-    color: #2e4982;
+    color: #013b82;
     font-size: 14px;
     line-height: 17px;
     font-weight: bold;
@@ -24,7 +24,7 @@ const styles = {
     justify-content: space-between;
   `,
   normaltext: css`
-    color: #2e4982;
+    color: #013b82;
     font-size: 12px;
     line-height: 14px;
     font-style: normal;

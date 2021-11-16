@@ -19,7 +19,7 @@ export const TableBodyFooter = (props: TableBodyFooterProps) => {
   const cmsData = useCMSData({ returnData: true });
   const styles = {
     cell: css`
-      background-color: #2e4982;
+      background-color: #013b82;
       height: 56px;
     `,
     typographyContainer: css`

@@ -22,7 +22,7 @@ export const LightTooltip = withStyles((theme: Theme) => ({
     color: theme.palette.common.white,
   },
   tooltip: {
-    color: "#2E4982",
+    color: "#013B82",
     backgroundColor: theme.palette.common.white,
     boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
   },

@@ -70,12 +70,12 @@ body {
 
 a {
   text-decoration: initial;
-  color: #2e4982;
+  color: #013b82;
 }
 a:hover {
   cursor: pointer;
   text-decoration: initial;
-  color: #2e4982;
+  color: #013b82;
 }
 
 button:hover {

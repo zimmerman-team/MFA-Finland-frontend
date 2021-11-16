@@ -5,7 +5,8 @@ import { FilterPanelProps } from "app/components/FilterPanel/data";
 export const createStyles = (props: FilterPanelProps) => {
   return {
     container: css`
-      background-color: ${ProjectPalette.primary.main};
+      background-color: #002561;
+      // background-color: ${ProjectPalette.primary.main};
       padding-top: 12px;
 
       position: fixed;
@@ -70,7 +71,8 @@ export const createStyles = (props: FilterPanelProps) => {
     primaryButton: css`
       padding: 9px 32px 10px 32px;
       background-color: white;
-      color: ${ProjectPalette.primary.main};
+      color: #002561;
+      // color: ${ProjectPalette.primary.main};
       border-radius: 22px;
       text-transform: unset;
       line-height: 17px;
