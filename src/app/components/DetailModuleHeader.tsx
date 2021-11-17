@@ -30,7 +30,7 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
             variant="h5"
             component="h2"
             css={`
-              color: #013b82;
+              color: #002561;
             `}
           >
             {props.label}
@@ -59,7 +59,7 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
                     height: 7px;
                     border-radius: 50%;
                     position: absolute;
-                    background: #013b82;
+                    background: #002561;
                   }
                 }
               }

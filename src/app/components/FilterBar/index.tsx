@@ -274,7 +274,7 @@ export const FilterBar = (props: FilterBarProps) => {
               height: 50px;
               box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.14),
                 0px 1px 8px rgba(0, 0, 0, 0.12);
-              background-color: #013b82;
+              background-color: #002561;
               position: fixed;
               bottom: 5vh;
               right: 8px;

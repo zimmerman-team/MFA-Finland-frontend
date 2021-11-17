@@ -44,7 +44,7 @@ const tablebodycell = (isLink: boolean) => css`
   font-size: 14px;
   font-weight: 500;
 
-  color: ${isLink ? "#013B82" : "initial"};
+  color: ${isLink ? "#002561" : "initial"};
   :hover {
     cursor: ${isLink ? "pointer" : "initial"};
   }

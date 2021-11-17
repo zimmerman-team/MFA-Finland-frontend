@@ -12,7 +12,7 @@ const containercss = css`
   padding: 8px;
   width: 250px;
   display: flex;
-  color: #013b82;
+  color: #002561;
   font-size: 14px;
   background: #fff;
   flex-direction: column;

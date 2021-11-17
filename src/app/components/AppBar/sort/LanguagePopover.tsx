@@ -26,7 +26,7 @@ export function LanguagePopover(
     font-size: 14px;
     line-height: 17px;
     letter-spacing: 0.15px;
-    color: #013b82;
+    color: #002561;
 
     :hover {
       background-color: #ecf1fa;

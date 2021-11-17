@@ -27,7 +27,7 @@ const style = {
     display: flex;
     width: ${percentage(7000, 10000)}%;
     height: 8px;
-    background-color: #013b82;
+    background-color: #002561;
     border-radius: 10px;
     justify-content: flex-end;
   `,
@@ -38,7 +38,7 @@ const style = {
     position: absolute;
     width: 40px;
     height: 40px;
-    background-color: #013b82;
+    background-color: #002561;
     border-radius: 50%;
     transform: translateX(20px) translateY(-50px);
 
@@ -51,7 +51,7 @@ const style = {
       position: absolute;
       margin: 0 0 -4px -5px;
       border: 5px solid transparent;
-      border-top-color: #013b82;
+      border-top-color: #002561;
       border-bottom: 0;
     }
   `,
@@ -72,7 +72,7 @@ const style = {
   divider: css`
     width: 1px;
     height: 30px;
-    background-color: #013b82;
+    background-color: #002561;
     margin-left: 15px;
     margin-right: 15px;
     transform: rotate(15deg);
@@ -103,7 +103,7 @@ export const TotalDisbursements = (props: TotalDisbursementsProps) => {
             display: flex;
             border-radius: 10px;
             justify-content: flex-end;
-            background-color: ${totalProgress > 0 ? "#013B82" : ""};
+            background-color: ${totalProgress > 0 ? "#002561" : ""};
             width: ${totalProgress > 0 ? `${totalProgress}%` : "40px"};
           `}
         >

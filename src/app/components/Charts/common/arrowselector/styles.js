@@ -2,7 +2,7 @@ import { css } from "styled-components/macro";
 
 export const containercss = css`
   display: flex;
-  color: #013b82;
+  color: #002561;
   font-size: 14px;
   font-weight: 900;
   user-select: none;

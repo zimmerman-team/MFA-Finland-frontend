@@ -23,7 +23,7 @@ export const BasicModuleHeader = (props: ModuleHeaderProps) => {
           variant="h5"
           component="h2"
           css={`
-            color: #013b82;
+            color: #002561;
           `}
         >
           {props.label}

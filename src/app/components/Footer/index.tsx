@@ -36,7 +36,7 @@ const styles = {
     width: 100%;
     height: 342px;
     padding-top: 50px;
-    background: #013b82;
+    background: #002561;
   `,
   backToTop: css`
     padding: 20px;
@@ -78,7 +78,7 @@ export function Footer() {
           css={`
             min-height: 100%;
             padding: 0 32px;
-            background: #013b82;
+            background: #002561;
 
             @media (max-width: 992px) {
               padding: 0;

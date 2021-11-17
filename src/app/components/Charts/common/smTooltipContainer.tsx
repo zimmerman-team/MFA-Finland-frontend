@@ -39,7 +39,7 @@ const closebtncss = css`
     padding: 0;
 
     svg {
-      fill: #013b82;
+      fill: #002561;
     }
   }
 `;
@@ -48,7 +48,7 @@ const buttoncss = css`
   color: #fff;
   font-size: 14px;
   padding: 6px 12px;
-  background: #013b82;
+  background: #002561;
   border-radius: 20px;
   text-transform: none;
 `;

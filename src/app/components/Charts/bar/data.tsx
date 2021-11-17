@@ -334,7 +334,7 @@ export const simplebarMockData = [
   {
     line: "European Development Fund",
     value: 4700000,
-    valueColor: "#013B82",
+    valueColor: "#002561",
   },
   {
     line: "Non-country specific development cooperation",
@@ -523,7 +523,7 @@ export const budgetLinesMockData = [
   {
     year: 2012,
     "European Development Fund": 4410000,
-    "European Development FundColor": "#013B82",
+    "European Development FundColor": "#002561",
     "Multilateral development cooperation": 33960000,
     "Multilateral development cooperationColor": "#8AA4DB",
     "Non-country specific development cooperation": 398000,
@@ -548,7 +548,7 @@ export const budgetLinesMockData = [
     "Support conducted by civil society organisations": 4235000,
     "Support conducted by civil society organisationsColor": "#ACD1D1",
     "European Development Fund": 66424356.06,
-    "European Development FundColor": "#013B82",
+    "European Development FundColor": "#002561",
   },
   {
     year: 2014,
