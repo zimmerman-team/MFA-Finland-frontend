@@ -101,13 +101,17 @@ export function LanguagePopover(
         >
           Finnish
         </button>
-        {/* <div
+        <button
+          type="button"
+          css={removeButtonStyling}
+          aria-label="Switch language to Swedish"
           onClick={() => {
             setLanguage("se");
+            handleClose();
           }}
         >
           Swedish
-        </div> */}
+        </button>
       </div>
     </Popover>
   );
