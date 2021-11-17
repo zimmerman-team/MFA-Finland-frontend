@@ -214,7 +214,10 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
                 <div
                   key={item.title}
                   onClick={() => {
-                    setClickedNode(item);
+                    setClickedNode({
+                      ...item,
+                      title: item[getTitle(currentLanguage)],
+                    });
                     setHoveredNode(null);
                   }}
                   css={`
