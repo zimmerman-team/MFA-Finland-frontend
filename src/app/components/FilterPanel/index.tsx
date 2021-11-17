@@ -748,7 +748,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 children: category.children.map((dac3: any) => ({
                   code: dac3.code,
                   name: dac3[getName(currentLanguage)] || dac3.name,
-                  children: category.children.map((dac5: any) => ({
+                  children: dac3.children.map((dac5: any) => ({
                     code: dac5.code,
                     name: dac5[getName(currentLanguage)] || dac5.name,
                   })),
