@@ -99,7 +99,7 @@ export function LanguagePopover(
             handleClose();
           }}
         >
-          Finnish
+          Suomi [Finnish]
         </button>
         <button
           type="button"
@@ -110,7 +110,7 @@ export function LanguagePopover(
             handleClose();
           }}
         >
-          Swedish
+          Svenska [Swedish]
         </button>
       </div>
     </Popover>
