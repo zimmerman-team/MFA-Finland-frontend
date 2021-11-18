@@ -249,7 +249,9 @@ const LanguageSwitch = ({
           margin-bottom: 3px;
         `}
       />
-      <div css={appbarStyle.selectedLanguages}>{currentLanguage}</div>
+      <div css={appbarStyle.selectedLanguages}>
+        {currentLanguage === "se" ? "sv" : currentLanguage}
+      </div>
     </button>
   );
 };
