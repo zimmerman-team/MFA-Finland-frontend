@@ -4,9 +4,11 @@ import sumBy from "lodash/sumBy";
 import filter from "lodash/filter";
 import isEmpty from "lodash/isEmpty";
 import orderBy from "lodash/orderBy";
+import { useRecoilState } from "recoil";
 import { useWindowScroll } from "react-use";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
+import { languageAtom } from "app/state/recoil/atoms";
 import useMousePosition from "app/hooks/useMousePosition";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
@@ -38,6 +40,7 @@ const styles = {
     list-style-type: none;
 
     > li {
+      width: 100%;
       display: flex;
       flex-direction: row;
       margin-bottom: 10px;
@@ -47,6 +50,18 @@ const styles = {
         display: flex;
         flex-direction: row;
         align-items: center;
+
+        &:nth-of-type(1) {
+          width: 70%;
+
+          > div:nth-of-type(2) {
+            width: calc(100% - 16px);
+          }
+        }
+        &:nth-of-type(2) {
+          width: 30%;
+          justify-content: flex-end;
+        }
       }
     }
   `,
@@ -80,6 +95,7 @@ export function BudgetLinesBarChartTooltip(props: any) {
   const { x, y } = useMousePosition();
   const windowScroll = useWindowScroll();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [style, setStyle] = React.useState({ top: 0, left: 0 });
 
   React.useEffect(() => {
@@ -119,7 +135,7 @@ export function BudgetLinesBarChartTooltip(props: any) {
       <div css="width: 100%;height: 15px;" />
       <div css={styles.titletext}>
         <span>{get(cmsData, "viz.disbursed", "Disbursed")}</span>
-        <span>{formatMoneyWithPrefix(totalValue)}</span>
+        <span>{formatMoneyWithPrefix(totalValue, currentLanguage)}</span>
       </div>
       <div css="width: 100%;height: 15px;" />
       <div css={styles.titletext}>
@@ -132,10 +148,10 @@ export function BudgetLinesBarChartTooltip(props: any) {
           <li key={line.name}>
             <div css={styles.normaltext}>
               <div css={styles.circle(line.color)} />
-              {line.name}
+              <div>{line.name}</div>
             </div>
             <div css={styles.normaltext}>
-              {formatMoneyWithPrefix(line.value)}
+              {formatMoneyWithPrefix(line.value, currentLanguage)}
             </div>
           </li>
         ))}

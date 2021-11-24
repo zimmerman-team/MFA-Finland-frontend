@@ -1,16 +1,23 @@
 import React from "react";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
 import SearchIcon from "@material-ui/icons/Search";
+import { languageAtom } from "app/state/recoil/atoms";
 import IconButton from "@material-ui/core/IconButton";
-import { Box, Grid, LinearProgress, Typography } from "@material-ui/core";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { SearchField } from "app/components/AppBar/common/Search/common/SearchField";
+import {
+  Box,
+  Grid,
+  LinearProgress,
+  Typography,
+  useMediaQuery,
+} from "@material-ui/core";
 import { FloatingButtons } from "app/components/Charts/modules/projects/common/FloatingButtons";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 interface ProjectsListModuleProps {
   count: number;
@@ -196,6 +203,7 @@ export const ProjectsListModule = (props: ProjectsListModuleProps) => {
 };
 
 const ListItem = (project: ProjectType) => {
+  const [currentLanguage] = useRecoilState(languageAtom);
   const styles = {
     container: css`
       background: #ffffff;
@@ -280,7 +288,10 @@ const ListItem = (project: ProjectType) => {
               "viz.totalcommitments",
               "Total committed"
             )}
-            value={formatLargeAmountsWithPrefix(project.committed)}
+            value={formatLargeAmountsWithPrefix(
+              project.committed,
+              currentLanguage
+            )}
           />
           <LabelValueGridItem
             label={get(
@@ -288,7 +299,10 @@ const ListItem = (project: ProjectType) => {
               "viz.totaldisbursements",
               "Total disbursed"
             )}
-            value={formatLargeAmountsWithPrefix(project.disbursed)}
+            value={formatLargeAmountsWithPrefix(
+              project.disbursed,
+              currentLanguage
+            )}
           />
         </Grid>
       </div>

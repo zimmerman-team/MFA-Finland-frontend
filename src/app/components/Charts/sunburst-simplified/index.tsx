@@ -261,7 +261,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
                       font-size: 12px;
                     `}
                   >
-                    {formatMoneyWithPrefix(item.size)}
+                    {formatMoneyWithPrefix(item.size, currentLanguage)}
                     {` | ${getPercentage(item)}%`}
                   </span>
                 </div>

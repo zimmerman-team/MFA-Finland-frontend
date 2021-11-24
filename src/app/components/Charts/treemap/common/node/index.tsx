@@ -76,7 +76,9 @@ export function TreeemapNode(props: any) {
         <div>
           <div>{node.data[getName(currentLanguage)] || node.data.name}</div>
           <div css="width: 100%;height: 5px;" />
-          <div>{formatLargeAmountsWithPrefix(node.data.value)}</div>
+          <div>
+            {formatLargeAmountsWithPrefix(node.data.value, currentLanguage)}
+          </div>
         </div>
       )}
     </div>

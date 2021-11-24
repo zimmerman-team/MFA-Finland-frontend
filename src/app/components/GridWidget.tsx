@@ -13,6 +13,7 @@ import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { formatLocaleN } from "app/utils/formatLocale";
 import { useRecoilState } from "recoil";
 import {
+  languageAtom,
   selectedFilterAtom,
   SelectedFilterAtomModel,
 } from "app/state/recoil/atoms";
@@ -235,6 +236,7 @@ export function displayPeriod(
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const history = useHistory();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [isHovered, setIsHovered] = React.useState(false);
   const odaWidget = props.label === "Overview Disbursements";
   const totalDisbursement = useStoreState((state) =>
@@ -349,7 +351,9 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
                     "Disbursements amount"
                   )}
                 </div>
-                <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
+                <div>
+                  {formatMoneyWithPrefix(totalDisbursement, currentLanguage)}
+                </div>
               </div>
             )}
             <div css={style.headerStat}>

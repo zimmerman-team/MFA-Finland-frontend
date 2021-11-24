@@ -3,6 +3,7 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
+import { useRecoilState } from "recoil";
 import { PrimaryColor } from "app/theme";
 import Grid from "@material-ui/core/Grid";
 import { ResponsivePie } from "@nivo/pie";
@@ -11,6 +12,7 @@ import { hexToRGBA } from "app/utils/hexToRgba";
 import { useCMSData } from "app/hooks/useCMSData";
 import { useHistory, Link } from "react-router-dom";
 import { formatLocale } from "app/utils/formatLocale";
+import { languageAtom } from "app/state/recoil/atoms";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import {
   directions,
@@ -32,6 +34,7 @@ import {
 export function ThematicAreas(props: ThematicAreasProps) {
   const history = useHistory();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const maxValue = get(maxBy(props.data, "value"), "value", 0);
 
   if (props.showSingleCircle) {
@@ -98,7 +101,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
           borderWidth={0.5}
           borderColor="#002561"
           arcLinkLabel={(e: any) => {
-            return `${formatMoneyWithPrefix(e.value)}`;
+            return `${formatMoneyWithPrefix(e.value, currentLanguage)}`;
           }}
           colors={[selected.color, hexToRGBA(selected.color, 0.5)]}
           arcLinkLabelsSkipAngle={6}
@@ -179,7 +182,8 @@ export function ThematicAreas(props: ThematicAreasProps) {
               {props.showOnlyViz && (
                 <div css="margin-top: 5px;">
                   {formatMoneyWithPrefix(
-                    item.primary.value + item.secondary.value
+                    item.primary.value + item.secondary.value,
+                    currentLanguage
                   )}
                 </div>
               )}
