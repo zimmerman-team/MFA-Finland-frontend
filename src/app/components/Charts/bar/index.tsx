@@ -250,7 +250,7 @@ export function BarChart(props: BarChartProps) {
           keys={["exclusive", "other"]}
           valueScale={{ type: "linear" }}
           layers={["grid", "axes", Bars]}
-          colors={["#ACD1D1", "#233C71"]}
+          colors={["#CCDDD5", "#4F6797"]}
           maxValue={maxValue + maxValue * 0.1}
           margin={{ top: 15, right: 60, bottom: 60, left: 50 }}
           borderWidth={1}
@@ -373,7 +373,7 @@ const Legend = (props: any) => {
           position: relative;
           &:before {
             border: 0.5px solid #343249;
-            background: #acd1d1;
+            background: #ccddd5;
           }
         `}
       >
@@ -384,7 +384,7 @@ const Legend = (props: any) => {
           position: relative;
           &:before {
             border: 0.5px solid #343249;
-            background: #233c71;
+            background: #4f6797;
           }
         `}
       >
@@ -396,7 +396,7 @@ const Legend = (props: any) => {
             position: relative;
             &:before {
               border: 0.5px solid #343249;
-              background: #d495a7;
+              background: #d06448;
             }
             @media (max-width: 600px) {
               padding-right: 0 !important;

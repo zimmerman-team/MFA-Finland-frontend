@@ -100,7 +100,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
           arcLinkLabel={(e: any) => {
             return `${formatMoneyWithPrefix(e.value)}`;
           }}
-          colors={["#E7C3CD", "#AE4764"]}
+          colors={[selected.color, hexToRGBA(selected.color, 0.5)]}
           arcLinkLabelsSkipAngle={6}
           arcLinkLabelsTextOffset={6}
           arcLinkLabelsTextColor="#002561"
