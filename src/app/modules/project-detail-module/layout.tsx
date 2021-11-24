@@ -78,6 +78,7 @@ export const ProjectDetailModuleLayout = (
     "general.activitiesfromto",
     "activities from {start} to {end}"
   );
+  dates = dates || "activities from {start} to {end}";
   dates = dates.replace("{start}", props.metadata.dates[0]);
   dates = dates.replace("{end}", props.metadata.dates[1]);
 
