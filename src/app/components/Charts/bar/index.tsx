@@ -112,6 +112,8 @@ export function BarChart(props: BarChartProps) {
       }
 
       setYearNotices(newYearNotices);
+    } else {
+      setYearNotices(allYearNotices);
     }
   }, [cmsData]);
 
