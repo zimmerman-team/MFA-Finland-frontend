@@ -27,6 +27,7 @@ const style = {
 
     ${odaWidget
       ? `
+      gap: 12px;
       @media (max-width: 992px) {
         display: block;
       }
