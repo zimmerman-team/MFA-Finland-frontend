@@ -13,14 +13,6 @@ export const ContactInformation = (props: any) => {
       flex-direction: column;
       font-size: 16px;
       gap: 8px;
-
-      span:first-of-type {
-        font-weight: bold;
-      }
-
-      span:last-of-type {
-        font-size: 14px;
-      }
     }
 
     li:first-of-type {
@@ -28,7 +20,7 @@ export const ContactInformation = (props: any) => {
     }
 
     a {
-      font-size: 12px;
+      font-size: 14px;
       word-break: break-all;
       text-decoration: underline;
 
@@ -41,15 +33,13 @@ export const ContactInformation = (props: any) => {
   return (
     <ul css={styles}>
       <li>
-        <span>{props.data.title}</span>
         <a href={props.data.link} target="_blank" rel="noreferrer">
-          {props.data.link}
+          {props.data.title}
         </a>
       </li>
       <li>
-        <span>{props.data.embassy.title}</span>
         <a href={props.data.embassy.link} target="_blank" rel="noreferrer">
-          {props.data.link}
+          {props.data.embassy.title}
         </a>
       </li>
     </ul>
