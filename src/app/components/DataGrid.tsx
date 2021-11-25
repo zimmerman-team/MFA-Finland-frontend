@@ -341,6 +341,11 @@ export const DataGrid = (props: DataGridProps) => {
     }
     return (
       <p
+        css={`
+          a {
+            text-decoration: underline;
+          }
+        `}
         style={{ lineHeight: "18px", fontSize: "16px" }}
         dangerouslySetInnerHTML={{ __html: aboutContent.text || "" }}
       />
