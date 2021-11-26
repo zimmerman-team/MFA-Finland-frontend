@@ -221,6 +221,7 @@ export function Footer() {
           </Grid>
           <div css={styles.backToTop}>
             <IconButton
+              aria-label="back to top"
               onClick={() =>
                 window.scrollTo({
                   top: 0,

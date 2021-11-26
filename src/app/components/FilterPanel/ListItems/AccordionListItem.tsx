@@ -107,10 +107,10 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
         css={styles.summary}
       >
         <FormControlLabel
-          label=""
-          aria-label="checkbox"
+          label={`${props.node.name} filter option`}
           onClick={(event: any) => event.stopPropagation()}
           onFocus={(event: any) => event.stopPropagation()}
+          aria-label={`select ${props.node.name} filter option`}
           css={styles.formControl}
           control={
             <Checkbox

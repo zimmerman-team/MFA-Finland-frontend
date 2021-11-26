@@ -116,6 +116,7 @@ const CardHeader = (props: FilterProps) => {
         <Checkbox
           id="select_all"
           color="default"
+          aria-label={`select all ${props.title} filter options`}
           css={styles.checkbox}
           onChange={props.onSelectAllCheckboxChange}
           checked={
