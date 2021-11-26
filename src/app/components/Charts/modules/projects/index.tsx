@@ -241,7 +241,7 @@ const ListItem = (project: ProjectType) => {
   };
 
   return (
-    <Link to={`/project/${project.code}`}>
+    <Link to={`/${currentLanguage}/project/${project.code}`}>
       <div css={styles.container}>
         <Typography variant="h6" css={styles.name}>
           {project.title}

@@ -3,7 +3,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { css } from "styled-components/macro";
+import { languageAtom } from "app/state/recoil/atoms";
 
 interface ResultItemParams {
   text: string;
@@ -43,13 +45,15 @@ const linkcss = css`
 `;
 
 export const SearchResultItem = (props: ResultItemParams) => {
+  const [currentLanguage] = useRecoilState(languageAtom);
+
   return (
     <div
       css={containercss}
       onClick={props.handleResultClick}
       data-cy={`search-result-item-${props.index}`}
     >
-      <Link css={linkcss} to={props.link}>
+      <Link css={linkcss} to={`/${currentLanguage}${props.link}`}>
         {props.text}
       </Link>
     </div>

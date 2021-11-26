@@ -1,7 +1,9 @@
 import React from "react";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
 import { css } from "styled-components/macro";
 import { useCMSData } from "app/hooks/useCMSData";
+import { languageAtom } from "app/state/recoil/atoms";
 import { TabProps } from "app/components/VizTabs/data";
 import { PrimaryColor, SecondaryColor } from "app/theme";
 import { NavLink, useRouteMatch, useLocation } from "react-router-dom";
@@ -41,10 +43,11 @@ export function RouteTab(props: TabProps) {
   const location = useLocation();
   const { params } = useRouteMatch();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   return (
     <li css={tabcss(get(params, "tab", "") === props.url.split("/")[2])}>
-      <NavLink to={`${props.url}${location.search}`}>
+      <NavLink to={`/${currentLanguage}${props.url}${location.search}`}>
         {props.cmsKey ? get(cmsData, props.cmsKey, props.name) : props.name}
       </NavLink>
     </li>

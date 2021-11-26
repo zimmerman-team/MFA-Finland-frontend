@@ -18,6 +18,8 @@ import LogoFacebook from "app/assets/icons/logo_fb.png";
 import LogoYoutube from "app/assets/icons/logo_yt.png";
 import LogoLinkedin from "app/assets/icons/logo_linkedin.png";
 import LogoTwitter from "app/assets/icons/logo_twitter.png";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 const styles = {
   container: css`
@@ -64,6 +66,7 @@ const styles = {
 export function Footer() {
   const location = useLocation();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   if (location.pathname.indexOf("/viz") > -1) {
     return null;
@@ -118,16 +121,16 @@ export function Footer() {
               component="nav"
               css={drawerStyle.AddressContainer}
             >
-              <NavLink to="/feedback" css={styles.link}>
+              <NavLink to={`/${currentLanguage}/feedback`} css={styles.link}>
                 {get(cmsData, `menu.feedback`, "Feedback")}
               </NavLink>
-              <NavLink to="/about" css={styles.link}>
+              <NavLink to={`/${currentLanguage}/about`} css={styles.link}>
                 {get(cmsData, `menu.about`, "About")}
               </NavLink>
-              <NavLink to="/result" css={styles.link}>
+              <NavLink to={`/${currentLanguage}/result`} css={styles.link}>
                 {get(cmsData, `menu.result`, "Result")}
               </NavLink>
-              <NavLink to="/statements" css={styles.link}>
+              <NavLink to={`/${currentLanguage}/statements`} css={styles.link}>
                 {get(cmsData, `menu.statements`, "Statements")}
               </NavLink>
             </Grid>

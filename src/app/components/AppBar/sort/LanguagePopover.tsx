@@ -1,6 +1,9 @@
 import React from "react";
+import { useRecoilState } from "recoil";
 import { Popover } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import { css } from "styled-components/macro";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export function LanguagePopover(
   id: string | undefined,
@@ -12,6 +15,9 @@ export function LanguagePopover(
     (arg0: string): void;
   }
 ) {
+  const history = useHistory();
+  const [currentLanguage] = useRecoilState(languageAtom);
+
   const removeButtonStyling = css`
     background: none;
     color: inherit;
@@ -39,6 +45,32 @@ export function LanguagePopover(
       border-radius: 10px;
     }
   `;
+
+  function onLanguageChange(lang: string) {
+    const prevLang = currentLanguage;
+    setLanguage(lang);
+    history.push(
+      `${history.location.pathname.replace(`/${prevLang}`, `/${lang}`)}${
+        history.location.search.length > 0 ? `?${history.location.search}` : ""
+      }`
+    );
+    handleClose();
+  }
+
+  React.useEffect(() => {
+    history.listen((location: any) => {
+      const urlParamLang = location.pathname.split("/")[1];
+      if (
+        location.pathname.split("/")[1] &&
+        currentLanguage !== urlParamLang &&
+        (urlParamLang === "en" ||
+          urlParamLang === "fi" ||
+          urlParamLang === "se")
+      ) {
+        setLanguage(urlParamLang);
+      }
+    });
+  }, []);
 
   return (
     <Popover
@@ -82,33 +114,24 @@ export function LanguagePopover(
         <button
           type="button"
           css={removeButtonStyling}
+          onClick={() => onLanguageChange("en")}
           aria-label="Switch language to Finnish"
-          onClick={() => {
-            setLanguage("en");
-            handleClose();
-          }}
         >
           English
         </button>
         <button
           type="button"
           css={removeButtonStyling}
+          onClick={() => onLanguageChange("fi")}
           aria-label="Switch language to Finnish"
-          onClick={() => {
-            setLanguage("fi");
-            handleClose();
-          }}
         >
           Suomi
         </button>
         <button
           type="button"
           css={removeButtonStyling}
+          onClick={() => onLanguageChange("se")}
           aria-label="Switch language to Swedish"
-          onClick={() => {
-            setLanguage("se");
-            handleClose();
-          }}
         >
           Svenska
         </button>

@@ -9,10 +9,13 @@ import {
 } from "app/components/Charts/sunburst/common/tooltip";
 import { useCMSData } from "app/hooks/useCMSData";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export function SunburstVizSimplified(props: any) {
   const history = useHistory();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   return (
     <React.Fragment>
@@ -66,7 +69,7 @@ export function SunburstVizSimplified(props: any) {
           }
           gotoDetail={() =>
             history.push(
-              `/sectors/${props.clickedNode.code}${history.location.search}`
+              `/${currentLanguage}/sectors/${props.clickedNode.code}${history.location.search}`
             )
           }
           drilldown={() => {

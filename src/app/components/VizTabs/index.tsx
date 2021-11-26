@@ -21,6 +21,8 @@ import get from "lodash/get";
 import { useCMSData } from "app/hooks/useCMSData";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { useLocation } from "react-use";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 const crumbs: BreadcrumbLinkModel[] = [
   { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
@@ -166,16 +168,13 @@ const VizTabsMobile = (props: VizTabsProps) => {
   const location = useLocation();
   const history = useHistory();
   const tooltip = get(cmsData, "tooltips.disbursements_visualisations", "");
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   function getActiveTabIndex() {
     return vizTabs.findIndex((tab) => {
       return tab.url.includes(get(params, "tab", ""));
     });
   }
-  const crumbs: BreadcrumbLinkModel[] = [
-    { label: "Homepage", path: Path.home, cmsKey: "breadcrumbs.homepage" },
-    { label: "Disbursements", cmsKey: "breadcrumbs.disbursements" },
-  ];
 
   const styles = {
     container: css`
@@ -232,8 +231,9 @@ const VizTabsMobile = (props: VizTabsProps) => {
     const index = event.target.value;
     setSelectedViz(index as string);
     // @ts-ignore
-    history.push(`${vizTabs[index].url}${location.search}`);
+    history.push(`/${currentLanguage}${vizTabs[index].url}${location.search}`);
   };
+
   return (
     <div css={styles.container}>
       <Breadcrumbs route={crumbs} />

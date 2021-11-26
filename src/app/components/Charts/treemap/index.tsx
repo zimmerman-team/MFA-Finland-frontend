@@ -50,9 +50,13 @@ export function Treemap(props: TreemapProps) {
     if (node.data.ref) {
       if (detailPage === "locations") {
         if (node.data.ref.length === 2) {
-          history.push(`/countries/${node.data.ref}${history.location.search}`);
+          history.push(
+            `/${currentLanguage}/countries/${node.data.ref}${history.location.search}`
+          );
         } else {
-          history.push(`/regions/${node.data.ref}${history.location.search}`);
+          history.push(
+            `/${currentLanguage}/regions/${node.data.ref}${history.location.search}`
+          );
         }
       }
       if (detailPage === "organisations") {

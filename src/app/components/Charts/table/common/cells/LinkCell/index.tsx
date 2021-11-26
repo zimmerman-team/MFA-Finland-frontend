@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 interface LinkCellModel {
   value: string | string[] | number | JSX.Element;
@@ -9,6 +11,8 @@ interface LinkCellModel {
 }
 
 export const LinkCell = (props: LinkCellModel) => {
+  const [currentLanguage] = useRecoilState(languageAtom);
+
   if (props.extLink) {
     return (
       <a href={props.link} target="_blank" rel="noopener noreferrer">
@@ -16,5 +20,5 @@ export const LinkCell = (props: LinkCellModel) => {
       </a>
     );
   }
-  return <Link to={props.link}>{props.value}</Link>;
+  return <Link to={`/${currentLanguage}${props.link}`}>{props.value}</Link>;
 };

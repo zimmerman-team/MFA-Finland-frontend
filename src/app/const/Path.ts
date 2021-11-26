@@ -9,7 +9,7 @@ export function getAppName(currentLanguage: string) {
   return AppNameFIN;
 }
 
-const basePath = "/";
+const basePath = "/:lang/";
 
 type PathItemType = {
   name: string;
@@ -22,7 +22,7 @@ interface PathProps {
 }
 
 export const Path = {
-  home: basePath,
+  home: "/:lang",
   viz: `${basePath}viz`,
   vizTab: `${basePath}viz/:tab`,
   general: {

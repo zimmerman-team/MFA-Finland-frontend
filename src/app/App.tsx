@@ -13,9 +13,18 @@ import { MdBottomMenu } from "./components/MdBottomMenu";
 export const App = () => {
   const { i18n } = useTranslation();
 
-  const [currentLanguage] = useRecoilState(languageAtom);
+  const [currentLanguage, setCurrentLanguage] = useRecoilState(languageAtom);
 
   React.useEffect(() => {
+    const urlParamLang = window.location.pathname.split("/")[1];
+    if (
+      window.location.pathname.split("/")[1] &&
+      currentLanguage !== urlParamLang &&
+      (urlParamLang === "en" || urlParamLang === "fi" || urlParamLang === "se")
+    ) {
+      setCurrentLanguage(urlParamLang);
+      i18n.changeLanguage(urlParamLang);
+    }
     i18n.changeLanguage(currentLanguage);
   }, []);
 

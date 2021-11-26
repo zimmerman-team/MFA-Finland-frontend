@@ -681,7 +681,7 @@ export default function VizModule() {
             />
           )}
           <Switch>
-            <Route path="/viz/oda">
+            <Route path="/:lang/viz/oda">
               {vizDataLoading.oda ? (
                 <VizLoader dataCy="oda-loader" loading={vizDataLoading.oda} />
               ) : (
@@ -706,7 +706,7 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/thematic-areas">
+            <Route path="/:lang/viz/thematic-areas">
               {vizDataLoading.thematic ? (
                 <VizLoader
                   dataCy="thematic-loader"
@@ -766,7 +766,7 @@ export default function VizModule() {
                 </div>
               )}
             </Route>
-            <Route path="/viz/sectors">
+            <Route path="/:lang/viz/sectors">
               {vizDataLoading.sectors ? (
                 <VizLoader
                   dataCy="sectors-loader"
@@ -789,7 +789,7 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/countries-regions">
+            <Route path="/:lang/viz/countries-regions">
               {vizDataLoading.locations ? (
                 <VizLoader
                   dataCy="locations-loader"
@@ -807,7 +807,7 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/organisations">
+            <Route path="/:lang/viz/organisations">
               {vizDataLoading.organisations ? (
                 <VizLoader
                   dataCy="orgs-loader"
@@ -825,7 +825,7 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/budget-lines">
+            <Route path="/:lang/viz/budget-lines">
               {vizDataLoading.budgetLines ? (
                 <VizLoader
                   dataCy="budgetlines-loader"
@@ -846,7 +846,7 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/projects">
+            <Route path="/:lang/viz/projects">
               <ProjectsListModule
                 searchKey={searchKey}
                 projects={projectsData}

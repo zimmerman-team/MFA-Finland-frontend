@@ -285,7 +285,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   function handleClick() {
     if (props.link) {
-      history.push(`${props.link}${searchFilterString}`);
+      history.push(`/${currentLanguage}${props.link}${searchFilterString}`);
     }
   }
 
@@ -379,7 +379,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
                 <Link
                   css={style.link}
                   aria-label="view more organisations"
-                  to={`/viz/organisations${searchFilterString}`}
+                  to={`/${currentLanguage}/viz/organisations${searchFilterString}`}
                 >
                   {get(cmsData, "viz.viewmore", "View more")}
                 </Link>
@@ -392,7 +392,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
                 <Link
                   css={style.link}
                   aria-label="view more projects"
-                  to={`/viz/projects${searchFilterString}`}
+                  to={`/${currentLanguage}/viz/projects${searchFilterString}`}
                 >
                   {get(cmsData, "viz.viewmore", "View more")}
                 </Link>

@@ -5,9 +5,11 @@ import { PageLoader } from "app/modules/common/page-loader";
 import { NoMatchPage } from "app/modules/common/no-match-page";
 
 import { Path } from "app/const/Path";
+import { useRecoilState } from "recoil";
 import VizModule from "app/modules/viz-module";
 import { Footer } from "app/components/Footer";
 import { useCMSData } from "app/hooks/useCMSData";
+import { languageAtom } from "app/state/recoil/atoms";
 import { useUrlFilters } from "app/hooks/useUrlFilters";
 import { useScrollToTop } from "app/hooks/useScrollToTop";
 import { useInitialLoad } from "app/hooks/useInitialLoad";
@@ -34,10 +36,15 @@ export function ModuleRoutes() {
   useUrlFilters();
   useInitialLoad();
   useScrollToTop();
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
+        <Route exact path="/">
+          <Redirect to={`/${currentLanguage}`} />
+        </Route>
+
         <Route exact path={Path.home}>
           <LandingModule />
         </Route>

@@ -64,7 +64,10 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
             budgetlines: [...selectedFilters.budgetlines, node.data.code],
           });
           setTimeout(
-            () => history.push(`/viz/projects${history.location.search}`),
+            () =>
+              history.push(
+                `/${currentLanguage}/viz/projects${history.location.search}`
+              ),
             200
           );
         }}
