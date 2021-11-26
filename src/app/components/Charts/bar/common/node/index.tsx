@@ -35,7 +35,7 @@ export function BarNode(props: BarNodeProps) {
   let border =
     props.data.indexValue === props.hoveredXIndex ||
     props.data.indexValue === get(props.selected, "indexValue", "")
-      ? "0.5px solid #343249"
+      ? "0.5px solid #382D5E"
       : "0.5px solid #B8B6CD";
 
   const color =
@@ -46,7 +46,7 @@ export function BarNode(props: BarNodeProps) {
 
   if (!props.hoveredXIndex && !props.selected) {
     opacity = 1;
-    border = "0.5px solid #B8B6CD";
+    border = "00.5px solid #382D5E";
   }
 
   function onItemClick() {

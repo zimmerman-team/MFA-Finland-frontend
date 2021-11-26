@@ -38,7 +38,9 @@ export function LineNodes(props: any) {
             >
               <circle
                 tabIndex={-1}
-                r="6"
+                r="4"
+                stroke="#382D5E"
+                strokeWidth={0.5}
                 css={`
                   pointer-events: none;
                   fill: ${(props.selected

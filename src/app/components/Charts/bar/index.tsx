@@ -139,7 +139,7 @@ export function BarChart(props: BarChartProps) {
         }
 
         circle {
-          r: 6px;
+          r: 4px;
         }
 
         > div {
@@ -252,7 +252,7 @@ export function BarChart(props: BarChartProps) {
           keys={["exclusive", "other"]}
           valueScale={{ type: "linear" }}
           layers={["grid", "axes", Bars]}
-          colors={["#CCDDD5", "#4F6797"]}
+          colors={["#85AF9B", "#002561"]}
           maxValue={maxValue + maxValue * 0.1}
           margin={{ top: 15, right: 60, bottom: 60, left: 50 }}
           borderWidth={1}
