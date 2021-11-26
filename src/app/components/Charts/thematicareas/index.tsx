@@ -159,6 +159,9 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
             </div>
             <div
+              tabIndex={0}
+              role="button"
+              aria-label={`go to ${item.name} priority detail page`}
               css={itemcirclelabelcss(
                 index,
                 !props.showOnlyViz,
@@ -166,6 +169,15 @@ export function ThematicAreas(props: ThematicAreasProps) {
               )}
               onClick={() => {
                 if (props.linkedLabels) {
+                  history.push(
+                    `/thematic-area/${item.ref}${
+                      history.location.search.length > 0 ? "/" : ""
+                    }${history.location.search}`
+                  );
+                }
+              }}
+              onKeyPress={(e: React.KeyboardEvent) => {
+                if (e.key === "Enter" && props.linkedLabels) {
                   history.push(
                     `/thematic-area/${item.ref}${
                       history.location.search.length > 0 ? "/" : ""

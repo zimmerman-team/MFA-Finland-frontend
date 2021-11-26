@@ -74,9 +74,16 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
         `}
       >
         <IconButton
+          tabIndex={0}
           data-cy="CloseButton"
+          aria-label="close tooltip button"
           css={closebtncss}
           onClick={() => props.close()}
+          onKeyPress={(event: React.KeyboardEvent) => {
+            if (event.key === "Enter") {
+              props.close();
+            }
+          }}
         >
           <IconClose />
         </IconButton>
@@ -89,10 +96,19 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
             {props.gotoDetail && (
               <Button
                 data-cy="GotoDetailButton"
+                aria-label="go to detail button"
                 css={buttoncss}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                   props.close();
-                  props.gotoDetail && props.gotoDetail();
+                  if (props.gotoDetail) {
+                    props.gotoDetail();
+                  }
+                }}
+                onKeyPress={(event: React.KeyboardEvent) => {
+                  props.close();
+                  if (props.gotoDetail) {
+                    props.gotoDetail();
+                  }
                 }}
               >
                 {props.detailBtnLabel}
@@ -101,10 +117,19 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
             {props.showDrilldownBtn && (
               <Button
                 data-cy="DrillDownButton"
+                aria-label="drilldown button"
                 css={buttoncss}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                   props.close();
-                  props.drilldown && props.drilldown();
+                  if (props.drilldown) {
+                    props.drilldown();
+                  }
+                }}
+                onKeyPress={(event: React.KeyboardEvent) => {
+                  props.close();
+                  if (props.drilldown) {
+                    props.drilldown();
+                  }
                 }}
               >
                 {get(props.cmsData, "viz.drilldown", "Drill Down")}

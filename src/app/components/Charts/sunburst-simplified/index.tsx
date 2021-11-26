@@ -212,13 +212,25 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
             .map((item: any) => {
               return (
                 <div
+                  tabIndex={0}
+                  role="button"
                   key={item.title}
+                  aria-label={`${item[getTitle(currentLanguage)]}`}
                   onClick={() => {
                     setClickedNode({
                       ...item,
                       title: item[getTitle(currentLanguage)],
                     });
                     setHoveredNode(null);
+                  }}
+                  onKeyPress={(event: React.KeyboardEvent) => {
+                    if (event.key === "Enter") {
+                      setClickedNode({
+                        ...item,
+                        title: item[getTitle(currentLanguage)],
+                      });
+                      setHoveredNode(null);
+                    }
                   }}
                   css={`
                     display: flex;
