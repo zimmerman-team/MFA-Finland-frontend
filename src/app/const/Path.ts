@@ -1,8 +1,7 @@
 export const AppNameENG =
   "OpenAid.fi | Databank on Finland's development cooperation";
-export const AppNameFIN =
-  "OpenAid.fi | Kehitysyhteistyön tietopankki ja tilastot";
-export const AppNameSWE = "OpenAid.fi";
+export const AppNameFIN = "OpenAid.fi | Kehitysyhteistyön tietopankki";
+export const AppNameSWE = "OpenAid.fi | Data om Finlands utvecklingssamarbete";
 
 export function getAppName(currentLanguage: string) {
   if (currentLanguage === "se") return AppNameSWE;
