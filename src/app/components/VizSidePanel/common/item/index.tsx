@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
-import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import { Link } from "react-router-dom";
 import { ArrowDropDown } from "@material-ui/icons";
 import { Grid, Typography } from "@material-ui/core";
 import { languageAtom } from "app/state/recoil/atoms";
@@ -105,7 +105,7 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
             `}
           >
             {props.link ? (
-              <Link to={`${currentLanguage}${props.link}`}>{props.name}</Link>
+              <Link to={`/${currentLanguage}${props.link}`}>{props.name}</Link>
             ) : (
               props.name
             )}
