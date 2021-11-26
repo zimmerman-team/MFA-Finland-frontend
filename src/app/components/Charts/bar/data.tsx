@@ -689,7 +689,11 @@ export const ODADataTableColumns: MUIDataTableColumnDef[] = [
 
 export const MoreButton = (props: any) => {
   return (
-    <Tooltip disableFocusListener title="More Options">
+    <Tooltip
+      disableFocusListener
+      title="More Options"
+      aria-label="More Options"
+    >
       <MoreActions data={props.data} viz={get(props.params, "tab", "")} />
     </Tooltip>
   );

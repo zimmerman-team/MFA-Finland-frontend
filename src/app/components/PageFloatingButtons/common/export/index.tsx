@@ -53,6 +53,7 @@ export function ExportTooltip(cmsData: any) {
         <Grid item xs={3}>
           <div
             css={downloadButton}
+            aria-label="Download this view in png"
             onClick={() => exportPage("png", "#f8f8f8")}
           >
             PNG
@@ -61,6 +62,7 @@ export function ExportTooltip(cmsData: any) {
         <Grid item xs={3}>
           <div
             css={downloadButton}
+            aria-label="Download this view in pdf"
             onClick={() => exportPage("pdf", "#f8f8f8")}
           >
             PDF
@@ -69,6 +71,7 @@ export function ExportTooltip(cmsData: any) {
         <Grid item xs={3}>
           <div
             css={downloadButton}
+            aria-label="Download this view in svg"
             onClick={() => exportPage("svg", "#f8f8f8")}
           >
             SVG

@@ -1,5 +1,7 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { FunctionComponent } from "react";
 import get from "lodash/get";
 import { PrimaryColor, ProjectPalette } from "app/theme";
@@ -287,6 +289,12 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     }
   }
 
+  function onKeyPress(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.code === "Enter") {
+      handleClick();
+    }
+  }
+
   const itemLinkable = props.link === "/viz/oda";
 
   const isDetailPage =
@@ -310,15 +318,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
         <div css="display: flex;align-items: center;">
           <div data-cy={`${props.label} title`}>
             <h3
-              role="button"
-              tabIndex={0}
-              onClick={() => handleClick()}
+              role={props.link ? "button" : "none"}
+              tabIndex={props.link ? 0 : undefined}
+              onClick={props.link ? handleClick : undefined}
               aria-label={`Go to ${props.label} detail page`}
-              onKeyPress={(e) => {
-                if (e.code === "Enter") {
-                  handleClick();
-                }
-              }}
+              onKeyPress={props.link ? onKeyPress : undefined}
               css={style.widgetLabel(props.link !== undefined)}
               onMouseEnter={() => !itemLinkable && setIsHovered(true)}
               onMouseLeave={() => !itemLinkable && setIsHovered(false)}
@@ -335,8 +339,17 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
           </div>
           {props.tooltip && !odaWidget && (
             <div css={style.widgeTooltip}>
-              <Tooltip title={props.tooltip} interactive tabIndex={0}>
-                <InfoOutlinedIcon css={style.widgetTooltipIcon} />
+              <Tooltip
+                interactive
+                tabIndex={0}
+                title={props.tooltip}
+                aria-label={props.tooltip}
+              >
+                <InfoOutlinedIcon
+                  aria-hidden="false"
+                  aria-label="Info tooltip"
+                  css={style.widgetTooltipIcon}
+                />
               </Tooltip>
             </div>
           )}
@@ -365,6 +378,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
               <div>
                 <Link
                   css={style.link}
+                  aria-label="view more organisations"
                   to={`/viz/organisations${searchFilterString}`}
                 >
                   {get(cmsData, "viz.viewmore", "View more")}
@@ -377,6 +391,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
               <div>
                 <Link
                   css={style.link}
+                  aria-label="view more projects"
                   to={`/viz/projects${searchFilterString}`}
                 >
                   {get(cmsData, "viz.viewmore", "View more")}
@@ -393,8 +408,12 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
           </h4>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
-              <Tooltip title={props.tooltip}>
-                <InfoOutlinedIcon css={style.widgetTooltipIcon} />
+              <Tooltip title={props.tooltip} aria-label={props.tooltip}>
+                <InfoOutlinedIcon
+                  aria-hidden="false"
+                  aria-label="Info tooltip"
+                  css={style.widgetTooltipIcon}
+                />
               </Tooltip>
             </div>
           )}

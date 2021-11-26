@@ -91,9 +91,8 @@ export function PageFloatingButtons() {
           <button
             tabIndex={0}
             type="button"
-            aria-label="Go to map"
+            aria-label="Download this view"
             css={buttoncss}
-            aria-pressed="false"
           >
             <IconDownload />
           </button>

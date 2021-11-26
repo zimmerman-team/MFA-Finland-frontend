@@ -131,7 +131,7 @@ export function VizTabs(props: VizTabsProps) {
             {get(cmsData, "viz.disbursements", "Disbursements")}
           </Typography>
           {tooltip && (
-            <Tooltip title={tooltip}>
+            <Tooltip title={tooltip} aria-label={tooltip}>
               <InfoOutlinedIcon css={styles.tooltip} />
             </Tooltip>
           )}
@@ -165,6 +165,7 @@ const VizTabsMobile = (props: VizTabsProps) => {
   );
   const location = useLocation();
   const history = useHistory();
+  const tooltip = get(cmsData, "tooltips.disbursements_visualisations", "");
 
   function getActiveTabIndex() {
     return vizTabs.findIndex((tab) => {
@@ -256,7 +257,7 @@ const VizTabsMobile = (props: VizTabsProps) => {
               ))}
             </Select>
           </FormControl>
-          <Tooltip title="Lorem Ipsum" interactive>
+          <Tooltip title={tooltip} interactive aria-label={tooltip}>
             <InfoOutlinedIcon id="tooltip" />
           </Tooltip>
         </div>
