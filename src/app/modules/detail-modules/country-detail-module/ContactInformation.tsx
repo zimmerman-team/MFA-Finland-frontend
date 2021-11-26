@@ -1,7 +1,10 @@
 import React from "react";
+import { useRecoilState } from "recoil";
 import { css } from "styled-components/macro";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export const ContactInformation = (props: any) => {
+  const [currentLanguage] = useRecoilState(languageAtom);
   const styles = css`
     list-style-type: none;
     padding: 0;
@@ -15,7 +18,7 @@ export const ContactInformation = (props: any) => {
       gap: 8px;
     }
 
-    li:first-of-type {
+    li:not(:last-child) {
       margin-bottom: 32px;
     }
 
@@ -42,6 +45,15 @@ export const ContactInformation = (props: any) => {
           {props.data.embassy.title}
         </a>
       </li>
+      {props.data.strategy && (
+        <li>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: props.data.strategy[currentLanguage] || "",
+            }}
+          />
+        </li>
+      )}
     </ul>
   );
 };
