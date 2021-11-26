@@ -21,7 +21,7 @@ export function LineNodes(props: any) {
               y1={item.y}
               x1={item.x}
               strokeWidth={2}
-              stroke="#E7C3CD"
+              stroke="#F4A490"
               key={`${item.id}-line`}
             />
           );
@@ -48,7 +48,7 @@ export function LineNodes(props: any) {
                     : null) === parseInt(item.data.x, 10) ||
                   props.hovered === parseInt(item.data.x, 10)
                     ? item.serieColor
-                    : "#E7C3CD"};
+                    : "#F4A490"};
                 `}
               />
             </g>
