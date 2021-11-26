@@ -99,7 +99,7 @@ export function getFilterChip(
     currentLanguage
   );
   const collaborationChip = createCollaborationChip(filters, filterOptions);
-  const humanRightsChip = createHumanRightsChip(filters, filterOptions);
+  const humanRightsChip = createHumanRightsChip(filters, currentLanguage);
   const periodChip = createPeriodChip(filters, filterOptions);
 
   if (thematicChip) {
@@ -637,7 +637,7 @@ function createCollaborationChip(
 
 function createHumanRightsChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  currentLanguage: string
 ) {
   const values: { label: string; value: string }[] = [];
 
@@ -645,7 +645,7 @@ function createHumanRightsChip(
     const fItem = find(humanrightfilteroptions, { code });
     if (fItem) {
       values.push({
-        label: fItem.name,
+        label: fItem[getName(currentLanguage)] || fItem.name,
         value: code,
       });
     }

@@ -963,7 +963,10 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title={get(cmsData, "general.humanrights", "Human rights approach")}
-            data={humanrightfilteroptions}
+            data={humanrightfilteroptions.map((hrba: any) => ({
+              code: hrba.code,
+              name: hrba[getName(currentLanguage)] || hrba.name,
+            }))}
             renderSearch
             selection={advancedPanelData[4].selection}
             onFilterCheckboxChange={(value: string | string[]) =>
