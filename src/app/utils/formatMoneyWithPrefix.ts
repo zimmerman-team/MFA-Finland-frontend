@@ -33,14 +33,14 @@ export function formatMoneyWithPrefix(n: number, lang = "en"): string {
   if (Math.abs(Number(n)) >= 1.0e6) {
     return `€${(Math.abs(Number(n)) / 1.0e6).toFixed(2)} ${get(
       translatedAbbrs,
-      `[${lang}].bln`,
+      `[${lang}].mln`,
       "mln"
     )}`;
   }
   if (Math.abs(Number(n)) >= 1.0e3) {
     return `€${(Math.abs(Number(n)) / 1.0e3).toFixed(2)} ${get(
       translatedAbbrs,
-      `[${lang}].bln`,
+      `[${lang}].k`,
       "k"
     )}`;
   }
