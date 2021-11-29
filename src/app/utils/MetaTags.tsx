@@ -9,8 +9,13 @@ import { getAppName } from "app/const/Path";
 export function MetaTags() {
   const [currentLanguage] = useRecoilState(languageAtom);
 
+  React.useEffect(() => {
+    document.documentElement.lang = currentLanguage;
+  }, [currentLanguage]);
+
   return (
     <Tags>
+      <meta name="title" content={getAppName(currentLanguage)} />
       <meta name="description" content={getSeoDescription(currentLanguage)} />
       <meta name="author" content="MFA Finland" />
 
