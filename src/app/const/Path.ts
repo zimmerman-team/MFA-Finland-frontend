@@ -48,4 +48,29 @@ export const Path = {
   debug: {
     components: `${basePath}components`,
   },
+  withoutLangParam: {
+    home: "/",
+    viz: "/viz",
+    vizTab: "/viz/:tab",
+    general: {
+      privacy: "/privacy",
+      contact: "/contact",
+      faq: "/faq",
+      about: "/about",
+      info: "/info",
+      notFound: "/notFound",
+      statements: "/statements",
+      result: "/result",
+      feedback: "/feedback",
+    },
+    detail: {
+      project: "/project/:param",
+      region: "/regions/:region",
+      country: "/countries/:country",
+      sector: "/sectors/:sector",
+      organisation: "/organisations/:organisation",
+      orgType: "/organisation-types/:orgType",
+      thematicArea: "/thematic-area/:theme",
+    },
+  },
 };
