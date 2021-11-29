@@ -18,7 +18,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
   const [selectedFilters, setSelectedFilters] = useRecoilState(
     selectedFilterAtom
   );
-  const range = getRange(props.data, ["value"]);
+  const range = getRange(props.data, ["value"], currentLanguage);
   const maxValue: number = max(props.data.map((item: any) => item.value)) || 0;
 
   return (

@@ -13,10 +13,13 @@ import {
   getRange,
   getMoneyValueWithMetricPrefix,
 } from "app/components/Charts/bar/utils";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export function BudgetLinesBarChart(props: BarChartProps) {
+  const [currentLanguage] = useRecoilState(languageAtom);
   const vizKeys: string[] = getBudgetLinesVizKeys(props.data);
-  const range = getRange(props.data, vizKeys);
+  const range = getRange(props.data, vizKeys, currentLanguage);
   const maxValue: number =
     max(
       props.data.map((item: any) => {

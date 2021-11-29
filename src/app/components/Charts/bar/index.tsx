@@ -8,7 +8,7 @@ import { useWindowSize } from "react-use";
 import Hidden from "@material-ui/core/Hidden";
 import { useCMSData } from "app/hooks/useCMSData";
 import { ResponsiveBar, BarItemProps } from "@nivo/bar";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
+import { languageAtom, selectedFilterAtom } from "app/state/recoil/atoms";
 import { Line } from "app/components/Charts/bar/common/line";
 import { BarNode } from "app/components/Charts/bar/common/node";
 import { BarChartProps, BarYearNotice } from "app/components/Charts/bar/data";
@@ -24,7 +24,8 @@ export function BarChart(props: BarChartProps) {
   const [yearNotices, setYearNotices] = React.useState<BarYearNotice[]>(
     getYearNotices(get(cmsData, "viz.odayearsnotice", {}))
   );
-  const range = getRange(props.data, ["exclusive", "other"]);
+  const [currentLanguage] = useRecoilState(languageAtom);
+  const range = getRange(props.data, ["exclusive", "other"], currentLanguage);
   const maxValue: number =
     max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);

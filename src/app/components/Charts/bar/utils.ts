@@ -9,9 +9,27 @@ import {
 
 /* eslint-disable no-plusplus */
 const ranges = [
-  { divider: 1e9, suffix: "Bn", abbr: "€ BLN" },
-  { divider: 1e6, suffix: "MM", abbr: "€ MLN" },
-  { divider: 1e3, suffix: "k", abbr: "€ K" },
+  {
+    divider: 1e9,
+    suffix: "Bn",
+    abbr_en: "€ bn",
+    abbr_fi: "€ mrd.",
+    abbr_se: "€ miljarder",
+  },
+  {
+    divider: 1e6,
+    suffix: "MM",
+    abbr_en: "€ mill.",
+    abbr_fi: "€ milj.",
+    abbr_se: "€ miljoner",
+  },
+  {
+    divider: 1e3,
+    suffix: "k",
+    abbr_en: "€ K",
+    abbr_fi: "€ tuhatta",
+    abbr_se: "€ tusen",
+  },
 ];
 
 export function getLineName(
@@ -23,7 +41,7 @@ export function getLineName(
   return "line";
 }
 
-export function getRange(data: any, fields: string[]) {
+export function getRange(data: any, fields: string[], lang = "en") {
   const rangesCount = [0, 0, 0];
 
   data.forEach((item: any) => {
@@ -43,16 +61,16 @@ export function getRange(data: any, fields: string[]) {
   if (rangesCount[0] > rangesCount[1])
     return {
       index: 0,
-      abbr: ranges[0].abbr,
+      abbr: get(ranges[0], `abbr_${lang}`, ranges[0].abbr_en),
     };
   if (rangesCount[1] > rangesCount[2])
     return {
       index: 1,
-      abbr: ranges[1].abbr,
+      abbr: get(ranges[1], `abbr_${lang}`, ranges[1].abbr_en),
     };
   return {
     index: 2,
-    abbr: ranges[2].abbr,
+    abbr: get(ranges[2], `abbr_${lang}`, ranges[2].abbr_en),
   };
 }
 

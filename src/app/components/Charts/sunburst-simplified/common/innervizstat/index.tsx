@@ -16,7 +16,7 @@ export function InnerVizStatSimplified(props: InnerVizStatProps) {
   return (
     <div css={totalcssSimplified}>
       <Typography variant="subtitle2" color="textPrimary">
-        {formatMoneyWithPrefix(props.count)}
+        {formatMoneyWithPrefix(props.count, currentLanguage)}
       </Typography>
     </div>
   );
