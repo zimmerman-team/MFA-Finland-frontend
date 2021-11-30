@@ -19,18 +19,18 @@ fs.copyFile(
   (err) => {
     if (err) throw err;
     console.log("File was copied to destination");
-    let options = {
+    const optionsTitle = {
       files: path.join(__dirname, "../build/index_fi.html"),
-      from: /OpenAid.fi | Databank on Finland's development cooperation/g,
+      from: /OpenAid.fi \| Databank on Finland's development cooperation/g,
       to: titles.fi,
     };
-    results = replace.sync(options);
-    options = {
+    replace.sync(optionsTitle);
+    const optionsDesc = {
       files: path.join(__dirname, "../build/index_fi.html"),
       from: /The Ministry for Foreign Affairs' databank shows how Finland's development co-operation funds have been used and what results have been achieved with them./g,
       to: descriptions.fi,
     };
-    replace.sync(options);
+    replace.sync(optionsDesc);
   }
 );
 
@@ -40,17 +40,17 @@ fs.copyFile(
   (err) => {
     if (err) throw err;
     console.log("File was copied to destination");
-    let options = {
+    const optionsTitle = {
       files: path.join(__dirname, "../build/index_se.html"),
-      from: /OpenAid.fi | Databank on Finland's development cooperation/g,
+      from: /OpenAid.fi \| Databank on Finland's development cooperation/g,
       to: titles.se,
     };
-    results = replace.sync(options);
-    options = {
+    replace.sync(optionsTitle);
+    const optionsDesc = {
       files: path.join(__dirname, "../build/index_se.html"),
       from: /The Ministry for Foreign Affairs' databank shows how Finland's development co-operation funds have been used and what results have been achieved with them./g,
       to: descriptions.se,
     };
-    replace.sync(options);
+    replace.sync(optionsDesc);
   }
 );
