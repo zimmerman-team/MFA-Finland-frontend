@@ -1,16 +1,19 @@
 import React from "react";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
+import { useRouteMatch } from "react-router-dom";
+import { useCMSData } from "app/hooks/useCMSData";
+import { getName } from "app/components/Charts/sdg";
+import { languageAtom } from "app/state/recoil/atoms";
 import { Treemap } from "app/components/Charts/treemap";
+import { MoreButton } from "app/components/Charts/bar/data";
 import { TreemapProps } from "app/components/Charts/treemap/data";
 import { LocationsFragmentTable } from "app/components/Charts/table/modules/locations";
+import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
 import {
   SectorsDataTableOptions,
   OrganisationTypesDataTableColumns,
 } from "app/components/Charts/table/data";
-import { useCMSData } from "app/hooks/useCMSData";
-import { useRouteMatch } from "react-router-dom";
-import { MoreButton } from "app/components/Charts/bar/data";
-import { getTranslatedCols } from "../../table/utils/getTranslatedCols";
 
 interface OrganisationsModuleModel extends TreemapProps {
   activeTab: string;
@@ -21,6 +24,7 @@ interface OrganisationsModuleModel extends TreemapProps {
 export function OrganisationsModule(props: OrganisationsModuleModel) {
   const cmsData = useCMSData({ returnData: true });
   const { params } = useRouteMatch();
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   if (props.activeTab === "chart") {
     return (
@@ -32,6 +36,24 @@ export function OrganisationsModule(props: OrganisationsModuleModel) {
       />
     );
   }
+
+  let tableData = props.data.children;
+
+  if (currentLanguage !== "en") {
+    tableData = tableData.map((item: any) => ({
+      ...item,
+      name: get(item, getName(currentLanguage), item.name),
+      orgs: get(item, "orgs", []).map((item2: any) => ({
+        ...item2,
+        name: get(item2, getName(currentLanguage), item2.name),
+        orgs: get(item2, "orgs", []).map((item3: any) => ({
+          ...item3,
+          name: get(item3, getName(currentLanguage), item3.name),
+        })),
+      })),
+    }));
+  }
+
   return (
     <div
       css={`
@@ -47,7 +69,7 @@ export function OrganisationsModule(props: OrganisationsModuleModel) {
     >
       <LocationsFragmentTable
         type="org"
-        data={props.data.children}
+        data={tableData}
         options={{
           ...SectorsDataTableOptions,
           customToolbar: () => (

@@ -773,7 +773,20 @@ export const FilterPanel = (props: FilterPanelProps) => {
         return (
           <Filter
             title={get(cmsData, "general.organisations", "Organisations")}
-            data={get(filterOptionsData.organisations, "data.data", [])}
+            data={get(filterOptionsData.organisations, "data.data", []).map(
+              (lvl1: any) => ({
+                code: lvl1.code,
+                name: lvl1[getName(currentLanguage)] || lvl1.name,
+                children: lvl1.children.map((lvl2: any) => ({
+                  code: lvl2.code,
+                  name: lvl2[getName(currentLanguage)] || lvl2.name,
+                  children: lvl2.children.map((lvl3: any) => ({
+                    code: lvl3.code,
+                    name: lvl3[getName(currentLanguage)] || lvl3.name,
+                  })),
+                })),
+              })
+            )}
             renderSearch
             selection={mainPanelData[3].selection}
             onFilterCheckboxChange={(value: string | string[]) =>

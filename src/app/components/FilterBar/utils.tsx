@@ -80,7 +80,11 @@ export function getFilterChip(
     filterOptions,
     currentLanguage
   );
-  const organisationChip = createOrganisationChip(filters, filterOptions);
+  const organisationChip = createOrganisationChip(
+    filters,
+    filterOptions,
+    currentLanguage
+  );
   const organisationTypeChip = createOrganisationTypeChip(
     filters,
     filterOptions
@@ -297,7 +301,8 @@ function createSectorsChip(
 
 function createOrganisationChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  currentLanguage: string
 ) {
   const organisations = get(filterOptions, "organisations.data.data", []);
   let values: { label: string; value: string }[] = [];
@@ -309,7 +314,7 @@ function createOrganisationChip(
       });
       if (fOrg) {
         values.push({
-          label: get(fOrg, "name", ""),
+          label: fOrg[getName(currentLanguage)] || get(fOrg, "name", ""),
           value: organisation,
         });
       } else {
@@ -318,7 +323,7 @@ function createOrganisationChip(
             const fOrgSub = find(orgOpt.children, { code: organisation });
             if (fOrgSub) {
               values.push({
-                label: fOrgSub.name,
+                label: fOrgSub[getName(currentLanguage)] || fOrgSub.name,
                 value: organisation,
               });
             } else {
@@ -329,7 +334,8 @@ function createOrganisationChip(
                   });
                   if (fOrgSubSub) {
                     values.push({
-                      label: fOrgSubSub.name,
+                      label:
+                        fOrgSubSub[getName(currentLanguage)] || fOrgSubSub.name,
                       value: organisation,
                     });
                   } else {
@@ -340,7 +346,9 @@ function createOrganisationChip(
                         });
                         if (fOrgSubSubSub) {
                           values.push({
-                            label: fOrgSubSubSub.name,
+                            label:
+                              fOrgSubSubSub[getName(currentLanguage)] ||
+                              fOrgSubSubSub.name,
                             value: organisation,
                           });
                         } else {
@@ -355,7 +363,10 @@ function createOrganisationChip(
                                 );
                                 if (fOrgSubSubSubSub) {
                                   values.push({
-                                    label: fOrgSubSubSubSub.name,
+                                    label:
+                                      fOrgSubSubSubSub[
+                                        getName(currentLanguage)
+                                      ] || fOrgSubSubSubSub.name,
                                     value: organisation,
                                   });
                                 }
