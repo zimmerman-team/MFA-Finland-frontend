@@ -20,10 +20,10 @@ export const App = () => {
     if (
       window.location.pathname.split("/")[1] &&
       currentLanguage !== urlParamLang &&
-      (urlParamLang === "en" || urlParamLang === "fi" || urlParamLang === "se")
+      (urlParamLang === "en" || urlParamLang === "fi" || urlParamLang === "sv")
     ) {
-      setCurrentLanguage(urlParamLang);
-      i18n.changeLanguage(urlParamLang);
+      setCurrentLanguage(urlParamLang === "sv" ? "se" : urlParamLang);
+      i18n.changeLanguage(urlParamLang === "sv" ? "se" : urlParamLang);
     }
     i18n.changeLanguage(currentLanguage);
   }, []);

@@ -69,7 +69,9 @@ export function SunburstVizSimplified(props: any) {
           }
           gotoDetail={() =>
             history.push(
-              `/${currentLanguage}/sectors/${props.clickedNode.code}${history.location.search}`
+              `/${currentLanguage === "se" ? "sv" : currentLanguage}/sectors/${
+                props.clickedNode.code
+              }${history.location.search}`
             )
           }
           drilldown={() => {

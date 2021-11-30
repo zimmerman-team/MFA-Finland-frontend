@@ -214,7 +214,11 @@ export function ThematicAreas(props: ThematicAreasProps) {
           </div>
           {props.data.map((item: DataProps) => (
             <div css={rightsideinfopanelitem} key={item.name}>
-              <Link to={`/${currentLanguage}/thematic-area/${item.ref}`}>
+              <Link
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/thematic-area/${item.ref}`}
+              >
                 {get(
                   cmsData.priorityAreas,
                   `${item.ref.split("|")[0].replace(/ /g, "")}`,

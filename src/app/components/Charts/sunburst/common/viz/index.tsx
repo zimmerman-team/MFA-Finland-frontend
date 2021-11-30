@@ -46,7 +46,11 @@ export function SunburstViz(props: any) {
             props.setSelectedCount(node.size);
           } else {
             // props.onSectorSelectChange(node.code);
-            history.push(`/${currentLanguage}/sectors/${node.code}`);
+            history.push(
+              `/${currentLanguage === "se" ? "sv" : currentLanguage}/sectors/${
+                node.code
+              }`
+            );
           }
         }}
         onValueMouseOver={(
@@ -75,7 +79,9 @@ export function SunburstViz(props: any) {
           close={() => setHoveredNode(null)}
           gotoDetail={() =>
             history.push(
-              `/${currentLanguage}/sectors/${hoveredNode.code}${history.location.search}`
+              `/${currentLanguage === "se" ? "sv" : currentLanguage}/sectors/${
+                hoveredNode.code
+              }${history.location.search}`
             )
           }
           drilldown={() => {

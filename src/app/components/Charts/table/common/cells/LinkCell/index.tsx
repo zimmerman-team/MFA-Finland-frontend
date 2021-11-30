@@ -20,5 +20,11 @@ export const LinkCell = (props: LinkCellModel) => {
       </a>
     );
   }
-  return <Link to={`/${currentLanguage}${props.link}`}>{props.value}</Link>;
+  return (
+    <Link
+      to={`/${currentLanguage === "se" ? "sv" : currentLanguage}${props.link}`}
+    >
+      {props.value}
+    </Link>
+  );
 };

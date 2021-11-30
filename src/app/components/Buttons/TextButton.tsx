@@ -39,7 +39,11 @@ export const TextButton = (props: TextButtonprops) => {
   return props.path ? (
     <NavLink
       css={containercss}
-      to={props.path ? `/${currentLanguage}${props.path}` : ""}
+      to={
+        props.path
+          ? `/${currentLanguage === "se" ? "sv" : currentLanguage}${props.path}`
+          : ""
+      }
     >
       {props.label}
     </NavLink>

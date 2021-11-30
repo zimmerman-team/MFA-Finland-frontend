@@ -121,16 +121,36 @@ export function Footer() {
               component="nav"
               css={drawerStyle.AddressContainer}
             >
-              <NavLink to={`/${currentLanguage}/feedback`} css={styles.link}>
+              <NavLink
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/feedback`}
+                css={styles.link}
+              >
                 {get(cmsData, `menu.feedback`, "Feedback")}
               </NavLink>
-              <NavLink to={`/${currentLanguage}/about`} css={styles.link}>
+              <NavLink
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/about`}
+                css={styles.link}
+              >
                 {get(cmsData, `menu.about`, "About")}
               </NavLink>
-              <NavLink to={`/${currentLanguage}/result`} css={styles.link}>
+              <NavLink
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/result`}
+                css={styles.link}
+              >
                 {get(cmsData, `menu.result`, "Result")}
               </NavLink>
-              <NavLink to={`/${currentLanguage}/statements`} css={styles.link}>
+              <NavLink
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/statements`}
+                css={styles.link}
+              >
                 {get(cmsData, `menu.statements`, "Statements")}
               </NavLink>
             </Grid>

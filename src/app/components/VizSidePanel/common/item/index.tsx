@@ -105,7 +105,13 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
             `}
           >
             {props.link ? (
-              <Link to={`/${currentLanguage}${props.link}`}>{props.name}</Link>
+              <Link
+                to={`/${currentLanguage === "se" ? "sv" : currentLanguage}${
+                  props.link
+                }`}
+              >
+                {props.name}
+              </Link>
             ) : (
               props.name
             )}

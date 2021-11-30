@@ -88,7 +88,9 @@ export function SDGvizItem(props: CompProps) {
           setTimeout(
             () =>
               history.push(
-                `/${currentLanguage}/viz/projects${history.location.search}`
+                `/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/viz/projects${history.location.search}`
               ),
             200
           );

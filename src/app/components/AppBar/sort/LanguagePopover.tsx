@@ -47,10 +47,13 @@ export function LanguagePopover(
   `;
 
   function onLanguageChange(lang: string) {
-    const prevLang = currentLanguage;
+    const prevLang = currentLanguage === "se" ? "sv" : currentLanguage;
     setLanguage(lang);
     history.push(
-      `${history.location.pathname.replace(`/${prevLang}`, `/${lang}`)}${
+      `${history.location.pathname.replace(
+        `/${prevLang}`,
+        `/${lang === "se" ? "sv" : lang}`
+      )}${
         history.location.search.length > 0 ? `?${history.location.search}` : ""
       }`
     );
@@ -65,9 +68,9 @@ export function LanguagePopover(
         currentLanguage !== urlParamLang &&
         (urlParamLang === "en" ||
           urlParamLang === "fi" ||
-          urlParamLang === "se")
+          urlParamLang === "sv")
       ) {
-        setLanguage(urlParamLang);
+        setLanguage(urlParamLang === "sv" ? "se" : urlParamLang);
       }
     });
   }, []);

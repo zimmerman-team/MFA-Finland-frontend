@@ -31,7 +31,9 @@ function NoLangParamRedirect(routeProps: RouteProps) {
 
   return (
     <Redirect
-      to={`/${currentLanguage}${routeProps.location?.pathname}${routeProps.location?.search}`}
+      to={`/${currentLanguage === "se" ? "sv" : currentLanguage}${
+        routeProps.location?.pathname
+      }${routeProps.location?.search}`}
     />
   );
 }

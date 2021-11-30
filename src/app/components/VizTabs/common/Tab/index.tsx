@@ -47,7 +47,11 @@ export function RouteTab(props: TabProps) {
 
   return (
     <li css={tabcss(get(params, "tab", "") === props.url.split("/")[2])}>
-      <NavLink to={`/${currentLanguage}${props.url}${location.search}`}>
+      <NavLink
+        to={`/${currentLanguage === "se" ? "sv" : currentLanguage}${props.url}${
+          location.search
+        }`}
+      >
         {props.cmsKey ? get(cmsData, props.cmsKey, props.name) : props.name}
       </NavLink>
     </li>

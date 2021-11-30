@@ -230,8 +230,12 @@ const VizTabsMobile = (props: VizTabsProps) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const index = event.target.value;
     setSelectedViz(index as string);
-    // @ts-ignore
-    history.push(`/${currentLanguage}${vizTabs[index].url}${location.search}`);
+    history.push(
+      `/${currentLanguage === "se" ? "sv" : currentLanguage}${
+        // @ts-ignore
+        vizTabs[index].url
+      }${location.search}`
+    );
   };
 
   return (

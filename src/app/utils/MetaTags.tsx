@@ -10,7 +10,8 @@ export function MetaTags() {
   const [currentLanguage] = useRecoilState(languageAtom);
 
   React.useEffect(() => {
-    document.documentElement.lang = currentLanguage;
+    document.documentElement.lang =
+      currentLanguage === "se" ? "sv" : currentLanguage;
   }, [currentLanguage]);
 
   return (

@@ -66,7 +66,9 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
           setTimeout(
             () =>
               history.push(
-                `/${currentLanguage}/viz/projects${history.location.search}`
+                `/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/viz/projects${history.location.search}`
               ),
             200
           );

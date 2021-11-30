@@ -115,7 +115,11 @@ export const Tooltip = React.memo(function TooltipMemoized(
         </Typography>
       </div>
       <div css={ButtonContainerStyle}>
-        <Link to={`/${currentLanguage}/countries/${props.ISO2Code}`}>
+        <Link
+          to={`/${
+            currentLanguage === "se" ? "sv" : currentLanguage
+          }/countries/${props.ISO2Code}`}
+        >
           <PillButton css={Button}>
             {get(cmsData, "viz.mapcountrypagebutton", "Country Page")}
           </PillButton>

@@ -56,7 +56,7 @@ export const ExpandableRowOrg = (props: any) => {
         </TableCell>
         <TableCell key={props.child.name} colSpan={1}>
           <Link
-            to={`/${currentLanguage}/${
+            to={`/${currentLanguage === "se" ? "sv" : currentLanguage}/${
               props.type === "org"
                 ? "organisations"
                 : props.child.ref.length === 2

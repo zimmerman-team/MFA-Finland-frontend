@@ -59,7 +59,9 @@ export const ExpandableRow = (props: any) => {
         </TableCell>
         <TableCell key={props.child.title} colSpan={1}>
           <Link
-            to={`/${currentLanguage}/sectors/${props.child.code}${history.location.search}`}
+            to={`/${
+              currentLanguage === "se" ? "sv" : currentLanguage
+            }/sectors/${props.child.code}${history.location.search}`}
           >
             {props.child.title}
           </Link>

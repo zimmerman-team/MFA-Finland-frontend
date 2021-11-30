@@ -53,7 +53,12 @@ export const SearchResultItem = (props: ResultItemParams) => {
       onClick={props.handleResultClick}
       data-cy={`search-result-item-${props.index}`}
     >
-      <Link css={linkcss} to={`/${currentLanguage}${props.link}`}>
+      <Link
+        css={linkcss}
+        to={`/${currentLanguage === "se" ? "sv" : currentLanguage}${
+          props.link
+        }`}
+      >
         {props.text}
       </Link>
     </div>

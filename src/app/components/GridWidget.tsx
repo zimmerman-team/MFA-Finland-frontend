@@ -285,7 +285,11 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   function handleClick() {
     if (props.link) {
-      history.push(`/${currentLanguage}${props.link}${searchFilterString}`);
+      history.push(
+        `/${currentLanguage === "se" ? "sv" : currentLanguage}${
+          props.link
+        }${searchFilterString}`
+      );
     }
   }
 
@@ -379,7 +383,9 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
                 <Link
                   css={style.link}
                   aria-label="view more organisations"
-                  to={`/${currentLanguage}/viz/organisations${searchFilterString}`}
+                  to={`/${
+                    currentLanguage === "se" ? "sv" : currentLanguage
+                  }/viz/organisations${searchFilterString}`}
                 >
                   {get(cmsData, "viz.viewmore", "View more")}
                 </Link>
@@ -392,7 +398,9 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
                 <Link
                   css={style.link}
                   aria-label="view more projects"
-                  to={`/${currentLanguage}/viz/projects${searchFilterString}`}
+                  to={`/${
+                    currentLanguage === "se" ? "sv" : currentLanguage
+                  }/viz/projects${searchFilterString}`}
                 >
                   {get(cmsData, "viz.viewmore", "View more")}
                 </Link>

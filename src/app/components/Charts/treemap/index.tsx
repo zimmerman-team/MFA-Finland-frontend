@@ -51,11 +51,15 @@ export function Treemap(props: TreemapProps) {
       if (detailPage === "locations") {
         if (node.data.ref.length === 2) {
           history.push(
-            `/${currentLanguage}/countries/${node.data.ref}${history.location.search}`
+            `/${currentLanguage === "se" ? "sv" : currentLanguage}/countries/${
+              node.data.ref
+            }${history.location.search}`
           );
         } else {
           history.push(
-            `/${currentLanguage}/regions/${node.data.ref}${history.location.search}`
+            `/${currentLanguage === "se" ? "sv" : currentLanguage}/regions/${
+              node.data.ref
+            }${history.location.search}`
           );
         }
       }

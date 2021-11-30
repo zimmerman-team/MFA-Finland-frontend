@@ -78,7 +78,7 @@ export const DrawerItem = (props: DrawerItemProps) => {
     </MUIListItem>
   ) : (
     <NavLink
-      to={`/${currentLanguage}${props.path}`}
+      to={`/${currentLanguage === "se" ? "sv" : currentLanguage}${props.path}`}
       exact
       isActive={(match) => {
         if (!match) {
