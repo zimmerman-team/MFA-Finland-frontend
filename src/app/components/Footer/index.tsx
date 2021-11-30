@@ -140,7 +140,7 @@ export function Footer() {
               <NavLink
                 to={`/${
                   currentLanguage === "se" ? "sv" : currentLanguage
-                }/result`}
+                }/data`}
                 css={styles.link}
               >
                 {get(cmsData, `menu.result`, "Result")}

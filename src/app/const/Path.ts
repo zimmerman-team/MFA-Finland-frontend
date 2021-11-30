@@ -33,7 +33,7 @@ export const Path = {
     info: `${basePath}info`,
     notFound: `${basePath}notFound`,
     statements: `${basePath}statements`,
-    result: `${basePath}result`,
+    result: `${basePath}data`,
     feedback: `${basePath}feedback`,
   },
   detail: {
@@ -60,7 +60,7 @@ export const Path = {
       info: "/info",
       notFound: "/notFound",
       statements: "/statements",
-      result: "/result",
+      result: "/data",
       feedback: "/feedback",
     },
     detail: {

@@ -14,7 +14,7 @@ export function shouldRender(location: any) {
     "/feedback",
     "/statement",
     "/statements",
-    "/result",
+    "/data",
     "/project/",
     "/contact",
     "/privacy",
