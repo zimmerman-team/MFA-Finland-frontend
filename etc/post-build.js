@@ -8,7 +8,7 @@ const titles = {
 };
 const descriptions = {
   fi:
-    "Openaid.fi on ulkoministeriön tietopankki Suomen kehitysyhteistyöstä. Palvelu näyttää mihin, kenelle ja milloin Suomen kehitysyhteistyövaroja on käytetty.",
+    "Openaid.fi on ulkoministeriön tietopankki Suomen kehitysyhteistyöstä. Palvelu näyttää mihin, miten ja milloin Suomen kehitysyhteistyövaroja on käytetty.",
   se:
     "På webbplatsen Openaid.fi samlar utrikesministeriet data om Finlands utvecklingssamarbete. Här ser du hur, var och när Finlands medel för utvecklingssamarbete har använts.",
 };
@@ -27,7 +27,7 @@ fs.copyFile(
     replace.sync(optionsTitle);
     const optionsDesc = {
       files: path.join(__dirname, "../build/index_fi.html"),
-      from: /The Ministry for Foreign Affairs' databank shows how Finland's development co-operation funds have been used and what results have been achieved with them./g,
+      from: /Openaid.fi is the Foreign Ministry’s databank on Finland’s development cooperation. The service shows where, how, and when Finland's development cooperation funds have been used./g,
       to: descriptions.fi,
     };
     replace.sync(optionsDesc);
@@ -54,7 +54,7 @@ fs.copyFile(
     replace.sync(optionsTitle);
     const optionsDesc = {
       files: path.join(__dirname, "../build/index_sv.html"),
-      from: /The Ministry for Foreign Affairs' databank shows how Finland's development co-operation funds have been used and what results have been achieved with them./g,
+      from: /Openaid.fi is the Foreign Ministry’s databank on Finland’s development cooperation. The service shows where, how, and when Finland's development cooperation funds have been used./g,
       to: descriptions.se,
     };
     replace.sync(optionsDesc);

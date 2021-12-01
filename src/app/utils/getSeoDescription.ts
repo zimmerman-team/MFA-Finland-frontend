@@ -1,8 +1,8 @@
 const seoDescription = {
   en:
-    "Openaid.fi is the Foreign Ministry’s databank on Finland’s development cooperation. The service shows where, to whom, and when Finland's development cooperation funds have been used.",
+    "Openaid.fi is the Foreign Ministry’s databank on Finland’s development cooperation. The service shows where, how, and when Finland's development cooperation funds have been used.",
   fi:
-    "Openaid.fi on ulkoministeriön tietopankki Suomen kehitysyhteistyöstä. Palvelu näyttää mihin, kenelle ja milloin Suomen kehitysyhteistyövaroja on käytetty.",
+    "Openaid.fi on ulkoministeriön tietopankki Suomen kehitysyhteistyöstä. Palvelu näyttää mihin, miten ja milloin Suomen kehitysyhteistyövaroja on käytetty.",
   se:
     "På webbplatsen Openaid.fi samlar utrikesministeriet data om Finlands utvecklingssamarbete. Här ser du hur, var och när Finlands medel för utvecklingssamarbete har använts.",
 };
