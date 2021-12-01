@@ -5,7 +5,7 @@ import filter from "lodash/filter";
 export function LineNodes(props: any) {
   return (
     <React.Fragment>
-      {filter(props.points, (item: any) => item.data.x < 2019).map(
+      {filter(props.points, (item: any) => item.data.x < 2020).map(
         (item: any, index: number) => {
           if (index === props.points.length - 1) {
             return null;
@@ -27,7 +27,7 @@ export function LineNodes(props: any) {
           );
         }
       )}
-      {filter(props.points, (item: any) => item.data.x < 2020).map(
+      {filter(props.points, (item: any) => item.data.x < 2021).map(
         (item: any) => {
           return (
             <g
