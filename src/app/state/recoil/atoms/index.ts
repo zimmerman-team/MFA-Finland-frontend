@@ -14,9 +14,22 @@ export const bottomDrawerAtom = atom({
   default: false, // default value (aka initial value)
 });
 
+function getDefaultBrowserLanguage(): string {
+  const browserLang = window.navigator.language;
+  if (
+    browserLang &&
+    (browserLang.substring(0, 2) === "en" ||
+      browserLang.substring(0, 2) === "fi" ||
+      browserLang.substring(0, 2) === "sv")
+  ) {
+    return browserLang.substring(0, 2);
+  }
+  return "fi";
+}
+
 export const languageAtom = atom({
   key: "languageAtom",
-  default: "en",
+  default: getDefaultBrowserLanguage(),
   effects_UNSTABLE: [persistAtom],
 });
 
