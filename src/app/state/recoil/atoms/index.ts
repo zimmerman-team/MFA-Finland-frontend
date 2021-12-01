@@ -24,7 +24,7 @@ function getDefaultBrowserLanguage(): string {
   ) {
     return browserLang.substring(0, 2);
   }
-  return "fi";
+  return "en";
 }
 
 export const languageAtom = atom({
