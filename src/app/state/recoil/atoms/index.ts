@@ -143,35 +143,35 @@ export const ODAlatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom({
 
 export const ThematicAreasLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
   {
-    key: "ODAlatestFilters",
+    key: "ThematicAreasLatestFiltersAtom",
     default: defaultfilters,
   }
 );
 
 export const SectorsSunburstLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
   {
-    key: "ODAlatestFilters",
+    key: "SectorsSunburstLatestFiltersAtom",
     default: defaultfilters,
   }
 );
 
 export const LocationsTreemapLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
   {
-    key: "ODAlatestFilters",
+    key: "LocationsTreemapLatestFiltersAtom",
     default: defaultfilters,
   }
 );
 
 export const OrganisationsLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
   {
-    key: "ODAlatestFilters",
+    key: "OrganisationsLatestFiltersAtom",
     default: defaultfilters,
   }
 );
 
 export const BudgetLinesLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom(
   {
-    key: "ODAlatestFilters",
+    key: "BudgetLinesLatestFiltersAtom",
     default: defaultfilters,
   }
 );
@@ -184,12 +184,12 @@ export const ProjectsLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = a
 );
 
 export const SDGlatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom({
-  key: "ODAlatestFilters",
+  key: "SDGlatestFiltersAtom",
   default: defaultfilters,
 });
 
 export const GeoLatestFiltersAtom: RecoilState<SelectedFilterAtomModel> = atom({
-  key: "ODAlatestFilters",
+  key: "GeoLatestFiltersAtom",
   default: defaultfilters,
 });
 
