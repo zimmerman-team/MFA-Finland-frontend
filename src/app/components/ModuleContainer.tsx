@@ -17,6 +17,9 @@ export const ModuleContainer = (props: ModuleContainerProps) => {
     location.pathname === "/en" ||
     location.pathname === "/fi" ||
     location.pathname === "/sv" ||
+    location.pathname === "/en/" ||
+    location.pathname === "/fi/" ||
+    location.pathname === "/sv/" ||
     location.pathname.indexOf("/regions") > -1 ||
     location.pathname.indexOf("/countries") > -1 ||
     location.pathname.indexOf("/sectors") > -1 ||
