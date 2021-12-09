@@ -7,6 +7,7 @@ import {
   FILTER_TYPES,
   humanrightfilteroptions,
 } from "app/components/FilterPanel/data";
+import { getTranslatedSDGS } from "../Charts/sdg/translations";
 
 export function shouldRender(location: any) {
   const urls = [
@@ -89,7 +90,7 @@ export function getFilterChip(
     filters,
     filterOptions
   );
-  const sdgChip = createSDGChip(filters, filterOptions);
+  const sdgChip = createSDGChip(filters, filterOptions, currentLanguage);
   const activityStatusChip = createActivityStatusChip(filters, filterOptions);
   const policyMarkerChip = createPolicyMarkerChip(filters, filterOptions);
   const defaultAidTypeChip = createDefaultAidTypeChip(
@@ -467,7 +468,8 @@ function createActivityStatusChip(
 
 function createSDGChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  currentLanguage: string
 ) {
   const sdgs = get(filterOptions, "sdgs.data.data.goals", []);
   const values: { label: string; value: string }[] = [];
@@ -475,7 +477,9 @@ function createSDGChip(
     const fSdg = find(sdgs, { code: sdg });
     if (fSdg) {
       values.push({
-        label: fSdg.name,
+        label:
+          getTranslatedSDGS(currentLanguage, parseInt(sdg, 10)) ||
+          get(fSdg, "name", ""),
         value: sdg,
       });
     }
