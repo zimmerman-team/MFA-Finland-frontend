@@ -213,7 +213,7 @@ export function displayPeriod(
     const endYear = new Date(selectedFilters.years[1]).getFullYear();
 
     if (startYear === endYear && startYear > 2014 && startYear < 2022) {
-      return cmsLabel.replace("{start}", startYear).replace(" to {end}", "");
+      return cmsLabel.replace("{start}", startYear).replace(" - {end}", "");
     }
 
     const years: number[] = [];
@@ -227,10 +227,7 @@ export function displayPeriod(
     if (years.length > 0) {
       return cmsLabel
         .replace("{start}", years[0])
-        .replace(
-          "{end}",
-          years.length > 1 ? ` to ${years[years.length - 1]}` : ""
-        );
+        .replace("{end}", years.length > 1 ? `${years[years.length - 1]}` : "");
     }
   }
   return cmsLabel.replace("{start}", 2015).replace("{end}", 2021);
