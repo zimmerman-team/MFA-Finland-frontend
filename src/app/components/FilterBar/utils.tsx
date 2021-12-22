@@ -8,6 +8,7 @@ import {
   humanrightfilteroptions,
 } from "app/components/FilterPanel/data";
 import { getTranslatedSDGS } from "../Charts/sdg/translations";
+import { findIndex } from "lodash";
 
 export function shouldRender(location: any) {
   const urls = [
@@ -67,44 +68,76 @@ export interface ChipModel {
 export function getFilterChip(
   filters: SelectedFilterAtomModel,
   filterOptions: any,
-  currentLanguage: string
+  currentLanguage: string,
+  cmsData: any
 ) {
   const chips: ChipModel[] = [];
-  const thematicChip = createThematicChip(filters, filterOptions);
+  const thematicChip = createThematicChip(
+    filters,
+    filterOptions,
+    currentLanguage,
+    cmsData
+  );
   const countriesChip = createCountriesChip(
     filters,
     filterOptions,
-    currentLanguage
+    currentLanguage,
+    cmsData
   );
   const sectorsChip = createSectorsChip(
     filters,
     filterOptions,
-    currentLanguage
+    currentLanguage,
+    cmsData
   );
   const organisationChip = createOrganisationChip(
     filters,
     filterOptions,
-    currentLanguage
+    currentLanguage,
+    cmsData
   );
   const organisationTypeChip = createOrganisationTypeChip(
     filters,
     filterOptions
   );
-  const sdgChip = createSDGChip(filters, filterOptions, currentLanguage);
-  const activityStatusChip = createActivityStatusChip(filters, filterOptions);
-  const policyMarkerChip = createPolicyMarkerChip(filters, filterOptions);
+  const sdgChip = createSDGChip(
+    filters,
+    filterOptions,
+    currentLanguage,
+    cmsData
+  );
+  const activityStatusChip = createActivityStatusChip(
+    filters,
+    filterOptions,
+    cmsData
+  );
+  const policyMarkerChip = createPolicyMarkerChip(
+    filters,
+    filterOptions,
+    cmsData
+  );
   const defaultAidTypeChip = createDefaultAidTypeChip(
     filters,
     filterOptions,
-    currentLanguage
+    currentLanguage,
+    cmsData
   );
   const budgetLinesChip = createBudgetLinesChip(
     filters,
     filterOptions,
-    currentLanguage
+    currentLanguage,
+    cmsData
   );
-  const collaborationChip = createCollaborationChip(filters, filterOptions);
-  const humanRightsChip = createHumanRightsChip(filters, currentLanguage);
+  const collaborationChip = createCollaborationChip(
+    filters,
+    filterOptions,
+    cmsData
+  );
+  const humanRightsChip = createHumanRightsChip(
+    filters,
+    currentLanguage,
+    cmsData
+  );
   const periodChip = createPeriodChip(filters, filterOptions);
 
   if (thematicChip) {
@@ -152,56 +185,66 @@ export function getFilterChip(
 // Fix this function
 function createThematicChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  currentLanguage: string,
+  cmsData: any
 ): ChipModel | null {
   const thematicAreaOptions = get(filterOptions, "thematicareas.data.data", []);
+  console.log(cmsData.priorityAreas);
+  console.log(thematicAreaOptions);
   const type = FILTER_TYPES.THEMATIC_AREAS;
   const values: { label: string; value: string }[] = [];
   if (selectedFilters.tag.length > 1) {
     selectedFilters.tag.forEach((tag: string) => {
       let label = "";
-      let fArea = find(thematicAreaOptions, { code: tag });
-      if (!fArea) {
-        thematicAreaOptions.forEach((area: any) => {
-          if (!fArea) {
-            fArea = find(area.children, { code: tag });
-            if (fArea) {
-              label = `${area.name} - ${fArea.name}`;
-            }
-          }
-        });
-      } else {
-        label = fArea.name;
+      const fAreaIndex = findIndex(thematicAreaOptions, { code: tag });
+      if (fAreaIndex > -1) {
+        label = `${get(
+          cmsData.priorityAreas,
+          `Priorityarea${fAreaIndex + 1}${
+            currentLanguage === "fi" ? "" : `_${currentLanguage}`
+          }`,
+          ""
+        )} - ${get(
+          cmsData.priorityAreas,
+          `Priorityarea${fAreaIndex + 1}${
+            currentLanguage === "fi" ? "" : `_${currentLanguage}`
+          }`,
+          ""
+        )}`;
       }
 
-      if (fArea) {
+      if (label.length > 0) {
         values.push({ label, value: tag });
       }
     });
 
     return {
-      label: "Thematic Areas",
+      label: get(cmsData, "general.thematicareas", "Thematic Areas"),
       values,
       type: FILTER_TYPES.THEMATIC_AREAS,
     };
   }
   let label = "";
   const tag = selectedFilters.tag[0];
-  let fArea = find(thematicAreaOptions, { code: tag });
-  if (!fArea) {
-    thematicAreaOptions.forEach((area: any) => {
-      if (!fArea) {
-        fArea = find(area.children, { code: tag });
-        if (fArea) {
-          label = `${area.name} - ${fArea.name}`;
-        }
-      }
-    });
-  } else {
-    label = fArea.name;
+  const fAreaIndex = findIndex(thematicAreaOptions, { code: tag });
+  if (fAreaIndex > -1) {
+    label = `${get(
+      cmsData.priorityAreas,
+      `Priorityarea${fAreaIndex + 1}${
+        currentLanguage === "fi" ? "" : `_${currentLanguage}`
+      }`,
+      ""
+    )} - ${get(
+      cmsData.priorityAreas,
+      `Priorityarea${fAreaIndex + 1}${
+        currentLanguage === "fi" ? "" : `_${currentLanguage}`
+      }`,
+      ""
+    )}`;
   }
 
-  if (fArea) {
+  if (label.length > 0) {
     values.push({ label, value: tag });
     return { label, values, type };
   }
@@ -212,7 +255,8 @@ function createThematicChip(
 function createCountriesChip(
   selectedFilters: SelectedFilterAtomModel,
   filterOptions: any,
-  currentLanguage: string
+  currentLanguage: string,
+  cmsData: any
 ): ChipModel | null {
   const type = FILTER_TYPES.COUNTRIES;
   const values: { label: string; value: string }[] = [];
@@ -236,7 +280,7 @@ function createCountriesChip(
   });
 
   if (selectedFilters.countries.length > 1) {
-    label = "Countries/Regions";
+    label = get(cmsData, "viz.countriesregions", "Countries/Regions");
   } else if (selectedFilters.countries.length === 1) {
     label = values[0].label;
   }
@@ -249,7 +293,8 @@ function createCountriesChip(
 function createSectorsChip(
   selectedFilters: SelectedFilterAtomModel,
   filterOptions: any,
-  currentLanguage: string
+  currentLanguage: string,
+  cmsData: any
 ) {
   const sectors = get(filterOptions, "sectors.data.data", []);
   const values: { label: string; value: string }[] = [];
@@ -292,7 +337,11 @@ function createSectorsChip(
     }
   });
   if (selectedFilters.sectors.length > 1) {
-    return { label: "Sectors", values, type: FILTER_TYPES.SECTORS };
+    return {
+      label: get(cmsData, "general.sectors", "Sectors"),
+      values,
+      type: FILTER_TYPES.SECTORS,
+    };
   }
   if (selectedFilters.sectors.length === 1) {
     return { label: values[0].label, values, type: FILTER_TYPES.SECTORS };
@@ -303,7 +352,8 @@ function createSectorsChip(
 function createOrganisationChip(
   selectedFilters: SelectedFilterAtomModel,
   filterOptions: any,
-  currentLanguage: string
+  currentLanguage: string,
+  cmsData: any
 ) {
   const organisations = get(filterOptions, "organisations.data.data", []);
   let values: { label: string; value: string }[] = [];
@@ -390,7 +440,11 @@ function createOrganisationChip(
   values = uniqBy(values, ["label", "value"]);
 
   if (selectedFilters.organisations.length > 1) {
-    return { label: "Organisations", values, type: FILTER_TYPES.ORGANISATIONS };
+    return {
+      label: get(cmsData, "general.organisations", "Organisations"),
+      values,
+      type: FILTER_TYPES.ORGANISATIONS,
+    };
   }
   if (selectedFilters.organisations.length === 1) {
     return { label: values[0].label, values, type: FILTER_TYPES.ORGANISATIONS };
@@ -434,7 +488,8 @@ function createOrganisationTypeChip(
 
 function createActivityStatusChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  cmsData: any
 ) {
   const activitystatus = get(filterOptions, "activitystatus.data.data", []);
   const values: { label: string; value: string }[] = [];
@@ -451,7 +506,7 @@ function createActivityStatusChip(
 
   if (selectedFilters.activitystatus.length > 1) {
     return {
-      label: "Activity Statutes",
+      label: get(cmsData, "filters.activitystatus", "Activity Status"),
       values,
       type: FILTER_TYPES.ACTIVITY_STATUS,
     };
@@ -469,7 +524,8 @@ function createActivityStatusChip(
 function createSDGChip(
   selectedFilters: SelectedFilterAtomModel,
   filterOptions: any,
-  currentLanguage: string
+  currentLanguage: string,
+  cmsData: any
 ) {
   const sdgs = get(filterOptions, "sdgs.data.data.goals", []);
   const values: { label: string; value: string }[] = [];
@@ -487,7 +543,7 @@ function createSDGChip(
 
   if (selectedFilters.sdg.length > 1) {
     return {
-      label: "SDGs",
+      label: get(cmsData, "general.sdgs", "SDGs"),
       values,
       type: FILTER_TYPES.SDGS,
     };
@@ -504,7 +560,8 @@ function createSDGChip(
 
 function createPolicyMarkerChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  cmsData: any
 ) {
   const policymarkers = get(filterOptions, "policymarkers.data.data", []);
   const values: { label: string; value: string }[] = [];
@@ -521,7 +578,7 @@ function createPolicyMarkerChip(
 
   if (selectedFilters.policymarker.length > 1) {
     return {
-      label: "Policy Markers",
+      label: get(cmsData, "filters.policymarkers", "Policy Markers"),
       values,
       type: FILTER_TYPES.POLICY_MARKERS,
     };
@@ -539,7 +596,8 @@ function createPolicyMarkerChip(
 function createDefaultAidTypeChip(
   selectedFilters: SelectedFilterAtomModel,
   filterOptions: any,
-  currentLanguage: string
+  currentLanguage: string,
+  cmsData: any
 ) {
   const aidtypes = get(filterOptions, "aidtypes.data.data", []);
   const values: { label: string; value: string }[] = [];
@@ -556,7 +614,7 @@ function createDefaultAidTypeChip(
 
   if (selectedFilters.defaultaidtype.length > 1) {
     return {
-      label: "Default Aid Types",
+      label: get(cmsData, "filters.typeofaid", "Type of aid"),
       values,
       type: FILTER_TYPES.AID_TYPE,
     };
@@ -574,7 +632,8 @@ function createDefaultAidTypeChip(
 function createBudgetLinesChip(
   selectedFilters: SelectedFilterAtomModel,
   filterOptions: any,
-  currentLanguage: string
+  currentLanguage: string,
+  cmsData: any
 ) {
   const budgetlines = get(filterOptions, "budgetlines.data.data", []);
   const values: { label: string; value: string }[] = [];
@@ -591,7 +650,7 @@ function createBudgetLinesChip(
 
   if (selectedFilters.budgetlines.length > 1) {
     return {
-      label: "Budget Lines",
+      label: get(cmsData, "general.budgetlines", "Budget lines"),
       values,
       type: FILTER_TYPES.BUDGET_LINES,
     };
@@ -609,7 +668,8 @@ function createBudgetLinesChip(
 
 function createCollaborationChip(
   selectedFilters: SelectedFilterAtomModel,
-  filterOptions: any
+  filterOptions: any,
+  cmsData: any
 ) {
   const bimulti = [
     {
@@ -635,7 +695,7 @@ function createCollaborationChip(
 
   if (selectedFilters.collaborationtype.length > 1) {
     return {
-      label: "Collaboration Type",
+      label: get(cmsData, "filters.bimulti", "Bi/Multi"),
       values,
       type: FILTER_TYPES.BI_MULTI,
     };
@@ -652,7 +712,8 @@ function createCollaborationChip(
 
 function createHumanRightsChip(
   selectedFilters: SelectedFilterAtomModel,
-  currentLanguage: string
+  currentLanguage: string,
+  cmsData: any
 ) {
   const values: { label: string; value: string }[] = [];
 
@@ -668,7 +729,7 @@ function createHumanRightsChip(
 
   if (selectedFilters.humanrights.length > 1) {
     return {
-      label: "Human rights",
+      label: get(cmsData, "filters.humanrights", "Human rights approach"),
       values,
       type: FILTER_TYPES.HUMAN_RIGHTS,
     };

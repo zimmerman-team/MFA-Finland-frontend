@@ -65,7 +65,12 @@ export const FilterBar = (props: FilterBarProps) => {
   React.useEffect(() => {
     if (!filterOptionsLoading) {
       setChips(
-        getFilterChip(selectedFilters, filterOptionsData, currentLanguage)
+        getFilterChip(
+          selectedFilters,
+          filterOptionsData,
+          currentLanguage,
+          cmsData
+        )
       );
     }
   }, [selectedFilters, filterOptionsData, filterOptionsLoading]);
@@ -74,7 +79,8 @@ export const FilterBar = (props: FilterBarProps) => {
     const newChips = getFilterChip(
       selectedFilters,
       filterOptionsData,
-      currentLanguage
+      currentLanguage,
+      cmsData
     );
     setChips(newChips);
   }, [currentLanguage]);
