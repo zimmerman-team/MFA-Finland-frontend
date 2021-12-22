@@ -75,7 +75,6 @@ export const FilterPanel = (props: FilterPanelProps) => {
     const updatedSelectedFilters = { ...localSelectedFilters };
     switch (type) {
       case FILTER_TYPES.THEMATIC_AREAS:
-        console.log(param);
         if (typeof param === "string") {
           if (updatedSelectedFilters.tag.indexOf(value) > -1) {
             updatedSelectedFilters.tag = filter(

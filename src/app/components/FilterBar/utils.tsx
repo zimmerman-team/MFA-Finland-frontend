@@ -190,14 +190,20 @@ function createThematicChip(
   cmsData: any
 ): ChipModel | null {
   const thematicAreaOptions = get(filterOptions, "thematicareas.data.data", []);
-  console.log(cmsData.priorityAreas);
-  console.log(thematicAreaOptions);
   const type = FILTER_TYPES.THEMATIC_AREAS;
   const values: { label: string; value: string }[] = [];
   if (selectedFilters.tag.length > 1) {
     selectedFilters.tag.forEach((tag: string) => {
       let label = "";
-      const fAreaIndex = findIndex(thematicAreaOptions, { code: tag });
+      const fAreaIndex = findIndex(thematicAreaOptions, (ta: any) => {
+        let found = false;
+        ta.children.forEach((child: any) => {
+          if (tag === child.code) {
+            found = true;
+          }
+        });
+        return found;
+      });
       if (fAreaIndex > -1) {
         label = `${get(
           cmsData.priorityAreas,
@@ -207,7 +213,7 @@ function createThematicChip(
           ""
         )} - ${get(
           cmsData.priorityAreas,
-          `Priorityarea${fAreaIndex + 1}${
+          `${tag.indexOf("primary") > -1 ? "main" : "secondary"}${
             currentLanguage === "fi" ? "" : `_${currentLanguage}`
           }`,
           ""
@@ -227,7 +233,15 @@ function createThematicChip(
   }
   let label = "";
   const tag = selectedFilters.tag[0];
-  const fAreaIndex = findIndex(thematicAreaOptions, { code: tag });
+  const fAreaIndex = findIndex(thematicAreaOptions, (ta: any) => {
+    let found = false;
+    ta.children.forEach((child: any) => {
+      if (tag === child.code) {
+        found = true;
+      }
+    });
+    return found;
+  });
   if (fAreaIndex > -1) {
     label = `${get(
       cmsData.priorityAreas,
@@ -237,7 +251,7 @@ function createThematicChip(
       ""
     )} - ${get(
       cmsData.priorityAreas,
-      `Priorityarea${fAreaIndex + 1}${
+      `${tag.indexOf("primary") > -1 ? "main" : "secondary"}${
         currentLanguage === "fi" ? "" : `_${currentLanguage}`
       }`,
       ""
