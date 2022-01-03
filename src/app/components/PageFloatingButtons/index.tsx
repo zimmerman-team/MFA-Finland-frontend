@@ -22,7 +22,7 @@ export const LightTooltip = withStyles((theme: Theme) => ({
     color: theme.palette.common.white,
   },
   tooltip: {
-    color: "#2E4982",
+    color: "#002561",
     backgroundColor: theme.palette.common.white,
     boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
   },
@@ -91,9 +91,8 @@ export function PageFloatingButtons() {
           <button
             tabIndex={0}
             type="button"
-            aria-label="Go to map"
+            aria-label="Download this view"
             css={buttoncss}
-            aria-pressed="false"
           >
             <IconDownload />
           </button>

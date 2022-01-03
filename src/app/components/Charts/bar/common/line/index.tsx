@@ -31,7 +31,7 @@ export function Line(props: LineProps) {
         max: maxValue + maxValue * 0.1,
       }}
       pointSize={6}
-      colors={["#D495A7"]}
+      colors={["#D06448"]}
       layers={["axes", Points]}
       enableGridY={false}
       enableGridX={false}

@@ -1,10 +1,10 @@
-import { contactInformation } from "app/modules/detail-modules/country-detail-module/mock";
 import React from "react";
+import { useRecoilState } from "recoil";
 import { css } from "styled-components/macro";
-import { useCMSData } from "app/hooks/useCMSData";
-import get from "lodash/get";
+import { languageAtom } from "app/state/recoil/atoms";
 
-export const ContactInformation = () => {
+export const ContactInformation = (props: any) => {
+  const [currentLanguage] = useRecoilState(languageAtom);
   const styles = css`
     list-style-type: none;
     padding: 0;
@@ -16,22 +16,15 @@ export const ContactInformation = () => {
       flex-direction: column;
       font-size: 16px;
       gap: 8px;
-
-      span:first-of-type {
-        font-weight: bold;
-      }
-
-      span:last-of-type {
-        font-size: 14px;
-      }
     }
 
-    li:first-of-type {
+    li:not(:last-child) {
       margin-bottom: 32px;
     }
 
     a {
-      font-size: 12px;
+      font-size: 14px;
+      word-break: break-all;
       text-decoration: underline;
 
       :hover {
@@ -39,51 +32,28 @@ export const ContactInformation = () => {
       }
     }
   `;
-  const cmsData = useCMSData({ returnData: true });
-  const embassy = getEmbassy();
-  const department = getDepartment();
-
-  function getEmbassy() {
-    // TODO: fetch data from api
-    return contactInformation.contactInfos.find((item) => {
-      return item.categories["organization-types"].find((org: string) => {
-        return org === "UE";
-      });
-    });
-  }
-
-  function getDepartment() {
-    // TODO: fetch data from api
-    return contactInformation.contactInfos.find((item) => {
-      return item.categories["organization-types"].find((org: string) => {
-        return org === "UM";
-      });
-    });
-  }
 
   return (
     <ul css={styles}>
       <li>
-        <span>{get(cmsData, "general.embassy", "Embassy")}:</span>
-        {embassy ? (
-          <a href={embassy.link}>
-            {embassy.reportName ? embassy.reportName : embassy.title}
-          </a>
-        ) : (
-          <span>Information not available</span>
-        )}
+        <a href={props.data.link} target="_blank" rel="noreferrer">
+          {props.data.title}
+        </a>
       </li>
-
       <li>
-        <span>{get(cmsData, "general.department", "Department")}:</span>{" "}
-        {department ? (
-          <a href={department.link}>
-            {department.reportName ? department.reportName : department.title}
-          </a>
-        ) : (
-          <span>Information not available</span>
-        )}
+        <a href={props.data.embassy.link} target="_blank" rel="noreferrer">
+          {props.data.embassy.title}
+        </a>
       </li>
+      {props.data.strategy && (
+        <li>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: props.data.strategy[currentLanguage] || "",
+            }}
+          />
+        </li>
+      )}
     </ul>
   );
 };

@@ -1,12 +1,14 @@
 import React from "react";
+import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
+import { languageAtom } from "app/state/recoil/atoms";
 import { SDGvizItem } from "app/components/Charts/sdg/common/item";
 import { SDGTooltip } from "app/components/Charts/sdg/common/tooltip";
 import { SDGvizProps, SDGvizItemProps } from "app/components/Charts/sdg/data";
-import { useRecoilState } from "recoil";
-import { languageAtom } from "app/state/recoil/atoms";
 
-export function getName(currentLanguage: string): string {
+export function getName(
+  currentLanguage: string
+): "name" | "name_fi" | "name_se" {
   if (currentLanguage === "se") return "name_se";
   if (currentLanguage === "fi") return "name_fi";
   if (currentLanguage === "en") return "name";

@@ -2,7 +2,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
 import { Link, useHistory } from "react-router-dom";
+import { languageAtom } from "app/state/recoil/atoms";
 import { formatLocale } from "app/utils/formatLocale";
 import { TableRow, TableCell } from "@material-ui/core";
 import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
@@ -18,6 +20,7 @@ const tableCellColors = [
 export const ExpandableRow = (props: any) => {
   const history = useHistory();
   const [expanded, setExpanded] = React.useState(false);
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   const children = get(props, "child.children", []);
 
@@ -55,7 +58,11 @@ export const ExpandableRow = (props: any) => {
           {props.child.code}
         </TableCell>
         <TableCell key={props.child.title} colSpan={1}>
-          <Link to={`/sectors/${props.child.code}${history.location.search}`}>
+          <Link
+            to={`/${
+              currentLanguage === "se" ? "sv" : currentLanguage
+            }/sectors/${props.child.code}${history.location.search}`}
+          >
             {props.child.title}
           </Link>
         </TableCell>

@@ -19,10 +19,8 @@ export function BarNode(props: BarNodeProps) {
     switch (props.color) {
       case "#ACD1D1":
         return hovered ? "#ACD1D1" : "#DCECEC";
-        break;
       case "#233C71":
         return hovered ? "#233C71" : "#A8BBE4";
-        break;
       default:
         return props.color;
     }
@@ -37,7 +35,7 @@ export function BarNode(props: BarNodeProps) {
   let border =
     props.data.indexValue === props.hoveredXIndex ||
     props.data.indexValue === get(props.selected, "indexValue", "")
-      ? "0.5px solid #343249"
+      ? "0.5px solid #382D5E"
       : "0.5px solid #B8B6CD";
 
   const color =
@@ -48,7 +46,7 @@ export function BarNode(props: BarNodeProps) {
 
   if (!props.hoveredXIndex && !props.selected) {
     opacity = 1;
-    border = "0.5px solid #B8B6CD";
+    border = "00.5px solid #382D5E";
   }
 
   function onItemClick() {
@@ -57,6 +55,18 @@ export function BarNode(props: BarNodeProps) {
       translation: { x: props.x * -1 + 50, y: 0 },
     });
     props.setSelected(props.data);
+  }
+
+  function onMouseMoveOrEnter(e: React.MouseEvent<SVGGElement>) {
+    if (
+      (props.selected || { indexValue: "" }).indexValue !==
+      props.data.indexValue
+    ) {
+      props.setHoveredXIndex(props.data.indexValue as number);
+    }
+    if (props.showTooltip) {
+      props.showTooltip(props.data.data);
+    }
   }
 
   return (
@@ -69,16 +79,15 @@ export function BarNode(props: BarNodeProps) {
         }
       }}
       onTouchStart={onItemClick}
+      // onMouseMove={onMouseMoveOrEnter}
+      onMouseEnter={onMouseMoveOrEnter}
       transform={`translate(${props.x}, ${props.y})`}
-      onMouseEnter={() => {
-        if (
-          (props.selected || { indexValue: "" }).indexValue !==
-          props.data.indexValue
-        ) {
-          props.setHoveredXIndex(props.data.indexValue as number);
+      onMouseLeave={() => {
+        if (props.hideTooltip) {
+          props.hideTooltip();
         }
+        props.setHoveredXIndex(null);
       }}
-      onMouseLeave={() => props.setHoveredXIndex(null)}
       css={`
         cursor: pointer;
         ${props.data.indexValue === get(props.selected, "indexValue", "")

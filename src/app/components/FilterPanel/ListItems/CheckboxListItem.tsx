@@ -36,6 +36,7 @@ export const CheckboxListItem = (props: CheckboxListItemProps) => {
         color="default"
         css={styles.checkbox}
         checked={props.selected}
+        aria-label={`select ${props.name} filter option`}
         onChange={(e: any) => props.onFilterCheckboxChange(props.code)}
       />
       <Typography variant="h6" css={styles.label}>

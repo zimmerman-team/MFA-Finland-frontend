@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
+import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
 import { ArrowDropDown } from "@material-ui/icons";
 import { Grid, Typography } from "@material-ui/core";
+import { languageAtom } from "app/state/recoil/atoms";
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
 import {
   circlecss,
@@ -21,6 +23,8 @@ interface VizSidePanelItemPropsProps extends VizSidePanelItemProps {
 }
 
 export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
+  const [currentLanguage] = useRecoilState(languageAtom);
+
   const isSectorOROrgORLocation =
     props.vizType === "sectors" ||
     props.vizType === "organisations" ||
@@ -101,7 +105,13 @@ export function VizSidePanelItem(props: VizSidePanelItemPropsProps) {
             `}
           >
             {props.link ? (
-              <Link to={props.link}>{props.name}</Link>
+              <Link
+                to={`/${currentLanguage === "se" ? "sv" : currentLanguage}${
+                  props.link
+                }`}
+              >
+                {props.name}
+              </Link>
             ) : (
               props.name
             )}

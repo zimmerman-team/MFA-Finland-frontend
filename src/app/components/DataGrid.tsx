@@ -3,28 +3,28 @@ import get from "lodash/get";
 import maxBy from "lodash/maxBy";
 import { useRecoilState } from "recoil";
 import { useLocation } from "react-router-dom";
+import { MFALogo2 } from "app/assets/MFALogo2";
 import { Grid, Hidden } from "@material-ui/core";
 import { useCMSData } from "app/hooks/useCMSData";
 import { SDGviz } from "app/components/Charts/sdg";
 import { BarChart } from "app/components/Charts/bar";
 import { Geomap } from "app/components/Charts/geomap";
 import { GridWidget } from "app/components/GridWidget";
+import { useWindowSize } from "app/hooks/useWindowSize";
 import { Treemap } from "app/components/Charts/treemap";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
-
+import { getCMSContent } from "app/utils/getCMSContent";
+import { VizLoader } from "app/modules/common/viz-loader";
+import { Collapsable } from "app/components/Collapseable";
+import { SDGvizItemProps } from "app/components/Charts/sdg/data";
 import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { Legend } from "app/components/Charts/geomap/common/Legend";
 import { DataProps } from "app/components/Charts/thematicareas/data";
-import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
 import { TreemapDataModel } from "app/components/Charts/treemap/data";
-import { SDGvizItemProps } from "app/components/Charts/sdg/data";
-import { VizLoader } from "app/modules/common/viz-loader";
-import { Collapsable } from "app/components/Collapseable";
+import { languageAtom, selectedFilterAtom } from "app/state/recoil/atoms";
+import { formatDataForViz } from "app/components/Charts/modules/budgetlines";
 import { SunburstChartSimplified } from "app/components/Charts/sunburst-simplified";
-import { useWindowSize } from "app/hooks/useWindowSize";
+import { BudgetLinesBarChart } from "app/components/Charts/bar/variations/budgetlines";
 import { ContactInformation } from "app/modules/detail-modules/country-detail-module/ContactInformation";
-import { getCMSContent } from "app/utils/getCMSContent";
-import { MFALogo2 } from "app/assets/MFALogo2";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -59,6 +59,7 @@ export const DataGrid = (props: DataGridProps) => {
   const location = useLocation();
   const [width] = useWindowSize();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
 
   const isOrgTypeDetail = location.pathname.indexOf("organisation-types") > -1;
@@ -174,7 +175,11 @@ export const DataGrid = (props: DataGridProps) => {
     }
     if (isRegionDetail) {
       return {
-        label: "Finland and the region in development cooperation?",
+        label: get(
+          cmsData,
+          "general.regiondevelopmentcooperation",
+          "Finland and the region in development cooperation?"
+        ),
         text: regionContent,
       };
     }
@@ -270,7 +275,13 @@ export const DataGrid = (props: DataGridProps) => {
   }
 
   function getAboutBlockContent() {
-    if (isOrgTypeDetail || isOrgDetail || isSectorDetail || isRegionDetail) {
+    if (
+      isOrgTypeDetail ||
+      isOrgDetail ||
+      isSectorDetail ||
+      isRegionDetail ||
+      (isCountryDetail && props.countryData && !props.countryData.isPartner)
+    ) {
       return {
         label: "",
         text: "",
@@ -292,8 +303,33 @@ export const DataGrid = (props: DataGridProps) => {
   }
 
   function renderAboutContent(): JSX.Element {
-    if (isCountryDetail) {
-      return <></>;
+    if (isCountryDetail && props.countryData && props.countryData.isPartner) {
+      return (
+        <ul
+          css={`
+            margin: 0;
+            padding: 0 10px 0 0;
+            list-style-type: none;
+
+            > li {
+              margin-bottom: 10px;
+
+              > a {
+                text-decoration: underline;
+              }
+            }
+          `}
+        >
+          {props.countryData &&
+            props.countryData.news.map((n: any) => (
+              <li key={n.title}>
+                <a href={n.link} target="_blank" rel="noreferrer">
+                  {n.title}
+                </a>
+              </li>
+            ))}
+        </ul>
+      );
     }
 
     if (aboutContent.icon) {
@@ -305,6 +341,11 @@ export const DataGrid = (props: DataGridProps) => {
     }
     return (
       <p
+        css={`
+          a {
+            text-decoration: underline;
+          }
+        `}
         style={{ lineHeight: "18px", fontSize: "16px" }}
         dangerouslySetInnerHTML={{ __html: aboutContent.text || "" }}
       />
@@ -356,6 +397,7 @@ export const DataGrid = (props: DataGridProps) => {
               onSelectChange={() => null}
               setSelectedVizItem={() => null}
               hideODAGNI={hideODAGNI()}
+              isOnDataGrid
             />
           )}
         </GridWidget>
@@ -469,7 +511,7 @@ export const DataGrid = (props: DataGridProps) => {
             childrencontainerStyle={{ paddingTop: 33 }}
           >
             {isCountryDetail ? (
-              <ContactInformation />
+              <ContactInformation data={props.countryData.contact} />
             ) : (
               <>
                 <p
@@ -548,7 +590,10 @@ export const DataGrid = (props: DataGridProps) => {
               setVizCompData={() => null}
               onSelectChange={() => null}
               setSelectedVizItem={() => null}
-              data={props.budgetLinesBarChartData}
+              data={formatDataForViz(
+                props.budgetLinesBarChartData,
+                currentLanguage
+              )}
             />
           )}
         </GridWidget>

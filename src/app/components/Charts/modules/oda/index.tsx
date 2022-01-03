@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import filter from "lodash/filter";
+import { useLocation } from "react-use";
 import { useCMSData } from "app/hooks/useCMSData";
 import { BarChart } from "app/components/Charts/bar";
 import {
@@ -12,18 +13,19 @@ import {
 } from "app/components/Charts/bar/data";
 import { DataTable } from "app/components/Charts/table";
 import { VizLoader } from "app/modules/common/viz-loader";
+import { getLineName } from "app/components/Charts/bar/utils";
 import { SimpleBarChart } from "app/components/Charts/bar/simple";
 import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
-import { useLocation } from "react-use";
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
   vizLevel: number;
   activeTab: string;
   activeTabData: any;
+  currentLanguage: string;
   scrollableHeight: number;
   odaBudgetLinesChartData: any;
   odaBudgetLinesChartLoading: boolean;
@@ -38,6 +40,7 @@ export function ODAvizModule(props: ODAvizModuleProps) {
     ? {
         data: props.odaBudgetLinesChartData.map((item: any) => ({
           ...item,
+          line: item[getLineName(props.currentLanguage)],
           year: props.selectedVizItemId,
         })),
         options: ODAbudgetLinesDataTableOptions,

@@ -2,8 +2,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
 import useFitText from "use-fit-text";
+import { useRecoilState } from "recoil";
 import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
+import { getName } from "app/components/Charts/sdg";
+import { languageAtom } from "app/state/recoil/atoms";
 import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 const containercss = css`
@@ -26,6 +29,7 @@ const containercss = css`
 
 export function TreeemapNode(props: any) {
   const { node } = props;
+  const [currentLanguage] = useRecoilState(languageAtom);
   const { fontSize, ref } = useFitText({ logLevel: "none" });
   return (
     <div
@@ -70,9 +74,11 @@ export function TreeemapNode(props: any) {
     >
       {(node.width > 99 || node.height > 99) && (
         <div>
-          <div>{node.data.name}</div>
+          <div>{node.data[getName(currentLanguage)] || node.data.name}</div>
           <div css="width: 100%;height: 5px;" />
-          <div>{formatLargeAmountsWithPrefix(node.data.value)}</div>
+          <div>
+            {formatLargeAmountsWithPrefix(node.data.value, currentLanguage)}
+          </div>
         </div>
       )}
     </div>

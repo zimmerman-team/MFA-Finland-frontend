@@ -1,6 +1,9 @@
 import React from "react";
+import { useRecoilState } from "recoil";
 import { Popover } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import { css } from "styled-components/macro";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export function LanguagePopover(
   id: string | undefined,
@@ -12,6 +15,9 @@ export function LanguagePopover(
     (arg0: string): void;
   }
 ) {
+  const history = useHistory();
+  const [currentLanguage] = useRecoilState(languageAtom);
+
   const removeButtonStyling = css`
     background: none;
     color: inherit;
@@ -26,7 +32,7 @@ export function LanguagePopover(
     font-size: 14px;
     line-height: 17px;
     letter-spacing: 0.15px;
-    color: #2e4982;
+    color: #002561;
 
     :hover {
       background-color: #ecf1fa;
@@ -39,6 +45,35 @@ export function LanguagePopover(
       border-radius: 10px;
     }
   `;
+
+  function onLanguageChange(lang: string) {
+    const prevLang = currentLanguage === "se" ? "sv" : currentLanguage;
+    setLanguage(lang);
+    history.push(
+      `${history.location.pathname.replace(
+        `/${prevLang}`,
+        `/${lang === "se" ? "sv" : lang}`
+      )}${
+        history.location.search.length > 0 ? `?${history.location.search}` : ""
+      }`
+    );
+    handleClose();
+  }
+
+  React.useEffect(() => {
+    history.listen((location: any) => {
+      const urlParamLang = location.pathname.split("/")[1];
+      if (
+        location.pathname.split("/")[1] &&
+        currentLanguage !== urlParamLang &&
+        (urlParamLang === "en" ||
+          urlParamLang === "fi" ||
+          urlParamLang === "sv")
+      ) {
+        setLanguage(urlParamLang === "sv" ? "se" : urlParamLang);
+      }
+    });
+  }, []);
 
   return (
     <Popover
@@ -82,32 +117,27 @@ export function LanguagePopover(
         <button
           type="button"
           css={removeButtonStyling}
+          onClick={() => onLanguageChange("en")}
           aria-label="Switch language to Finnish"
-          onClick={() => {
-            setLanguage("en");
-            handleClose();
-          }}
         >
           English
         </button>
         <button
           type="button"
           css={removeButtonStyling}
+          onClick={() => onLanguageChange("fi")}
           aria-label="Switch language to Finnish"
-          onClick={() => {
-            setLanguage("fi");
-            handleClose();
-          }}
         >
-          Finnish
+          Suomi
         </button>
-        {/* <div
-          onClick={() => {
-            setLanguage("se");
-          }}
+        <button
+          type="button"
+          css={removeButtonStyling}
+          onClick={() => onLanguageChange("se")}
+          aria-label="Switch language to Swedish"
         >
-          Swedish
-        </div> */}
+          Svenska
+        </button>
       </div>
     </Popover>
   );

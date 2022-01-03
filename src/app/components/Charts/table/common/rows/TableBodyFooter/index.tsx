@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { SelectableRows } from "mui-datatables";
+import { useCMSData } from "app/hooks/useCMSData";
 import { formatLocale } from "app/utils/formatLocale";
 
 export interface TableBodyFooterProps {
@@ -15,9 +16,10 @@ export interface TableBodyFooterProps {
 }
 
 export const TableBodyFooter = (props: TableBodyFooterProps) => {
+  const cmsData = useCMSData({ returnData: true });
   const styles = {
     cell: css`
-      background-color: #2e4982;
+      background-color: #002561;
       height: 56px;
     `,
     typographyContainer: css`
@@ -57,13 +59,13 @@ export const TableBodyFooter = (props: TableBodyFooterProps) => {
         <TableCell colSpan={6} css={styles.cell}>
           <div css={styles.typographyContainer}>
             <Typography variant="body2" css={typographyStyle(24)}>
-              Disbursement type:
+              {get(cmsData, "viz.disbursementstype", "Disbursement type")}:
             </Typography>
             <Typography variant="body2" css={typographyStyle(110)}>
               {formatLocale(disbursement)}
             </Typography>
             <Typography variant="body2" css={typographyStyle(24)}>
-              Commitment type:
+              {get(cmsData, "viz.committmentstype", "Commitment type")}:
             </Typography>
             <Typography variant="body2" css={typographyStyle(0)}>
               {formatLocale(commitment)}

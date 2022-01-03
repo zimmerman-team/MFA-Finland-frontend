@@ -47,7 +47,7 @@ export function Collapsable(props: any) {
     card: css`
       background-color: white;
       padding: 16px;
-      height: 258px;
+      min-height: 258px;
       width: 192px;
       border-radius: 15px;
       filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.12));

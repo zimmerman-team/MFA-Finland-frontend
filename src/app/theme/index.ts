@@ -34,7 +34,7 @@ export const ProjectTextStyles = {
   },
 };
 
-export const PrimaryColor = ["#2E4982", "#F8F8F8", "#FFFFFF", "#4F6797"];
+export const PrimaryColor = ["#002561", "#F8F8F8", "#FFFFFF", "#4F6797"];
 export const SecondaryColor = ["#ECF1FA", "#BCC6D6", "#888888", "#E3E3E3"];
 
 export const ProjectPalette: ProjectPalette = {
@@ -58,7 +58,7 @@ export const ProjectPalette: ProjectPalette = {
     A200: "#aaaaaa",
   },
   text: {
-    primary: "#2E4982",
+    primary: "#002561",
     // secondary: '#fff',
     secondary: "#6f7173",
     disabled: "rgba(0, 0, 0, 0.38)",
@@ -66,7 +66,7 @@ export const ProjectPalette: ProjectPalette = {
   },
   divider: "rgba(0, 0, 0, 0.12)",
   primary: {
-    main: "#2E4982",
+    main: "#002561",
     light: "#2f3b52",
     dark: "rgb(25, 32, 46)",
     contrastText: "#fff",
@@ -280,6 +280,14 @@ export default createMuiTheme({
       root: {
         paddingTop: 12,
         paddingBottom: 12,
+      },
+    },
+    MuiTooltip: {
+      tooltip: {
+        color: "#002561",
+        fontSize: "12px",
+        backgroundColor: "#fff",
+        boxShadow: "0px 1px 8px rgba(0, 0, 0, 0.12)",
       },
     },
   },

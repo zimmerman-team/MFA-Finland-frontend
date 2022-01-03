@@ -45,6 +45,7 @@ export const CheckboxGridListItem = (props: CheckboxListItemProps) => {
           >
             <Checkbox
               css={styles.checkbox}
+              aria-label={`select ${node.name} filter option`}
               color="default"
               checked={props.selectedItems.indexOf(node.code) > -1}
               onChange={() => props.onFilterCheckboxChange(node.code)}
