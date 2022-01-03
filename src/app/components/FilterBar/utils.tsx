@@ -207,15 +207,11 @@ function createThematicChip(
       if (fAreaIndex > -1) {
         label = `${get(
           cmsData.priorityAreas,
-          `Priorityarea${fAreaIndex + 1}${
-            currentLanguage === "fi" ? "" : `_${currentLanguage}`
-          }`,
+          `Priorityarea${fAreaIndex + 1}`,
           ""
         )} - ${get(
           cmsData.priorityAreas,
-          `${tag.indexOf("primary") > -1 ? "main" : "secondary"}${
-            currentLanguage === "fi" ? "" : `_${currentLanguage}`
-          }`,
+          `${tag.indexOf("primary") > -1 ? "main" : "secondary"}`,
           ""
         )}`;
       }
@@ -245,15 +241,11 @@ function createThematicChip(
   if (fAreaIndex > -1) {
     label = `${get(
       cmsData.priorityAreas,
-      `Priorityarea${fAreaIndex + 1}${
-        currentLanguage === "fi" ? "" : `_${currentLanguage}`
-      }`,
+      `Priorityarea${fAreaIndex + 1}`,
       ""
     )} - ${get(
       cmsData.priorityAreas,
-      `${tag.indexOf("primary") > -1 ? "main" : "secondary"}${
-        currentLanguage === "fi" ? "" : `_${currentLanguage}`
-      }`,
+      `${tag.indexOf("primary") > -1 ? "main" : "secondary"}`,
       ""
     )}`;
   }
