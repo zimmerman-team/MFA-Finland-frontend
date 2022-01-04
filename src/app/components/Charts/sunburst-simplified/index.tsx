@@ -212,6 +212,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
             .map((item: any) => {
               return (
                 <div
+                  data-cy={`legend-${item.title}`}
                   tabIndex={0}
                   role="button"
                   key={item.title}

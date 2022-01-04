@@ -144,7 +144,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
         lg={props.showOnlyViz ? 12 : 6}
         xl={props.showOnlyViz ? 12 : 6}
         css={containercss}
-        data-cy="priority-area-pie-chart"
+        data-cy="viz-pie-chart"
       >
         {props.data.map((item: DataProps, index: number) => (
           <React.Fragment key={item.name}>
@@ -159,6 +159,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
               <div />
             </div>
             <div
+              data-cy={`viz-pie-${item.name}`}
               tabIndex={0}
               role="button"
               aria-label={`go to ${item.name} priority detail page`}
