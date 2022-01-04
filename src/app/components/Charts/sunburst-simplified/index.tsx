@@ -6,9 +6,13 @@ import find from "lodash/find";
 import sumBy from "lodash/sumBy";
 import findIndex from "lodash/findIndex";
 import { SunburstPoint } from "react-vis";
+import { useCMSData } from "app/hooks/useCMSData";
 
 import { SunburstChartProps } from "app/components/Charts/sunburst/data";
-import { getSelectedItemData } from "app/components/Charts/sunburst/utils";
+import {
+  getSelectedItemData,
+  getTitle,
+} from "app/components/Charts/sunburst/utils";
 
 import { SunburstVizSimplified } from "app/components/Charts/sunburst-simplified/common/viz";
 import { InnerVizStatSimplified } from "app/components/Charts/sunburst-simplified/common/innervizstat";
@@ -16,8 +20,11 @@ import { containercssSimplified } from "app/components/Charts/sunburst-simplifie
 import Grid from "@material-ui/core/Grid";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { backbuttoncss } from "../sunburst/common/innervizstat/styles";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export function SunburstChartSimplified(props: SunburstChartProps) {
+  const cmsData = useCMSData({ returnData: true });
   const [selectedCount, setSelectedCount] = React.useState(0);
   const [localData, setLocalData] = React.useState(props.data);
   const [selected, setSelected] = React.useState({ name: "", code: " " });
@@ -30,10 +37,13 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
   const [clickedNode, setClickedNode] = React.useState<SunburstPoint | null>(
     null
   );
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   React.useEffect(() => {
     // if (selected.code.length !== 3 || prevSelections.length === 1) {
-    setLocalData(getSelectedItemData(selected.name, props.data));
+    setLocalData(
+      getSelectedItemData(selected.name, props.data, currentLanguage)
+    );
     // }
   }, [selected, props.data]);
 
@@ -54,7 +64,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
   function goBack() {
     const prevIndex = findIndex(
       prevSelections,
-      (ps: { name: string; code: string }) => ps.name === selected.name
+      (ps: { name: string; code: string }) => ps.code === selected.code
     );
     setSelected(
       prevIndex < 1 ? { name: "", code: "" } : prevSelections[prevIndex - 1]
@@ -88,9 +98,12 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
       if (fItem) {
         setPrevSelections([
           ...prevSelections,
-          { name: fItem.title, code: fItem.code },
+          { name: fItem[getTitle(currentLanguage)], code: fItem.code },
         ]);
-        setSelected({ name: fItem.title, code: fItem.code });
+        setSelected({
+          name: fItem[getTitle(currentLanguage)],
+          code: fItem.code,
+        });
       }
     }
   }, [props.selectedVizItemId]);
@@ -102,7 +115,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
       children: data.children.map((child: any) => {
         let updChild: any = {
           code: child.code,
-          title: child.title,
+          title: child[getTitle(currentLanguage)],
           color: child.color,
           disbursed: child.size,
           committed: child.committed,
@@ -112,7 +125,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
           if (
             selected.code.length === 3 &&
             prevSelections.length > 0 &&
-            child.title === selected.name
+            child[getTitle(currentLanguage)] === selected.name
           ) {
             updChild = {
               ...updChild,
@@ -155,7 +168,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
       <Grid id="sunburst-back" item xs={12} sm={3} md={3} lg={3}>
         {prevSelections.length > 0 && (
           <div css={backbuttoncss} onClick={goBack}>
-            Back
+            {get(cmsData, "general.back", "Back")}
           </div>
         )}
       </Grid>
@@ -200,10 +213,25 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
               return (
                 <div
                   data-cy={`legend-${item.title}`}
+                  tabIndex={0}
+                  role="button"
                   key={item.title}
+                  aria-label={`${item[getTitle(currentLanguage)]}`}
                   onClick={() => {
-                    setClickedNode(item);
+                    setClickedNode({
+                      ...item,
+                      title: item[getTitle(currentLanguage)],
+                    });
                     setHoveredNode(null);
+                  }}
+                  onKeyPress={(event: React.KeyboardEvent) => {
+                    if (event.key === "Enter") {
+                      setClickedNode({
+                        ...item,
+                        title: item[getTitle(currentLanguage)],
+                      });
+                      setHoveredNode(null);
+                    }
                   }}
                   css={`
                     display: flex;
@@ -237,7 +265,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
                       font-size: 12px;
                     `}
                   >
-                    {item.title} <br />
+                    {item[getTitle(currentLanguage)]} <br />
                   </span>
                   <span
                     css={`
@@ -246,7 +274,7 @@ export function SunburstChartSimplified(props: SunburstChartProps) {
                       font-size: 12px;
                     `}
                   >
-                    {formatMoneyWithPrefix(item.size)}
+                    {formatMoneyWithPrefix(item.size, currentLanguage)}
                     {` | ${getPercentage(item)}%`}
                   </span>
                 </div>

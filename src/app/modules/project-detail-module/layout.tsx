@@ -73,6 +73,15 @@ export const ProjectDetailModuleLayout = (
     (item: SDGvizItemProps) => item.committed > 0 || item.disbursed > 0
   );
 
+  let dates = get(
+    cmsData,
+    "general.activitiesfromto",
+    "activities from {start} to {end}"
+  );
+  dates = dates || "activities from {start} to {end}";
+  dates = dates.replace("{start}", props.metadata.dates[0]);
+  dates = dates.replace("{end}", props.metadata.dates[1]);
+
   return (
     <ModuleContainer>
       {/* ------------------------------------ */}
@@ -151,16 +160,7 @@ export const ProjectDetailModuleLayout = (
             {props.metadata.iati_identifier}
           </Typography>
           <Box width="100px" />
-          <Typography css={FieldOneStyle}>
-            activities from{" "}
-            <span css={TextHighlightStyle}>
-              <b>{props.metadata.dates[0]}</b>
-            </span>{" "}
-            To{" "}
-            <span css={TextHighlightStyle}>
-              <b>{props.metadata.dates[1]}</b>
-            </span>{" "}
-          </Typography>
+          <Typography css={FieldOneStyle}>{dates}</Typography>
         </Grid>
         <Hidden smDown>
           <Box width="100%" height="24px" />
@@ -238,6 +238,7 @@ export const ProjectDetailModuleLayout = (
               margin-top: 16px;
               position: sticky;
             `}
+            data-cy="activity-in-page-nav"
           >
             <InPageNavigation
               cmsData={cmsData}

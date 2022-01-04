@@ -3,6 +3,7 @@
 import React from "react";
 import get from "lodash/get";
 import maxBy from "lodash/maxBy";
+import { useRecoilState } from "recoil";
 import { PrimaryColor } from "app/theme";
 import Grid from "@material-ui/core/Grid";
 import { ResponsivePie } from "@nivo/pie";
@@ -11,6 +12,7 @@ import { hexToRGBA } from "app/utils/hexToRgba";
 import { useCMSData } from "app/hooks/useCMSData";
 import { useHistory, Link } from "react-router-dom";
 import { formatLocale } from "app/utils/formatLocale";
+import { languageAtom } from "app/state/recoil/atoms";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import {
   directions,
@@ -32,6 +34,7 @@ import {
 export function ThematicAreas(props: ThematicAreasProps) {
   const history = useHistory();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const maxValue = get(maxBy(props.data, "value"), "value", 0);
 
   if (props.showSingleCircle) {
@@ -71,7 +74,7 @@ export function ThematicAreas(props: ThematicAreasProps) {
           }
           circle {
             stroke-width: 1px;
-            stroke: #2e4982;
+            stroke: #002561;
           }
         `}
       >
@@ -96,18 +99,18 @@ export function ThematicAreas(props: ThematicAreasProps) {
           ]}
           margin={{ top: 80, right: 0, bottom: 30, left: 0 }}
           borderWidth={0.5}
-          borderColor="#2e4982"
+          borderColor="#002561"
           arcLinkLabel={(e: any) => {
-            return `${formatMoneyWithPrefix(e.value)}`;
+            return `${formatMoneyWithPrefix(e.value, currentLanguage)}`;
           }}
-          colors={["#E7C3CD", "#AE4764"]}
+          colors={[selected.color, hexToRGBA(selected.color, 0.5)]}
           arcLinkLabelsSkipAngle={6}
           arcLinkLabelsTextOffset={6}
-          arcLinkLabelsTextColor="#2e4982"
+          arcLinkLabelsTextColor="#002561"
           arcLinkLabelsOffset={1}
           arcLinkLabelsDiagonalLength={7}
           arcLinkLabelsStraightLength={8}
-          arcLinkLabelsColor="#2e4982"
+          arcLinkLabelsColor="#002561"
           enableArcLabels={false}
           isInteractive={false}
           legends={[
@@ -157,6 +160,9 @@ export function ThematicAreas(props: ThematicAreasProps) {
             </div>
             <div
               data-cy={`viz-pie-${item.name}`}
+              tabIndex={0}
+              role="button"
+              aria-label={`go to ${item.name} priority detail page`}
               css={itemcirclelabelcss(
                 index,
                 !props.showOnlyViz,
@@ -164,6 +170,15 @@ export function ThematicAreas(props: ThematicAreasProps) {
               )}
               onClick={() => {
                 if (props.linkedLabels) {
+                  history.push(
+                    `/thematic-area/${item.ref}${
+                      history.location.search.length > 0 ? "/" : ""
+                    }${history.location.search}`
+                  );
+                }
+              }}
+              onKeyPress={(e: React.KeyboardEvent) => {
+                if (e.key === "Enter" && props.linkedLabels) {
                   history.push(
                     `/thematic-area/${item.ref}${
                       history.location.search.length > 0 ? "/" : ""
@@ -180,7 +195,8 @@ export function ThematicAreas(props: ThematicAreasProps) {
               {props.showOnlyViz && (
                 <div css="margin-top: 5px;">
                   {formatMoneyWithPrefix(
-                    item.primary.value + item.secondary.value
+                    item.primary.value + item.secondary.value,
+                    currentLanguage
                   )}
                 </div>
               )}
@@ -199,7 +215,11 @@ export function ThematicAreas(props: ThematicAreasProps) {
           </div>
           {props.data.map((item: DataProps) => (
             <div css={rightsideinfopanelitem} key={item.name}>
-              <Link to={`/thematic-area/${item.ref}`}>
+              <Link
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/thematic-area/${item.ref}`}
+              >
                 {get(
                   cmsData.priorityAreas,
                   `${item.ref.split("|")[0].replace(/ /g, "")}`,

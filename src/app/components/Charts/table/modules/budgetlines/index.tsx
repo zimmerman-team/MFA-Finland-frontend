@@ -49,7 +49,11 @@ export function BudgetLinesFragmentTable(props: BudgetLinesFragmentTableProps) {
   React.useEffect(() => setShownData(props.data), [props.data]);
 
   const MoreButton = () => (
-    <Tooltip disableFocusListener title="More Options">
+    <Tooltip
+      disableFocusListener
+      title="More Options"
+      aria-label="More Options"
+    >
       <MoreActions data={props.csvData} viz="budget-lines" />
     </Tooltip>
   );

@@ -86,7 +86,12 @@ export function SDGvizItem(props: CompProps) {
             sdg: [...selectedFilters.sdg, props.number.toString()],
           });
           setTimeout(
-            () => history.push(`/viz/projects${history.location.search}`),
+            () =>
+              history.push(
+                `/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/viz/projects${history.location.search}`
+              ),
             200
           );
         }

@@ -7,7 +7,7 @@ context("Result", () => {
 
   it("should show correct title", () => {
     cy.acceptCookie();
-    cy.visit("localhost:3000/result");
+    cy.visit("localhost:3000/data");
     cy.get("h2").contains("Development cooperation results").should("exist");
   });
 

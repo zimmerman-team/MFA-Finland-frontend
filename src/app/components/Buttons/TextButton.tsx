@@ -4,6 +4,8 @@ import React from "react";
 import theme from "app/theme";
 import { NavLink } from "react-router-dom";
 import { css } from "styled-components/macro";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 interface TextButtonprops {
   label: string;
@@ -32,8 +34,17 @@ const containercss = css`
 `;
 
 export const TextButton = (props: TextButtonprops) => {
+  const [currentLanguage] = useRecoilState(languageAtom);
+
   return props.path ? (
-    <NavLink to={props.path || ""} css={containercss}>
+    <NavLink
+      css={containercss}
+      to={
+        props.path
+          ? `/${currentLanguage === "se" ? "sv" : currentLanguage}${props.path}`
+          : ""
+      }
+    >
       {props.label}
     </NavLink>
   ) : (

@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from "react";
+import { useRecoilState } from "recoil";
 import { Typography } from "@material-ui/core";
+import { languageAtom } from "app/state/recoil/atoms";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { totalcss } from "app/components/Charts/sunburst/common/innervizstat/styles";
 
@@ -10,6 +12,7 @@ interface InnerVizStatProps {
 }
 
 export function InnerVizStat(props: InnerVizStatProps) {
+  const [currentLanguage] = useRecoilState(languageAtom);
   return (
     <div css={totalcss}>
       <Typography
@@ -22,7 +25,7 @@ export function InnerVizStat(props: InnerVizStatProps) {
           margin-bottom: 6px;
         `}
       >
-        {formatMoneyWithPrefix(props.count)}
+        {formatMoneyWithPrefix(props.count, currentLanguage)}
       </Typography>
     </div>
   );

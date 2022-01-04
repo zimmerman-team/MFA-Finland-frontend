@@ -15,7 +15,7 @@ const containercss = css`
   padding: 8px;
   width: 250px;
   display: flex;
-  color: #2e4982;
+  color: #002561;
   font-size: 14px;
   background: #fff;
   flex-direction: column;
@@ -30,22 +30,26 @@ const iconscontainercss = css`
 
 export function ShareTooltip(cmsData: any) {
   const url = window.location.href;
-  const title = "MFA IATI data portal";
   return (
     <div css={containercss}>
       <Typography variant="body2">
         {get(cmsData.cmsData, "tooltips.share_button", "Share the link via")}
       </Typography>
       <div css={iconscontainercss}>
-        <FacebookShareButton type="button" autoFocus url={url} quote={title}>
+        <FacebookShareButton
+          type="button"
+          autoFocus
+          url={url}
+          quote="OpenAid.fi"
+        >
           <FacebookIcon size={38} round />
         </FacebookShareButton>
 
-        <LinkedinShareButton type="button" url={url} title={title}>
+        <LinkedinShareButton type="button" url={url} title="OpenAid.fi">
           <LinkedinIcon size={38} round />
         </LinkedinShareButton>
 
-        <TwitterShareButton type="button" url={url} title={title}>
+        <TwitterShareButton type="button" url={url} title="#OpenAidFi">
           <TwitterIcon size={38} round />
         </TwitterShareButton>
       </div>

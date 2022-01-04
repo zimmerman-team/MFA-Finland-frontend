@@ -63,6 +63,7 @@ export const BottomActions = (props: BottomActions) => {
   return (
     <div css={styles.container}>
       <PillButton
+        data-cy="PillButton-reset filters"
         variant="text"
         css={styles.secondaryButton}
         onClick={props.onReset}
@@ -72,7 +73,11 @@ export const BottomActions = (props: BottomActions) => {
           : get(cmsData, "filters.resetall", "Reset filters")}
       </PillButton>
       {props.onApply && (
-        <PillButton css={styles.primaryButton} onClick={props.onApply}>
+        <PillButton
+          data-cy="PillButton-apply"
+          css={styles.primaryButton}
+          onClick={props.onApply}
+        >
           {get(cmsData, "filters.apply", "Apply")}
         </PillButton>
       )}

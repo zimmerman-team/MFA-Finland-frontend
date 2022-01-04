@@ -1,8 +1,10 @@
 import React from "react";
+import { useRecoilState } from "recoil";
+import { PrimaryColor } from "app/theme";
 import { css } from "styled-components/macro";
 import { Typography } from "@material-ui/core";
+import { languageAtom } from "app/state/recoil/atoms";
 import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
-import { PrimaryColor } from "app/theme";
 
 interface LegendProps {
   label: string;
@@ -48,6 +50,7 @@ const value = css`
 `;
 
 export const Legend = (props: LegendProps) => {
+  const [currentLanguage] = useRecoilState(languageAtom);
   return (
     <div css={container}>
       <Typography variant="subtitle2" css={label}>
@@ -60,7 +63,7 @@ export const Legend = (props: LegendProps) => {
           {props.startValue}
         </Typography>
         <Typography variant="body2" css={value}>
-          {formatMoneyWithPrefix(props.totalValue)}
+          {formatMoneyWithPrefix(props.totalValue, currentLanguage)}
         </Typography>
       </div>
     </div>

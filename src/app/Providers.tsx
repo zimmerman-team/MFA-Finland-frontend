@@ -10,7 +10,6 @@ import { StoreProvider, useStoreRehydrated } from "easy-peasy";
 import { Container, StylesProvider, CssBaseline } from "@material-ui/core";
 import { AppBar } from "app/components/AppBar";
 import { FilterBar } from "app/components/FilterBar";
-import useCookie from "@devhammed/use-cookie";
 import { ThirdPartyScripts } from "app/third-party-scripts/Scripts";
 
 type ProviderProps = {
@@ -18,14 +17,12 @@ type ProviderProps = {
 };
 
 function Providers(props: ProviderProps) {
-  const [userConsent] = useCookie("userConsent", "false");
-
   return (
     /* material ui theme provider */
     <RecoilRoot>
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
-          {userConsent && <ThirdPartyScripts />}
+          <ThirdPartyScripts />
           <CssBaseline />
           <StoreProvider store={store}>
             <AppContainer>

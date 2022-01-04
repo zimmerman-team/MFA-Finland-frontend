@@ -9,6 +9,8 @@ import {
   getMoneyValueWithMetricPrefix,
 } from "app/components/Charts/bar/utils";
 import { TreemapTooltip } from "app/components/Charts/treemap/common/tooltip";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export const transactionsBarData = [
   {
@@ -76,7 +78,8 @@ interface TransactionsBarProps {
 const keys = ["disbursed", "commitment"];
 
 export const TransactionsBar = (props: TransactionsBarProps) => {
-  const range = getRange(props.data, keys);
+  const [currentLanguage] = useRecoilState(languageAtom);
+  const range = getRange(props.data, keys, currentLanguage);
   const values: number[] = [];
   props.data.forEach((item: any) => {
     keys.forEach((key: string) => {

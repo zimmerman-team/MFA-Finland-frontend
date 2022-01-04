@@ -53,7 +53,7 @@ export const SearchResultNavigation = (props: Props) => {
             <SearchResultNavItem
               index={index}
               key={`search-nav-item-${index}`}
-              active={props.activeTab === navItem}
+              active={props.activeTab === navItem.name}
               onClick={() => props.onChange(navItem.name)}
               name={get(props.cmsData, navItem.cmsKey, navItem.name)}
               count={get(props.results, `[${navItem.name}]`, []).count}

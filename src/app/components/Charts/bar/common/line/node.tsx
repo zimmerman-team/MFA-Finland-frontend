@@ -5,7 +5,7 @@ import filter from "lodash/filter";
 export function LineNodes(props: any) {
   return (
     <React.Fragment>
-      {filter(props.points, (item: any) => item.data.x < 2019).map(
+      {filter(props.points, (item: any) => item.data.x < 2020).map(
         (item: any, index: number) => {
           if (index === props.points.length - 1) {
             return null;
@@ -21,13 +21,13 @@ export function LineNodes(props: any) {
               y1={item.y}
               x1={item.x}
               strokeWidth={2}
-              stroke="#E7C3CD"
+              stroke="#F4A490"
               key={`${item.id}-line`}
             />
           );
         }
       )}
-      {filter(props.points, (item: any) => item.data.x < 2020).map(
+      {filter(props.points, (item: any) => item.data.x < 2021).map(
         (item: any) => {
           return (
             <g
@@ -38,7 +38,9 @@ export function LineNodes(props: any) {
             >
               <circle
                 tabIndex={-1}
-                r="6"
+                r="4"
+                stroke="#382D5E"
+                strokeWidth={0.5}
                 css={`
                   pointer-events: none;
                   fill: ${(props.selected
@@ -46,7 +48,7 @@ export function LineNodes(props: any) {
                     : null) === parseInt(item.data.x, 10) ||
                   props.hovered === parseInt(item.data.x, 10)
                     ? item.serieColor
-                    : "#E7C3CD"};
+                    : "#F4A490"};
                 `}
               />
             </g>
