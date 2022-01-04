@@ -9,6 +9,8 @@ import {
   SunburstTooltip,
   SunburstTooltipContent,
 } from "app/components/Charts/sunburst/common/tooltip";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 export function SunburstViz(props: any) {
   const history = useHistory();
@@ -17,6 +19,7 @@ export function SunburstViz(props: any) {
   );
   const showSmTooltip = "ontouchstart" in document.documentElement;
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   return (
     <React.Fragment>
@@ -43,7 +46,11 @@ export function SunburstViz(props: any) {
             props.setSelectedCount(node.size);
           } else {
             // props.onSectorSelectChange(node.code);
-            history.push(`/sectors/${node.code}`);
+            history.push(
+              `/${currentLanguage === "se" ? "sv" : currentLanguage}/sectors/${
+                node.code
+              }`
+            );
           }
         }}
         onValueMouseOver={(
@@ -72,7 +79,9 @@ export function SunburstViz(props: any) {
           close={() => setHoveredNode(null)}
           gotoDetail={() =>
             history.push(
-              `/sectors/${hoveredNode.code}${history.location.search}`
+              `/${currentLanguage === "se" ? "sv" : currentLanguage}/sectors/${
+                hoveredNode.code
+              }${history.location.search}`
             )
           }
           drilldown={() => {

@@ -2,21 +2,23 @@ import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
 import { useMeasure } from "react-use";
+import { useRecoilState } from "recoil";
 import Grid from "@material-ui/core/Grid";
 import { css } from "styled-components/macro";
 import { useHistory } from "react-router-dom";
+import { useCMSData } from "app/hooks/useCMSData";
+import { getName } from "app/components/Charts/sdg";
+import { languageAtom } from "app/state/recoil/atoms";
 import { ResponsiveTreeMapHtml } from "@nivo/treemap";
+import { TreeemapNode } from "app/components/Charts/treemap/common/node";
 import { TreemapTooltip } from "app/components/Charts/treemap/common/tooltip";
+import { SmTooltipContainer } from "app/components/Charts/common/smTooltipContainer";
+import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
 import {
   TreeemapNodeData,
   TreemapProps,
   TreemapVizModel,
 } from "app/components/Charts/treemap/data";
-import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
-import { useCMSData } from "app/hooks/useCMSData";
-
-import { TreeemapNode } from "./common/node";
-import { SmTooltipContainer } from "../common/smTooltipContainer";
 
 const containercss = (height?: number) => css`
   height: ${height || 500}px;
@@ -37,6 +39,7 @@ export function Treemap(props: TreemapProps) {
   const [prevRenderedNodes, setPrevRenderedNodes] = React.useState<
     TreeemapNodeData[][]
   >([]);
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   const showStandardTooltip = !("ontouchstart" in document.documentElement);
 
@@ -47,9 +50,17 @@ export function Treemap(props: TreemapProps) {
     if (node.data.ref) {
       if (detailPage === "locations") {
         if (node.data.ref.length === 2) {
-          history.push(`/countries/${node.data.ref}${history.location.search}`);
+          history.push(
+            `/${currentLanguage === "se" ? "sv" : currentLanguage}/countries/${
+              node.data.ref
+            }${history.location.search}`
+          );
         } else {
-          history.push(`/regions/${node.data.ref}${history.location.search}`);
+          history.push(
+            `/${currentLanguage === "se" ? "sv" : currentLanguage}/regions/${
+              node.data.ref
+            }${history.location.search}`
+          );
         }
       }
       if (detailPage === "organisations") {
@@ -115,7 +126,7 @@ export function Treemap(props: TreemapProps) {
             font-size: 14px;
           `}
         >
-          <b>{e.node.data.name}</b>
+          <b>{e.node.data[getName(currentLanguage)] || e.node.data.name}</b>
         </div>
       );
     }
@@ -165,7 +176,7 @@ export function Treemap(props: TreemapProps) {
       <Grid item sm={12} md={2} lg={3}>
         {drilldownId && (
           <div css={backbuttoncss} onClick={goBack}>
-            Back
+            {get(cmsData, "general.back", "Back")}
           </div>
         )}
       </Grid>
@@ -197,7 +208,11 @@ export function Treemap(props: TreemapProps) {
       {smTooltip && (
         <SmTooltipContainer
           cmsData={cmsData}
-          detailBtnLabel={`${props.label} Detail`}
+          detailBtnLabel={get(
+            cmsData,
+            `viz.${props.label}detail`,
+            `${props.label} detail`
+          )}
           showDrilldownBtn={get(smTooltip, "data.orgs", []).length > 0}
           close={() => setSmTooltip(null)}
           gotoDetail={

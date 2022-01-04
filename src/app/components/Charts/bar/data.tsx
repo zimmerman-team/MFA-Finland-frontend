@@ -19,6 +19,7 @@ export interface BarChartProps {
     translation: { x: number; y: number };
   }) => void;
   hideODAGNI?: boolean;
+  isOnDataGrid?: boolean;
 }
 
 export interface SimpleBarChartProps {
@@ -36,6 +37,8 @@ export interface BarNodeProps extends BarItemProps<any> {
     translation: { x: number; y: number };
   }) => void;
   onZoomOut: () => void;
+  showTooltip?: any;
+  hideTooltip?: any;
 }
 
 export interface BarYearNotice {
@@ -331,7 +334,7 @@ export const simplebarMockData = [
   {
     line: "European Development Fund",
     value: 4700000,
-    valueColor: "#2E4982",
+    valueColor: "#002561",
   },
   {
     line: "Non-country specific development cooperation",
@@ -376,6 +379,24 @@ export const budgetLineKeys = [
   "Support conducted by civil society organisations",
   "Concessional credits",
 ];
+
+export function getBudgetLinesVizKeys(data: any) {
+  const vizKeys: string[] = [];
+  data.forEach((d: any) => {
+    const keys = Object.keys(d);
+    keys.forEach((key: string) => {
+      if (
+        key.indexOf("Color") === -1 &&
+        key.indexOf("Code") === -1 &&
+        key !== "year" &&
+        vizKeys.indexOf(key) === -1
+      ) {
+        vizKeys.push(key);
+      }
+    });
+  });
+  return vizKeys;
+}
 
 export const budgetLinesMockData = [
   {
@@ -502,7 +523,7 @@ export const budgetLinesMockData = [
   {
     year: 2012,
     "European Development Fund": 4410000,
-    "European Development FundColor": "#2E4982",
+    "European Development FundColor": "#002561",
     "Multilateral development cooperation": 33960000,
     "Multilateral development cooperationColor": "#8AA4DB",
     "Non-country specific development cooperation": 398000,
@@ -527,7 +548,7 @@ export const budgetLinesMockData = [
     "Support conducted by civil society organisations": 4235000,
     "Support conducted by civil society organisationsColor": "#ACD1D1",
     "European Development Fund": 66424356.06,
-    "European Development FundColor": "#2E4982",
+    "European Development FundColor": "#002561",
   },
   {
     year: 2014,
@@ -668,7 +689,11 @@ export const ODADataTableColumns: MUIDataTableColumnDef[] = [
 
 export const MoreButton = (props: any) => {
   return (
-    <Tooltip disableFocusListener title="More Options">
+    <Tooltip
+      disableFocusListener
+      title="More Options"
+      aria-label="More Options"
+    >
       <MoreActions data={props.data} viz={get(props.params, "tab", "")} />
     </Tooltip>
   );

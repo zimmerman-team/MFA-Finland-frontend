@@ -2,19 +2,26 @@ import React from "react";
 import get from "lodash/get";
 import find from "lodash/find";
 import sumBy from "lodash/sumBy";
+import { useRecoilState } from "recoil";
 import findIndex from "lodash/findIndex";
 import { SunburstPoint } from "react-vis";
 import { useWindowSize } from "react-use";
 import Grid from "@material-ui/core/Grid";
+import { useCMSData } from "app/hooks/useCMSData";
+import { languageAtom } from "app/state/recoil/atoms";
 import { containercss } from "app/components/Charts/sunburst/styles";
 import { SunburstViz } from "app/components/Charts/sunburst/common/viz";
 import { SunburstChartProps } from "app/components/Charts/sunburst/data";
-import { getSelectedItemData } from "app/components/Charts/sunburst/utils";
 import { InnerVizStat } from "app/components/Charts/sunburst/common/innervizstat";
 import { backbuttoncss } from "app/components/Charts/sunburst/common/innervizstat/styles";
+import {
+  getSelectedItemData,
+  getTitle,
+} from "app/components/Charts/sunburst/utils";
 
 export function SunburstChart(props: SunburstChartProps) {
   const { width } = useWindowSize();
+  const cmsData = useCMSData({ returnData: true });
   const [vizSize, setVizSize] = React.useState(340);
   const [selectedCount, setSelectedCount] = React.useState(0);
   const [localData, setLocalData] = React.useState(props.data);
@@ -22,10 +29,13 @@ export function SunburstChart(props: SunburstChartProps) {
   const [prevSelections, setPrevSelections] = React.useState<
     { name: string; code: string }[]
   >([]);
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   React.useEffect(() => {
     if (selected.code.length !== 3 || prevSelections.length === 1) {
-      setLocalData(getSelectedItemData(selected.name, props.data));
+      setLocalData(
+        getSelectedItemData(selected.name, props.data, currentLanguage)
+      );
     }
   }, [selected, props.data]);
 
@@ -46,7 +56,7 @@ export function SunburstChart(props: SunburstChartProps) {
   function goBack() {
     const prevIndex = findIndex(
       prevSelections,
-      (ps: { name: string; code: string }) => ps.name === selected.name
+      (ps: { name: string; code: string }) => ps.code === selected.code
     );
     setSelected(
       prevIndex < 1 ? { name: "", code: "" } : prevSelections[prevIndex - 1]
@@ -80,9 +90,12 @@ export function SunburstChart(props: SunburstChartProps) {
       if (fItem) {
         setPrevSelections([
           ...prevSelections,
-          { name: fItem.title, code: fItem.code },
+          { name: fItem[getTitle(currentLanguage)], code: fItem.code },
         ]);
-        setSelected({ name: fItem.title, code: fItem.code });
+        setSelected({
+          name: fItem[getTitle(currentLanguage)],
+          code: fItem.code,
+        });
       }
     }
   }, [props.selectedVizItemId]);
@@ -100,7 +113,7 @@ export function SunburstChart(props: SunburstChartProps) {
       children: data.children.map((child: any) => {
         let updChild: any = {
           code: child.code,
-          title: child.title,
+          title: child[getTitle(currentLanguage)],
           color: child.color,
           disbursed: child.size,
           committed: child.committed,
@@ -111,7 +124,7 @@ export function SunburstChart(props: SunburstChartProps) {
           if (
             selected.code.length === 3 &&
             prevSelections.length > 0 &&
-            child.title === selected.name
+            child[getTitle(currentLanguage)] === selected.name
           ) {
             updChild = {
               ...updChild,
@@ -140,7 +153,7 @@ export function SunburstChart(props: SunburstChartProps) {
       <Grid id="sunburst-back" item xs={12} sm={3} md={2} lg={1}>
         {prevSelections.length > 0 && (
           <div css={backbuttoncss} onClick={goBack}>
-            Back
+            {get(cmsData, "general.back", "Back")}
           </div>
         )}
       </Grid>

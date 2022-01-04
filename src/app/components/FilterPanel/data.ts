@@ -324,23 +324,33 @@ export const level3MockData: FilterOption[] = [
 
 export const humanrightfilteroptions = [
   {
-    name: "Not defined",
     code: "Not defined",
+    name: "Not defined",
+    name_fi: "Ei määritelty",
+    name_se: "Inte definierad",
   },
   {
-    name: "Human rights blind",
     code: "Human rights blind",
+    name: "Human rights blind",
+    name_fi: "Ihmisoikeussokea",
+    name_se: "Blind i fråga om mänskliga rättigheter",
   },
   {
-    name: "Human rights sensitive",
     code: "Human rights sensitive",
+    name: "Human rights sensitive",
+    name_fi: "Ihmisoikeudet huomioiva",
+    name_se: "Sensitiv i fråga om mänskliga rättigheter",
   },
   {
-    name: "Human rights progressive",
     code: "Human rights progressive",
+    name: "Human rights progressive",
+    name_fi: "Ihmisoikeuksia edistävä",
+    name_se: "Progressiv i fråga mänskliga rättigheter",
   },
   {
-    name: "Human rights transformative",
     code: "Human rights transformative",
+    name: "Human rights transformative",
+    name_fi: "Ihmisoikeushaasteisiin tarttuva",
+    name_se: "Aktiv i fråga om mänskliga rättigheter",
   },
 ];

@@ -2,16 +2,46 @@ import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 import { formatLocale } from "app/utils/formatLocale";
 import { VizSidePanelItemProps } from "app/components/VizSidePanel/data";
-import { budgetLineKeys, BarYearNotice } from "./data";
+import {
+  BarYearNotice,
+  getBudgetLinesVizKeys,
+} from "app/components/Charts/bar/data";
 
 /* eslint-disable no-plusplus */
 const ranges = [
-  { divider: 1e9, suffix: "Bn", abbr: "€ BLN" },
-  { divider: 1e6, suffix: "MM", abbr: "€ MLN" },
-  { divider: 1e3, suffix: "k", abbr: "€ K" },
+  {
+    divider: 1e9,
+    suffix: "Bn",
+    abbr_en: "€ bn",
+    abbr_fi: "€ mrd.",
+    abbr_se: "€ miljarder",
+  },
+  {
+    divider: 1e6,
+    suffix: "MM",
+    abbr_en: "€ mill.",
+    abbr_fi: "€ milj.",
+    abbr_se: "€ miljoner",
+  },
+  {
+    divider: 1e3,
+    suffix: "k",
+    abbr_en: "€ K",
+    abbr_fi: "€ tuhatta",
+    abbr_se: "€ tusen",
+  },
 ];
 
-export function getRange(data: any, fields: string[]) {
+export function getLineName(
+  currentLanguage: string
+): "line" | "line_fi" | "line_se" {
+  if (currentLanguage === "se") return "line_se";
+  if (currentLanguage === "fi") return "line_fi";
+  if (currentLanguage === "en") return "line";
+  return "line";
+}
+
+export function getRange(data: any, fields: string[], lang = "en") {
   const rangesCount = [0, 0, 0];
 
   data.forEach((item: any) => {
@@ -31,16 +61,16 @@ export function getRange(data: any, fields: string[]) {
   if (rangesCount[0] > rangesCount[1])
     return {
       index: 0,
-      abbr: ranges[0].abbr,
+      abbr: get(ranges[0], `abbr_${lang}`, ranges[0].abbr_en),
     };
   if (rangesCount[1] > rangesCount[2])
     return {
       index: 1,
-      abbr: ranges[1].abbr,
+      abbr: get(ranges[1], `abbr_${lang}`, ranges[1].abbr_en),
     };
   return {
     index: 2,
-    abbr: ranges[2].abbr,
+    abbr: get(ranges[2], `abbr_${lang}`, ranges[2].abbr_en),
   };
 }
 
@@ -65,7 +95,7 @@ export function getODALegendItems(
   hideODAGNI: boolean
 ): VizSidePanelItemProps[] {
   return orderBy(data, "year", "desc").map((d: any) => {
-    if (d.year < 2020) {
+    if (d.year < 2021) {
       const children = [
         {
           id: "Exclusive ODA",
@@ -117,20 +147,24 @@ export function getODALegendItems(
   });
 }
 
-export function getSimpleBarLegendItems(data: any): VizSidePanelItemProps[] {
+export function getSimpleBarLegendItems(
+  data: any,
+  currentLanguage: string
+): VizSidePanelItemProps[] {
   return orderBy(data, "value", "desc").map((d: any) => ({
-    id: d.line,
-    name: d.line,
+    id: d[getLineName(currentLanguage)],
+    name: d[getLineName(currentLanguage)],
     value: formatLocale(get(d, "value", 0)),
     color: get(d, "valueColor", ""),
   }));
 }
 
 export function getBudgetLinesLegendItems(data: any): VizSidePanelItemProps[] {
+  const vizKeys: string[] = getBudgetLinesVizKeys(data);
   return orderBy(data, "year", "desc").map((d: any) => {
     let value = 0;
     const children: VizSidePanelItemProps[] = [];
-    budgetLineKeys.forEach((key: string) => {
+    vizKeys.forEach((key: string) => {
       value += get(d, `[${key}]`, 0);
       if (get(d, `[${key}]`, 0) > 0) {
         children.push({

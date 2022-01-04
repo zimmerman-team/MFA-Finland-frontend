@@ -33,9 +33,6 @@ context("Homepage", () => {
   it("Overview Disbursements", () => {
     cy.waitLoader("oda-loader");
     cy.get('[id="viz-scroller"]').should("exist");
-    cy.get('[id="viz-scroller"]').eq(0).click({ force: true });
-    cy.visit("localhost:3000");
-    cy.wait(8000);
   });
 
   it("Thematic areas and Sectors", () => {

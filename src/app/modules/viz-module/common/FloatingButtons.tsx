@@ -90,8 +90,8 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
     <div id="viz-floating-buttons" css={styles.container}>
       <IconButton
         css={styles.moreIconButton}
-        onClick={() => setMoreActive(!moreActive)}
         aria-label="Toggle more options"
+        onClick={() => setMoreActive(!moreActive)}
       >
         {moreActive ? (
           <Close css={styles.moreIcon} />
@@ -101,7 +101,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
       </IconButton>
       {moreActive && (
         <>
-          <IconButton css={styles.shareIconButton}>
+          <IconButton css={styles.shareIconButton} aria-label="Share this view">
             <LightTooltip
               aria-label="Share"
               arrow
@@ -116,7 +116,7 @@ export const FloatingButtons = (props: FloatingButtonsProps) => {
             </LightTooltip>
           </IconButton>
           <IconButton
-            aria-label="Download"
+            aria-label="Download this view"
             css={styles.downloadIconButton}
             onClick={(e) => handleDownloadClick(e)}
           >
