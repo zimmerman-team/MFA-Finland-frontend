@@ -1,17 +1,18 @@
 import React from "react";
 import find from "lodash/find";
 import filter from "lodash/filter";
+import { Tooltip } from "@material-ui/core";
 import { DataTable } from "app/components/Charts/table";
 import { MUIDataTableIsRowCheck } from "mui-datatables";
 import { DataTableProps } from "app/components/Charts/table/data";
-import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
-import { Tooltip } from "@material-ui/core";
-import { useRouteMatch } from "react-router-dom";
-import get from "lodash/get";
 import { MoreActions } from "app/components/Charts/table/common/toolbar/MoreButton";
+import { ExpandableRows } from "app/components/Charts/table/common/rows/ExpandableRows";
 
-export function BudgetLinesFragmentTable(props: DataTableProps) {
-  const { params } = useRouteMatch();
+interface BudgetLinesFragmentTableProps extends DataTableProps {
+  csvData: any;
+}
+
+export function BudgetLinesFragmentTable(props: BudgetLinesFragmentTableProps) {
   const [shownData, setShownData] = React.useState<
     Array<object | number[] | string[]>
   >([]);
@@ -48,8 +49,12 @@ export function BudgetLinesFragmentTable(props: DataTableProps) {
   React.useEffect(() => setShownData(props.data), [props.data]);
 
   const MoreButton = () => (
-    <Tooltip disableFocusListener title="More Options">
-      <MoreActions data={{}} viz={get(params, "tab", "")} />
+    <Tooltip
+      disableFocusListener
+      title="More Options"
+      aria-label="More Options"
+    >
+      <MoreActions data={props.csvData} viz="budget-lines" />
     </Tooltip>
   );
 

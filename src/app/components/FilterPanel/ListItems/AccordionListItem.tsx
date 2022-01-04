@@ -38,6 +38,7 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
         box-shadow: none;
         color: white;
         height: 42px !important;
+        background-color: #002561;
         min-height: 42px !important;
         border-bottom: 1px solid white;
 
@@ -50,7 +51,7 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
           align-items: center;
         }
 
-        background-color: ${PrimaryColor[0]};
+        // background-color: ${PrimaryColor[0]};
 
         @media (max-width: 600px) {
           //background-color: red;
@@ -61,7 +62,8 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
         margin-left: 0;
       `,
       details: css`
-        background-color: ${PrimaryColor[0]};
+        background-color: #002561;
+        // background-color: ${PrimaryColor[0]};
         padding: ${props.nodeStyle === "has2NodesStyle"
           ? "16px 0px 16px 80px"
           : "32px 16px 24px 80px"};
@@ -106,9 +108,9 @@ export const AccordionListItem = (props: AccordionListItemProps) => {
       >
         <FormControlLabel
           label=""
-          aria-label="checkbox"
           onClick={(event: any) => event.stopPropagation()}
           onFocus={(event: any) => event.stopPropagation()}
+          aria-label={`select ${props.node.name} filter option`}
           css={styles.formControl}
           control={
             <Checkbox

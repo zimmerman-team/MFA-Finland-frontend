@@ -5,8 +5,8 @@ import { useRecoilState } from "recoil";
 import { PrimaryColor } from "app/theme";
 import { ResponsiveBar } from "@nivo/bar";
 import { useHistory } from "react-router-dom";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
 import { SimpleBarChartProps } from "app/components/Charts/bar/data";
+import { languageAtom, selectedFilterAtom } from "app/state/recoil/atoms";
 import {
   getRange,
   getMoneyValueWithMetricPrefix,
@@ -14,10 +14,11 @@ import {
 
 export function SimpleBarChart(props: SimpleBarChartProps) {
   const history = useHistory();
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters, setSelectedFilters] = useRecoilState(
     selectedFilterAtom
   );
-  const range = getRange(props.data, ["value"]);
+  const range = getRange(props.data, ["value"], currentLanguage);
   const maxValue: number = max(props.data.map((item: any) => item.value)) || 0;
 
   return (
@@ -44,7 +45,7 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
       {range.abbr}
       <ResponsiveBar
         padding={0.3}
-        indexBy="line"
+        indexBy={currentLanguage === "en" ? "line" : `line_${currentLanguage}`}
         keys={["value"]}
         innerPadding={0}
         data={props.data}
@@ -63,7 +64,12 @@ export function SimpleBarChart(props: SimpleBarChartProps) {
             budgetlines: [...selectedFilters.budgetlines, node.data.code],
           });
           setTimeout(
-            () => history.push(`/viz/projects${history.location.search}`),
+            () =>
+              history.push(
+                `/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/viz/projects${history.location.search}`
+              ),
             200
           );
         }}

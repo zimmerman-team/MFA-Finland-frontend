@@ -9,23 +9,29 @@ import { getAppName } from "app/const/Path";
 export function MetaTags() {
   const [currentLanguage] = useRecoilState(languageAtom);
 
+  React.useEffect(() => {
+    document.documentElement.lang =
+      currentLanguage === "se" ? "sv" : currentLanguage;
+  }, [currentLanguage]);
+
   return (
     <Tags>
+      <meta name="title" content={getAppName(currentLanguage)} />
       <meta name="description" content={getSeoDescription(currentLanguage)} />
-      <meta name="author" content="Zimmerman B.V." />
+      <meta name="author" content="MFA Finland" />
 
       {/* Google / Search Engine Tags */}
       <meta itemProp="name" content={getAppName(currentLanguage)} />
       <meta
         itemProp="image"
-        content="https://app.mfa.test.nyuki.io/openaidfi.png"
+        content={`${window.location.origin}/openaidfi.png`}
       />
 
       {/* Facebook Meta Tags */}
-      <meta property="og:url" content="https://app.mfa.test.nyuki.io/" />
+      <meta property="og:url" content={window.location.origin} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={getAppName(currentLanguage)} />
-      <meta property="og:author" content="Zimmerman B.V." />
+      <meta property="og:author" content="MFA Finland" />
 
       <meta
         property="og:description"
@@ -33,7 +39,7 @@ export function MetaTags() {
       />
       <meta
         property="og:image"
-        content="https://app.mfa.test.nyuki.io/openaidfi.png"
+        content={`${window.location.origin}/openaidfi.png`}
       />
 
       {/* Twitter Meta Tags */}
@@ -43,11 +49,11 @@ export function MetaTags() {
         name="twitter:description"
         content={getSeoDescription(currentLanguage)}
       />
-      <meta name="twitter:author" content="Zimmerman B.V." />
+      <meta name="twitter:author" content="MFA Finland" />
 
       <meta
         name="twitter:image"
-        content="https://app.mfa.test.nyuki.io/openaidfi.png"
+        content={`${window.location.origin}/openaidfi.png`}
       />
     </Tags>
   );

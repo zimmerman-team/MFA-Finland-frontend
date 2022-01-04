@@ -73,11 +73,12 @@ export const DrawerItem = (props: DrawerItemProps) => {
       >
         <FormControlLabel value="en" control={<Radio />} label="English" />
         <FormControlLabel value="fi" control={<Radio />} label="Finnish" />
+        <FormControlLabel value="se" control={<Radio />} label="Swedish" />
       </RadioGroup>
     </MUIListItem>
   ) : (
     <NavLink
-      to={props.path}
+      to={`/${currentLanguage === "se" ? "sv" : currentLanguage}${props.path}`}
       exact
       isActive={(match) => {
         if (!match) {

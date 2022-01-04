@@ -39,7 +39,7 @@ const closebtncss = css`
     padding: 0;
 
     svg {
-      fill: #2e4982;
+      fill: #002561;
     }
   }
 `;
@@ -48,9 +48,9 @@ const buttoncss = css`
   color: #fff;
   font-size: 14px;
   padding: 6px 12px;
-  background: #2e4982;
+  background: #002561;
   border-radius: 20px;
-  text-transform: capitalize;
+  text-transform: none;
 `;
 
 interface SmTooltipContainerProps {
@@ -64,7 +64,7 @@ interface SmTooltipContainerProps {
 }
 
 export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
-  <div css={containercss}>
+  <div data-cy="smalltooltipcontainer" css={containercss}>
     <div css={innercontainercss}>
       <div
         css={`
@@ -73,7 +73,18 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
           justify-content: flex-end;
         `}
       >
-        <IconButton css={closebtncss} onClick={() => props.close()}>
+        <IconButton
+          tabIndex={0}
+          data-cy="CloseButton"
+          aria-label="close tooltip button"
+          css={closebtncss}
+          onClick={() => props.close()}
+          onKeyPress={(event: React.KeyboardEvent) => {
+            if (event.key === "Enter") {
+              props.close();
+            }
+          }}
+        >
           <IconClose />
         </IconButton>
       </div>
@@ -84,10 +95,20 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
           <div css="width: 100%;display: flex;justify-content: flex-end;align-items: center;gap: 16px;">
             {props.gotoDetail && (
               <Button
+                data-cy="GotoDetailButton"
+                aria-label="go to detail button"
                 css={buttoncss}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                   props.close();
-                  props.gotoDetail && props.gotoDetail();
+                  if (props.gotoDetail) {
+                    props.gotoDetail();
+                  }
+                }}
+                onKeyPress={(event: React.KeyboardEvent) => {
+                  props.close();
+                  if (props.gotoDetail) {
+                    props.gotoDetail();
+                  }
                 }}
               >
                 {props.detailBtnLabel}
@@ -95,10 +116,20 @@ export const SmTooltipContainer = (props: SmTooltipContainerProps) => (
             )}
             {props.showDrilldownBtn && (
               <Button
+                data-cy="DrillDownButton"
+                aria-label="drilldown button"
                 css={buttoncss}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                   props.close();
-                  props.drilldown && props.drilldown();
+                  if (props.drilldown) {
+                    props.drilldown();
+                  }
+                }}
+                onKeyPress={(event: React.KeyboardEvent) => {
+                  props.close();
+                  if (props.drilldown) {
+                    props.drilldown();
+                  }
                 }}
               >
                 {get(props.cmsData, "viz.drilldown", "Drill Down")}

@@ -161,7 +161,7 @@ export function mockData(
       committed: 34325000,
       disbursed: 22397000,
       name: "Goal 1. End poverty in all its forms everywhere",
-      icon: `/sdgs/${currentLanguage}/1.png`,
+      icon: `/sdgs/${currentLanguage === "se" ? "sv" : currentLanguage}/1.png`,
       number: 1,
       disabled: false,
     },

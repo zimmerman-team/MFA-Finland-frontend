@@ -1,9 +1,10 @@
 const seoDescription = {
   en:
-    "The Ministry for Foreign Affairs' databank shows how Finland's development co-operation funds have been used and what results have been achieved with them.",
+    "Openaid.fi is the Foreign Ministry’s databank on Finland’s development cooperation. The service shows where, how, and when Finland's development cooperation funds have been used.",
   fi:
-    "Ulkoministeriön tietopankki kertoo mihin Suomen kehitysyhteistyövaroja on käytetty ja millaisia tuloksia niiden avulla on saavutettu.",
-  se: "",
+    "Openaid.fi on ulkoministeriön tietopankki Suomen kehitysyhteistyöstä. Palvelu näyttää mihin, miten ja milloin Suomen kehitysyhteistyövaroja on käytetty.",
+  se:
+    "På webbplatsen Openaid.fi samlar utrikesministeriet data om Finlands utvecklingssamarbete. Här ser du hur, var och när Finlands medel för utvecklingssamarbete har använts.",
 };
 export function getSeoDescription(language: string) {
   if (language === "en") return seoDescription.en;

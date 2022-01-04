@@ -80,18 +80,32 @@ export function getMainFilterPanelData(
     (ta: string) => ta.length > 1
   );
   if (thematicareas.length > 0) {
-    updatedData[0].selection = [`${thematicareas.length} thematic areas`];
+    updatedData[0].selection = [
+      `${get(cmsData, "general.thematicareas", "Thematic Areas")} (${
+        thematicareas.length
+      })`,
+    ];
   }
   if (selectedFilters.countries.length > 0) {
     updatedData[1].selection.push(
-      `${selectedFilters.countries.length} countries`
+      `${get(cmsData, "filters.countries", "Countries")} (${
+        selectedFilters.countries.length
+      })`
     );
   }
   if (selectedFilters.regions.length > 0) {
-    updatedData[1].selection.push(`${selectedFilters.regions.length} regions`);
+    updatedData[1].selection.push(
+      `${get(cmsData, "filters.regions", "Regions")} (${
+        selectedFilters.regions.length
+      })`
+    );
   }
   if (selectedFilters.sectors.length > 0) {
-    updatedData[2].selection.push(`${selectedFilters.sectors.length} sectors`);
+    updatedData[2].selection.push(
+      `${get(cmsData, "general.sectors", "Sectors")} (${
+        selectedFilters.sectors.length
+      })`
+    );
   }
   // if (selectedFilters.organisationtypes.length > 0) {
   //   updatedData[3].selection.push(
@@ -100,15 +114,21 @@ export function getMainFilterPanelData(
   // }
   if (selectedFilters.organisations.length > 0) {
     updatedData[3].selection.push(
-      `${selectedFilters.organisations.length} organisations`
+      `${get(cmsData, "general.organisations", "Organisations")} (${
+        selectedFilters.organisations.length
+      })`
     );
   }
   if (selectedFilters.sdg.length > 0) {
-    updatedData[4].selection.push(`${selectedFilters.sdg.length} SDGS`);
+    updatedData[4].selection.push(
+      `${get(cmsData, "general.sdgs", "SDGs")} (${selectedFilters.sdg.length})`
+    );
   }
   if (selectedFilters.activitystatus.length > 0) {
     updatedData[5].selection.push(
-      `${selectedFilters.activitystatus.length} activity statuses`
+      `${get(cmsData, "filters.activitystatus", "Activity Status")} (${
+        selectedFilters.activitystatus.length
+      })`
     );
   }
   if (selectedFilters.years.length === 2) {
@@ -160,27 +180,37 @@ export function getAdvancedFilterPanelData(
 
   if (selectedFilters.policymarker.length > 0) {
     updatedData[0].selection.push(
-      `${selectedFilters.policymarker.length} Policy Markers`
+      `${get(cmsData, "filters.policymarkers", "Policy Markers")} (${
+        selectedFilters.policymarker.length
+      })`
     );
   }
   if (selectedFilters.defaultaidtype.length > 0) {
     updatedData[1].selection.push(
-      `${selectedFilters.defaultaidtype.length} Types of aid`
+      `${get(cmsData, "filters.typeofaid", "Type of aid")} (${
+        selectedFilters.defaultaidtype.length
+      })`
     );
   }
   if (selectedFilters.budgetlines.length > 0) {
     updatedData[2].selection.push(
-      `${selectedFilters.budgetlines.length} Budget lines`
+      `${get(cmsData, "general.budgetlines", "Budget lines")} (${
+        selectedFilters.budgetlines.length
+      })`
     );
   }
   if (selectedFilters.collaborationtype.length > 0) {
     updatedData[3].selection.push(
-      `${selectedFilters.collaborationtype.length} collaboration types`
+      `${get(cmsData, "filters.bimulti", "Bi/Multi")} (${
+        selectedFilters.collaborationtype.length
+      })`
     );
   }
   if (selectedFilters.humanrights.length > 0) {
     updatedData[4].selection.push(
-      `${selectedFilters.humanrights.length} human rights app`
+      `${get(cmsData, "filters.humanrights", "Human rights approach")} (${
+        selectedFilters.humanrights.length
+      })`
     );
   }
 

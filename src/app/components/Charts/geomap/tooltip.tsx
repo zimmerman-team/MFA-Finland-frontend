@@ -1,12 +1,16 @@
 import React from "react";
-import { css } from "styled-components/macro";
-import IconButton from "@material-ui/core/IconButton";
-import { Lock, LockOpen } from "@material-ui/icons";
-import { Typography } from "@material-ui/core";
-import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
+import get from "lodash/get";
+import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
-import { PrimaryColor, ProjectPalette } from "../../../theme";
-import { PillButton } from "../../Buttons/PillButton";
+import { css } from "styled-components/macro";
+import { useCMSData } from "app/hooks/useCMSData";
+import { Lock, LockOpen } from "@material-ui/icons";
+import Typography from "@material-ui/core/Typography";
+import { languageAtom } from "app/state/recoil/atoms";
+import IconButton from "@material-ui/core/IconButton";
+import { PrimaryColor, ProjectPalette } from "app/theme";
+import { PillButton } from "app/components/Buttons/PillButton";
+import { formatLargeAmountsWithPrefix } from "app/utils/formatMoneyWithPrefix";
 
 interface TooltipModel {
   label: string;
@@ -83,6 +87,8 @@ export const Button = css`
 export const Tooltip = React.memo(function TooltipMemoized(
   props: TooltipModel
 ) {
+  const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   return (
     <div css={Container}>
       <div
@@ -105,12 +111,18 @@ export const Tooltip = React.memo(function TooltipMemoized(
         </div>
         <div css={ValueLabel}>Disbursements</div>
         <Typography variant="h5" css={Value}>
-          {formatLargeAmountsWithPrefix(props.value)}
+          {formatLargeAmountsWithPrefix(props.value, currentLanguage)}
         </Typography>
       </div>
       <div css={ButtonContainerStyle}>
-        <Link to={`/countries/${props.ISO2Code}`}>
-          <PillButton css={Button}>Country Page</PillButton>
+        <Link
+          to={`/${
+            currentLanguage === "se" ? "sv" : currentLanguage
+          }/countries/${props.ISO2Code}`}
+        >
+          <PillButton css={Button}>
+            {get(cmsData, "viz.mapcountrypagebutton", "Country Page")}
+          </PillButton>
         </Link>
       </div>
     </div>

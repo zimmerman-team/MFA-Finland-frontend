@@ -27,7 +27,10 @@ import { SectorsVizModule } from "app/components/Charts/modules/sectors";
 import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import { ProjectsListModule } from "app/components/Charts/modules/projects";
 import { Switch, Route, useRouteMatch, useLocation } from "react-router-dom";
-import { BudgetLinesModule } from "app/components/Charts/modules/budgetlines";
+import {
+  BudgetLinesModule,
+  formatDataForViz,
+} from "app/components/Charts/modules/budgetlines";
 import { FloatingButtons } from "app/modules/viz-module/common/FloatingButtons";
 import { CountriesRegionsModule } from "app/components/Charts/modules/locations";
 import { OrganisationsModule } from "app/components/Charts/modules/organisations";
@@ -159,7 +162,10 @@ export default function VizModule() {
     (actions) => actions.budgetLinesBarChart.fetch
   );
   const budgetLinesBarChartData = useStoreState((state) =>
-    get(state.budgetLinesBarChart, "data.vizData", [])
+    formatDataForViz(
+      get(state.budgetLinesBarChart, "data.vizData", []),
+      currentLanguage
+    )
   );
   const odaBudgetLinesChartAction = useStoreActions(
     (actions) => actions.odaBudgetLinesChart.fetch
@@ -609,7 +615,8 @@ export default function VizModule() {
               selectedVizItem,
               cmsData,
               thematicAreaChartSingle,
-              hideODAGNI()
+              hideODAGNI(),
+              currentLanguage
             )}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
@@ -674,9 +681,9 @@ export default function VizModule() {
             />
           )}
           <Switch>
-            <Route path="/viz/oda">
+            <Route path="/:lang/viz/oda">
               {vizDataLoading.oda ? (
-                <VizLoader loading={vizDataLoading.oda} />
+                <VizLoader dataCy="oda-loader" loading={vizDataLoading.oda} />
               ) : (
                 <ODAvizModule
                   vizScale={vizScale}
@@ -689,6 +696,7 @@ export default function VizModule() {
                   setVizCompData={setVizCompData}
                   onSelectChange={onSelectChange}
                   vizTranslation={vizTranslation}
+                  currentLanguage={currentLanguage}
                   selectedVizItemId={expandedVizItem}
                   setSelectedVizItem={setExpandedVizItem}
                   onArrowSelectChange={onZoomInLevelSelectorChange}
@@ -698,9 +706,12 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/thematic-areas">
+            <Route path="/:lang/viz/thematic-areas">
               {vizDataLoading.thematic ? (
-                <VizLoader loading={vizDataLoading.thematic} />
+                <VizLoader
+                  dataCy="thematic-loader"
+                  loading={vizDataLoading.thematic}
+                />
               ) : activeTab === "chart" ? (
                 <>
                   <div css="width: 100%;height: 100px;" />
@@ -755,9 +766,12 @@ export default function VizModule() {
                 </div>
               )}
             </Route>
-            <Route path="/viz/sectors">
+            <Route path="/:lang/viz/sectors">
               {vizDataLoading.sectors ? (
-                <VizLoader loading={vizDataLoading.sectors} />
+                <VizLoader
+                  dataCy="sectors-loader"
+                  loading={vizDataLoading.sectors}
+                />
               ) : (
                 <SectorsVizModule
                   vizLevel={vizLevel}
@@ -775,9 +789,12 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/countries-regions">
+            <Route path="/:lang/viz/countries-regions">
               {vizDataLoading.locations ? (
-                <VizLoader loading={vizDataLoading.locations} />
+                <VizLoader
+                  dataCy="locations-loader"
+                  loading={vizDataLoading.locations}
+                />
               ) : (
                 <CountriesRegionsModule
                   label=""
@@ -790,9 +807,12 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/organisations">
+            <Route path="/:lang/viz/organisations">
               {vizDataLoading.organisations ? (
-                <VizLoader loading={vizDataLoading.organisations} />
+                <VizLoader
+                  dataCy="orgs-loader"
+                  loading={vizDataLoading.organisations}
+                />
               ) : (
                 <OrganisationsModule
                   label=""
@@ -805,9 +825,12 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/budget-lines">
+            <Route path="/:lang/viz/budget-lines">
               {vizDataLoading.budgetLines ? (
-                <VizLoader loading={vizDataLoading.budgetLines} />
+                <VizLoader
+                  dataCy="budgetlines-loader"
+                  loading={vizDataLoading.budgetLines}
+                />
               ) : (
                 <BudgetLinesModule
                   activeTab={activeTab}
@@ -823,7 +846,7 @@ export default function VizModule() {
                 />
               )}
             </Route>
-            <Route path="/viz/projects">
+            <Route path="/:lang/viz/projects">
               <ProjectsListModule
                 searchKey={searchKey}
                 projects={projectsData}

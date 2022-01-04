@@ -18,6 +18,7 @@ import {
 import {
   currentFilterOpenAtom,
   filterbarHeightAtom,
+  languageAtom,
   selectedFilterAtom,
 } from "app/state/recoil/atoms";
 
@@ -30,6 +31,7 @@ export interface FilterBarProps {
 export const FilterBar = (props: FilterBarProps) => {
   const location = useLocation();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [chips, setChips] = React.useState<ChipModel[]>([]);
   const render: boolean = shouldRender(location);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
@@ -52,7 +54,7 @@ export const FilterBar = (props: FilterBarProps) => {
       state.filterOptions.aidtypes.loading ||
       state.filterOptions.budgetlines.loading
   );
-  const heightObserver = new ResizeObserver(function (entries) {
+  const heightObserver = new ResizeObserver((entries) => {
     const height = entries[0].target.clientHeight;
     if (height !== filterbarHeight) {
       setFilterbarHeight(height);
@@ -62,9 +64,26 @@ export const FilterBar = (props: FilterBarProps) => {
 
   React.useEffect(() => {
     if (!filterOptionsLoading) {
-      setChips(getFilterChip(selectedFilters, filterOptionsData));
+      setChips(
+        getFilterChip(
+          selectedFilters,
+          filterOptionsData,
+          currentLanguage,
+          cmsData
+        )
+      );
     }
-  }, [selectedFilters, filterOptionsData]);
+  }, [selectedFilters, filterOptionsData, filterOptionsLoading]);
+
+  React.useEffect(() => {
+    const newChips = getFilterChip(
+      selectedFilters,
+      filterOptionsData,
+      currentLanguage,
+      cmsData
+    );
+    setChips(newChips);
+  }, [currentLanguage]);
 
   React.useEffect(() => {
     const filterbarElement = document.querySelector("#filterbar-container");
@@ -72,6 +91,7 @@ export const FilterBar = (props: FilterBarProps) => {
       heightObserver.observe(filterbarElement);
     }
   }, []);
+
   function removeChip(chip: ChipModel) {
     const updatedSelectedFilters = { ...selectedFilters };
     switch (chip.type) {
@@ -229,6 +249,7 @@ export const FilterBar = (props: FilterBarProps) => {
         <div css={styles.container} id="filterbar-container">
           <div css={styles.buttonContainer}>
             <PillButton
+              data-cy="PillButton-Add Filters"
               css={styles.button}
               onClick={() => setCurrentFilterOpen(FILTER_TYPES.MAIN)}
             >
@@ -259,7 +280,7 @@ export const FilterBar = (props: FilterBarProps) => {
               height: 50px;
               box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.14),
                 0px 1px 8px rgba(0, 0, 0, 0.12);
-              background-color: #2e4982;
+              background-color: #002561;
               position: fixed;
               bottom: 5vh;
               right: 8px;

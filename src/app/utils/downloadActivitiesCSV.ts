@@ -22,7 +22,7 @@ export const sortKeys = {
   "IATI ref desc": "index desc",
 };
 
-const stickyPeriodFilter = `activity_date_start_actual_f:[2015-01-01T00:00:00Z TO *] OR activity_date_start_planned_f:[2015-01-01T00:00:00Z TO *]`;
+const stickyPeriodFilter = "transaction_value_date:[2015-01-01T00:00:00Z TO *]";
 
 const fields =
   "iati_identifier,title_narrative,title_narrative_lang,description_narrative,description_narrative_lang,description_type,activity_status_code,recipient_country_code,recipient_country_name,recipient_country_percentage,recipient_region_code,recipient_region_name,recipient_region_percentage,activity_date_start_actual,activity_date_start_planned,activity_date_end_actual,activity_date_end_planned,participating_org_narrative,participating_org_narrative_lang,participating_org_narrative_text,participating_org_ref,participating_org_role,participating_org_type,reporting_org_narrative,reporting_org_ref,reporting_org_type_code,reporting_org_type_name,sector_code,sector_narrative,sector_percentage,sector_vocabulary,tag_code,tag_narrative,budget_value_usd,transaction_type,transaction_value";

@@ -10,7 +10,6 @@ import { StoreProvider, useStoreRehydrated } from "easy-peasy";
 import { Container, StylesProvider, CssBaseline } from "@material-ui/core";
 import { AppBar } from "app/components/AppBar";
 import { FilterBar } from "app/components/FilterBar";
-import useCookie from "@devhammed/use-cookie";
 import { ThirdPartyScripts } from "app/third-party-scripts/Scripts";
 
 type ProviderProps = {
@@ -18,33 +17,40 @@ type ProviderProps = {
 };
 
 function Providers(props: ProviderProps) {
-  const [userConsent] = useCookie("userConsent", "false");
-
   return (
     /* material ui theme provider */
     <RecoilRoot>
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
-          {userConsent && <ThirdPartyScripts />}
+          <ThirdPartyScripts />
           <CssBaseline />
           <StoreProvider store={store}>
             <AppContainer>
               <Router>
                 <AppBar />
                 <FilterBar />
-                <Container
-                  maxWidth="lg"
+                <div
                   css={`
-                    //min-height: 100%;
-                    padding: 0 32px;
-
-                    @media (max-width: 992px) {
-                      padding: 0;
-                    }
+                    display: flex;
+                    justify-content: center;
                   `}
                 >
-                  {props.children}
-                </Container>
+                  <Container
+                    maxWidth="lg"
+                    css={`
+                      //min-height: 100%;
+                      padding: 0 32px;
+                      margin-left: unset;
+                      margin-right: unset;
+
+                      @media (max-width: 992px) {
+                        padding: 0;
+                      }
+                    `}
+                  >
+                    {props.children}
+                  </Container>
+                </div>
               </Router>
             </AppContainer>
           </StoreProvider>

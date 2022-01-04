@@ -18,6 +18,8 @@ import LogoFacebook from "app/assets/icons/logo_fb.png";
 import LogoYoutube from "app/assets/icons/logo_yt.png";
 import LogoLinkedin from "app/assets/icons/logo_linkedin.png";
 import LogoTwitter from "app/assets/icons/logo_twitter.png";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 
 const styles = {
   container: css`
@@ -36,7 +38,7 @@ const styles = {
     width: 100%;
     height: 342px;
     padding-top: 50px;
-    background: #2e4982;
+    background: #002561;
   `,
   backToTop: css`
     padding: 20px;
@@ -64,6 +66,7 @@ const styles = {
 export function Footer() {
   const location = useLocation();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   if (location.pathname.indexOf("/viz") > -1) {
     return null;
@@ -78,7 +81,7 @@ export function Footer() {
           css={`
             min-height: 100%;
             padding: 0 32px;
-            background: #2e4982;
+            background: #002561;
 
             @media (max-width: 992px) {
               padding: 0;
@@ -118,16 +121,36 @@ export function Footer() {
               component="nav"
               css={drawerStyle.AddressContainer}
             >
-              <NavLink to="/feedback" css={styles.link}>
+              <NavLink
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/feedback`}
+                css={styles.link}
+              >
                 {get(cmsData, `menu.feedback`, "Feedback")}
               </NavLink>
-              <NavLink to="/about" css={styles.link}>
+              <NavLink
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/about`}
+                css={styles.link}
+              >
                 {get(cmsData, `menu.about`, "About")}
               </NavLink>
-              <NavLink to="/result" css={styles.link}>
+              <NavLink
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/data`}
+                css={styles.link}
+              >
                 {get(cmsData, `menu.result`, "Result")}
               </NavLink>
-              <NavLink to="/statements" css={styles.link}>
+              <NavLink
+                to={`/${
+                  currentLanguage === "se" ? "sv" : currentLanguage
+                }/statements`}
+                css={styles.link}
+              >
                 {get(cmsData, `menu.statements`, "Statements")}
               </NavLink>
             </Grid>
@@ -221,6 +244,7 @@ export function Footer() {
           </Grid>
           <div css={styles.backToTop}>
             <IconButton
+              aria-label="back to top"
               onClick={() =>
                 window.scrollTo({
                   top: 0,

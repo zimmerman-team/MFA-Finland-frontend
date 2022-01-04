@@ -1,8 +1,7 @@
 export const AppNameENG =
   "OpenAid.fi | Databank on Finland's development cooperation";
-export const AppNameFIN =
-  "OpenAid.fi | Kehitysyhteistyön tietopankki ja tilastot";
-export const AppNameSWE = "OpenAid.fi";
+export const AppNameFIN = "OpenAid.fi | Kehitysyhteistyön tietopankki";
+export const AppNameSWE = "OpenAid.fi | Data om Finlands utvecklingssamarbete";
 
 export function getAppName(currentLanguage: string) {
   if (currentLanguage === "se") return AppNameSWE;
@@ -10,7 +9,7 @@ export function getAppName(currentLanguage: string) {
   return AppNameFIN;
 }
 
-const basePath = "/";
+const basePath = "/:lang/";
 
 type PathItemType = {
   name: string;
@@ -23,7 +22,7 @@ interface PathProps {
 }
 
 export const Path = {
-  home: basePath,
+  home: "/:lang",
   viz: `${basePath}viz`,
   vizTab: `${basePath}viz/:tab`,
   general: {
@@ -34,7 +33,7 @@ export const Path = {
     info: `${basePath}info`,
     notFound: `${basePath}notFound`,
     statements: `${basePath}statements`,
-    result: `${basePath}result`,
+    result: `${basePath}data`,
     feedback: `${basePath}feedback`,
   },
   detail: {
@@ -48,5 +47,30 @@ export const Path = {
   },
   debug: {
     components: `${basePath}components`,
+  },
+  withoutLangParam: {
+    home: "/",
+    viz: "/viz",
+    vizTab: "/viz/:tab",
+    general: {
+      privacy: "/privacy",
+      contact: "/contact",
+      faq: "/faq",
+      about: "/about",
+      info: "/info",
+      notFound: "/notFound",
+      statements: "/statements",
+      result: "/data",
+      feedback: "/feedback",
+    },
+    detail: {
+      project: "/project/:param",
+      region: "/regions/:region",
+      country: "/countries/:country",
+      sector: "/sectors/:sector",
+      organisation: "/organisations/:organisation",
+      orgType: "/organisation-types/:orgType",
+      thematicArea: "/thematic-area/:theme",
+    },
   },
 };

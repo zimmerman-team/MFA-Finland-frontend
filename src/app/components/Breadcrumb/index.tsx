@@ -7,6 +7,8 @@ import {
 } from "app/components/Breadcrumb/data";
 import { useCMSData } from "app/hooks/useCMSData";
 import get from "lodash/get";
+import { useRecoilState } from "recoil";
+import { languageAtom } from "app/state/recoil/atoms";
 import {
   BreadcrumbContainerStyle,
   BreadcrumbItemStyle,
@@ -16,6 +18,7 @@ import {
 export const Breadcrumbs = (props: BreadcrumbProps) => {
   const location = useLocation();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
 
   function getLabel(crumb: BreadcrumbLinkModel) {
     const cmsLabel = get(cmsData, crumb.cmsKey, null);
@@ -34,7 +37,9 @@ export const Breadcrumbs = (props: BreadcrumbProps) => {
             <NavLink
               key={breadcrumb.label}
               css={BreadcrumbItemStyle}
-              to={`${breadcrumb.path}${location.search}`}
+              to={`${breadcrumb.path.replace(":lang", currentLanguage)}${
+                location.search
+              }`}
             >
               {getLabel(breadcrumb)}
             </NavLink>

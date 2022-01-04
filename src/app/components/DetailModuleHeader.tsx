@@ -3,8 +3,6 @@ import Flag from "react-world-flags";
 import { Grid, Typography } from "@material-ui/core";
 import { Breadcrumbs } from "app/components/Breadcrumb";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
-import { useCMSData } from "app/hooks/useCMSData";
-import get from "lodash/get";
 
 interface ModuleHeaderProps {
   label: string;
@@ -14,17 +12,6 @@ interface ModuleHeaderProps {
 }
 
 export const DetailModuleHeader = (props: ModuleHeaderProps) => {
-  const cmsData = useCMSData({ returnData: true });
-
-  function isPartneredCountry(): boolean {
-    const countries = get(cmsData, "regions.partnered_countries", []);
-    const country = countries.find((item: any) => {
-      return item.code === props.flagCode;
-    });
-
-    return get(country, "isPartner", false);
-  }
-
   return (
     <React.Fragment>
       <Grid item xs={12}>
@@ -37,12 +24,13 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
             flex-direction: row;
             align-items: center;
           `}
+          data-cy="common-module-header"
         >
           <Typography
             variant="h5"
             component="h2"
             css={`
-              color: #2e4982;
+              color: #002561;
             `}
           >
             {props.label}
@@ -71,7 +59,7 @@ export const DetailModuleHeader = (props: ModuleHeaderProps) => {
                     height: 7px;
                     border-radius: 50%;
                     position: absolute;
-                    background: #2e4982;
+                    background: #002561;
                   }
                 }
               }

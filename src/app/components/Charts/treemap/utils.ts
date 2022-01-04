@@ -7,10 +7,12 @@ import {
   TreemapDataModel,
   TreeemapNodeData,
 } from "app/components/Charts/treemap/data";
+import { getName } from "../sdg";
 
 export function getTreemapLegends(
   data: TreemapDataModel,
-  nodefilter: string | number | null
+  nodefilter: string | number | null,
+  currentLanguage: string
 ): VizSidePanelItemProps[] {
   let filteredData = data.children;
   if (nodefilter) {
@@ -39,19 +41,19 @@ export function getTreemapLegends(
   }
   return orderBy(filteredData, "value", "desc").map((d: TreeemapNodeData) => ({
     id: d.ref,
-    name: d.name,
+    name: get(d, getName(currentLanguage), d.name),
     value: formatLocale(d.value),
     color: d.color,
     children: orderBy(get(d, "orgs", []), "value", "desc").map(
       (c: TreeemapNodeData) => ({
         id: c.ref,
-        name: c.name,
+        name: get(c, getName(currentLanguage), d.name),
         value: formatLocale(c.value),
         color: c.color,
         children: orderBy(get(c, "orgs", []), "value", "desc").map(
           (cc: TreeemapNodeData) => ({
             id: cc.ref,
-            name: cc.name,
+            name: get(cc, getName(currentLanguage), d.name),
             value: formatLocale(cc.value),
             color: cc.color,
           })

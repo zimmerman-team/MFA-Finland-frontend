@@ -1,7 +1,6 @@
 import React from "react";
 import { ModuleRoutes } from "app/Routes";
 import { Drawer } from "app/components/Drawer";
-import { CookieDialog } from "app/components/CookieDialog";
 import { useTranslation } from "react-i18next";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
@@ -14,9 +13,18 @@ import { MdBottomMenu } from "./components/MdBottomMenu";
 export const App = () => {
   const { i18n } = useTranslation();
 
-  const [currentLanguage] = useRecoilState(languageAtom);
+  const [currentLanguage, setCurrentLanguage] = useRecoilState(languageAtom);
 
   React.useEffect(() => {
+    const urlParamLang = window.location.pathname.split("/")[1];
+    if (
+      window.location.pathname.split("/")[1] &&
+      currentLanguage !== urlParamLang &&
+      (urlParamLang === "en" || urlParamLang === "fi" || urlParamLang === "sv")
+    ) {
+      setCurrentLanguage(urlParamLang === "sv" ? "se" : urlParamLang);
+      i18n.changeLanguage(urlParamLang === "sv" ? "se" : urlParamLang);
+    }
     i18n.changeLanguage(currentLanguage);
   }, []);
 
@@ -29,7 +37,7 @@ export const App = () => {
       <MdBottomMenu />
       <PageOrnament />
       <ModuleRoutes />
-      <CookieDialog />
+      {/* <CookieDialog /> */}
     </React.Fragment>
   );
 };

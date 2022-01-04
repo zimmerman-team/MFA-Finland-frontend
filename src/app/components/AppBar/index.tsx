@@ -84,7 +84,9 @@ export function AppBar() {
           {/* logo */}
           {!mobileSearchOpen && (
             <NavLink
-              to={`/${location.search}`}
+              to={`/${currentLanguage === "se" ? "sv" : currentLanguage}/${
+                location.search
+              }`}
               css={appbarStyle.logoLink(!isFocused, !mobileSearchOpen)}
               onClick={() => {
                 setCurrentFilterOpen(FILTER_TYPES.NONE);
@@ -249,7 +251,9 @@ const LanguageSwitch = ({
           margin-bottom: 3px;
         `}
       />
-      <div css={appbarStyle.selectedLanguages}>{currentLanguage}</div>
+      <div css={appbarStyle.selectedLanguages}>
+        {currentLanguage === "se" ? "sv" : currentLanguage}
+      </div>
     </button>
   );
 };

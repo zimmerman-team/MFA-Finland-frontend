@@ -12,7 +12,7 @@ const containercss = css`
   padding: 8px;
   width: 250px;
   display: flex;
-  color: #2e4982;
+  color: #002561;
   font-size: 14px;
   background: #fff;
   flex-direction: column;
@@ -51,17 +51,29 @@ export function ExportTooltip(cmsData: any) {
       </Typography>
       <Grid container css={iconscontainercss}>
         <Grid item xs={3}>
-          <div css={downloadButton} onClick={() => exportPage("png")}>
+          <div
+            css={downloadButton}
+            aria-label="Download this view in png"
+            onClick={() => exportPage("png", "#f8f8f8")}
+          >
             PNG
           </div>
         </Grid>
         <Grid item xs={3}>
-          <div css={downloadButton} onClick={() => exportPage("pdf")}>
+          <div
+            css={downloadButton}
+            aria-label="Download this view in pdf"
+            onClick={() => exportPage("pdf", "#f8f8f8")}
+          >
             PDF
           </div>
         </Grid>
         <Grid item xs={3}>
-          <div css={downloadButton} onClick={() => exportPage("svg")}>
+          <div
+            css={downloadButton}
+            aria-label="Download this view in svg"
+            onClick={() => exportPage("svg", "#f8f8f8")}
+          >
             SVG
           </div>
         </Grid>

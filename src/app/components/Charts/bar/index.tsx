@@ -8,7 +8,7 @@ import { useWindowSize } from "react-use";
 import Hidden from "@material-ui/core/Hidden";
 import { useCMSData } from "app/hooks/useCMSData";
 import { ResponsiveBar, BarItemProps } from "@nivo/bar";
-import { selectedFilterAtom } from "app/state/recoil/atoms";
+import { languageAtom, selectedFilterAtom } from "app/state/recoil/atoms";
 import { Line } from "app/components/Charts/bar/common/line";
 import { BarNode } from "app/components/Charts/bar/common/node";
 import { BarChartProps, BarYearNotice } from "app/components/Charts/bar/data";
@@ -24,7 +24,8 @@ export function BarChart(props: BarChartProps) {
   const [yearNotices, setYearNotices] = React.useState<BarYearNotice[]>(
     getYearNotices(get(cmsData, "viz.odayearsnotice", {}))
   );
-  const range = getRange(props.data, ["exclusive", "other"]);
+  const [currentLanguage] = useRecoilState(languageAtom);
+  const range = getRange(props.data, ["exclusive", "other"], currentLanguage);
   const maxValue: number =
     max(props.data.map((item: any) => item.exclusive + item.other)) || 0;
   const [hoveredXIndex, setHoveredXIndex] = React.useState<number | null>(null);
@@ -112,6 +113,8 @@ export function BarChart(props: BarChartProps) {
       }
 
       setYearNotices(newYearNotices);
+    } else {
+      setYearNotices(allYearNotices);
     }
   }, [cmsData]);
 
@@ -119,6 +122,56 @@ export function BarChart(props: BarChartProps) {
     document.getElementById("linechart-in-bar"),
     "clientWidth",
     null
+  );
+
+  const lineViz = (
+    <div
+      id="linechart-in-bar"
+      css={`
+        left: 0;
+        top: 30px;
+        position: absolute;
+        padding-left: 25px;
+        width: calc(100% - 25px);
+        height: ${props.height || 450}px;
+
+        @media (max-width: 600px) {
+          width: 1000px;
+        }
+
+        circle {
+          r: 4px;
+        }
+
+        > div {
+          > div {
+            > svg {
+              > g {
+                > g:first-of-type {
+                  ${lineWidth
+                    ? `transform: translate(${lineWidth - 17 - 100}px, 0);`
+                    : ""}
+                }
+              }
+            }
+          }
+        }
+      `}
+    >
+      <Line
+        data={[
+          {
+            id: "gni",
+            data: props.data.map((d: any) => ({
+              x: d.year,
+              y: d.gni,
+            })),
+          },
+        ]}
+        selected={selected}
+        hovered={hoveredXIndex}
+      />
+    </div>
   );
 
   return (
@@ -179,6 +232,7 @@ export function BarChart(props: BarChartProps) {
       <Hidden smDown>
         <div css="width: 100%;height: 15px;" />
       </Hidden>
+      {!props.hideODAGNI && showGni && !props.isOnDataGrid && lineViz}
       <div
         css={`
           width: 100%;
@@ -199,7 +253,7 @@ export function BarChart(props: BarChartProps) {
           keys={["exclusive", "other"]}
           valueScale={{ type: "linear" }}
           layers={["grid", "axes", Bars]}
-          colors={["#ACD1D1", "#233C71"]}
+          colors={["#85AF9B", "#002561"]}
           maxValue={maxValue + maxValue * 0.1}
           margin={{ top: 15, right: 60, bottom: 60, left: 50 }}
           borderWidth={1}
@@ -268,55 +322,7 @@ export function BarChart(props: BarChartProps) {
           }}
         />
       </div>
-      {!props.hideODAGNI && showGni && (
-        <div
-          id="linechart-in-bar"
-          css={`
-            left: 0;
-            top: 30px;
-            position: absolute;
-            padding-left: 25px;
-            width: calc(100% - 25px);
-            height: ${props.height || 450}px;
-
-            @media (max-width: 600px) {
-              width: 1000px;
-            }
-
-            circle {
-              r: 6px;
-            }
-
-            > div {
-              > div {
-                > svg {
-                  > g {
-                    > g:first-of-type {
-                      ${lineWidth
-                        ? `transform: translate(${lineWidth - 17 - 100}px, 0);`
-                        : ""}
-                    }
-                  }
-                }
-              }
-            }
-          `}
-        >
-          <Line
-            data={[
-              {
-                id: "gni",
-                data: props.data.map((d: any) => ({
-                  x: d.year,
-                  y: d.gni,
-                })),
-              },
-            ]}
-            selected={selected}
-            hovered={hoveredXIndex}
-          />
-        </div>
-      )}
+      {!props.hideODAGNI && showGni && props.isOnDataGrid && lineViz}
       {yearNotices.length > 0 && (
         <div
           css={`
@@ -370,7 +376,7 @@ const Legend = (props: any) => {
           position: relative;
           &:before {
             border: 0.5px solid #343249;
-            background: #acd1d1;
+            background: #ccddd5;
           }
         `}
       >
@@ -381,7 +387,7 @@ const Legend = (props: any) => {
           position: relative;
           &:before {
             border: 0.5px solid #343249;
-            background: #233c71;
+            background: #4f6797;
           }
         `}
       >
@@ -393,14 +399,14 @@ const Legend = (props: any) => {
             position: relative;
             &:before {
               border: 0.5px solid #343249;
-              background: #d495a7;
+              background: #d06448;
             }
             @media (max-width: 600px) {
               padding-right: 0 !important;
             }
           `}
         >
-          ODA/GNI
+          {get(cmsData, "viz.odagni", "ODA/GNI")}
         </div>
       )}
     </div>

@@ -1,5 +1,7 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { FunctionComponent } from "react";
 import get from "lodash/get";
 import { PrimaryColor, ProjectPalette } from "app/theme";
@@ -13,6 +15,7 @@ import { formatMoneyWithPrefix } from "app/utils/formatMoneyWithPrefix";
 import { formatLocaleN } from "app/utils/formatLocale";
 import { useRecoilState } from "recoil";
 import {
+  languageAtom,
   selectedFilterAtom,
   SelectedFilterAtomModel,
 } from "app/state/recoil/atoms";
@@ -26,6 +29,7 @@ const style = {
 
     ${odaWidget
       ? `
+      gap: 12px;
       @media (max-width: 992px) {
         display: block;
       }
@@ -33,10 +37,12 @@ const style = {
       : ""}
   `,
   odaHeaderStats: css`
+    gap: 40px;
     display: flex;
     flex-direction: row;
     width: calc(100% - 350px);
-    justify-content: space-between;
+    justify-content: flex-end;
+
     @media (max-width: 992px) {
       width: 100%;
       margin: 10px 0;
@@ -207,7 +213,7 @@ export function displayPeriod(
     const endYear = new Date(selectedFilters.years[1]).getFullYear();
 
     if (startYear === endYear && startYear > 2014 && startYear < 2022) {
-      return cmsLabel.replace("{start}", startYear).replace(" to {end}", "");
+      return cmsLabel.replace("{start}", startYear).replace(" - {end}", "");
     }
 
     const years: number[] = [];
@@ -221,10 +227,7 @@ export function displayPeriod(
     if (years.length > 0) {
       return cmsLabel
         .replace("{start}", years[0])
-        .replace(
-          "{end}",
-          years.length > 1 ? ` to ${years[years.length - 1]}` : ""
-        );
+        .replace("{end}", years.length > 1 ? `${years[years.length - 1]}` : "");
     }
   }
   return cmsLabel.replace("{start}", 2015).replace("{end}", 2021);
@@ -233,6 +236,7 @@ export function displayPeriod(
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const history = useHistory();
   const cmsData = useCMSData({ returnData: true });
+  const [currentLanguage] = useRecoilState(languageAtom);
   const [isHovered, setIsHovered] = React.useState(false);
   const odaWidget = props.label === "Overview Disbursements";
   const totalDisbursement = useStoreState((state) =>
@@ -278,15 +282,33 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   function handleClick() {
     if (props.link) {
-      history.push(`${props.link}${searchFilterString}`);
+      history.push(
+        `/${currentLanguage === "se" ? "sv" : currentLanguage}${
+          props.link
+        }${searchFilterString}`
+      );
     }
   }
 
-  const itemLinkable =
-    props.link === "/viz/oda" || props.link === "/viz/budget-lines";
+  function onKeyPress(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.code === "Enter") {
+      handleClick();
+    }
+  }
+
+  const itemLinkable = props.link === "/viz/oda";
+
+  const isDetailPage =
+    history.location.pathname.indexOf("organisation-types") > -1 ||
+    history.location.pathname.indexOf("organisations") > -1 ||
+    history.location.pathname.indexOf("sectors") > -1 ||
+    history.location.pathname.indexOf("countries") > -1 ||
+    history.location.pathname.indexOf("regions") > -1 ||
+    history.location.pathname.indexOf("thematic-area") > -1;
 
   return (
     <div
+      aria-label={`${props.label} module`}
       css={style.widgetContainer(
         props.height,
         isHovered && !props.interactive && props.link !== undefined,
@@ -295,17 +317,13 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
     >
       <div css={style.widgetHeader(odaWidget)}>
         <div css="display: flex;align-items: center;">
-          <div>
+          <div data-cy="disbursement-period">
             <h3
-              role="button"
-              tabIndex={0}
-              onClick={() => handleClick()}
+              role={props.link ? "button" : "none"}
+              tabIndex={props.link ? 0 : undefined}
+              onClick={props.link ? handleClick : undefined}
               aria-label={`Go to ${props.label} detail page`}
-              onKeyPress={(e) => {
-                if (e.code === "Enter") {
-                  handleClick();
-                }
-              }}
+              onKeyPress={props.link ? onKeyPress : undefined}
               css={style.widgetLabel(props.link !== undefined)}
               onMouseEnter={() => !itemLinkable && setIsHovered(true)}
               onMouseLeave={() => !itemLinkable && setIsHovered(false)}
@@ -322,25 +340,44 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
           </div>
           {props.tooltip && !odaWidget && (
             <div css={style.widgeTooltip}>
-              <Tooltip title={props.tooltip} interactive tabIndex={0}>
-                <InfoOutlinedIcon css={style.widgetTooltipIcon} />
+              <Tooltip
+                interactive
+                tabIndex={0}
+                title={props.tooltip}
+                aria-label={props.tooltip}
+              >
+                <InfoOutlinedIcon
+                  aria-hidden="false"
+                  aria-label="Info tooltip"
+                  css={style.widgetTooltipIcon}
+                />
               </Tooltip>
             </div>
           )}
         </div>
         {odaWidget && (
           <div css={style.odaHeaderStats}>
-            <div css={style.headerStat}>
-              <div>
-                {get(
-                  cmsData,
-                  "viz.disbursementsamount",
-                  "Disbursements amount"
-                )}
+            {isDetailPage && (
+              <div
+                css={style.headerStat}
+                data-cy="homepage-overview disbursement"
+              >
+                <div>
+                  {get(
+                    cmsData,
+                    "viz.disbursementsamount",
+                    "Disbursements amount"
+                  )}
+                </div>
+                <div>
+                  {formatMoneyWithPrefix(totalDisbursement, currentLanguage)}
+                </div>
               </div>
-              <div>{formatMoneyWithPrefix(totalDisbursement)}</div>
-            </div>
-            <div css={style.headerStat}>
+            )}
+            <div
+              css={style.headerStat}
+              data-cy="homepage-overview organisations"
+            >
               <div>
                 {get(cmsData, "general.organisations", "Organisations")}
               </div>
@@ -348,19 +385,25 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
               <div>
                 <Link
                   css={style.link}
-                  to={`/viz/organisations${searchFilterString}`}
+                  aria-label="view more organisations"
+                  to={`/${
+                    currentLanguage === "se" ? "sv" : currentLanguage
+                  }/viz/organisations${searchFilterString}`}
                 >
                   {get(cmsData, "viz.viewmore", "View more")}
                 </Link>
               </div>
             </div>
-            <div css={style.headerStat}>
+            <div data-cy="homepage-overview projects" css={style.headerStat}>
               <div>{get(cmsData, "viz.projects", "Projects")}</div>
               <div>{formatLocaleN(projCount)}</div>
               <div>
                 <Link
                   css={style.link}
-                  to={`/viz/projects${searchFilterString}`}
+                  aria-label="view more projects"
+                  to={`/${
+                    currentLanguage === "se" ? "sv" : currentLanguage
+                  }/viz/projects${searchFilterString}`}
                 >
                   {get(cmsData, "viz.viewmore", "View more")}
                 </Link>
@@ -371,11 +414,17 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
       </div>
       {odaWidget && (
         <div css="display: flex;align-items: center;">
-          <h4 css={style.widgetLabel(false)}>ODA</h4>
+          <h4 css={style.widgetLabel(false)}>
+            {get(cmsData, "viz.oda", "ODA")}
+          </h4>
           {props.tooltip && (
             <div css={style.widgeTooltip}>
-              <Tooltip title={props.tooltip}>
-                <InfoOutlinedIcon css={style.widgetTooltipIcon} />
+              <Tooltip title={props.tooltip} aria-label={props.tooltip}>
+                <InfoOutlinedIcon
+                  aria-hidden="false"
+                  aria-label="Info tooltip"
+                  css={style.widgetTooltipIcon}
+                />
               </Tooltip>
             </div>
           )}
