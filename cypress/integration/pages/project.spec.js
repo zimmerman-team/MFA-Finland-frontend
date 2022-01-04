@@ -1,13 +1,17 @@
 /// <reference types="cypress" />
-const title = ["Description", "Project disbursements for year", "Disbursement"];
+const title = [
+  "Description",
+  "Disbursements for year",
+  "Disbursement/Commitment for one year for activity",
+];
 const accodionTitle = [
-  "Participating organisations",
+  "Organisations",
   "Activity summary",
   "Countries",
   "Regions",
   "Sector",
-  "Type of aid",
-  "Policy Markers",
+  "Cooperation modalities",
+  "Objectives monitored by the OECD/DAC",
 ];
 const number = [0, 1, 2, 3, 4, 5, 6];
 
@@ -17,15 +21,8 @@ context("Project detail", () => {
   });
 
   it("go to the project page", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
-    cy.visit("localhost:3000/viz/projects");
-    cy.get("h6").contains("activities");
-  });
-
-  it("go to the project detail page", () => {
-    cy.get('[id="image-container"] a').eq(0).click();
+    cy.visit("localhost:3000/en/project/FI-3-2020-2019000389");
+    cy.wait(1000);
   });
 
   it("should have the correct title", () => {
@@ -41,15 +38,8 @@ context("Project detail", () => {
     cy.get('[data-cy="disbursement-bar"]').should("exist");
   });
 
-  it("transcation hover", () => {
-    cy.get("g rect").eq(0).trigger("mouseover", { force: true });
-    cy.get('[id="treemap-tooltip"]').should("be.visible");
-  });
-
   it("transcation table", () => {
-    cy.get('[data-cy="PillButton-table"]').click();
     cy.get("table").contains("disbursements");
-    cy.get('[data-cy="PillButton-chart"]').click();
   });
 
   it("Accordion show correct title", () => {
