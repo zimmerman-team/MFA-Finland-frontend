@@ -238,6 +238,7 @@ export const ProjectDetailModuleLayout = (
               margin-top: 16px;
               position: sticky;
             `}
+            data-cy="activity-in-page-nav"
           >
             <InPageNavigation
               cmsData={cmsData}

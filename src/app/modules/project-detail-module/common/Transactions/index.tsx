@@ -67,12 +67,14 @@ export const Transactions = (props: TransactionsProps) => {
         </Typography>
         {/* <div css={styles.tabContainer}>
           <PillButton
+            data-cy="PillButton-chart"
             css={tab(activeTab === "chart")}
             onClick={() => setActiveTab("chart")}
           >
             {get(props.cmsData, "general.chart", "Chart")}
           </PillButton>
           <PillButton
+            data-cy="PillButton-table"
             css={tab(activeTab === "table")}
             onClick={() => setActiveTab("table")}
           >

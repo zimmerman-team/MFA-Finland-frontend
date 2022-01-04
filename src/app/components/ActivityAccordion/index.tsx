@@ -34,12 +34,14 @@ export const ActivityAccordion = (props: ActivityItemProps) => {
         >
           {props.expanded ? (
             <ExpandLessIcon
+              data-cy="expandless-icon"
               css={`
                 margin-right: 16px;
               `}
             />
           ) : (
             <ExpandMoreIcon
+              data-cy="expandmore-icon"
               css={`
                 margin-right: 16px;
               `}
@@ -51,6 +53,7 @@ export const ActivityAccordion = (props: ActivityItemProps) => {
           </Typography>
         </MUIAccordionSummary>
         <MUIAccordionDetails
+          data-cy="accordion-detail"
           css={`
             background-color: #f7f7f7;
           `}
