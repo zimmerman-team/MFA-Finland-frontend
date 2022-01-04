@@ -5,20 +5,13 @@ context("Filter", () => {
     cy.viewport(1536, 860);
   });
 
-  it("accept cookie", () => {
-    cy.visit("localhost:3000");
-    cy.wait(10000);
-    cy.get('[test-id="main-page-accept"]').click();
-  });
-
   it("click add filter button", () => {
+    cy.visit("localhost:3000");
     cy.get('[data-cy="PillButton-Add Filters"]').click();
-    cy.get("h3").contains("Countries and Regions");
-    cy.get("h3").contains("SDG - Sustainable Development Goals");
   });
 
   it("Priority area show correct content", () => {
-    cy.get('[data-cy="PillButton- Priority areas"]').click();
+    cy.get('[data-cy="PillButton-All Priorities"]').click();
     cy.wait(1000);
     cy.get("h6").contains(
       "Strengthening the status and rights of women and girls"
@@ -30,7 +23,7 @@ context("Filter", () => {
 
   it("single select thematic area", () => {
     cy.get('[data-cy="PillButton-Add Filters"]').click();
-    cy.get('[data-cy="PillButton- Priority areas"]').click();
+    cy.get('[data-cy="PillButton-All Priorities"]').click();
     cy.get(".MuiAccordionSummary-expandIcon").eq(2).click();
     cy.get('[data-indeterminate="false"]').eq(8).check();
 
@@ -41,7 +34,6 @@ context("Filter", () => {
     cy.get(".MuiChip-label").contains(
       "Education, well-functioning societies and democracy - Main priority"
     );
-    cy.get('[data-cy="homepage-overview disbursement"]').contains("mln");
     cy.wait(5000);
     cy.get('[data-cy="priority-area-pie-simple"]').should("exist");
     cy.get("g text").contains("Main priority");
@@ -50,17 +42,11 @@ context("Filter", () => {
   it("cancel select", () => {
     // delete last selection
     cy.get(".MuiChip-deleteIcon").click({ force: true });
-    // make sure get back to the main page
-    cy.get('[data-cy="homepage-overview disbursement"]').contains("bln");
   });
 
   it("select both contries and sectors", () => {
-    cy.get('[data-cy="PillButton-Add Filters"]')
-      .contains("Add Filters")
-      .click();
-    cy.get('[data-cy="PillButton- Countries and Regions"]')
-      .contains("Countries and Regions")
-      .click();
+    cy.get('[data-cy="PillButton-Add Filters"]').click();
+    cy.get('[data-cy="PillButton-All Countries and regions"]').click();
 
     // check Europe
     cy.get('[data-indeterminate="false"]').eq(1).check();
@@ -72,7 +58,7 @@ context("Filter", () => {
     // back iconbutton
     cy.get('[aria-label="back"]').click();
 
-    cy.get('[data-cy="PillButton- Sectors"]').contains("Sectors").click();
+    cy.get('[data-cy="PillButton-All Sectors"]').click();
 
     // check eduction sectore
     cy.get('[data-indeterminate="false"]').eq(1).check();
@@ -96,10 +82,10 @@ context("Filter", () => {
 
   it("selection chip should show the correct items", () => {
     cy.get(".MuiChip-label")
-      .contains("Countries/Regions")
+      .contains("Countries and regions")
       .click()
       .contains(
-        "Albania; Belarus; Bosnia and Herzegovina; Kosovo; Macedonia, the Former Yugoslav Republic of; Moldova, Republic of; Montenegro; Serbia; Turkey; Ukraine; Egypt"
+        "Albania; Belarus; Bosnia and Herzegowina; Kosovo; Moldova; Montenegro; North Macedonia; Serbia; Turkey; Ukraine; Egypt"
       )
       .click();
 
@@ -114,47 +100,37 @@ context("Filter", () => {
 
   it("reset selects", () => {
     // delete last selection
-    cy.get('[data-cy="PillButton-Add Filters"]')
-      .contains("Add Filters")
-      .click();
+    cy.get('[data-cy="PillButton-Add Filters"]').click();
     cy.get(".MuiButton-label").contains("Reset").click();
     cy.get('[aria-label="cancel"]').click();
-
-    cy.wait(5000);
-    // make sure get back to the main page
-    cy.get('[data-cy="homepage-overview disbursement"]').contains("bln");
   });
 
   it("select and organisation and SDGs and period and advanced filter", () => {
-    cy.get('[data-cy="PillButton-Add Filters"]')
-      .contains("Add Filters")
-      .click();
+    cy.get('[data-cy="PillButton-Add Filters"]').click();
 
     // check organisation-multi
-    cy.get('[data-cy="PillButton- Organisations"]')
-      .contains("Organisations")
-      .click();
-    cy.get('[aria-label="checkbox"] input').eq(0).check();
-    cy.get('[aria-label="back"]').click();
+    // cy.get('[data-cy="PillButton-All Organisations"]').click();
+    // cy.get('[type="checkbox"] input').eq(0).check();
+    // cy.get('[aria-label="back"]').click();
 
     // check SDG-goal3 goal4
-    cy.get('[data-cy="PillButton- SDG - Sustainable Development Goals"]')
-      .contains("SDG - Sustainable Development Goals")
-      .click();
+    cy.get(
+      '[data-cy="PillButton-All SDGs - Sustainable Development Goals"]'
+    ).click();
     cy.get('[aria-disabled="false"] input').eq(3).check();
     cy.get('[aria-disabled="false"] input').eq(4).check();
     cy.get('[aria-label="back"]').click();
 
     // years 2016-2020
-    cy.get('[data-cy="PillButton- Years"]').contains("Years").click();
+    cy.get('[data-cy="PillButton-All Years"]').click();
     cy.get('[id="button-2016"]').click();
     cy.get('[id="to"]').click();
     cy.get('[id="button-2020"]').click();
     cy.get('[aria-label="back"]').click();
 
     // advanced filters-type of aid-Project-type interventions && Administrative costs not included elsewhere
-    cy.get('[data-cy="PillButton-5 Advanced Filters"]').click();
-    cy.get('[data-cy="PillButton- Type of aid"]').click();
+    cy.get('[data-cy="PillButton-5 Advanced filters"]').click();
+    cy.get('[data-cy="PillButton-All Cooperation modalities"]').click();
     cy.get('[aria-disabled="false"] input').eq(0).check();
     cy.get('[aria-disabled="false"] input').eq(1).check();
 
@@ -163,8 +139,7 @@ context("Filter", () => {
 
   it("homepage should show the correct content", () => {
     cy.wait(5000);
-    cy.get('[data-cy="disbursement-period"]').contains("2016 - to 2020");
-    cy.get('[data-cy="homepage-overview disbursement"]').contains("mln");
+    cy.get('[data-cy="disbursement-period"]').contains("2016 - 2020");
 
     cy.get('[aria-label="Public Sector Institutions"]').trigger("mouseover", {
       force: true,
@@ -173,21 +148,19 @@ context("Filter", () => {
   });
 
   it("change filter", () => {
-    cy.get('[data-cy="PillButton-Add Filters"]')
-      .contains("Add Filters")
-      .click();
+    cy.get('[data-cy="PillButton-Add Filters"]').click();
 
     //change the sdg g3g4 to g4g5
     cy.get(
-      '[data-cy="PillButton- SDG - Sustainable Development Goals"]'
+      '[data-cy="PillButton-All SDGs - Sustainable Development Goals"]'
     ).click();
     cy.get('[aria-disabled="false"] input').eq(5).check();
     cy.get('[aria-disabled="false"] input').eq(3).uncheck();
     cy.get('[aria-label="back"]').click();
 
     // delete advanced filters
-    cy.get('[data-cy="PillButton-5 Advanced Filters"]').click();
-    cy.get('[data-cy="PillButton- Type of aid"]').click();
+    cy.get('[data-cy="PillButton-5 Advanced filters"]').click();
+    cy.get('[data-cy="PillButton-All Cooperation modalities"]').click();
     cy.get(".MuiButton-label").contains("Reset").click();
     cy.get('[aria-label="back"]').click();
     cy.get('[aria-label="cancel"]').click();
@@ -204,14 +177,11 @@ context("Filter", () => {
 
   it("homepage should show the correct content", () => {
     cy.wait(5000);
-    cy.get('[data-cy="disbursement-period"]').contains("2016 - to 2021");
-    cy.get('[data-cy="homepage-overview disbursement"]').contains("mln");
+    cy.get('[data-cy="disbursement-period"]').contains("2016 - 2021");
 
     cy.get('[aria-label="Public Sector Institutions"]').trigger("mouseover", {
       force: true,
     });
     cy.get("b").contains("Public Sector Institutions");
-
-    cy.get("h6").contains("mln");
   });
 });
