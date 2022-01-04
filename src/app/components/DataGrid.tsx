@@ -374,6 +374,7 @@ export const DataGrid = (props: DataGridProps) => {
         component="section"
       >
         <GridWidget
+          data-cy="overview_disbursements"
           link="/viz/oda"
           tooltip={get(cmsData, "tooltips.overview_disbursements", "")}
           label="Overview Disbursements"
