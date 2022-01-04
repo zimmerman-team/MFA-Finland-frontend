@@ -17,12 +17,9 @@ context("detail sector page", () => {
   });
 
   it("go to the sector page", () => {
-    cy.acceptCookie();
-    cy.waitLoader("sectors-loader");
-    cy.get('[pointer-events="all"] > :nth-child(3)').click();
-    cy.get(".smTooltipContainer___StyledButton-sc-1e6tvjb-6")
-      .contains("Sector")
-      .click({ force: true });
+    cy.visit("localhost:3000/en/sectors/11220");
+    cy.wait(1000);
+    cy.get("h2").contains("Primary education");
   });
 
   // it("should show the correct title", () => {
@@ -40,23 +37,21 @@ context("detail sector page", () => {
     cy.get("._StyledDiv4-ggjYTm").contains("100%");
   });
 
-  it("Regions", () => {
-    cy.checkRegion("Regional and Unspecified");
-  });
+  // it("Regions", () => {
+  //   cy.checkRegion("Regional and Unspecified");
+  // });
 
-  it("Orgnisations", () => {
-    cy.checkOrganisation("Multilateral Organisations");
-  });
+  // it("Organisations", () => {
+  //   cy.checkOrganisation("Multilateral Organisations");
+  // });
 
   it("Sector info", () => {
-    cy.get("._StyledDiv5-iiwrxn").contains("support");
+    cy.get("._StyledDiv5-iiwrxn").contains(
+      "Formal and non-formal primary education for children"
+    );
   });
 
   it("SDG", () => {
     cy.checkSDG("1", "Goal 1. End poverty in all its forms everywhere");
-  });
-
-  it("cy.reload() - reload the page", () => {
-    cy.reload();
   });
 });

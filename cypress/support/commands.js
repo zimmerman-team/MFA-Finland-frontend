@@ -51,10 +51,7 @@ Cypress.Commands.add("checkMapContent", () => {
   cy.get(
     '[aria-label="Collapse Geographically unallocable ODA visualisation"]'
   ).click();
-  cy.get("h6").contains("Geographically unallocable ODA");
-
-  //Disbursements amount
-  cy.get("h6").contains("Aggregated disbursements");
+  cy.get("h6").contains("Non-country specific development cooperation");
 });
 
 Cypress.Commands.add("checkRegion", (id) => {

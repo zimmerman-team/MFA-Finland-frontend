@@ -16,16 +16,8 @@ context("detail org page", () => {
   });
 
   it("go to the org page", () => {
-    cy.acceptCookie();
-    cy.waitLoader("orgs-loader");
-    cy.get(
-      '[aria-label="Non-Governmental Organisation (NGO) and Civil Society"]'
-    ).click({ force: true });
-    cy.get('[data-cy="GotoDetailButton"]').click();
-    cy.wait(5000);
-  });
-
-  it("should show the correct org name", () => {
+    cy.visit("localhost:3000/en/organisations/20000");
+    cy.wait(1000);
     cy.get("h2").contains(
       "Non-Governmental Organisation (NGO) and Civil Society"
     );
@@ -40,21 +32,17 @@ context("detail org page", () => {
     cy.checkCharts();
   });
 
-  it("Regions", () => {
-    cy.checkRegion("Regional and Unspecified");
-  });
+  // it("Regions", () => {
+  //   cy.checkRegion("Regional and Unspecified");
+  // });
 
-  it("Orgnisations", () => {
-    cy.checkOrganisation(
-      "Non-Governmental Organisation (NGO) and Civil Society"
-    );
-  });
+  // it("Orgnisations", () => {
+  //   cy.checkOrganisation(
+  //     "Non-Governmental Organisation (NGO) and Civil Society"
+  //   );
+  // });
 
   it("SDG", () => {
     cy.checkSDG("1", "Goal 1. End poverty in all its forms everywhere");
-  });
-
-  it("cy.reload() - reload the page", () => {
-    cy.reload();
   });
 });

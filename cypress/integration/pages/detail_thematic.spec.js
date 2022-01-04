@@ -16,7 +16,7 @@ context("detail thematic area page", () => {
   });
 
   it("go to the thematic area page", () => {
-    cy.acceptCookie();
+    cy.visit("localhost:3000");
     cy.waitLoader("thematic-loader");
     cy.get('[data-cy="viz-pie-Thematic area A"]').click({ force: true });
     cy.wait(5000);
@@ -39,7 +39,6 @@ context("detail thematic area page", () => {
     cy.waitLoader("sectors-loader");
     cy.get(".rv-xy-plot__inner").should("exist");
 
-    cy.checkBudgetLine();
     cy.checkMapContent();
 
     cy.get("header").should("exist");
@@ -51,19 +50,15 @@ context("detail thematic area page", () => {
     cy.get("g text").contains("Main priority");
   });
 
-  it("Regions", () => {
-    cy.checkRegion("Regional and Unspecified");
-  });
+  // it("Regions", () => {
+  //   cy.checkRegion("Regional and Unspecified");
+  // });
 
-  it("Orgnisations", () => {
-    cy.checkOrganisation("Multilateral Organisations");
-  });
+  // it("Orgnisations", () => {
+  //   cy.checkOrganisation("Multilateral Organisations");
+  // });
 
   it("SDG", () => {
     cy.checkSDG("1", "Goal 1. End poverty in all its forms everywhere");
-  });
-
-  it("cy.reload() - reload the page", () => {
-    cy.reload();
   });
 });

@@ -14,14 +14,8 @@ context("detail country page", () => {
     cy.viewport(1536, 860);
   });
   it("go to the country page", () => {
-    cy.acceptCookie();
-    cy.waitLoader("locations-loader");
-    cy.get('[id="South of Sahara"]').click({ force: true });
-    cy.get('[data-cy="DrillDownButton"]').click();
+    cy.visit("localhost:3000/en/countries/MZ");
     cy.wait(1000);
-    cy.get('[id="MZ"]').click({ force: true });
-    cy.get('[data-cy="GotoDetailButton"]').click();
-    cy.wait(5000);
     cy.get("h2").contains("Mozambique");
   });
 
@@ -33,15 +27,11 @@ context("detail country page", () => {
     cy.checkCharts();
   });
 
-  it("Orgnisations", () => {
-    cy.checkOrganisation("Multilateral Organisations");
-  });
+  // it("Orgnisations", () => {
+  //   cy.checkOrganisation("Multilateral Organisations");
+  // });
 
   it("SDG", () => {
     cy.checkSDG("1", "Goal 1. End poverty in all its forms everywhere");
-  });
-
-  it("cy.reload() - reload the page", () => {
-    cy.reload();
   });
 });
