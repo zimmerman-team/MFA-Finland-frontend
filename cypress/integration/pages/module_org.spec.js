@@ -15,12 +15,8 @@ const NGOorgs = [
 ];
 
 context("viz module page organisation", () => {
-  beforeEach(() => {
-    cy.viewport(1536, 860);
-  });
-
   it("go to the module org page", () => {
-    cy.acceptCookie();
+    cy.visit("localhost:3000/en");
     cy.get("h3").contains("Organisations").click();
   });
 

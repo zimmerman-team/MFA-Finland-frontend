@@ -15,23 +15,23 @@ context("viz module page budget", () => {
   });
 
   it("go to the module org page", () => {
-    cy.acceptCookie();
+    cy.visit("localhost:3000/en");
     cy.get("h3").contains("Budget lines").click();
   });
 
-  it("check chart and hover", () => {
-    cy.waitLoader("budgetlines-loader");
-    cy.get("#viz-scroller").should("exist");
-    cy.get('[data-cy="bf-barchart-bar-comp"]')
-      .eq(18)
-      .then(($bar) => {
-        cy.wrap($bar).click();
-      });
-    cy.get('[data-cy="legend-items-space"]').should("be.visible");
-    budgets.forEach((text) => {
-      cy.get("[data-cy^=sub-legend-items-]").contains(text);
-    });
-  });
+  // it("check chart and hover", () => {
+  //   cy.waitLoader("budgetlines-loader");
+  //   cy.get("#viz-scroller").should("exist");
+  //   cy.get('[data-cy="bf-barchart-bar-comp"]')
+  //     .eq(18)
+  //     .then(($bar) => {
+  //       cy.wrap($bar).click();
+  //     });
+  //   cy.get('[data-cy="legend-items-space"]').should("be.visible");
+  //   budgets.forEach((text) => {
+  //     cy.get("[data-cy^=sub-legend-items-]").contains(text);
+  //   });
+  // });
 
   it("check right coordinate", () => {
     years.forEach((text) => {

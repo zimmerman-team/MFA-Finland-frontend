@@ -19,12 +19,8 @@ const asiaCountries = [
 ];
 
 context("viz module page country and region", () => {
-  beforeEach(() => {
-    cy.viewport(1536, 860);
-  });
-
   it("go to the module region page", () => {
-    cy.acceptCookie();
+    cy.visit("localhost:3000/en");
     cy.get("h3").contains("regions").click();
   });
 
@@ -53,7 +49,7 @@ context("viz module page country and region", () => {
   });
 
   it("CSV file", () => {
-    cy.checkCSV("countries-regions.csv", 5400);
+    cy.checkCSV("countries-regions.csv", 5000);
   });
 
   it("PNG image", () => {
@@ -78,7 +74,7 @@ context("viz module page country and region", () => {
     cy.get("td").should("have.length", 4);
     cy.get("td").contains("Middle East");
     cy.get('[id="expandable-button"]').eq(1).click();
-    cy.get("td").contains("Syrian Arab Republic").should("be.visible");
+    cy.get("td").contains("Syria").should("be.visible");
   });
 
   it("check deep chart click", () => {

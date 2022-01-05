@@ -9,11 +9,11 @@ const sectors = [
 ];
 const governSector = [
   "Government and civil society, general",
-  "Government & Civil Society-general",
+  "Government and civil society, general",
   "Conflict prevention and resolution, peace and security",
 ];
 const governDetailSector = [
-  "Government & Civil Society-general",
+  "Government and civil society, general",
   "Women’s rights organisations and movements, and government institutions",
   "Public sector policy and administrative management",
   "Human rights",
@@ -28,7 +28,7 @@ context("viz module page sectors", () => {
   });
 
   it("go to the viz module sector page", () => {
-    cy.acceptCookie();
+    cy.visit("localhost:3000/en");
     cy.get("h3").contains("Sectors").click();
   });
   it("check charts", () => {

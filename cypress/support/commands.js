@@ -49,7 +49,7 @@ Cypress.Commands.add("checkTooltip", () => {
     force: true,
   });
   cy.get(".MuiTooltip-popper").should("be.visible");
-  cy.get('[aria-label="Download"]').click();
+  cy.get('[aria-label="Download this view"]').click();
 });
 
 Cypress.Commands.add("checkCSV", (file, length) => {

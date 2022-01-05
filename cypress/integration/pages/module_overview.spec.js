@@ -6,7 +6,7 @@ context("viz module page overview", () => {
   });
 
   it("go to the module overview page", () => {
-    cy.acceptCookie();
+    cy.visit("localhost:3000/en");
     cy.waitLoader("oda-loader");
     cy.get("#viz-scroller").eq(0).click({ force: true });
   });

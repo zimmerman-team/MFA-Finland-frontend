@@ -13,8 +13,8 @@ context("viz module page thematic", () => {
   });
 
   it("go to the viz thematic area page", () => {
-    cy.acceptCookie();
-    cy.get("h3").contains("Priority areas").click();
+    cy.visit("localhost:3000/en");
+    cy.get("h3").contains("Priorities").click();
   });
 
   it("check charts", () => {
@@ -47,7 +47,7 @@ context("viz module page thematic", () => {
 
   it("change to table display", () => {
     cy.get('[data-cy="filled-button-Table"]').click({ force: true });
-    cy.get("h6").contains("priority areas");
+    cy.get("h6").contains("priorities");
     cy.get("table").should("exist");
   });
 
