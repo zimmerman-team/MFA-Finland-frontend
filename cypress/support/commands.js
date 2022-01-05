@@ -25,10 +25,39 @@
 
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+import path from "path";
+import validateImage from "../plugins/index";
+
 Cypress.Commands.add("acceptCookie", () => {
   cy.visit("localhost:3000");
   cy.wait(10000);
   cy.get('[test-id="main-page-accept"]').click();
+});
+
+Cypress.Commands.add("checkPNG", () => {
+  // image comes from a domain different from the page
+  cy.get("p").contains("PNG").click({
+    force: true,
+  });
+  cy.log("**confirm downloaded image**");
+  validateImage();
+});
+
+Cypress.Commands.add("checkTooltip", () => {
+  cy.get('[aria-label="Toggle more options"]').click();
+  cy.get('[aria-label="Share"]').trigger("mouseover", {
+    force: true,
+  });
+  cy.get(".MuiTooltip-popper").should("be.visible");
+  cy.get('[aria-label="Download this view"]').click();
+});
+
+Cypress.Commands.add("checkCSV", (file, length) => {
+  cy.get('[id="download-csv"]').click();
+  cy.log("**read downloaded file**");
+  const downloadsFolder = Cypress.config("downloadsFolder");
+  const filename = path.join(downloadsFolder, file);
+  cy.readFile(filename, { timeout: 15000 }).should("have.length.gt", length);
 });
 
 Cypress.Commands.add("checkOrganisation", (id) => {

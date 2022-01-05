@@ -19,4 +19,19 @@
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+  const validateImage = (downloadedFilename) => {
+    const downloadsFolder = Cypress.config("downloadsFolder");
+
+    if (!downloadedFilename) {
+      downloadedFilename = path.join(downloadsFolder, "download.png");
+    }
+
+    cy.readFile(downloadedFilename, "binary", { timeout: 15000 }).should(
+      (buffer) => {
+        // by having length assertion we ensure the file has text
+        // since we don't know when the browser finishes writing it to disk
+        expect(buffer.length).to.be.gt(10000);
+      }
+    );
+  };
 };

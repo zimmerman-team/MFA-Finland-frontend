@@ -138,13 +138,13 @@ export function ThematicAreas(props: ThematicAreasProps) {
   return (
     <Grid container justify="center" alignItems="center" direction="row">
       <Grid
+        data-cy="viz-pie-chart"
         item
         xs={12}
         md={12}
         lg={props.showOnlyViz ? 12 : 6}
         xl={props.showOnlyViz ? 12 : 6}
         css={containercss}
-        data-cy="viz-pie-chart"
       >
         {props.data.map((item: DataProps, index: number) => (
           <React.Fragment key={item.name}>
