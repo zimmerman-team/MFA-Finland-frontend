@@ -7,7 +7,7 @@
     "url": "https://github.com/zimmerman-team/MFA-Finland-frontend.git"
   },
   "dependencies": {
-    "@craco/craco": "^6.1.1",
+    "@craco/craco": "^6.4.3",
     "@devhammed/use-cookie": "^1.1.0",
     "@hot-loader/react-dom": "^17.0.1",
     "@jackwilsdon/craco-use-babelrc": "^1.0.0",
@@ -43,7 +43,7 @@
     "react-map-interaction": "^2.0.0",
     "react-meta-tags": "^1.0.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.2",
+    "react-scripts": "^5.0.0",
     "react-share": "^4.4.0",
     "react-use": "^17.1.1",
     "react-vis": "^1.11.7",
@@ -100,8 +100,8 @@
     "depcheck": "depcheck",
     "start": "craco start",
     "build": "craco build && node etc/post-build.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "test": "craco test",
+    "eject": "craco eject",
     "cypress:run": "cypress run",
     "cypress:record": "cypress run --record --key 523ddcd5-748b-4eaa-9362-5b1d37cf7bc9",
     "cypress:open": "export BABEL_ENV=development && cypress open",
