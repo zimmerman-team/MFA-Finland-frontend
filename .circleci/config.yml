@@ -50,7 +50,7 @@ workflows:
     jobs:
       #      - happo
       - cypress/install:
-          #          executor: cypress-executor
+          executor: cypress/base-14
           pre-steps:
             - run:
                 name: Set env variables
