@@ -51,21 +51,6 @@ chore: Changes to the build process or auxiliary tools and libraries such as doc
 - If there's a reason to commit code that is commented out (there usually should be none), always leave a "FIXME" or "TODO" comment so it's clear for other developers why this was done.
 - Automatic code quality / testing checks (continuous integration tools) are implemented to check all these things automatically when pushing / merging new branches. Quality is the key!
 
-## Who currently makes use of IATI.cloud?
-
-- Dutch Ministry of Foreign Affairs: [www.openaid.nl](https://www.openaid.nl)
-- FCDO Devtracker: [devtracker.dfid.gov.uk](https://devtracker.dfid.gov.uk/)
-- UNESCO Transparency Portal: [opendata.unesco.org](https://opendata.unesco.org)
-- Netherlands Enterprise Agency: [aiddata.rvo.nl](https://aiddata.rvo.nl/)
-- Mohinga AIMS: [mohinga.info](http://mohinga.info/en/)
-- UN-Habitat: [open.unhabitat.org](http://open.unhabitat.org)
-- Overseas Development Institute: [ODI.org](https://transparency.odi.org/)
-- UN Migration: [IOM.int](https://www.iom.int/)
-- AIDA [AIDA.tools](https://www.aida.tools/)
-- IATI Datastore
-
-& many others
-
 ## Available Scripts
 
 #### NOTE:
