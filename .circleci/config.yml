@@ -7,12 +7,12 @@ version: 2.1
 executors:
   cypress-executor:
     docker:
-      - image: "cypress/included:5.5.0"
+      - image: "cypress/included:9.4.1"
     resource_class: large
 
   cypress-executor-med:
     docker:
-      - image: "cypress/included:5.5.0"
+      - image: "cypress/included:9.4.1"
     resource_class: medium
 
 jobs:
