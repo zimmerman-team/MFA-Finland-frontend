@@ -95,7 +95,7 @@ export function getODALegendItems(
   hideODAGNI: boolean
 ): VizSidePanelItemProps[] {
   return orderBy(data, "year", "desc").map((d: any) => {
-    if (d.year < 2021) {
+    if (get(d, "gni", 0) > 0) {
       const children = [
         {
           id: "Exclusive ODA",
