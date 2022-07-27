@@ -8,6 +8,9 @@ import { languageAtom } from "app/state/recoil/atoms";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
+import {
+  AF_COUNTRY,
+} from 'app/utils/getAPIFormattedFilters';
 
 export function CountryDetailModule() {
   const { params } = useRouteMatch();
@@ -28,7 +31,7 @@ export function CountryDetailModule() {
     unallocablePercentage,
   } = useDataGridData({
     detailPageFilter: {
-      key: "recipient_country_code",
+      key: AF_COUNTRY,
       value: get(params, "country", ""),
     },
   });
@@ -56,7 +59,7 @@ export function CountryDetailModule() {
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
       detailPageFilter={{
-        key: "recipient_country_code",
+        key: AF_COUNTRY,
         value: get(params, "country", ""),
       }}
       countryData={countryData}

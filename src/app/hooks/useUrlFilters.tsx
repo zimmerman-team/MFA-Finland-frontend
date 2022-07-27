@@ -4,6 +4,21 @@ import { useUnmount, useUpdateEffect } from "react-use";
 import { useHistory, useLocation } from "react-router-dom";
 import { useComponentWillMount } from "app/hooks/useCompWillMount";
 import { defaultfilters, selectedFilterAtom } from "app/state/recoil/atoms";
+import {
+  AF_COUNTRY,
+  AF_REGION,
+  AF_SECTOR,
+  AF_PARTICIPATING_ORG_REF,
+  AF_ACTIVITY_STATUS_CODE,
+  AF_ACTIVITY_SCOPE_CODE,
+  AF_TAG_NARRATIVE,
+  AF_TAG_CODE,
+  AF_DEFAULT_AID_TYPE_CODE,
+  AF_DEFAULT_TIED_STATUS_CODE,
+  AF_DEFAULT_FLOW_TYPE_CODE,
+  AF_COLLABORATION_TYPE_CODE,
+  AF_POLICY_MARKER_CODE,
+} from 'app/utils/getAPIFormattedFilters';
 
 export function useUrlFilters() {
   const history = useHistory();
@@ -15,25 +30,23 @@ export function useUrlFilters() {
   useComponentWillMount({
     action: () => {
       const updatedSelectedFilters = { ...selectedFilters };
-      const currentUrlParams = new URLSearchParams(history.location.search);
-      const countries = currentUrlParams.get("recipient_country_code");
-      const regions = currentUrlParams.get("recipient_region_code");
-      const sectors = currentUrlParams.get("sector_code");
-      const organisations = currentUrlParams.get("participating_org_ref");
-      const activitystatus = currentUrlParams.get("activity_status_code");
-      const activityscope = currentUrlParams.get("activity_scope_code");
-      const tag = currentUrlParams.get("tag_narrative");
-      const sdg = currentUrlParams.get("tag_code");
-      const defaultaidtype = currentUrlParams.get("default_aid_type_code");
-      const defaulttiedstatus = currentUrlParams.get(
-        "default_tied_status_code"
-      );
-      const defaultflowtype = currentUrlParams.get("default_flow_type_code");
-      const collaborationtype = currentUrlParams.get("collaboration_type_code");
-      const policymarker = currentUrlParams.get("policy_marker_code");
-      const budgetlines = currentUrlParams.get("budget_line");
-      const humanrights = currentUrlParams.get("human_rights_approach");
-      const years = currentUrlParams.get("years");
+      const currentURLParams = new URLSearchParams(history.location.search);
+      const countries = currentURLParams.get(AF_COUNTRY);
+      const regions = currentURLParams.get(AF_REGION);
+      const sectors = currentURLParams.get(AF_SECTOR);
+      const organisations = currentURLParams.get(AF_PARTICIPATING_ORG_REF);
+      const activitystatus = currentURLParams.get(AF_ACTIVITY_STATUS_CODE);
+      const activityscope = currentURLParams.get(AF_ACTIVITY_SCOPE_CODE);
+      const tag = currentURLParams.get(AF_TAG_NARRATIVE);
+      const sdg = currentURLParams.get(AF_TAG_CODE);
+      const defaultaidtype = currentURLParams.get(AF_DEFAULT_AID_TYPE_CODE);
+      const defaulttiedstatus = currentURLParams.get(AF_DEFAULT_TIED_STATUS_CODE);
+      const defaultflowtype = currentURLParams.get(AF_DEFAULT_FLOW_TYPE_CODE);
+      const collaborationtype = currentURLParams.get(AF_COLLABORATION_TYPE_CODE);
+      const policymarker = currentURLParams.get(AF_POLICY_MARKER_CODE);
+      const budgetlines = currentURLParams.get("budget_line");
+      const humanrights = currentURLParams.get("human_rights_approach");
+      const years = currentURLParams.get("years");
 
       if (countries) {
         updatedSelectedFilters.countries = countries.split(",");
@@ -94,98 +107,98 @@ export function useUrlFilters() {
     const currentUrlParams = new URLSearchParams(history.location.search);
     if (selectedFilters.countries.length > 0) {
       currentUrlParams.set(
-        "recipient_country_code",
+        AF_COUNTRY,
         selectedFilters.countries.join(",")
       );
     } else {
-      currentUrlParams.delete("recipient_country_code");
+      currentUrlParams.delete(AF_COUNTRY);
     }
     if (selectedFilters.regions.length > 0) {
       currentUrlParams.set(
-        "recipient_region_code",
+        AF_REGION,
         selectedFilters.regions.join(",")
       );
     } else {
-      currentUrlParams.delete("recipient_region_code");
+      currentUrlParams.delete(AF_REGION);
     }
     if (selectedFilters.sectors.length > 0) {
-      currentUrlParams.set("sector_code", selectedFilters.sectors.join(","));
+      currentUrlParams.set(AF_SECTOR, selectedFilters.sectors.join(","));
     } else {
-      currentUrlParams.delete("sector_code");
+      currentUrlParams.delete(AF_SECTOR);
     }
     if (selectedFilters.organisations.length > 0) {
       currentUrlParams.set(
-        "participating_org_ref",
+        AF_PARTICIPATING_ORG_REF,
         selectedFilters.organisations.join(",")
       );
     } else {
-      currentUrlParams.delete("participating_org_ref");
+      currentUrlParams.delete(AF_PARTICIPATING_ORG_REF);
     }
     if (selectedFilters.activitystatus.length > 0) {
       currentUrlParams.set(
-        "activity_status_code",
+        AF_ACTIVITY_STATUS_CODE,
         selectedFilters.activitystatus.join(",")
       );
     } else {
-      currentUrlParams.delete("activity_status_code");
+      currentUrlParams.delete(AF_ACTIVITY_STATUS_CODE);
     }
     if (selectedFilters.activityscope.length > 0) {
       currentUrlParams.set(
-        "activity_scope_code",
+        AF_ACTIVITY_SCOPE_CODE,
         selectedFilters.activityscope.join(",")
       );
     } else {
-      currentUrlParams.delete("activity_scope_code");
+      currentUrlParams.delete(AF_ACTIVITY_SCOPE_CODE);
     }
     if (selectedFilters.tag.length > 0) {
-      currentUrlParams.set("tag_narrative", selectedFilters.tag.join(","));
+      currentUrlParams.set(AF_TAG_NARRATIVE, selectedFilters.tag.join(","));
     } else {
-      currentUrlParams.delete("tag_narrative");
+      currentUrlParams.delete(AF_TAG_NARRATIVE);
     }
     if (selectedFilters.sdg.length > 0) {
-      currentUrlParams.set("tag_code", selectedFilters.sdg.join(","));
+      currentUrlParams.set(AF_TAG_CODE, selectedFilters.sdg.join(","));
     } else {
-      currentUrlParams.delete("tag_code");
+      currentUrlParams.delete(AF_TAG_CODE);
     }
     if (selectedFilters.defaultaidtype.length > 0) {
       currentUrlParams.set(
-        "default_aid_type_code",
+        AF_DEFAULT_AID_TYPE_CODE,
         selectedFilters.defaultaidtype.join(",")
       );
     } else {
-      currentUrlParams.delete("default_aid_type_code");
+      currentUrlParams.delete(AF_DEFAULT_AID_TYPE_CODE);
     }
     if (selectedFilters.defaultflowtype.length > 0) {
       currentUrlParams.set(
-        "default_flow_type_code",
+        AF_DEFAULT_FLOW_TYPE_CODE,
         selectedFilters.defaultflowtype.join(",")
       );
     } else {
-      currentUrlParams.delete("default_flow_type_code");
+      currentUrlParams.delete(AF_DEFAULT_FLOW_TYPE_CODE);
     }
     if (selectedFilters.defaulttiedstatus.length > 0) {
       currentUrlParams.set(
-        "default_tied_status_code",
+        AF_DEFAULT_TIED_STATUS_CODE,
         selectedFilters.defaulttiedstatus.join(",")
       );
     } else {
-      currentUrlParams.delete("default_tied_status_code");
+      currentUrlParams.delete(AF_DEFAULT_TIED_STATUS_CODE);
     }
     if (selectedFilters.collaborationtype.length > 0) {
       currentUrlParams.set(
-        "collaboration_type_code",
+        AF_COLLABORATION_TYPE_CODE,
         selectedFilters.collaborationtype.join(",")
       );
     } else {
-      currentUrlParams.delete("collaboration_type_code");
+      currentUrlParams.delete(AF_COLLABORATION_TYPE_CODE);
     }
     if (selectedFilters.policymarker.length > 0) {
       currentUrlParams.set(
-        "policy_marker_code",
+        AF_POLICY_MARKER_CODE,
         selectedFilters.policymarker.join(",")
       );
     } else {
-      currentUrlParams.delete("policy_marker_code");
+      currentUrlParams.delete(AF_POLICY_MARKER_CODE);
     }
     if (selectedFilters.budgetlines.length > 0) {
       currentUrlParams.set(
@@ -220,19 +233,19 @@ export function useUrlFilters() {
   useUpdateEffect(() => {
     const updatedSelectedFilters = { ...selectedFilters };
     const currentUrlParams = new URLSearchParams(location.search);
-    const countries = currentUrlParams.get("recipient_country_code");
-    const regions = currentUrlParams.get("recipient_region_code");
-    const sectors = currentUrlParams.get("sector_code");
-    const organisations = currentUrlParams.get("participating_org_ref");
-    const activitystatus = currentUrlParams.get("activity_status_code");
-    const activityscope = currentUrlParams.get("activity_scope_code");
-    const tag = currentUrlParams.get("tag_narrative");
-    const sdg = currentUrlParams.get("tag_code");
-    const defaultaidtype = currentUrlParams.get("default_aid_type_code");
-    const defaulttiedstatus = currentUrlParams.get("default_tied_status_code");
-    const defaultflowtype = currentUrlParams.get("default_flow_type_code");
-    const collaborationtype = currentUrlParams.get("collaboration_type_code");
-    const policymarker = currentUrlParams.get("policy_marker_code");
+    const countries = currentUrlParams.get(AF_COUNTRY);
+    const regions = currentUrlParams.get(AF_REGION);
+    const sectors = currentUrlParams.get(AF_SECTOR);
+    const organisations = currentUrlParams.get(AF_PARTICIPATING_ORG_REF);
+    const activitystatus = currentUrlParams.get(AF_ACTIVITY_STATUS_CODE);
+    const activityscope = currentUrlParams.get(AF_ACTIVITY_SCOPE_CODE);
+    const tag = currentUrlParams.get(AF_TAG_NARRATIVE);
+    const sdg = currentUrlParams.get(AF_TAG_CODE);
+    const defaultaidtype = currentUrlParams.get(AF_DEFAULT_AID_TYPE_CODE);
+    const defaulttiedstatus = currentUrlParams.get(AF_DEFAULT_TIED_STATUS_CODE);
+    const defaultflowtype = currentUrlParams.get(AF_DEFAULT_FLOW_TYPE_CODE);
+    const collaborationtype = currentUrlParams.get(AF_COLLABORATION_TYPE_CODE);
+    const policymarker = currentUrlParams.get(AF_POLICY_MARKER_CODE);
     const budgetlines = currentUrlParams.get("budget_line");
     const humanrights = currentUrlParams.get("human_rights_approach");
     const years = currentUrlParams.get("years");

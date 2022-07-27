@@ -8,6 +8,9 @@ import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
+import {
+  AF_PARTICIPATING_ORG_TYPE,
+} from 'app/utils/getAPIFormattedFilters';
 
 const moduleName = "Organisation Type Detail Module";
 
@@ -36,7 +39,7 @@ export function OrganisationTypeDetailModule() {
     detailPageNameData,
   } = useDataGridData({
     detailPageFilter: {
-      key: "participating_org_type",
+      key: AF_PARTICIPATING_ORG_TYPE,
       value: get(params, "orgType", ""),
     },
   });
@@ -57,7 +60,7 @@ export function OrganisationTypeDetailModule() {
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
       detailPageFilter={{
-        key: "participating_org_type",
+        key: AF_PARTICIPATING_ORG_TYPE,
         value: get(params, "orgType", ""),
       }}
     />

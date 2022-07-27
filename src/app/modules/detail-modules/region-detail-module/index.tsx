@@ -8,6 +8,9 @@ import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
+import {
+  AF_REGION,
+} from 'app/utils/getAPIFormattedFilters';
 
 const moduleName = "Region Detail Module";
 
@@ -36,7 +39,7 @@ export function RegionDetailModule() {
     detailPageNameData,
   } = useDataGridData({
     detailPageFilter: {
-      key: "recipient_region_code",
+      key: AF_REGION,
       value: get(params, "region", ""),
     },
   });
@@ -57,7 +60,7 @@ export function RegionDetailModule() {
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
       detailPageFilter={{
-        key: "recipient_region_code",
+        key: AF_REGION,
         value: get(params, "region", ""),
       }}
     />

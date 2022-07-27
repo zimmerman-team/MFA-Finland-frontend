@@ -11,6 +11,9 @@ import { languageAtom } from "app/state/recoil/atoms";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
+import {
+  AF_PARTICIPATING_ORG_REF,
+} from 'app/utils/getAPIFormattedFilters';
 
 const moduleName = "Organisation Detail Module";
 
@@ -122,7 +125,7 @@ export function OrganisationDetailModule() {
     detailPageNameData,
   } = useDataGridData({
     detailPageFilter: {
-      key: "participating_org_ref",
+      key: AF_PARTICIPATING_ORG_REF,
       value: orgValues,
     },
   });
@@ -143,7 +146,7 @@ export function OrganisationDetailModule() {
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
       detailPageFilter={{
-        key: "participating_org_ref",
+        key: AF_PARTICIPATING_ORG_REF,
         value: orgValues,
       }}
     />

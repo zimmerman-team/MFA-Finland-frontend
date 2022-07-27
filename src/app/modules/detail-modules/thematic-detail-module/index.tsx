@@ -9,6 +9,9 @@ import { languageAtom } from "app/state/recoil/atoms";
 import { useDataGridData } from "app/hooks/useDataGridData";
 import { BreadcrumbLinkModel } from "app/components/Breadcrumb/data";
 import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
+import {
+  AF_TAG_NARRATIVE,
+} from 'app/utils/getAPIFormattedFilters';
 
 const moduleName = "Thematic Detail Module";
 
@@ -40,7 +43,7 @@ export function ThematicDetailModule() {
     detailPageNameData,
   } = useDataGridData({
     detailPageFilter: {
-      key: "tag_narrative",
+      key: AF_TAG_NARRATIVE,
       value: `${decodeURIComponent(get(params, "theme", ""))}| primary`,
     },
   });
@@ -65,7 +68,7 @@ export function ThematicDetailModule() {
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
       detailPageFilter={{
-        key: "tag_narrative",
+        key: AF_TAG_NARRATIVE,
         value: [
           `${decodeURIComponent(get(params, "theme", ""))}| primary`,
           `${decodeURIComponent(get(params, "theme", ""))}| secondary`,

@@ -19,6 +19,21 @@ import { ArrowSelector } from "app/components/Charts/common/arrowselector";
 import { SlideContainer } from "app/components/Charts/common/slidecontainer";
 import { TransitionContainer } from "app/components/Charts/common/transitioncontainer";
 import { getTranslatedCols } from "app/components/Charts/table/utils/getTranslatedCols";
+import {
+  AF_COUNTRY,
+  AF_REGION,
+  AF_SECTOR,
+  AF_PARTICIPATING_ORG_REF,
+  AF_ACTIVITY_STATUS_CODE,
+  AF_ACTIVITY_SCOPE_CODE,
+  AF_TAG_NARRATIVE,
+  AF_TAG_CODE,
+  AF_DEFAULT_AID_TYPE_CODE,
+  AF_DEFAULT_TIED_STATUS_CODE,
+  AF_DEFAULT_FLOW_TYPE_CODE,
+  AF_COLLABORATION_TYPE_CODE,
+  AF_POLICY_MARKER_CODE,
+} from 'app/utils/getAPIFormattedFilters';
 
 interface ODAvizModuleProps extends BarChartProps {
   vizScale: number;
@@ -61,19 +76,19 @@ export function ODAvizModule(props: ODAvizModuleProps) {
 
   const hideODAGNI = () => {
     const currentURLParams = new URLSearchParams(location.search);
-    const countries = currentURLParams.get("recipient_country_code");
-    const regions = currentURLParams.get("recipient_region_code");
-    const sectors = currentURLParams.get("sector_code");
-    const organisations = currentURLParams.get("participating_org_ref");
-    const activitystatus = currentURLParams.get("activity_status_code");
-    const activityscope = currentURLParams.get("activity_scope_code");
-    const tag = currentURLParams.get("tag_narrative");
-    const sdg = currentURLParams.get("tag_code");
-    const defaultaidtype = currentURLParams.get("default_aid_type_code");
-    const defaulttiedstatus = currentURLParams.get("default_tied_status_code");
-    const defaultflowtype = currentURLParams.get("default_flow_type_code");
-    const collaborationtype = currentURLParams.get("collaboration_type_code");
-    const policymarker = currentURLParams.get("policy_marker_code");
+    const countries = currentURLParams.get(AF_COUNTRY);
+    const regions = currentURLParams.get(AF_REGION);
+    const sectors = currentURLParams.get(AF_SECTOR);
+    const organisations = currentURLParams.get(AF_PARTICIPATING_ORG_REF);
+    const activitystatus = currentURLParams.get(AF_ACTIVITY_STATUS_CODE);
+    const activityscope = currentURLParams.get(AF_ACTIVITY_SCOPE_CODE);
+    const tag = currentURLParams.get(AF_TAG_NARRATIVE);
+    const sdg = currentURLParams.get(AF_TAG_CODE);
+    const defaultaidtype = currentURLParams.get(AF_DEFAULT_AID_TYPE_CODE);
+    const defaulttiedstatus = currentURLParams.get(AF_DEFAULT_TIED_STATUS_CODE);
+    const defaultflowtype = currentURLParams.get(AF_DEFAULT_FLOW_TYPE_CODE);
+    const collaborationtype = currentURLParams.get(AF_COLLABORATION_TYPE_CODE);
+    const policymarker = currentURLParams.get(AF_POLICY_MARKER_CODE);
     const budgetlines = currentURLParams.get("budget_line");
     const humanrights = currentURLParams.get("human_rights_approach");
     const years = currentURLParams.get("years");
