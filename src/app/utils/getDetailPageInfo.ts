@@ -1,8 +1,16 @@
+import {
+  AF_COUNTRY,
+  AF_REGION,
+  AF_TAG_CODE,
+  AF_SECTOR,
+  AF_PARTICIPATING_ORG_REF,
+} from 'app/utils/getAPIFormattedFilters';
+
 export function getDetailPageInfo(routeData: any) {
   if (routeData.region) {
     return {
       detailPageFilter: {
-        key: "recipient_region_code",
+        key: AF_REGION,
         value: routeData.region,
       },
     };
@@ -10,7 +18,7 @@ export function getDetailPageInfo(routeData: any) {
   if (routeData.country) {
     return {
       detailPageFilter: {
-        key: "recipient_country_code",
+        key: AF_COUNTRY,
         value: routeData.country,
       },
     };
@@ -18,7 +26,7 @@ export function getDetailPageInfo(routeData: any) {
   if (routeData.sector) {
     return {
       detailPageFilter: {
-        key: "sector_code",
+        key: AF_SECTOR,
         value: routeData.sector,
       },
     };
@@ -26,7 +34,7 @@ export function getDetailPageInfo(routeData: any) {
   if (routeData.organisation) {
     return {
       detailPageFilter: {
-        key: "participating_org_ref",
+        key: AF_PARTICIPATING_ORG_REF,
         value: routeData.organisation,
       },
     };
@@ -34,7 +42,7 @@ export function getDetailPageInfo(routeData: any) {
   if (routeData.theme) {
     return {
       detailPageFilter: {
-        key: "tag_code",
+        key: AF_TAG_CODE,
         value: routeData.theme,
       },
     };

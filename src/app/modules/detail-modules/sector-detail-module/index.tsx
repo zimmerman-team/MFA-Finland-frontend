@@ -9,6 +9,9 @@ import { DetailModuleLayout } from "app/modules/detail-modules/common/layout";
 import { useRecoilState } from "recoil";
 import { languageAtom } from "app/state/recoil/atoms";
 import { getName } from "app/components/Charts/sdg";
+import {
+  AF_SECTOR,
+} from 'app/utils/getAPIFormattedFilters';
 
 export function SectorDetailModule() {
   const { params } = useRouteMatch();
@@ -30,7 +33,7 @@ export function SectorDetailModule() {
     sectorNames,
   } = useDataGridData({
     detailPageFilter: {
-      key: "sector_code",
+      key: AF_SECTOR,
       value: get(params, "sector", ""),
     },
   });
@@ -62,7 +65,7 @@ export function SectorDetailModule() {
       geoMapData={geoMapData}
       unallocablePercentage={unallocablePercentage}
       detailPageFilter={{
-        key: "sector_code",
+        key: AF_SECTOR,
         value: get(params, "sector", ""),
       }}
       sectorDescription={sectorDescription}

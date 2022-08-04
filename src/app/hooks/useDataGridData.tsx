@@ -21,6 +21,21 @@ import {
   GeoLatestFiltersAtom,
   languageAtom,
 } from "app/state/recoil/atoms";
+import {
+  AF_COUNTRY,
+  AF_REGION,
+  AF_SECTOR,
+  AF_PARTICIPATING_ORG_REF,
+  AF_ACTIVITY_STATUS_CODE,
+  AF_ACTIVITY_SCOPE_CODE,
+  AF_TAG_NARRATIVE,
+  AF_TAG_CODE,
+  AF_DEFAULT_AID_TYPE_CODE,
+  AF_DEFAULT_TIED_STATUS_CODE,
+  AF_DEFAULT_FLOW_TYPE_CODE,
+  AF_COLLABORATION_TYPE_CODE,
+  AF_POLICY_MARKER_CODE,
+} from 'app/utils/getAPIFormattedFilters';
 
 interface useDataGridDataProps {
   detailPageFilter: {
@@ -167,23 +182,23 @@ export function useDataGridData(props: useDataGridDataProps) {
 
   function initialCheckURLSearchParams() {
     const updatedSelectedFilters = { ...selectedFilters };
-    const currentUrlParams = new URLSearchParams(history.location.search);
-    const countries = currentUrlParams.get("recipient_country_code");
-    const regions = currentUrlParams.get("recipient_region_code");
-    const sectors = currentUrlParams.get("sector_code");
-    const organisations = currentUrlParams.get("participating_org_ref");
-    const activitystatus = currentUrlParams.get("activity_status_code");
-    const activityscope = currentUrlParams.get("activity_scope_code");
-    const tag = currentUrlParams.get("tag_narrative");
-    const sdg = currentUrlParams.get("tag_code");
-    const defaultaidtype = currentUrlParams.get("default_aid_type_code");
-    const defaulttiedstatus = currentUrlParams.get("default_tied_status_code");
-    const defaultflowtype = currentUrlParams.get("default_flow_type_code");
-    const collaborationtype = currentUrlParams.get("collaboration_type_code");
-    const policymarker = currentUrlParams.get("policy_marker_code");
-    const budgetlines = currentUrlParams.get("budget_line");
-    const humanrights = currentUrlParams.get("human_rights_approach");
-    const years = currentUrlParams.get("years");
+    const currentURLParams = new URLSearchParams(history.location.search);
+    const countries = currentURLParams.get(AF_COUNTRY);
+    const regions = currentURLParams.get(AF_REGION);
+    const sectors = currentURLParams.get(AF_SECTOR);
+    const organisations = currentURLParams.get(AF_PARTICIPATING_ORG_REF);
+    const activitystatus = currentURLParams.get(AF_ACTIVITY_STATUS_CODE);
+    const activityscope = currentURLParams.get(AF_ACTIVITY_SCOPE_CODE);
+    const tag = currentURLParams.get(AF_TAG_NARRATIVE);
+    const sdg = currentURLParams.get(AF_TAG_CODE);
+    const defaultaidtype = currentURLParams.get(AF_DEFAULT_AID_TYPE_CODE);
+    const defaulttiedstatus = currentURLParams.get(AF_DEFAULT_TIED_STATUS_CODE);
+    const defaultflowtype = currentURLParams.get(AF_DEFAULT_FLOW_TYPE_CODE);
+    const collaborationtype = currentURLParams.get(AF_COLLABORATION_TYPE_CODE);
+    const policymarker = currentURLParams.get(AF_POLICY_MARKER_CODE);
+    const budgetlines = currentURLParams.get("budget_line");
+    const humanrights = currentURLParams.get("human_rights_approach");
+    const years = currentURLParams.get("years");
 
     if (countries) {
       updatedSelectedFilters.countries = countries.split(",");
@@ -251,7 +266,7 @@ export function useDataGridData(props: useDataGridDataProps) {
       filters = {
         ...filters,
         [props.detailPageFilter.key]:
-          props.detailPageFilter.key === "tag_narrative"
+          props.detailPageFilter.key === AF_TAG_NARRATIVE
             ? [
                 props.detailPageFilter.value,
                 (props.detailPageFilter.value as string).replace(
@@ -398,7 +413,7 @@ export function useDataGridData(props: useDataGridDataProps) {
       filters = {
         ...filters,
         [props.detailPageFilter.key]:
-          props.detailPageFilter.key === "tag_narrative"
+          props.detailPageFilter.key === AF_TAG_NARRATIVE
             ? [
                 props.detailPageFilter.value,
                 (props.detailPageFilter.value as string).replace(
@@ -483,7 +498,7 @@ export function useDataGridData(props: useDataGridDataProps) {
       filters = {
         ...filters,
         [props.detailPageFilter.key]:
-          props.detailPageFilter.key === "tag_narrative"
+          props.detailPageFilter.key === AF_TAG_NARRATIVE
             ? [
                 props.detailPageFilter.value,
                 (props.detailPageFilter.value as string).replace(
