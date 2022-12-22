@@ -67,6 +67,7 @@ export const APIModel = <QueryModel, ResponseModel>(
           headers: {
             "Content-Type": "application/json",
           },
+          signal: query.abortControllerSignal,
         })
         .then(
           (resp: AxiosResponse) =>

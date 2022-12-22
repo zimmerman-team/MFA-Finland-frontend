@@ -19,6 +19,7 @@ import {
   selectedFilterAtom,
   SelectedFilterAtomModel,
 } from "app/state/recoil/atoms";
+import { onLocationSearchChange } from "app/hooks/useUrlFilters";
 
 const style = {
   widgetHeader: (odaWidget: boolean) => css`
@@ -265,7 +266,8 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
   const projCount = useStoreState((state) =>
     get(state.geoMap, "data.projectCount", 0)
   );
-  const [selectedFilters] = useRecoilState(selectedFilterAtom);
+  const [selectedFilters, setSelectedFilters] =
+    useRecoilState(selectedFilterAtom);
 
   let searchFilterString = `${
     props.detailPageFilter
@@ -282,11 +284,14 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
 
   function handleClick() {
     if (props.link) {
-      history.push(
-        `/${currentLanguage === "se" ? "sv" : currentLanguage}${
-          props.link
-        }${searchFilterString}`
-      );
+      onLocationSearchChange(selectedFilters, setSelectedFilters);
+      setTimeout(() => {
+        history.push(
+          `/${currentLanguage === "se" ? "sv" : currentLanguage}${
+            props.link
+          }${searchFilterString}`
+        );
+      }, 100);
     }
   }
 

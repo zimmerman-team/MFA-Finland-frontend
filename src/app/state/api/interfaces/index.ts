@@ -2,11 +2,13 @@ import { Action, Thunk } from "easy-peasy";
 import { SyncSearchModel } from "app/state/api/actions-reducers/sync/search";
 import { FiltersUpdatedModel } from "app/state/api/actions-reducers/sync/filtersUpdated";
 import { ProjectListPage } from "../actions-reducers/sync/generic";
+import { GenericAbortSignal } from "axios";
 
 export interface RequestValues<T> {
   values?: T;
   addOnData?: boolean;
   isCMSfetch?: boolean;
+  abortControllerSignal?: GenericAbortSignal;
 }
 
 export interface ResponseData<T> {

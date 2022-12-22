@@ -66,7 +66,7 @@ import {
   AF_DEFAULT_FLOW_TYPE_CODE,
   AF_COLLABORATION_TYPE_CODE,
   AF_POLICY_MARKER_CODE,
-} from 'app/utils/getAPIFormattedFilters';
+} from "app/utils/getAPIFormattedFilters";
 
 export default function VizModule() {
   const location = useLocation();
@@ -96,32 +96,20 @@ export default function VizModule() {
   const [prevTab, setPrevTab] = React.useState(get(params, "tab", ""));
   const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
-  const [filterbarHeight, setFilterbarHeight] = useRecoilState(
-    filterbarHeightAtom
-  );
-  const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
-    ODAlatestFiltersAtom
-  );
-  const [
-    ThematicAreasLatestFilters,
-    setThematicAreasLatestFilters,
-  ] = useRecoilState(ThematicAreasLatestFiltersAtom);
-  const [
-    SectorsSunburstLatestFilters,
-    setSectorsSunburstLatestFilters,
-  ] = useRecoilState(SectorsSunburstLatestFiltersAtom);
-  const [
-    LocationsTreemapLatestFilters,
-    setLocationsTreemapLatestFilters,
-  ] = useRecoilState(LocationsTreemapLatestFiltersAtom);
-  const [
-    OrganisationsLatestFilters,
-    setOrganisationsLatestFilters,
-  ] = useRecoilState(OrganisationsLatestFiltersAtom);
-  const [
-    BudgetLinesLatestFilters,
-    setBudgetLinesLatestFilters,
-  ] = useRecoilState(BudgetLinesLatestFiltersAtom);
+  const [filterbarHeight, setFilterbarHeight] =
+    useRecoilState(filterbarHeightAtom);
+  const [ODAlatestFilters, setODAlatestFilters] =
+    useRecoilState(ODAlatestFiltersAtom);
+  const [ThematicAreasLatestFilters, setThematicAreasLatestFilters] =
+    useRecoilState(ThematicAreasLatestFiltersAtom);
+  const [SectorsSunburstLatestFilters, setSectorsSunburstLatestFilters] =
+    useRecoilState(SectorsSunburstLatestFiltersAtom);
+  const [LocationsTreemapLatestFilters, setLocationsTreemapLatestFilters] =
+    useRecoilState(LocationsTreemapLatestFiltersAtom);
+  const [OrganisationsLatestFilters, setOrganisationsLatestFilters] =
+    useRecoilState(OrganisationsLatestFiltersAtom);
+  const [BudgetLinesLatestFilters, setBudgetLinesLatestFilters] =
+    useRecoilState(BudgetLinesLatestFiltersAtom);
   const [ProjectsLatestFilters, setProjectsLatestFilters] = useRecoilState(
     ProjectsLatestFiltersAtom
   );

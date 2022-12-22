@@ -1,9 +1,13 @@
 import isEqual from "lodash/isEqual";
-import { useRecoilState } from "recoil";
+import { SetterOrUpdater, useRecoilState } from "recoil";
 import { useUnmount, useUpdateEffect } from "react-use";
 import { useHistory, useLocation } from "react-router-dom";
 import { useComponentWillMount } from "app/hooks/useCompWillMount";
-import { defaultfilters, selectedFilterAtom } from "app/state/recoil/atoms";
+import {
+  defaultfilters,
+  selectedFilterAtom,
+  SelectedFilterAtomModel,
+} from "app/state/recoil/atoms";
 import {
   AF_COUNTRY,
   AF_REGION,
@@ -18,14 +22,13 @@ import {
   AF_DEFAULT_FLOW_TYPE_CODE,
   AF_COLLABORATION_TYPE_CODE,
   AF_POLICY_MARKER_CODE,
-} from 'app/utils/getAPIFormattedFilters';
+} from "app/utils/getAPIFormattedFilters";
 
 export function useUrlFilters() {
   const history = useHistory();
   const location = useLocation();
-  const [selectedFilters, setSelectedFilters] = useRecoilState(
-    selectedFilterAtom
-  );
+  const [selectedFilters, setSelectedFilters] =
+    useRecoilState(selectedFilterAtom);
 
   useComponentWillMount({
     action: () => {
@@ -40,9 +43,13 @@ export function useUrlFilters() {
       const tag = currentURLParams.get(AF_TAG_NARRATIVE);
       const sdg = currentURLParams.get(AF_TAG_CODE);
       const defaultaidtype = currentURLParams.get(AF_DEFAULT_AID_TYPE_CODE);
-      const defaulttiedstatus = currentURLParams.get(AF_DEFAULT_TIED_STATUS_CODE);
+      const defaulttiedstatus = currentURLParams.get(
+        AF_DEFAULT_TIED_STATUS_CODE
+      );
       const defaultflowtype = currentURLParams.get(AF_DEFAULT_FLOW_TYPE_CODE);
-      const collaborationtype = currentURLParams.get(AF_COLLABORATION_TYPE_CODE);
+      const collaborationtype = currentURLParams.get(
+        AF_COLLABORATION_TYPE_CODE
+      );
       const policymarker = currentURLParams.get(AF_POLICY_MARKER_CODE);
       const budgetlines = currentURLParams.get("budget_line");
       const humanrights = currentURLParams.get("human_rights_approach");
@@ -106,18 +113,12 @@ export function useUrlFilters() {
   useUpdateEffect(() => {
     const currentUrlParams = new URLSearchParams(history.location.search);
     if (selectedFilters.countries.length > 0) {
-      currentUrlParams.set(
-        AF_COUNTRY,
-        selectedFilters.countries.join(",")
-      );
+      currentUrlParams.set(AF_COUNTRY, selectedFilters.countries.join(","));
     } else {
       currentUrlParams.delete(AF_COUNTRY);
     }
     if (selectedFilters.regions.length > 0) {
-      currentUrlParams.set(
-        AF_REGION,
-        selectedFilters.regions.join(",")
-      );
+      currentUrlParams.set(AF_REGION, selectedFilters.regions.join(","));
     } else {
       currentUrlParams.delete(AF_REGION);
     }
@@ -231,110 +232,117 @@ export function useUrlFilters() {
   }, [selectedFilters]);
 
   useUpdateEffect(() => {
-    const updatedSelectedFilters = { ...selectedFilters };
-    const currentUrlParams = new URLSearchParams(location.search);
-    const countries = currentUrlParams.get(AF_COUNTRY);
-    const regions = currentUrlParams.get(AF_REGION);
-    const sectors = currentUrlParams.get(AF_SECTOR);
-    const organisations = currentUrlParams.get(AF_PARTICIPATING_ORG_REF);
-    const activitystatus = currentUrlParams.get(AF_ACTIVITY_STATUS_CODE);
-    const activityscope = currentUrlParams.get(AF_ACTIVITY_SCOPE_CODE);
-    const tag = currentUrlParams.get(AF_TAG_NARRATIVE);
-    const sdg = currentUrlParams.get(AF_TAG_CODE);
-    const defaultaidtype = currentUrlParams.get(AF_DEFAULT_AID_TYPE_CODE);
-    const defaulttiedstatus = currentUrlParams.get(AF_DEFAULT_TIED_STATUS_CODE);
-    const defaultflowtype = currentUrlParams.get(AF_DEFAULT_FLOW_TYPE_CODE);
-    const collaborationtype = currentUrlParams.get(AF_COLLABORATION_TYPE_CODE);
-    const policymarker = currentUrlParams.get(AF_POLICY_MARKER_CODE);
-    const budgetlines = currentUrlParams.get("budget_line");
-    const humanrights = currentUrlParams.get("human_rights_approach");
-    const years = currentUrlParams.get("years");
-
-    if (countries) {
-      updatedSelectedFilters.countries = countries.split(",");
-    } else if (updatedSelectedFilters.countries.length > 0) {
-      updatedSelectedFilters.countries = [];
-    }
-    if (regions) {
-      updatedSelectedFilters.regions = regions.split(",");
-    } else if (updatedSelectedFilters.regions.length > 0) {
-      updatedSelectedFilters.regions = [];
-    }
-    if (sectors) {
-      updatedSelectedFilters.sectors = sectors.split(",");
-    } else if (updatedSelectedFilters.sectors.length > 0) {
-      updatedSelectedFilters.sectors = [];
-    }
-    if (organisations) {
-      updatedSelectedFilters.organisations = organisations.split(",");
-    } else if (updatedSelectedFilters.organisations.length > 0) {
-      updatedSelectedFilters.organisations = [];
-    }
-    if (activitystatus) {
-      updatedSelectedFilters.activitystatus = activitystatus.split(",");
-    } else if (updatedSelectedFilters.activitystatus.length > 0) {
-      updatedSelectedFilters.activitystatus = [];
-    }
-    if (activityscope) {
-      updatedSelectedFilters.activityscope = activityscope.split(",");
-    } else if (updatedSelectedFilters.activityscope.length > 0) {
-      updatedSelectedFilters.activityscope = [];
-    }
-    if (tag) {
-      updatedSelectedFilters.tag = tag.split(",");
-    } else if (updatedSelectedFilters.tag.length > 0) {
-      updatedSelectedFilters.tag = [];
-    }
-    if (sdg) {
-      updatedSelectedFilters.sdg = sdg.split(",");
-    } else if (updatedSelectedFilters.sdg.length > 0) {
-      updatedSelectedFilters.sdg = [];
-    }
-    if (defaultaidtype) {
-      updatedSelectedFilters.defaultaidtype = defaultaidtype.split(",");
-    } else if (updatedSelectedFilters.defaultaidtype.length > 0) {
-      updatedSelectedFilters.defaultaidtype = [];
-    }
-    if (defaultflowtype) {
-      updatedSelectedFilters.defaultflowtype = defaultflowtype.split(",");
-    } else if (updatedSelectedFilters.defaultflowtype.length > 0) {
-      updatedSelectedFilters.defaultflowtype = [];
-    }
-    if (defaulttiedstatus) {
-      updatedSelectedFilters.defaulttiedstatus = defaulttiedstatus.split(",");
-    } else if (updatedSelectedFilters.defaulttiedstatus.length > 0) {
-      updatedSelectedFilters.defaulttiedstatus = [];
-    }
-    if (collaborationtype) {
-      updatedSelectedFilters.collaborationtype = collaborationtype.split(",");
-    } else if (updatedSelectedFilters.collaborationtype.length > 0) {
-      updatedSelectedFilters.collaborationtype = [];
-    }
-    if (policymarker) {
-      updatedSelectedFilters.policymarker = policymarker.split(",");
-    } else if (updatedSelectedFilters.policymarker.length > 0) {
-      updatedSelectedFilters.policymarker = [];
-    }
-    if (budgetlines) {
-      updatedSelectedFilters.budgetlines = budgetlines.split(",");
-    } else if (updatedSelectedFilters.budgetlines.length > 0) {
-      updatedSelectedFilters.budgetlines = [];
-    }
-    if (humanrights) {
-      updatedSelectedFilters.humanrights = humanrights.split(",");
-    } else if (updatedSelectedFilters.humanrights.length > 0) {
-      updatedSelectedFilters.humanrights = [];
-    }
-    if (years) {
-      updatedSelectedFilters.years = years.split(",");
-    } else if (updatedSelectedFilters.years.length > 0) {
-      updatedSelectedFilters.years = [];
-    }
-
-    if (!isEqual(selectedFilters, updatedSelectedFilters)) {
-      setSelectedFilters(updatedSelectedFilters);
-    }
+    onLocationSearchChange(selectedFilters, setSelectedFilters);
   }, [location.search]);
 
   return null;
+}
+
+export function onLocationSearchChange(
+  selectedFilters: SelectedFilterAtomModel,
+  setSelectedFilters: SetterOrUpdater<SelectedFilterAtomModel>
+) {
+  const updatedSelectedFilters = { ...selectedFilters };
+  const currentUrlParams = new URLSearchParams(location.search);
+  const countries = currentUrlParams.get(AF_COUNTRY);
+  const regions = currentUrlParams.get(AF_REGION);
+  const sectors = currentUrlParams.get(AF_SECTOR);
+  const organisations = currentUrlParams.get(AF_PARTICIPATING_ORG_REF);
+  const activitystatus = currentUrlParams.get(AF_ACTIVITY_STATUS_CODE);
+  const activityscope = currentUrlParams.get(AF_ACTIVITY_SCOPE_CODE);
+  const tag = currentUrlParams.get(AF_TAG_NARRATIVE);
+  const sdg = currentUrlParams.get(AF_TAG_CODE);
+  const defaultaidtype = currentUrlParams.get(AF_DEFAULT_AID_TYPE_CODE);
+  const defaulttiedstatus = currentUrlParams.get(AF_DEFAULT_TIED_STATUS_CODE);
+  const defaultflowtype = currentUrlParams.get(AF_DEFAULT_FLOW_TYPE_CODE);
+  const collaborationtype = currentUrlParams.get(AF_COLLABORATION_TYPE_CODE);
+  const policymarker = currentUrlParams.get(AF_POLICY_MARKER_CODE);
+  const budgetlines = currentUrlParams.get("budget_line");
+  const humanrights = currentUrlParams.get("human_rights_approach");
+  const years = currentUrlParams.get("years");
+
+  if (countries) {
+    updatedSelectedFilters.countries = countries.split(",");
+  } else if (updatedSelectedFilters.countries.length > 0) {
+    updatedSelectedFilters.countries = [];
+  }
+  if (regions) {
+    updatedSelectedFilters.regions = regions.split(",");
+  } else if (updatedSelectedFilters.regions.length > 0) {
+    updatedSelectedFilters.regions = [];
+  }
+  if (sectors) {
+    updatedSelectedFilters.sectors = sectors.split(",");
+  } else if (updatedSelectedFilters.sectors.length > 0) {
+    updatedSelectedFilters.sectors = [];
+  }
+  if (organisations) {
+    updatedSelectedFilters.organisations = organisations.split(",");
+  } else if (updatedSelectedFilters.organisations.length > 0) {
+    updatedSelectedFilters.organisations = [];
+  }
+  if (activitystatus) {
+    updatedSelectedFilters.activitystatus = activitystatus.split(",");
+  } else if (updatedSelectedFilters.activitystatus.length > 0) {
+    updatedSelectedFilters.activitystatus = [];
+  }
+  if (activityscope) {
+    updatedSelectedFilters.activityscope = activityscope.split(",");
+  } else if (updatedSelectedFilters.activityscope.length > 0) {
+    updatedSelectedFilters.activityscope = [];
+  }
+  if (tag) {
+    updatedSelectedFilters.tag = tag.split(",");
+  } else if (updatedSelectedFilters.tag.length > 0) {
+    updatedSelectedFilters.tag = [];
+  }
+  if (sdg) {
+    updatedSelectedFilters.sdg = sdg.split(",");
+  } else if (updatedSelectedFilters.sdg.length > 0) {
+    updatedSelectedFilters.sdg = [];
+  }
+  if (defaultaidtype) {
+    updatedSelectedFilters.defaultaidtype = defaultaidtype.split(",");
+  } else if (updatedSelectedFilters.defaultaidtype.length > 0) {
+    updatedSelectedFilters.defaultaidtype = [];
+  }
+  if (defaultflowtype) {
+    updatedSelectedFilters.defaultflowtype = defaultflowtype.split(",");
+  } else if (updatedSelectedFilters.defaultflowtype.length > 0) {
+    updatedSelectedFilters.defaultflowtype = [];
+  }
+  if (defaulttiedstatus) {
+    updatedSelectedFilters.defaulttiedstatus = defaulttiedstatus.split(",");
+  } else if (updatedSelectedFilters.defaulttiedstatus.length > 0) {
+    updatedSelectedFilters.defaulttiedstatus = [];
+  }
+  if (collaborationtype) {
+    updatedSelectedFilters.collaborationtype = collaborationtype.split(",");
+  } else if (updatedSelectedFilters.collaborationtype.length > 0) {
+    updatedSelectedFilters.collaborationtype = [];
+  }
+  if (policymarker) {
+    updatedSelectedFilters.policymarker = policymarker.split(",");
+  } else if (updatedSelectedFilters.policymarker.length > 0) {
+    updatedSelectedFilters.policymarker = [];
+  }
+  if (budgetlines) {
+    updatedSelectedFilters.budgetlines = budgetlines.split(",");
+  } else if (updatedSelectedFilters.budgetlines.length > 0) {
+    updatedSelectedFilters.budgetlines = [];
+  }
+  if (humanrights) {
+    updatedSelectedFilters.humanrights = humanrights.split(",");
+  } else if (updatedSelectedFilters.humanrights.length > 0) {
+    updatedSelectedFilters.humanrights = [];
+  }
+  if (years) {
+    updatedSelectedFilters.years = years.split(",");
+  } else if (updatedSelectedFilters.years.length > 0) {
+    updatedSelectedFilters.years = [];
+  }
+
+  if (!isEqual(selectedFilters, updatedSelectedFilters)) {
+    setSelectedFilters(updatedSelectedFilters);
+  }
 }
