@@ -71,9 +71,3 @@ typings/
 .vercel
 .DS_Store
 Icon
-
-# cypress recordings
-cypress/screenshots/
-cypress/videos/
-
-
