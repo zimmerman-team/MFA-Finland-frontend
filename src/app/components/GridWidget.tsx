@@ -193,6 +193,7 @@ interface GridWidgetProps {
   };
   disbursementsStatComponent?: FunctionComponent;
   // responsiveOrder?: number;
+  odaLatestYear?: number;
   detailPageFilter?: {
     key: string;
     value: string | string[];
@@ -201,7 +202,8 @@ interface GridWidgetProps {
 
 export function displayPeriod(
   selectedFilters: SelectedFilterAtomModel,
-  cmsData: any
+  cmsData: any,
+  latestYear?: number
 ) {
   const cmsLabel = get(
     cmsData,
@@ -231,7 +233,7 @@ export function displayPeriod(
         .replace("{end}", years.length > 1 ? `${years[years.length - 1]}` : "");
     }
   }
-  return cmsLabel.replace("{start}", 2015).replace("{end}", 2021);
+  return cmsLabel.replace("{start}", 2015).replace("{end}", latestYear || 2022);
 }
 
 export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
@@ -339,7 +341,7 @@ export const GridWidget: FunctionComponent<GridWidgetProps> = (props) => {
             </h3>
             {odaWidget && (
               <div css="font-size: 14px;margin-top: 6px;">
-                {displayPeriod(selectedFilters, cmsData)}
+                {displayPeriod(selectedFilters, cmsData, props.odaLatestYear)}
               </div>
             )}
           </div>

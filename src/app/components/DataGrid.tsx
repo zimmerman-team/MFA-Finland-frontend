@@ -39,7 +39,7 @@ import {
   AF_DEFAULT_FLOW_TYPE_CODE,
   AF_COLLABORATION_TYPE_CODE,
   AF_POLICY_MARKER_CODE,
-} from 'app/utils/getAPIFormattedFilters';
+} from "app/utils/getAPIFormattedFilters";
 
 export interface DataGridProps {
   odaBarChartData: any;
@@ -393,6 +393,11 @@ export const DataGrid = (props: DataGridProps) => {
           link="/viz/oda"
           tooltip={get(cmsData, "tooltips.overview_disbursements", "")}
           label="Overview Disbursements"
+          odaLatestYear={
+            props.odaBarChartData.length > 0
+              ? props.odaBarChartData[props.odaBarChartData.length - 1].year
+              : undefined
+          }
           detailPageFilter={props.detailPageFilter}
           childrencontainerStyle={{
             height: 100,
