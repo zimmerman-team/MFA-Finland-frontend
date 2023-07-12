@@ -1,4 +1,3 @@
-.circleci/**/*
 build/**/*
 config/**/*
 scripts/**/*
