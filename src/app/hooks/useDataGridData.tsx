@@ -7,7 +7,6 @@ import { useHistory } from "react-router-dom";
 import { getName } from "app/components/Charts/sdg";
 import { useUpdateEffect, useUnmount } from "react-use";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
-import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import {
   selectedFilterAtom,
   prevLocationAtom,
@@ -35,7 +34,8 @@ import {
   AF_DEFAULT_FLOW_TYPE_CODE,
   AF_COLLABORATION_TYPE_CODE,
   AF_POLICY_MARKER_CODE,
-} from 'app/utils/getAPIFormattedFilters';
+  getAPIFormattedFilters,
+} from "app/utils/getAPIFormattedFilters";
 
 interface useDataGridDataProps {
   detailPageFilter: {
@@ -48,35 +48,22 @@ export function useDataGridData(props: useDataGridDataProps) {
   const history = useHistory();
   const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
-  const [ODAlatestFilters, setODAlatestFilters] = useRecoilState(
-    ODAlatestFiltersAtom
-  );
-  const [
-    ThematicAreasLatestFilters,
-    setThematicAreasLatestFilters,
-  ] = useRecoilState(ThematicAreasLatestFiltersAtom);
-  const [
-    SectorsSunburstLatestFilters,
-    setSectorsSunburstLatestFilters,
-  ] = useRecoilState(SectorsSunburstLatestFiltersAtom);
-  const [
-    LocationsTreemapLatestFilters,
-    setLocationsTreemapLatestFilters,
-  ] = useRecoilState(LocationsTreemapLatestFiltersAtom);
-  const [
-    OrganisationsLatestFilters,
-    setOrganisationsLatestFilters,
-  ] = useRecoilState(OrganisationsLatestFiltersAtom);
-  const [
-    BudgetLinesLatestFilters,
-    setBudgetLinesLatestFilters,
-  ] = useRecoilState(BudgetLinesLatestFiltersAtom);
-  const [SDGlatestFilters, setSDGlatestFilters] = useRecoilState(
-    SDGlatestFiltersAtom
-  );
-  const [GeoLatestFilters, setGeoLatestFilters] = useRecoilState(
-    GeoLatestFiltersAtom
-  );
+  const [ODAlatestFilters, setODAlatestFilters] =
+    useRecoilState(ODAlatestFiltersAtom);
+  const [ThematicAreasLatestFilters, setThematicAreasLatestFilters] =
+    useRecoilState(ThematicAreasLatestFiltersAtom);
+  const [SectorsSunburstLatestFilters, setSectorsSunburstLatestFilters] =
+    useRecoilState(SectorsSunburstLatestFiltersAtom);
+  const [LocationsTreemapLatestFilters, setLocationsTreemapLatestFilters] =
+    useRecoilState(LocationsTreemapLatestFiltersAtom);
+  const [OrganisationsLatestFilters, setOrganisationsLatestFilters] =
+    useRecoilState(OrganisationsLatestFiltersAtom);
+  const [BudgetLinesLatestFilters, setBudgetLinesLatestFilters] =
+    useRecoilState(BudgetLinesLatestFiltersAtom);
+  const [SDGlatestFilters, setSDGlatestFilters] =
+    useRecoilState(SDGlatestFiltersAtom);
+  const [GeoLatestFilters, setGeoLatestFilters] =
+    useRecoilState(GeoLatestFiltersAtom);
   const [prevLocation, setPrevLocation] = useRecoilState(prevLocationAtom);
 
   /* STATE & ACTIONS */

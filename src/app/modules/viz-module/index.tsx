@@ -24,7 +24,6 @@ import { ThematicAreas } from "app/components/Charts/thematicareas";
 import { getSidebarLegendItems } from "app/modules/viz-module/utils";
 import { useStoreState, useStoreActions } from "app/state/store/hooks";
 import { SectorsVizModule } from "app/components/Charts/modules/sectors";
-import { getAPIFormattedFilters } from "app/utils/getAPIFormattedFilters";
 import { ProjectsListModule } from "app/components/Charts/modules/projects";
 import { Switch, Route, useRouteMatch, useLocation } from "react-router-dom";
 import {
@@ -53,6 +52,7 @@ import {
   filterbarHeightAtom,
 } from "app/state/recoil/atoms";
 import {
+  getAPIFormattedFilters,
   AF_COUNTRY,
   AF_REGION,
   AF_SECTOR,
@@ -96,8 +96,7 @@ export default function VizModule() {
   const [prevTab, setPrevTab] = React.useState(get(params, "tab", ""));
   const [currentLanguage] = useRecoilState(languageAtom);
   const [selectedFilters] = useRecoilState(selectedFilterAtom);
-  const [filterbarHeight, setFilterbarHeight] =
-    useRecoilState(filterbarHeightAtom);
+  const [filterbarHeight] = useRecoilState(filterbarHeightAtom);
   const [ODAlatestFilters, setODAlatestFilters] =
     useRecoilState(ODAlatestFiltersAtom);
   const [ThematicAreasLatestFilters, setThematicAreasLatestFilters] =
