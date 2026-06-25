@@ -31,28 +31,26 @@ export function AppBar() {
   const [isFocused] = useRecoilState(searchFocusAtom);
   const [currentLanguage, setLanguage] = useRecoilState(languageAtom);
   const [_, setCurrentFilterOpen] = useRecoilState(currentFilterOpenAtom);
-  const [bottomMenuState, setBottomMenuState] = useRecoilState(
-    bottomDrawerAtom
-  );
+  const [bottomMenuState, setBottomMenuState] =
+    useRecoilState(bottomDrawerAtom);
   const [mobileSearchOpen, setMobileSearchOpen] = useRecoilState(
-    mobileSearchFocusAtom
+    mobileSearchFocusAtom,
   );
 
-  const toggleBottomMenu = (open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    if (
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
-    setBottomMenuState(open);
-  };
+  const toggleBottomMenu =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+      setBottomMenuState(open);
+    };
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
+    null,
   );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -83,28 +81,51 @@ export function AppBar() {
           {/* ---------------------------------------------- */}
           {/* logo */}
           {!mobileSearchOpen && (
-            <NavLink
-              to={`/${currentLanguage === "se" ? "sv" : currentLanguage}/${
-                location.search
-              }`}
-              css={appbarStyle.logoLink(!isFocused, !mobileSearchOpen)}
-              onClick={() => {
-                setCurrentFilterOpen(FILTER_TYPES.NONE);
-              }}
+            <div
+              css={`
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+              `}
             >
-              <Hidden xsDown>
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="Go to homepage"
-                >
-                  <MfaLogo />
-                </IconButton>
-              </Hidden>
-              <h1 css={appbarStyle.logoText(PrimaryColor[2])}>
-                {get(cmsData, "general.pagetitle", "")}
-              </h1>
-            </NavLink>
+              <NavLink
+                to={`/${currentLanguage === "se" ? "sv" : currentLanguage}/${
+                  location.search
+                }`}
+                css={appbarStyle.logoLink(!isFocused, !mobileSearchOpen)}
+                onClick={() => {
+                  setCurrentFilterOpen(FILTER_TYPES.NONE);
+                }}
+              >
+                <Hidden xsDown>
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="Go to homepage"
+                  >
+                    <MfaLogo />
+                  </IconButton>
+                </Hidden>
+                <h1 css={appbarStyle.logoText(PrimaryColor[2])}>
+                  {get(cmsData, "general.pagetitle", "")}
+                </h1>
+              </NavLink>
+              <div
+                css={`
+                  color: #fff;
+                  margin-left: 10px;
+                  margin-bottom: -2px;
+
+                  a {
+                    color: #fff;
+                    text-decoration: underline;
+                  }
+                `}
+                dangerouslySetInnerHTML={{
+                  __html: get(cmsData, "general.v1headerbetamessage", ""),
+                }}
+              />
+            </div>
           )}
 
           <div
