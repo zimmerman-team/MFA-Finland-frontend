@@ -67,15 +67,6 @@ export function Treemap(props: TreemapProps) {
         history.push(
           `/organisations/${node.data.ref}${history.location.search}`
         );
-        if (node.data.ref.length === 2) {
-          history.push(
-            `/organisations/${node.data.ref}${history.location.search}`
-          );
-        } else {
-          history.push(
-            `/organisations/${node.data.ref}${history.location.search}`
-          );
-        }
       }
     }
   }

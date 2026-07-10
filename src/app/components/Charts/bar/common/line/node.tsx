@@ -3,6 +3,8 @@ import get from "lodash/get";
 import filter from "lodash/filter";
 
 export function LineNodes(props: any) {
+  const selected = props.selected ? props.selected.indexValue : null;
+
   return (
     <React.Fragment>
       {filter(
@@ -44,8 +46,7 @@ export function LineNodes(props: any) {
               strokeWidth={0.5}
               css={`
                 pointer-events: none;
-                fill: ${(props.selected ? props.selected.indexValue : null) ===
-                  parseInt(item.data.x, 10) ||
+                fill: ${selected === parseInt(item.data.x, 10) ||
                 props.hovered === parseInt(item.data.x, 10)
                   ? item.serieColor
                   : "#F4A490"};

@@ -37,12 +37,10 @@ export const FilterPanel = (props: FilterPanelProps) => {
   );
   const cmsData = useCMSData({ returnData: true });
   const filterOptionsData = useStoreState((state) => state.filterOptions);
-  const [selectedFilters, setSelectedFilters] = useRecoilState(
-    selectedFilterAtom
-  );
-  const [localSelectedFilters, setLocalSelectedFilters] = React.useState(
-    selectedFilters
-  );
+  const [selectedFilters, setSelectedFilters] =
+    useRecoilState(selectedFilterAtom);
+  const [localSelectedFilters, setLocalSelectedFilters] =
+    React.useState(selectedFilters);
   const [currentLanguage] = useRecoilState(languageAtom);
   const [mainPanelData, setMainPanelData] = React.useState<
     MailPanelInitDataItemModel[]
@@ -570,40 +568,28 @@ export const FilterPanel = (props: FilterPanelProps) => {
     switch (filterType) {
       case FILTER_TYPES.THEMATIC_AREAS:
         return ["tag"];
-        break;
       case FILTER_TYPES.COUNTRIES:
         return ["countries", "regions"];
-        break;
       case FILTER_TYPES.SECTORS:
         return ["sectors"];
-        break;
       case FILTER_TYPES.ORGANISATIONS:
         return ["organisations"];
-        break;
       case FILTER_TYPES.SDGS:
         return ["sdg"];
-        break;
       case FILTER_TYPES.ACTIVITY_STATUS:
         return ["activitystatus"];
-        break;
       case FILTER_TYPES.POLICY_MARKERS:
         return ["policymarker"];
-        break;
       case FILTER_TYPES.AID_TYPE:
         return ["defaultaidtype"];
-        break;
       case FILTER_TYPES.BUDGET_LINES:
         return ["budgetlines"];
-        break;
       case FILTER_TYPES.BI_MULTI:
         return ["collaborationtype"];
-        break;
       case FILTER_TYPES.HUMAN_RIGHTS:
         return ["humanrights"];
-        break;
       default:
         return [""];
-        break;
     }
   }
 

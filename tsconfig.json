@@ -28,7 +28,6 @@
     "**/*.spec.ts",
     "@nivo/bar",
     ".vscode",
-    "cypress",
     ".history",
     "e2e",
     "etc",
